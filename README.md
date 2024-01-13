@@ -43,3 +43,31 @@ Recurring is a collaborative platform for effective project management, organiza
    ```bash
    git clone https://github.com/your-username/recurring.git
    ```
+
+2. Navigate to the project frontend directory:
+
+   ```bash
+   cd recurring/recurring-web
+   ```
+
+   ```bash
+   npm install
+   ```
+
+   ```bash
+   npm run dev
+   ```
+
+3. Navigate to the project backend directory:
+
+   ```bash
+   cd recurring/recurring-backend
+   ```
+
+   ```bash
+   npm install
+   ```
+
+   ```bash
+   npm run dev
+   ```
