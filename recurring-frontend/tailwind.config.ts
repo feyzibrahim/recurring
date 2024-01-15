@@ -53,6 +53,7 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
         backgroundAccent: "hsl(var(--backgroundAccent))",
+        foregroundAccent: "hsl(var(--foregroundAccent))",
       },
       borderRadius: {
         lg: "var(--radius)",

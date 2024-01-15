@@ -7,7 +7,7 @@ import Recurring from "./Recurring";
 
 function Navbar() {
   return (
-    <nav className="flex justify-between px-5 lg:px-20 py-3 bg-backgroundAccent shadow-md fixed w-full">
+    <nav className="flex justify-between px-5 lg:px-40 py-3 bg-backgroundAccent shadow-md fixed w-full">
       <div className="flex items-center gap-4">
         <Image alt="recurring" src={Logo} width={30} height={30} />
         <h1 className="font-bold text-2xl">

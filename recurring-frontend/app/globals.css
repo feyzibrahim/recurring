@@ -6,7 +6,8 @@
   :root {
     --background: 228 26% 96%;
     --backgroundAccent: 228 26% 100%;
-    --foreground: 0 0% 3.9%;
+    --foreground: 72 11% 9%;
+    --foregroundAccent: 0 0% 65%;
 
     --test: 360 89% 19%;
 
@@ -41,7 +42,8 @@
   .dark {
     --background: 210 10% 8%;
     --backgroundAccent: 231 10% 13%;
-    --foreground: 0 0% 98%;
+    --foreground: 220 11% 89%;
+    --foregroundAccent: 0 0% 65%;
 
     --test: 231 10% 13%;
 
