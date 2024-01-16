@@ -82,3 +82,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.hover-text {
+  @apply text-foregroundAccent hover:text-foreground cursor-pointer;
+}

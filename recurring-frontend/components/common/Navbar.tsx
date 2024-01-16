@@ -16,15 +16,25 @@ function Navbar() {
       </div>
       <div className="gap-5 items-center flex">
         <div className="hidden lg:flex gap-5">
-          <Link href={"/"}>Home</Link>
-          <Link href={"/contact"}>Contact Us</Link>
-          <Link href={"/blog"}>Blog</Link>
-          <Link href={"/about"}>About Us</Link>
-          <Link href={"/testimonials"} className="mr-10">
+          <Link href={"/"} className="hover-text">
+            Home
+          </Link>
+          <Link href={"/contact"} className="hover-text">
+            Contact Us
+          </Link>
+          <Link href={"/blog"} className="hover-text">
+            Blog
+          </Link>
+          <Link href={"/about"} className="hover-text">
+            About Us
+          </Link>
+          <Link href={"/testimonials"} className="mr-10 hover-text">
             Testimonials
           </Link>
         </div>
-        <Link href={"/login"}>Login</Link>
+        <Link href={"/login"} className="hover-text">
+          Login
+        </Link>
         <Button asChild>
           <Link href={"/register"}>Sign Up</Link>
         </Button>
