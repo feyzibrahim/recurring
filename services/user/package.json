@@ -27,6 +27,7 @@
     "express": "^4.18.2",
     "inversify": "^6.0.2",
     "inversify-express-utils": "^6.4.6",
+    "mongoose": "^8.1.0",
     "reflect-metadata": "^0.2.1"
   }
 }
