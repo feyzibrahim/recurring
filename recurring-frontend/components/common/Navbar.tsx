@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Logo from "../img/logo.png";
+import Logo from "../../public/img/logo.png";
 import Link from "next/link";
 import { ThemeToggle } from "../ThemeToggle";
 import { Button } from "../ui/button";
@@ -7,7 +7,7 @@ import Recurring from "./Recurring";
 
 function Navbar() {
   return (
-    <nav className="flex justify-between px-5 lg:px-40 py-3 bg-backgroundAccent shadow-md fixed w-full">
+    <nav className="flex justify-between px-5 lg:px-40 py-3 bg-backgroundAccent shadow-md fixed w-full z-50">
       <div className="flex items-center gap-4">
         <Image alt="recurring" src={Logo} width={30} height={30} />
         <h1 className="font-bold text-2xl">
@@ -15,7 +15,7 @@ function Navbar() {
         </h1>
       </div>
       <div className="gap-5 items-center flex">
-        <div className="hidden lg:flex gap-5">
+        <div className="hidden lg:flex items-center gap-5">
           <Link href={"/"} className="hover-text">
             Home
           </Link>
@@ -31,13 +31,13 @@ function Navbar() {
           <Link href={"/testimonials"} className="mr-10 hover-text">
             Testimonials
           </Link>
+          <Link href={"/login"} className="hover-text">
+            Login
+          </Link>
+          <Button asChild>
+            <Link href={"/register"}>Sign Up</Link>
+          </Button>
         </div>
-        <Link href={"/login"} className="hover-text">
-          Login
-        </Link>
-        <Button asChild>
-          <Link href={"/register"}>Sign Up</Link>
-        </Button>
         <ThemeToggle />
       </div>
     </nav>

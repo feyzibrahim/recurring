@@ -1,9 +1,9 @@
 import Recurring from "./Recurring";
-import { Input } from "@/components/ui/input";
-
 import Image from "next/image";
-import Logo from "../img/logo.png";
-import FooterForm from "./FooterForm";
+import Logo from "../../public/img/logo.png";
+import { FooterForm } from "./FooterForm";
+import InputWithIcon from "../custom/InputWithIcon";
+import { FiMail } from "react-icons/fi";
 
 export default function Footer() {
   return (
@@ -25,6 +25,7 @@ export default function Footer() {
           </p>
           <p className="py-5 text-foregroundAccent">_ Feyz Ibrahim</p>
         </div>
+        {/* Footer form */}
         <FooterForm />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 lg:py-20 py-5">
@@ -36,7 +37,7 @@ export default function Footer() {
             </h1>
           </div>
           <p>Get started now try our product</p>
-          <Input type="email" id="email" placeholder="Enter you email" />
+          <InputWithIcon icon={<FiMail />} placeholder="Enter your email" />
         </div>
         <div className="col-span-2 lg:col-span-1 grid grid-rows-5">
           <h5 className="font-bold">Support</h5>

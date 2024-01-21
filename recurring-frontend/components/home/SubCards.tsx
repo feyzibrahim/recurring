@@ -10,7 +10,7 @@ export default function SubCards({
   business: string;
 }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 py-8 px-16">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 py-8 lg:px-16">
       <div className="bg-backgroundAccent rounded-xl p-5">
         <h4 className="text-xl font-bold">Free</h4>
         <p className="text-foregroundAccent">Have a go and test your</p>
