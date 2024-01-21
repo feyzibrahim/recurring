@@ -1,5 +1,5 @@
 import React from "react";
-import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 import Image from "next/image";
 import Recurring from "@/components/common/Recurring";
 import Logo from "../../public/img/logo.png";
@@ -20,24 +20,19 @@ export default function page() {
               <Recurring />
             </h1>
           </div>
-          <div className="text-2xl font-bold py-3">Login</div>
-          <LoginForm />
-          <p className="py-5 text-primary text-center">
-            <Link href="forget" className="hover:text-blue-400">
-              Forgot Password?
-            </Link>
-          </p>
+          <div className="text-2xl font-bold py-3">Sign Up</div>
+          <RegisterForm />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 mt-10">
             <div className="h-[2px] w-full bg-backgroundAccent rounded-full"></div>
             <p>or</p>
             <div className="h-[2px] w-full bg-backgroundAccent rounded-full"></div>
           </div>
 
           <p className="py-5">
-            Don't Have an account?{" "}
-            <Link href="/register" className="text-primary hover:text-blue-400">
-              Sign Up
+            Already have an account?{" "}
+            <Link href="/login" className="text-primary hover:text-blue-400">
+              Login
             </Link>
           </p>
         </div>

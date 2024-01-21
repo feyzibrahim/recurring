@@ -16,17 +16,17 @@ import { HiCheckCircle } from "react-icons/hi";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center pt-32 px-5 lg:px-40">
+    <main className="flex min-h-screen flex-col items-center pt-20 md:pt-32 px-5 lg:px-40">
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:mb-10">
         <div>
-          <h1 className="text-6xl font-bold ">
+          <h1 className="text-4xl md:text-6xl font-bold ">
             We're here to Enhance your Work & Company
           </h1>
           <svg
-            width="400"
-            height="80"
+            // width="400"
+            // height="80"
             xmlns="http://www.w3.org/2000/svg"
-            className="text-primary"
+            className="text-primary w-full h-20"
           >
             <path
               d="M10 50 Q200 10, 390 50"
@@ -161,7 +161,7 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           <div>
-            <div className="px-20 lg:px-5">
+            <div className="md:px-20 lg:px-5">
               <Image alt="collaboration" src={Collaboration} />
             </div>
             <h4 className="font-bold pt-5 pb-2">Collaboration Teams</h4>
@@ -170,7 +170,7 @@ export default function Home() {
             </p>
           </div>
           <div>
-            <div className="px-20 lg:px-5">
+            <div className="md:px-20 lg:px-5">
               <Image alt="Cloud Storage" src={CloudStorage} />
             </div>
             <h4 className="font-bold pt-5 pb-2">Cloud Storage</h4>
@@ -180,7 +180,7 @@ export default function Home() {
             </p>
           </div>
           <div>
-            <div className="px-20 lg:px-5">
+            <div className="md:px-20 lg:px-5">
               <Image alt="Employee" src={Employee} />
             </div>
             <h4 className="font-bold pt-5 pb-2">Employee Management</h4>

@@ -3,15 +3,16 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import Logo from "../img/logo.png";
+import Logo from "../../public/img/logo.png";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { Textarea } from "@/components/ui/textarea";
 
-export default function FooterForm() {
+export function FooterForm() {
   const { toast } = useToast();
 
   return (
-    <div className="p-10 lg:p-16 bg-backgroundAccent rounded-xl flex flex-col gap-4">
+    <div className="p-5 lg:p-16 bg-backgroundAccent rounded-xl flex flex-col gap-4">
       <Image
         alt="recurring"
         src={Logo}
@@ -35,17 +36,18 @@ export default function FooterForm() {
           <Input type="email" id="email" placeholder="Enter you email" />
         </div>
 
-        <div>
+        <div className="py-3">
           <Label htmlFor="message">Message</Label>
-          <Input
-            type="text"
+          <Textarea
             id="message"
             placeholder="What you want to say?"
             className="h-32"
           />
         </div>
 
-        <Button type="submit">Send Message</Button>
+        <Button type="submit" className="w-full">
+          Send Message
+        </Button>
       </form>
     </div>
   );
