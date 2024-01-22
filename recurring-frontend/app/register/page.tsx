@@ -4,10 +4,11 @@ import Image from "next/image";
 import Recurring from "@/components/common/Recurring";
 import Logo from "../../public/img/logo.png";
 import Link from "next/link";
+import BgImage from "../../public/Register.png";
 
 export default function page() {
   return (
-    <div className="lg:h-screen grid grid-cols-1 lg:grid-cols-2 mb-5">
+    <div className="grid grid-cols-1 lg:grid-cols-2 mb-5">
       <div className="px-5 pt-20 lg:p-20 flex items-center">
         <div className="w-full lg:px-20">
           <div className="flex items-center gap-4 py-10">
@@ -37,11 +38,12 @@ export default function page() {
           </p>
         </div>
       </div>
-      <div className="bg-primary p-24">
-        <p>
-          This is your very own headline to describe your product or service.
-        </p>
-        <h1>This is a headline</h1>
+      <div className="w-full">
+        <Image
+          alt="Bg Image"
+          src={BgImage}
+          className="w-full h-full object-cover"
+        />
       </div>
     </div>
   );

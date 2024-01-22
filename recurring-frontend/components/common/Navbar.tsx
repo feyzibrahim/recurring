@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ThemeToggle } from "../ThemeToggle";
 import { Button } from "../ui/button";
 import Recurring from "./Recurring";
+import Hamburger from "./Hamburger";
 
 function Navbar() {
   return (
@@ -39,6 +40,7 @@ function Navbar() {
           </Button>
         </div>
         <ThemeToggle />
+        <Hamburger />
       </div>
     </nav>
   );
