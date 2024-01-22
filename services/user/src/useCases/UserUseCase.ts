@@ -9,6 +9,7 @@ export class UserUseCase {
   getUsers(): Promise<User[]> {
     return this.userInterface.getUsers();
   }
+
   createUser(userData: User): Promise<User> {
     return this.userInterface.createUser(userData);
   }

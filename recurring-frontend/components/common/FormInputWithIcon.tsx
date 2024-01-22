@@ -11,7 +11,7 @@ interface InputWithIconProps {
   icon: React.ReactNode;
   placeholder: string;
   field: any;
-  title: string;
+  title?: string;
   type?: string;
   showTitle: boolean;
 }

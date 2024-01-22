@@ -1,12 +1,16 @@
 import { Container } from "inversify";
-import { UserController } from "./controller/UserController";
-import { UserUseCase } from "./useCases/UserUseCase";
+import { AuthController } from "./handler/controller/auth/AuthController";
+import { AuthUseCase } from "./useCases/AuthUseCase";
+// import { UserController } from "./handler/controller/UserController";
+// import { UserUseCase } from "./useCases/UserUseCase";
 import {
   connectToDatabase,
   disconnectFromDatabase,
 } from "./config/dbConnection";
 import { UserAdapter } from "./adapter/Database/MongoDB/UserAdapter";
 import { UserInterface } from "./interface/UserInterface";
+import { AuthInterface } from "./interface/AuthInterface";
+import { AuthAdapter } from "./adapter/Database/MongoDB/AuthAdapter";
 
 // Database connection
 connectToDatabase();
@@ -14,8 +18,13 @@ connectToDatabase();
 const container = new Container();
 
 container.bind<UserInterface>("UserInterface").to(UserAdapter);
-container.bind<UserController>(UserController).toSelf();
-container.bind<UserUseCase>(UserUseCase).toSelf();
+container.bind<AuthInterface>("AuthInterface").to(AuthAdapter);
+
+// container.bind<UserController>(UserController).toSelf();
+// container.bind<UserUseCase>(UserUseCase).toSelf();
+
+container.bind<AuthController>(AuthController).toSelf();
+container.bind<AuthUseCase>(AuthUseCase).toSelf();
 
 // Disconnect From Database
 process.on("SIGINT", async () => {

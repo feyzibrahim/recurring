@@ -5,9 +5,9 @@ import {
   httpGet,
   httpPost,
 } from "inversify-express-utils";
-import { UserUseCase } from "../useCases/UserUseCase";
+import { UserUseCase } from "../../useCases/UserUseCase";
 import { inject } from "inversify";
-import { User } from "../Entities/User";
+import { User } from "../../Entities/User";
 
 @controller("/users")
 export class UserController {

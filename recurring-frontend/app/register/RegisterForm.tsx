@@ -7,29 +7,36 @@ import { Form, FormField } from "@/components/ui/form";
 import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
+import { commonRequest } from "@/api/api";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-const formSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(30, { message: "Username max is 30 characters" }),
-  email: z
-    .string()
-    .email()
-    .min(2, {
-      message: "Email must be at least 2 characters.",
-    })
-    .max(30, { message: "Email max is 30 characters" }),
-  password: z.string().refine((value) => strongPassword.test(value), {
-    message:
-      "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.",
-  }),
-});
+const formSchema = z
+  .object({
+    username: z
+      .string()
+      .min(2, {
+        message: "Username must be at least 2 characters.",
+      })
+      .max(30, { message: "Username max is 30 characters" }),
+    email: z
+      .string()
+      .email()
+      .min(2, {
+        message: "Email must be at least 2 characters.",
+      })
+      .max(30, { message: "Email max is 30 characters" }),
+    password: z.string().refine((value) => strongPassword.test(value), {
+      message:
+        "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.",
+    }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Password don't match",
+    path: ["confirmPassword"],
+  });
 
 export default function RegisterForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -38,11 +45,25 @@ export default function RegisterForm() {
       username: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    const res = await commonRequest({
+      method: "POST",
+      url: "/users",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        name: values.username,
+        email: values.email,
+        id: 10,
+      },
+    });
+    console.log("Log: onSubmit -> res", res);
   }
 
   return (
@@ -56,7 +77,6 @@ export default function RegisterForm() {
               field={field}
               icon={<FiMail />}
               placeholder="Your Username"
-              title="Username"
               showTitle={false}
             />
           )}
@@ -69,7 +89,6 @@ export default function RegisterForm() {
               field={field}
               icon={<FiMail />}
               placeholder="Your Email"
-              title="Email"
               showTitle={false}
             />
           )}
@@ -82,7 +101,6 @@ export default function RegisterForm() {
               field={field}
               icon={<RiLockPasswordLine />}
               placeholder="Your password"
-              title="Password"
               type="password"
               showTitle={false}
             />
@@ -90,13 +108,12 @@ export default function RegisterForm() {
         />
         <FormField
           control={form.control}
-          name="password"
+          name="confirmPassword"
           render={({ field }) => (
             <FormInputWithIcon
               field={field}
               icon={<RiLockPasswordLine />}
               placeholder="Password Again"
-              title="Password"
               type="password"
               showTitle={false}
             />
