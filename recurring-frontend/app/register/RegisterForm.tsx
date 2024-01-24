@@ -53,7 +53,7 @@ export default function RegisterForm() {
     console.log(values);
     const res = await commonRequest({
       method: "POST",
-      url: "/users",
+      url: "/auth/signup",
       headers: {
         "Content-Type": "application/json",
       },

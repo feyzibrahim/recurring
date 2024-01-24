@@ -31,7 +31,6 @@ export const commonRequest = async ({
 
   try {
     const response = await apiInstance(requestConfig);
-    console.log("Log: response", response);
 
     return response;
   } catch (error) {

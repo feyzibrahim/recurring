@@ -7,6 +7,10 @@ import { Form, FormField } from "@/components/ui/form";
 import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "../lib/hook";
+import { loginUser } from "../lib/features/user/userActions";
+import { useEffect } from "react";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -26,16 +30,26 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { user, loading, error } = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard");
+    }
+  }, [user]);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      username: "josadfafhn.oe1@example.com",
+      password: "hashedPassword@123",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    dispatch(loginUser(values));
   }
 
   return (

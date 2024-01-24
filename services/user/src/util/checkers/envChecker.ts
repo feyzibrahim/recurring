@@ -1,9 +1,14 @@
 const envChecker = () => {
   try {
-    if (!process.env.PORT) throw new Error("PORT NUMBER IS REQUIRED");
-    if (!process.env.FRONTEND_URL) throw new Error("FRONTEND_URL IS REQUIRED");
+    if (!process.env.PORT) throw new Error(".env | PORT NUMBER IS REQUIRED");
+    if (!process.env.REFRESH_SECRET)
+      throw new Error(".env | REFRESH_SECRET IS REQUIRED");
+    if (!process.env.ACCESS_SECRET)
+      throw new Error(".env | REFRESH_SECRET IS REQUIRED");
+    if (!process.env.FRONTEND_URL)
+      throw new Error(".env | FRONTEND_URL IS REQUIRED");
     if (!process.env.DATABASE_CONNECTION_URI)
-      throw new Error("DATABASE_CONNECTION_URI IS REQUIRED");
+      throw new Error(".env | DATABASE_CONNECTION_URI IS REQUIRED");
 
     console.log("Log: envChecker -> Env Check Passed");
   } catch (error: any) {

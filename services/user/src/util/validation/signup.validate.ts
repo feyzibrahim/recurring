@@ -35,10 +35,10 @@ const validateUser = async (
   if (emailExists) {
     throw new Error("Email Already already Exists");
   }
-  const phoneExists = await authUseCase.fetchUserWithPhone(user.phoneNumber);
-  if (phoneExists) {
-    throw new Error("Phone Number already Exists");
-  }
+  // const phoneExists = await authUseCase.fetchUserWithPhone(user.phoneNumber);
+  // if (phoneExists) {
+  //   throw new Error("Phone Number already Exists");
+  // }
   const username = await authUseCase.fetchUserWithUsername(user.username);
   if (username) {
     throw new Error("Username already Exists");
