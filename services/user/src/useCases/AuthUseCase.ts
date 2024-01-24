@@ -1,24 +1,26 @@
 import { inject, injectable } from "inversify";
 import { User } from "../Entities/User";
-import { AuthInterface } from "../interface/AuthInterface";
+import { AuthUseCaseInterface } from "../interface/AuthUseCaseInterface";
+import { TYPES } from "../constants/types/types";
 
 @injectable()
-export class AuthUseCase {
-  constructor(@inject("AuthInterface") private authInterface: AuthInterface) {}
+export class AuthUseCase implements AuthUseCaseInterface {
+  constructor(
+    @inject(TYPES.AuthAdapterInterface)
+    private iAuthUseCase: AuthUseCaseInterface
+  ) {}
 
   signup(userData: User): Promise<User | boolean> {
-    return this.authInterface.signup(userData);
+    return this.iAuthUseCase.signup(userData);
   }
   changePassword(password: string): Promise<User | boolean> {
-    return this.authInterface.changePassword(password);
+    return this.iAuthUseCase.changePassword(password);
   }
   fetchUserWithEmail(email: string): Promise<User | boolean> {
-    return this.authInterface.fetchUserWithEmail(email);
+    return this.iAuthUseCase.fetchUserWithEmail(email);
   }
-  fetchUserWithPhone(phone: number): Promise<User | boolean> {
-    return this.authInterface.fetchUserWithPhone(phone);
-  }
+
   fetchUserWithUsername(username: string): Promise<User | boolean> {
-    return this.authInterface.fetchUserWithUsername(username);
+    return this.iAuthUseCase.fetchUserWithUsername(username);
   }
 }

@@ -6,15 +6,23 @@ import {
 
 import { AuthController } from "./handler/controller/auth/AuthController";
 import { AuthUseCase } from "./useCases/AuthUseCase";
-import { AuthInterface } from "./interface/AuthInterface";
 import { AuthAdapter } from "./adapter/Database/MongoDB/AuthAdapter";
+import { AuthAdapterInterface } from "./interface/AuthAdapterInterface";
+import { TYPES } from "./constants/types/types";
+import { AuthUseCaseInterface } from "./interface/AuthUseCaseInterface";
 
 // Database connection
 connectToDatabase();
 
 const container = new Container();
 
-container.bind<AuthInterface>("AuthInterface").to(AuthAdapter);
+container
+  .bind<AuthAdapterInterface>(TYPES.AuthAdapterInterface)
+  .to(AuthAdapter);
+
+container
+  .bind<AuthUseCaseInterface>(TYPES.AuthUseCaseInterface)
+  .to(AuthUseCase);
 
 container.bind<AuthController>(AuthController).toSelf();
 container.bind<AuthUseCase>(AuthUseCase).toSelf();

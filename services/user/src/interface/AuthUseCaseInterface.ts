@@ -1,9 +1,8 @@
 import { User } from "../Entities/User";
 
-export interface AuthControllerInterface {
+export interface AuthUseCaseInterface {
   signup(userData: User): Promise<User | boolean>;
-  changePassword(password: string): Promise<User>;
+  changePassword(password: string): Promise<User | boolean>;
   fetchUserWithEmail(email: string): Promise<User | boolean>;
-  fetchUserWithPhone(phone: Number): Promise<User | boolean>;
   fetchUserWithUsername(username: string): Promise<User | boolean>;
 }

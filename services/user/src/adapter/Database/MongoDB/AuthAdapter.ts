@@ -1,10 +1,10 @@
 import { injectable } from "inversify";
 import { User } from "../../../Entities/User";
-import { AuthInterface } from "../../../interface/AuthInterface";
 import UserModal from "./Modal/UserModal";
+import { AuthAdapterInterface } from "../../../interface/AuthAdapterInterface";
 
 @injectable()
-export class AuthAdapter implements AuthInterface {
+export class AuthAdapter implements AuthAdapterInterface {
   async changePassword(password: string): Promise<User> {
     const user = await UserModal.findOne({ password });
 

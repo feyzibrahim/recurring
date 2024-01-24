@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { controller, httpPost } from "inversify-express-utils";
-import { AuthUseCase } from "../../../useCases/AuthUseCase";
 import { inject } from "inversify";
 import { User } from "../../../Entities/User";
 import validateUser from "../../../util/validation/signup.validate";
@@ -10,6 +9,8 @@ import {
   createJwtAccessToken,
   createJwtRefreshToken,
 } from "../../../util/JWT/create.jwt";
+import { AuthUseCaseInterface } from "../../../interface/AuthUseCaseInterface";
+import { TYPES } from "../../../constants/types/types";
 
 const cookieConfig = {
   secure: true,
@@ -19,10 +20,12 @@ const cookieConfig = {
 
 @controller("/auth")
 export class AuthController {
-  constructor(@inject(AuthUseCase) private authUseCase: AuthUseCase) {}
+  constructor(
+    @inject(TYPES.AuthUseCaseInterface)
+    private iAuthUseCase: AuthUseCaseInterface
+  ) {}
 
   // User Login Function
-
   @httpPost("/login")
   async login(req: Request, res: Response) {
     const userData: any = req.body;
@@ -30,7 +33,7 @@ export class AuthController {
     try {
       let user: User | boolean = await validateUserOnLogin(
         userData,
-        this.authUseCase
+        this.iAuthUseCase
       );
 
       // Setting JWT Tokens
@@ -56,13 +59,13 @@ export class AuthController {
 
     try {
       // Validate Password
-      let user = await validateUser(userData, this.authUseCase);
+      let user = await validateUser(userData, this.iAuthUseCase);
 
       // Hash Password
       user = await hashPassword(user);
 
       // Registering User to DB
-      const newUser: User | boolean = await this.authUseCase.signup(user);
+      const newUser: User | boolean = await this.iAuthUseCase.signup(user);
 
       if (!newUser) {
         throw new Error("Cannot Signup Now! Please try Later");

@@ -1,3 +1,4 @@
 export const TYPES = {
-  AuthInterface: Symbol.for("AuthInterface"),
+  AuthAdapterInterface: Symbol.for("AuthAdapterInterface"),
+  AuthUseCaseInterface: Symbol.for("AuthUseCaseInterface"),
 };

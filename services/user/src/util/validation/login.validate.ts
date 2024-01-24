@@ -1,11 +1,11 @@
 import validator from "validator";
 import { User } from "../../Entities/User";
-import { AuthUseCase } from "../../useCases/AuthUseCase";
 import reHashPassword from "../hash/password.rehash";
+import { AuthUseCaseInterface } from "../../interface/AuthUseCaseInterface";
 
 const validateUserOnLogin = async (
   user: any,
-  authUseCase: AuthUseCase
+  authUseCase: AuthUseCaseInterface
 ): Promise<User> => {
   if (user.username.trim() === "" || user.password.trim() === "") {
     throw Error("All fields are required");

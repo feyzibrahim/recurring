@@ -1,6 +1,6 @@
 import { User } from "../Entities/User";
 
-export interface AuthInterface {
+export interface AuthAdapterInterface {
   signup(userData: User): Promise<User | boolean>;
   changePassword(password: string): Promise<User>;
   fetchUserWithEmail(email: string): Promise<User | boolean>;

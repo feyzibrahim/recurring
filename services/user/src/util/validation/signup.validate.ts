@@ -1,10 +1,10 @@
 import validator from "validator";
 import { User } from "../../Entities/User";
-import { AuthUseCase } from "../../useCases/AuthUseCase";
+import { AuthUseCaseInterface } from "../../interface/AuthUseCaseInterface";
 
 const validateUser = async (
   user: any,
-  authUseCase: AuthUseCase
+  iAuthUseCase: AuthUseCaseInterface
 ): Promise<User> => {
   if (
     user.firstName.trim() === "" ||
@@ -31,15 +31,12 @@ const validateUser = async (
   delete user.confirmPassword;
 
   // Checking if user already exists
-  const emailExists = await authUseCase.fetchUserWithEmail(user.email);
+  const emailExists = await iAuthUseCase.fetchUserWithEmail(user.email);
   if (emailExists) {
     throw new Error("Email Already already Exists");
   }
-  // const phoneExists = await authUseCase.fetchUserWithPhone(user.phoneNumber);
-  // if (phoneExists) {
-  //   throw new Error("Phone Number already Exists");
-  // }
-  const username = await authUseCase.fetchUserWithUsername(user.username);
+
+  const username = await iAuthUseCase.fetchUserWithUsername(user.username);
   if (username) {
     throw new Error("Username already Exists");
   }
