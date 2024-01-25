@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { User } from "../../../Entities/User";
 import UserModal from "./Modal/UserModal";
-import { AuthAdapterInterface } from "../../../interface/AuthAdapterInterface";
+import { AuthAdapterInterface } from "../../../interface/auth/AuthAdapterInterface";
 
 @injectable()
 export class AuthAdapter implements AuthAdapterInterface {

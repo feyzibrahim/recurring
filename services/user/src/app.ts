@@ -6,12 +6,14 @@ import container from "./inversify.config";
 import express from "express";
 import cors from "cors";
 import envChecker from "./util/checkers/envChecker";
+import cookieParser from "cookie-parser";
 
 const server = new InversifyExpressServer(container);
 
 server.setConfig((app) => {
   const url = process.env.FRONTEND_URL ?? "";
 
+  app.use(cookieParser());
   app.use(express.json());
   app.use(
     cors({

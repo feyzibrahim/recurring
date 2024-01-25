@@ -9,16 +9,16 @@ import {
   createJwtAccessToken,
   createJwtRefreshToken,
 } from "../../../util/JWT/create.jwt";
-import { AuthUseCaseInterface } from "../../../interface/AuthUseCaseInterface";
+import { AuthUseCaseInterface } from "../../../interface/auth/AuthUseCaseInterface";
 import { TYPES } from "../../../constants/types/types";
 
 const cookieConfig = {
   secure: true,
   httpOnly: true,
-  maxAge: 1000 * 60 * 60 * 24,
+  maxAge: 1000 * 60 * 60 * 24 * 30,
 };
 
-@controller("/auth")
+@controller("/api/auth")
 export class AuthController {
   constructor(
     @inject(TYPES.AuthUseCaseInterface)
@@ -53,7 +53,7 @@ export class AuthController {
   }
 
   // User Signup Function
-  @httpPost("/signup")
+  @httpPost("/register")
   async signup(req: Request, res: Response) {
     const userData: any = req.body;
 

@@ -1,7 +1,7 @@
 import validator from "validator";
 import { User } from "../../Entities/User";
 import reHashPassword from "../hash/password.rehash";
-import { AuthUseCaseInterface } from "../../interface/AuthUseCaseInterface";
+import { AuthUseCaseInterface } from "../../interface/auth/AuthUseCaseInterface";
 
 const validateUserOnLogin = async (
   user: any,

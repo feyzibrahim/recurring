@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../lib/hook";
 import { loginUser } from "../lib/features/user/userActions";
 import { useEffect } from "react";
+import { clearError } from "../lib/features/user/userSlice";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -36,8 +37,11 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (user) {
-      router.push("/dashboard");
+      router.push("/");
     }
+    return () => {
+      dispatch(clearError());
+    };
   }, [user]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -83,8 +87,9 @@ export default function LoginForm() {
           )}
         />
         <Button type="submit" className="w-full">
-          Login
+          {loading ? "Loading..." : "Login"}
         </Button>
+        {error && <p className="text-sm text-red-500">{error}</p>}
       </form>
     </Form>
   );

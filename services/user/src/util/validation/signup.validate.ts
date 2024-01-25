@@ -1,16 +1,16 @@
 import validator from "validator";
 import { User } from "../../Entities/User";
-import { AuthUseCaseInterface } from "../../interface/AuthUseCaseInterface";
+import { AuthUseCaseInterface } from "../../interface/auth/AuthUseCaseInterface";
 
 const validateUser = async (
   user: any,
   iAuthUseCase: AuthUseCaseInterface
 ): Promise<User> => {
   if (
-    user.firstName.trim() === "" ||
+    // user.firstName.trim() === "" ||
     user.username.trim() === "" ||
-    user.email.trim() === "" ||
-    user.role.trim() === ""
+    user.email.trim() === ""
+    // user.role.trim() === ""
   ) {
     throw Error("All fields are required");
   }

@@ -4,9 +4,10 @@ const createJwtAccessToken = (user: User): string => {
   const secret = process.env.ACCESS_SECRET || "";
 
   return Jwt.sign({ user: user._id, roles: user.role }, secret, {
-    expiresIn: "15m",
+    expiresIn: "20s",
   });
 };
+
 const createJwtRefreshToken = (user: User): string => {
   const secret = process.env.REFRESH_SECRET || "";
 

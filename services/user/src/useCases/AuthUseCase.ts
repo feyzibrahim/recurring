@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import { User } from "../Entities/User";
-import { AuthUseCaseInterface } from "../interface/AuthUseCaseInterface";
+import { AuthUseCaseInterface } from "../interface/auth/AuthUseCaseInterface";
 import { TYPES } from "../constants/types/types";
 
 @injectable()

@@ -1,9 +1,14 @@
+import { handleError } from "@/util/functions";
 import axios from "axios";
 
-export const BACKEND_URL = "http://localhost:4001/";
+export const BACKEND_URL = "http://localhost:4001/api";
 
 const apiInstance = axios.create({
   baseURL: BACKEND_URL,
+});
+
+apiInstance.interceptors.response.use((response) => {
+  return response.data;
 });
 
 interface RequestProps {
@@ -12,21 +17,22 @@ interface RequestProps {
   data?: {};
   headers: {};
   withCredentials?: boolean;
+  rejectWithValue?: any;
 }
 
-export const commonRequest = async ({
+export const commonReduxRequest = async ({
   method,
   url,
   data,
   headers,
-  withCredentials = true,
+  rejectWithValue,
 }: RequestProps): Promise<any> => {
   let requestConfig: RequestProps = {
     method,
     url,
     data,
     headers,
-    withCredentials,
+    withCredentials: true,
   };
 
   try {
@@ -35,6 +41,6 @@ export const commonRequest = async ({
     return response;
   } catch (error) {
     console.log("api.tsx: error", error);
-    return error;
+    return handleError(error, rejectWithValue);
   }
 };

@@ -7,7 +7,12 @@ import { Form, FormField } from "@/components/ui/form";
 import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
-import { commonRequest } from "@/api/api";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "../lib/hook";
+import { clearError } from "../lib/features/user/userSlice";
+import { registerUser } from "../lib/features/user/userActions";
+// import { commonRequest } from "@/api/api";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -39,32 +44,32 @@ const formSchema = z
   });
 
 export default function RegisterForm() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { user, loading, error } = useAppSelector((state) => state.user);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      username: "test",
+      email: "test@gmail.com",
+      password: "Faiz@1234",
+      confirmPassword: "Faiz@1234",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    const res = await commonRequest({
-      method: "POST",
-      url: "/auth/signup",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: {
-        name: values.username,
-        email: values.email,
-        id: 10,
-      },
-    });
-    console.log("Log: onSubmit -> res", res);
+    dispatch(registerUser(values));
   }
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+    return () => {
+      dispatch(clearError());
+    };
+  }, [user]);
 
   return (
     <Form {...form}>
@@ -119,6 +124,7 @@ export default function RegisterForm() {
             />
           )}
         />
+        {error && <p className="text-sm text-red-500">{error}</p>}
         <Button type="submit" className="w-full">
           Sign Up
         </Button>

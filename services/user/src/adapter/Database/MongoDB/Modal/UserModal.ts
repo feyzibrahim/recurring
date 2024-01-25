@@ -10,7 +10,6 @@ const userSchema = new Schema(
     },
     firstName: {
       type: String,
-      required: true,
     },
     lastName: {
       type: String,
@@ -33,6 +32,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       enum: ["owner", "employee", "manager"],
+      default: "owner",
     },
     isActive: {
       type: Boolean,
@@ -45,6 +45,7 @@ const userSchema = new Schema(
     isEmailVerified: {
       type: Boolean,
       required: true,
+      default: false,
     },
   },
   { timestamps: true }

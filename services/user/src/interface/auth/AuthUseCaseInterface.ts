@@ -1,4 +1,4 @@
-import { User } from "../Entities/User";
+import { User } from "../../Entities/User";
 
 export interface AuthUseCaseInterface {
   signup(userData: User): Promise<User | boolean>;

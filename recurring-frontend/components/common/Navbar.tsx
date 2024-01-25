@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Logo from "../../public/img/logo.png";
 import Link from "next/link";
-import { ThemeToggle } from "../ThemeToggle";
+import { ThemeToggle } from "../theme/ThemeToggle";
 import { Button } from "../ui/button";
 import Recurring from "./Recurring";
 import Hamburger from "./Hamburger";
