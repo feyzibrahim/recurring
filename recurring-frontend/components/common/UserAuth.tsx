@@ -2,7 +2,7 @@
 import { loadUser } from "@/app/lib/features/user/userActions";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { useRouter } from "next/navigation";
-import { ReactNode, useLayoutEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 type UserAuthProps = {
   children: ReactNode;
@@ -14,7 +14,7 @@ const UserAuth = ({ children }: UserAuthProps) => {
   const { user, loading } = useAppSelector((state) => state.user);
   const [test, setLoading] = useState<Boolean>(true);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (user) {
       router.push("/dashboard");
     } else {

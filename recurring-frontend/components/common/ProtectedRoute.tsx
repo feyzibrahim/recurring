@@ -15,9 +15,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     if (!user) {
       router.push("/");
     }
-  }, [user]);
+  }, []);
 
-  return <>{children}</>;
+  return <ProtectedRoute>{children}</ProtectedRoute>;
 };
 
 export default ProtectedRoute;

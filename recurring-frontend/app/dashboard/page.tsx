@@ -1,21 +1,16 @@
-"use client";
-import ProtectedRoute from "@/components/common/ProtectedRoute";
-import { useAppDispatch, useAppSelector } from "../lib/hook";
-import { Button } from "@/components/ui/button";
-import { logoutUser } from "../lib/features/user/userActions";
-
-const page = () => {
-  const dispatch = useAppDispatch();
-  const { user, loading, error } = useAppSelector((state) => state.user);
-  console.log("Log: Dashboard -> user", user);
+const page = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 10000));
 
   return (
-    <ProtectedRoute>
-      <div className="h-screen flex items-center justify-center w-full">
-        <h1>Hello world {user && user.username}</h1>
-        <Button onClick={() => dispatch(logoutUser())}>Logout</Button>
+    <div className="h-screen p-10">
+      <div className="flex gap-5">
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            Hello World
+          </div>
+        </div>
       </div>
-    </ProtectedRoute>
+    </div>
   );
 };
 

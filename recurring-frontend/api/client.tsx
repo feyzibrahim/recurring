@@ -7,9 +7,14 @@ const apiInstance = axios.create({
   baseURL: BACKEND_URL,
 });
 
-apiInstance.interceptors.response.use((response) => {
-  return response.data;
-});
+apiInstance.interceptors.response.use(
+  (response) => {
+    return response.data;
+  },
+  (error) => {
+    return error.response.data;
+  }
+);
 
 interface RequestProps {
   method: string;
@@ -40,7 +45,29 @@ export const commonReduxRequest = async ({
 
     return response;
   } catch (error) {
-    console.log("api.tsx: error", error);
     return handleError(error, rejectWithValue);
+  }
+};
+
+export const commonRequest = async ({
+  method,
+  url,
+  data,
+  headers,
+}: RequestProps): Promise<any> => {
+  let requestConfig: RequestProps = {
+    method,
+    url,
+    data,
+    headers,
+    withCredentials: true,
+  };
+
+  try {
+    const response = await apiInstance(requestConfig);
+
+    return response;
+  } catch (error) {
+    return error;
   }
 };

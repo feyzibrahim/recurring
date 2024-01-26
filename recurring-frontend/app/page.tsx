@@ -13,11 +13,16 @@ import { FiPieChart } from "react-icons/fi";
 import { BiCommand } from "react-icons/bi";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { HiCheckCircle } from "react-icons/hi";
-import UserAuth from "@/components/common/UserAuth";
+import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
+import { checkUser } from "@/server/checkUser";
 
-export default function Home() {
+export default async function Home() {
+  await checkUser();
+
   return (
-    <UserAuth>
+    <>
+      <Navbar />
       <main className="flex min-h-screen flex-col items-center pt-20 md:pt-32 px-5 lg:px-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:mb-10">
           <div>
@@ -25,8 +30,6 @@ export default function Home() {
               We're here to Enhance your Work & Company
             </h1>
             <svg
-              // width="400"
-              // height="80"
               xmlns="http://www.w3.org/2000/svg"
               className="text-primary w-full h-20"
             >
@@ -34,8 +37,8 @@ export default function Home() {
                 d="M10 50 Q200 10, 390 50"
                 fill="none"
                 stroke="#4787FA"
-                stroke-width="5"
-                stroke-linecap="round"
+                strokeWidth="5"
+                strokeLinecap="round"
               />
             </svg>
             <p className="text-lg font-semibold lg:w-4/5 pb-5">
@@ -232,6 +235,7 @@ export default function Home() {
         {/* Subscription Plans */}
         <Plans />
       </main>
-    </UserAuth>
+      <Footer />
+    </>
   );
 }

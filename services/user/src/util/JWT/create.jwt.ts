@@ -4,7 +4,7 @@ const createJwtAccessToken = (user: User): string => {
   const secret = process.env.ACCESS_SECRET || "";
 
   return Jwt.sign({ user: user._id, roles: user.role }, secret, {
-    expiresIn: "20s",
+    expiresIn: "1h",
   });
 };
 

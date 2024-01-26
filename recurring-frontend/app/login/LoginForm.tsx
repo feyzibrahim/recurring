@@ -8,10 +8,8 @@ import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "../lib/hook";
-import { loginUser } from "../lib/features/user/userActions";
-import { useEffect } from "react";
-import { clearError } from "../lib/features/user/userSlice";
+import { commonRequest } from "@/api/client";
+import { useState } from "react";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -32,17 +30,8 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const { user, loading, error } = useAppSelector((state) => state.user);
-
-  useEffect(() => {
-    if (user) {
-      router.push("/");
-    }
-    return () => {
-      dispatch(clearError());
-    };
-  }, [user]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,7 +42,25 @@ export default function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    dispatch(loginUser(values));
+    setLoading(true);
+    let res = await commonRequest({
+      method: "POST",
+      url: "/auth/login",
+      data: { ...values },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log("Log: onSubmit -> res", res);
+    if (!res.success) {
+      setError(res.error);
+    }
+
+    if (res.success) {
+      router.push("/dashboard");
+    }
+    setLoading(false);
   }
 
   return (
@@ -86,7 +93,7 @@ export default function LoginForm() {
             />
           )}
         />
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Loading..." : "Login"}
         </Button>
         {error && <p className="text-sm text-red-500">{error}</p>}

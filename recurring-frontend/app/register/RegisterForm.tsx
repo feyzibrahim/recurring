@@ -7,12 +7,9 @@ import { Form, FormField } from "@/components/ui/form";
 import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "../lib/hook";
-import { clearError } from "../lib/features/user/userSlice";
-import { registerUser } from "../lib/features/user/userActions";
-// import { commonRequest } from "@/api/api";
+import { useState } from "react";
+import { commonRequest } from "@/api/client";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -45,8 +42,8 @@ const formSchema = z
 
 export default function RegisterForm() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const { user, loading, error } = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,17 +56,24 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    dispatch(registerUser(values));
-  }
+    let res = await commonRequest({
+      method: "POST",
+      url: "/auth/register",
+      data: { ...values },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  useEffect(() => {
-    if (user) {
-      router.push("/");
+    console.log("Log: onSubmit -> res", res);
+    if (!res.success) {
+      setError(res.error);
     }
-    return () => {
-      dispatch(clearError());
-    };
-  }, [user]);
+
+    if (res.success) {
+      router.push("/dashboard");
+    }
+  }
 
   return (
     <Form {...form}>
@@ -126,7 +130,7 @@ export default function RegisterForm() {
         />
         {error && <p className="text-sm text-red-500">{error}</p>}
         <Button type="submit" className="w-full">
-          Sign Up
+          {loading ? "Loading..." : "Sign Up"}
         </Button>
       </form>
     </Form>

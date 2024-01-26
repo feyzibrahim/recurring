@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
 import Image from "next/image";
 import Logo from "../../public/img/logo.png";
 import Recurring from "./Recurring";
@@ -13,6 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
+import { BiMenu } from "react-icons/bi";
 
 const Hamburger = () => {
   const pathName = usePathname();
@@ -20,7 +20,9 @@ const Hamburger = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <GiHamburgerMenu className="text-lg lg:hidden" />
+        <div className="lg:hidden text-2xl">
+          <BiMenu />
+        </div>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

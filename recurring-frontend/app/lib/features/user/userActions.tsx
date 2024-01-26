@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { commonReduxRequest } from "@/api/api";
+import { commonReduxRequest } from "@/api/client";
 
 // Initial Data Reload
 export const loadUser = createAsyncThunk(
