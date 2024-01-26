@@ -8,6 +8,7 @@ import BgImage from "../../public/Register.png";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import { checkUser } from "@/server/checkUser";
+import GoogleAuth from "../../components/common/GoogleAuth";
 
 export default async function page() {
   await checkUser();
@@ -36,7 +37,7 @@ export default async function page() {
               <p>or</p>
               <div className="h-[2px] w-full bg-backgroundAccent rounded-full"></div>
             </div>
-
+            <GoogleAuth />
             <p className="py-5">
               Already have an account?{" "}
               <Link href="/login" className="text-primary hover:text-blue-400">

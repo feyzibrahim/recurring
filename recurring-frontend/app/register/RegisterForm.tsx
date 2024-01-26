@@ -56,6 +56,7 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
     let res = await commonRequest({
       method: "POST",
       url: "/auth/register",
@@ -65,7 +66,6 @@ export default function RegisterForm() {
       },
     });
 
-    console.log("Log: onSubmit -> res", res);
     if (!res.success) {
       setError(res.error);
     }
@@ -73,6 +73,7 @@ export default function RegisterForm() {
     if (res.success) {
       router.push("/dashboard");
     }
+    setLoading(false);
   }
 
   return (

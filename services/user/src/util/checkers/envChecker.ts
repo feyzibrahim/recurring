@@ -9,6 +9,8 @@ const envChecker = () => {
       throw new Error(".env | FRONTEND_URL IS REQUIRED");
     if (!process.env.DATABASE_CONNECTION_URI)
       throw new Error(".env | DATABASE_CONNECTION_URI IS REQUIRED");
+    if (!process.env.GOOGLE_AUTH_ID)
+      throw new Error(".env | GOOGLE_AUTH_ID IS REQUIRED");
 
     console.log("Log: envChecker -> Env Check Passed");
   } catch (error: any) {

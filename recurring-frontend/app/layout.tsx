@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 // import StoreProvider from "./lib/StoreProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +18,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const googleClientId = process.env.GOOGLE_AUTH_ID ?? "";
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -26,9 +29,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <StoreProvider> */}
-          {children}
-          {/* </StoreProvider> */}
+          <GoogleOAuthProvider clientId={googleClientId}>
+            {children}
+          </GoogleOAuthProvider>
           <Toaster />
         </ThemeProvider>
       </body>
