@@ -27,4 +27,8 @@ export class AuthUseCase implements AuthUseCaseInterface {
   updateUserStatusAfterEmailValidation(id: string): Promise<boolean | User> {
     return this.iAuthUseCase.updateUserStatusAfterEmailValidation(id);
   }
+
+  resetPassword(password: string, id: string): Promise<boolean | User> {
+    return this.iAuthUseCase.resetPassword(password, id);
+  }
 }

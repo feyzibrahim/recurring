@@ -81,9 +81,26 @@ export class AuthAdapter implements AuthAdapterInterface {
       return user as User;
     } catch (error: any) {
       console.log(
-        "Log: AuthAdapter -> fetchUserWithUsername -> error",
+        "Log: AuthAdapter -> updateUserStatusAfterEmailValidation -> error",
         error.message
       );
+      return false;
+    }
+  }
+
+  async resetPassword(
+    password: string,
+    email: string
+  ): Promise<boolean | User> {
+    try {
+      const user = await UserModal.findOneAndUpdate(
+        { email: email },
+        { $set: { password: password } }
+      );
+
+      return user as User;
+    } catch (error: any) {
+      console.log("Log: AuthAdapter -> resetPassword -> error", error.message);
       return false;
     }
   }

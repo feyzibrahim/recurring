@@ -8,6 +8,8 @@ import { login } from "./functions/login.controller";
 import { signup } from "./functions/signup.controller";
 import { verifyEmail } from "./functions/verifyEmail.controller";
 import { forgotPassword } from "./functions/forgotPassword.controller";
+import { verifyPasswordReset } from "./functions/verifyPasswordReset.controller";
+import { resetPassword } from "./functions/resetPassword.controller";
 
 @controller("/api/auth")
 export class AuthController {
@@ -43,5 +45,17 @@ export class AuthController {
   @httpGet("/verify-email/:token")
   async verifyEmail(req: Request, res: Response) {
     await verifyEmail(req, res, this.iAuthUseCase);
+  }
+
+  // Verify Password Link
+  @httpGet("/verify-password-link/:token")
+  async verifyPasswordReset(req: Request, res: Response) {
+    await verifyPasswordReset(req, res, this.iAuthUseCase);
+  }
+
+  // Set New Password
+  @httpPost("/reset-password/:token")
+  async resetPassword(req: Request, res: Response) {
+    await resetPassword(req, res, this.iAuthUseCase);
   }
 }

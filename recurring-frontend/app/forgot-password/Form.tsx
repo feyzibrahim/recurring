@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { FiUser } from "react-icons/fi";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
-import { useRouter } from "next/navigation";
 import { commonRequest } from "@/api/client";
 import { useState } from "react";
+import Link from "next/link";
 
 const formSchema = z.object({
   username: z
@@ -20,7 +20,7 @@ const formSchema = z.object({
 });
 
 export default function FormUsername() {
-  const router = useRouter();
+  const [emailPage, setEmailPage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -48,9 +48,10 @@ export default function FormUsername() {
     }
 
     setLoading(false);
+    setEmailPage(true);
   }
 
-  return (
+  return !emailPage ? (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
@@ -72,5 +73,16 @@ export default function FormUsername() {
         {error && <p className="text-sm text-red-500">{error}</p>}
       </form>
     </Form>
+  ) : (
+    <div className="p-8 rounded-lg shadow-md max-w-md w-full bg-backgroundAccent">
+      <p className="text-foregroundAccent mb-6">
+        We've sent you an email with instructions to reset your password. Please
+        check your inbox and follow the steps to create a new password.
+      </p>
+
+      <Link href="/">
+        <Button>Back to Home</Button>
+      </Link>
+    </div>
   );
 }

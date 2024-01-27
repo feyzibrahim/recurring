@@ -1,7 +1,7 @@
 import Recurring from "@/components/common/Recurring";
 import Head from "next/head";
 import RecurringVertical from "@/components/common/RecurringVertical";
-// import BackToHome from "@/components/common/BackToHome";
+import BackToHome from "@/components/common/BackToHome";
 
 const page = () => {
   return (
@@ -25,7 +25,7 @@ const page = () => {
         </p>
 
         <div className="flex items-center justify-between">
-          {/* <BackToHome /> */}
+          <BackToHome />
           <div className="text-foregroundAccent text-sm">
             <Recurring /> App &copy; 2024
           </div>

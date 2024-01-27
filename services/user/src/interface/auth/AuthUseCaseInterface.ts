@@ -6,4 +6,5 @@ export interface AuthUseCaseInterface {
   fetchUserWithEmail(email: string): Promise<User | boolean>;
   fetchUserWithUsername(username: string): Promise<User | boolean>;
   updateUserStatusAfterEmailValidation(id: string): Promise<User | boolean>;
+  resetPassword(password: string, id: string): Promise<User | boolean>;
 }
