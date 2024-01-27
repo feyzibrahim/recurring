@@ -1,23 +1,13 @@
 import { Request, Response } from "express";
-import { controller, httpPost } from "inversify-express-utils";
+import { controller, httpGet, httpPost } from "inversify-express-utils";
 import { inject } from "inversify";
-import { User } from "../../../Entities/User";
-import validateUser from "../../../util/validation/signup.validate";
-import hashPassword from "../../../util/hash/password.hash";
-import validateUserOnLogin from "../../../util/validation/login.validate";
-import {
-  createJwtAccessToken,
-  createJwtRefreshToken,
-} from "../../../util/JWT/create.jwt";
 import { AuthUseCaseInterface } from "../../../interface/auth/AuthUseCaseInterface";
 import { TYPES } from "../../../constants/types/types";
-import validateUserOnGoogleAuth from "../../../util/google/validate.google";
-
-const cookieConfig = {
-  secure: true,
-  httpOnly: true,
-  maxAge: 1000 * 60 * 60 * 24 * 30,
-};
+import { googleSignup } from "./functions/googleSignup.controller";
+import { login } from "./functions/login.controller";
+import { signup } from "./functions/signup.controller";
+import { verifyEmail } from "./functions/verifyEmail.controller";
+import { forgotPassword } from "./functions/forgotPassword.controller";
 
 @controller("/api/auth")
 export class AuthController {
@@ -29,100 +19,29 @@ export class AuthController {
   // User Login Function
   @httpPost("/login")
   async login(req: Request, res: Response) {
-    const userData: any = req.body;
-
-    try {
-      let user: User | boolean = await validateUserOnLogin(
-        userData,
-        this.iAuthUseCase
-      );
-
-      // Setting JWT Tokens
-      const access_token = createJwtAccessToken(user);
-      const refresh_token = createJwtRefreshToken(user);
-      res.cookie("access_token", access_token, cookieConfig);
-      res.cookie("refresh_token", refresh_token, cookieConfig);
-
-      return res.status(200).json({
-        user: user,
-        success: true,
-        message: "Users successfully Logged In",
-      });
-    } catch (error: any) {
-      res.status(400).json({ success: false, error: error.message });
-    }
+    await login(req, res, this.iAuthUseCase);
   }
 
   // User Signup Function
   @httpPost("/register")
   async signup(req: Request, res: Response) {
-    const userData: any = req.body;
-
-    try {
-      // Validate Password
-      let user = await validateUser(userData, this.iAuthUseCase);
-
-      // Hash Password
-      user = await hashPassword(user);
-
-      // Registering User to DB
-      const newUser: User | boolean = await this.iAuthUseCase.signup(user);
-
-      if (!newUser) {
-        throw new Error("Cannot Signup Now! Please try Later");
-      }
-
-      // Setting JWT Tokens
-      const access_token = createJwtAccessToken(user);
-      const refresh_token = createJwtRefreshToken(user);
-      res.cookie("access_token", access_token, cookieConfig);
-      res.cookie("refresh_token", refresh_token, cookieConfig);
-
-      return res.status(200).json({
-        user: newUser,
-        success: true,
-        message: "Users successfully Registered",
-      });
-    } catch (error: any) {
-      res.status(400).json({ success: false, error: error.message });
-    }
+    await signup(req, res, this.iAuthUseCase);
   }
 
   // Google Sign Up
   @httpPost("/google")
   async googleSignup(req: Request, res: Response) {
-    const body: any = req.body;
+    await googleSignup(req, res, this.iAuthUseCase);
+  }
+  // Forget Password Link Sent
+  @httpPost("/forgot-password")
+  async forgotPassword(req: Request, res: Response) {
+    await forgotPassword(req, res, this.iAuthUseCase);
+  }
 
-    try {
-      const data = await validateUserOnGoogleAuth(body);
-      const temp = {
-        email: data?.email,
-        firstName: data?.name,
-        profileImageURL: data?.picture,
-        isEmailVerified: true,
-      };
-
-      let user: User | boolean = await this.iAuthUseCase.fetchUserWithEmail(
-        temp.email as string
-      );
-
-      if (!user) {
-        user = await this.iAuthUseCase.signup(temp as User);
-      }
-
-      // Setting JWT Tokens
-      const access_token = createJwtAccessToken(user as User);
-      const refresh_token = createJwtRefreshToken(user as User);
-      res.cookie("access_token", access_token, cookieConfig);
-      res.cookie("refresh_token", refresh_token, cookieConfig);
-
-      return res.status(200).json({
-        user: user,
-        success: true,
-        message: "Users successfully Registered",
-      });
-    } catch (error: any) {
-      res.status(400).json({ success: false, error: error.message });
-    }
+  // Verify Email
+  @httpGet("/verify-email/:token")
+  async verifyEmail(req: Request, res: Response) {
+    await verifyEmail(req, res, this.iAuthUseCase);
   }
 }

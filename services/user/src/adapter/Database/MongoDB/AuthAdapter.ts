@@ -68,4 +68,23 @@ export class AuthAdapter implements AuthAdapterInterface {
       return false;
     }
   }
+
+  async updateUserStatusAfterEmailValidation(
+    id: string
+  ): Promise<boolean | User> {
+    try {
+      const user = await UserModal.findOneAndUpdate(
+        { _id: id },
+        { $set: { isEmailVerified: true } }
+      );
+
+      return user as User;
+    } catch (error: any) {
+      console.log(
+        "Log: AuthAdapter -> fetchUserWithUsername -> error",
+        error.message
+      );
+      return false;
+    }
+  }
 }

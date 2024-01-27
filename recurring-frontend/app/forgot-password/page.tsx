@@ -1,5 +1,4 @@
 import React from "react";
-import LoginForm from "./LoginForm";
 import Image from "next/image";
 import Recurring from "@/components/common/Recurring";
 import Logo from "../../public/img/logo.png";
@@ -7,8 +6,8 @@ import Link from "next/link";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import { checkUser } from "@/server/checkUser";
-import GoogleAuth from "@/components/common/GoogleAuth";
 import BgImage from "../../public/login-bg.jpg";
+import FormUsername from "./Form";
 
 export default async function page() {
   await checkUser();
@@ -29,21 +28,14 @@ export default async function page() {
                 <Recurring />
               </h1>
             </div>
-            <div className="text-2xl font-bold py-3">Login</div>
-            <LoginForm />
-            <p className="py-5 text-primary text-center">
-              <Link href="/forgot-password" className="hover:text-primary">
-                Forgot Password?
-              </Link>
+            <h1 className="text-2xl font-semibold mb-4">
+              Forgot Your Password?
+            </h1>
+            <p className="text-foregroundAccent mb-6">
+              No worries! Enter your email address below, and we'll send you a
+              link to reset your password.
             </p>
-
-            <div className="flex items-center gap-3">
-              <div className="h-[2px] w-full bg-backgroundAccent rounded-full"></div>
-              <p>or</p>
-              <div className="h-[2px] w-full bg-backgroundAccent rounded-full"></div>
-            </div>
-
-            <GoogleAuth />
+            <FormUsername />
 
             <p className="py-5">
               Don't Have an account?{" "}

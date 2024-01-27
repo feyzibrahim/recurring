@@ -23,4 +23,8 @@ export class AuthUseCase implements AuthUseCaseInterface {
   fetchUserWithUsername(username: string): Promise<User | boolean> {
     return this.iAuthUseCase.fetchUserWithUsername(username);
   }
+
+  updateUserStatusAfterEmailValidation(id: string): Promise<boolean | User> {
+    return this.iAuthUseCase.updateUserStatusAfterEmailValidation(id);
+  }
 }

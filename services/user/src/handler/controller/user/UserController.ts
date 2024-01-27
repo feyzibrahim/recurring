@@ -22,6 +22,10 @@ export class UserController {
       const data = validateJwt(access_token);
       const user = await this.iUserUseCase.getUser(data.user);
 
+      if (!user) {
+        throw new Error("No user found");
+      }
+
       return res.status(200).json({
         user,
         success: true,

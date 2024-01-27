@@ -10,7 +10,7 @@ import { AuthAdapter } from "./adapter/Database/MongoDB/AuthAdapter";
 import { AuthAdapterInterface } from "./interface/auth/AuthAdapterInterface";
 import { TYPES } from "./constants/types/types";
 import { AuthUseCaseInterface } from "./interface/auth/AuthUseCaseInterface";
-import { UserController } from "./handler/controller/auth/UserController";
+import { UserController } from "./handler/controller/user/UserController";
 import { UserUseCase } from "./useCases/UserUseCase";
 import { UserUseCaseInterface } from "./interface/user/UserUseCaseInterface";
 import { UserAdapterInterface } from "./interface/user/UserAdapterInterface";

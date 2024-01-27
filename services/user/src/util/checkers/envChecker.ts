@@ -11,6 +11,11 @@ const envChecker = () => {
       throw new Error(".env | DATABASE_CONNECTION_URI IS REQUIRED");
     if (!process.env.GOOGLE_AUTH_ID)
       throw new Error(".env | GOOGLE_AUTH_ID IS REQUIRED");
+    if (!process.env.MAIL_HOST) throw new Error(".env | MAIL_HOST IS REQUIRED");
+    if (!process.env.MAIL_USER) throw new Error(".env | MAIL_USER IS REQUIRED");
+    if (!process.env.MAIL_PASS) throw new Error(".env | MAIL_PASS IS REQUIRED");
+    if (!process.env.VERIFICATION_SECRET)
+      throw new Error(".env | VERIFICATION_SECRET IS REQUIRED");
 
     console.log("Log: envChecker -> Env Check Passed");
   } catch (error: any) {

@@ -6,4 +6,5 @@ export interface AuthAdapterInterface {
   fetchUserWithEmail(email: string): Promise<User | boolean>;
   fetchUserWithPhone(phone: Number): Promise<User | boolean>;
   fetchUserWithUsername(username: string): Promise<User | boolean>;
+  updateUserStatusAfterEmailValidation(id: string): Promise<User | boolean>;
 }
