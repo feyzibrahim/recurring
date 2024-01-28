@@ -17,4 +17,8 @@ export const checkUserWithoutRedirect = async () => {
   if (data.user && !data.user.isEmailVerified) {
     redirect("/email-validation");
   }
+
+  if (data.user) {
+    return data.user;
+  }
 };

@@ -1,12 +1,7 @@
 import bcrypt from "bcrypt";
 import validator from "validator";
-import { AuthUseCaseInterface } from "../../interface/auth/AuthUseCaseInterface";
 
-const passwordValidate = async (
-  password: string,
-  confirmPassword: string,
-  authUseCase: AuthUseCaseInterface
-) => {
+const passwordValidate = async (password: string, confirmPassword: string) => {
   if (!password || !confirmPassword) {
     throw Error("All fields are necessary");
   }

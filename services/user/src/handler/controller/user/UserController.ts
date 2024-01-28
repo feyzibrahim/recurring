@@ -1,11 +1,18 @@
 import { inject } from "inversify";
 import { TYPES } from "../../../constants/types/types";
 import { UserUseCaseInterface } from "../../../interface/user/UserUseCaseInterface";
-import { controller, httpGet } from "inversify-express-utils";
+import {
+  controller,
+  httpGet,
+  httpPatch,
+  httpPost,
+} from "inversify-express-utils";
 // import { User } from "../../../Entities/User";
 import { Request, Response } from "express";
 import { requireAuth } from "../../middleware/AuthMiddleware";
 import { validateJwt } from "../../../util/JWT/validate.jwt";
+import { changePassword } from "./functions/changePassword.controller";
+import { updateProfile } from "./functions/updateProfile.controller";
 
 @controller("/api/user")
 export class UserController {
@@ -48,5 +55,15 @@ export class UserController {
     } catch (error: any) {
       res.status(400).json({ success: false, error: error.message });
     }
+  }
+
+  @httpPatch("/change-password", requireAuth)
+  async changePassword(req: Request, res: Response) {
+    await changePassword(req, res, this.iUserUseCase);
+  }
+
+  @httpPatch("/update-profile", requireAuth)
+  async updateProfile(req: Request, res: Response) {
+    await updateProfile(req, res, this.iUserUseCase);
   }
 }

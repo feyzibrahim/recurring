@@ -11,7 +11,6 @@ import { IoIosPeople } from "react-icons/io";
 import { BiChat, BiCreditCard, BiLogOut } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { usePathname, useRouter } from "next/navigation";
-import { commonRequest } from "@/api/client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,24 +22,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { logout } from "@/client/logout";
 
-const SideBar = async () => {
+const SideBar = () => {
   const pathName = usePathname();
   const router = useRouter();
-
-  const logoutUser = async () => {
-    const data = await commonRequest({
-      method: "GET",
-      url: "/user/logout",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("SideBar: logoutUser -> data", data);
-    if (data.success) {
-      router.push("/");
-    }
-  };
 
   return (
     <div className="bg-backgroundAccent p-2 hidden md:block text-center h-screen">
@@ -160,7 +146,7 @@ const SideBar = async () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>No</AlertDialogCancel>
-              <AlertDialogAction onClick={() => logoutUser()}>
+              <AlertDialogAction onClick={() => logout(router)}>
                 Yes!
               </AlertDialogAction>
             </AlertDialogFooter>

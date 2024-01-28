@@ -9,7 +9,15 @@ export class UserUseCase implements UserUseCaseInterface {
     @inject(TYPES.UserAdapterInterface)
     private iUserUseCase: UserUseCaseInterface
   ) {}
+
   getUser(id: string): Promise<boolean | User> {
     return this.iUserUseCase.getUser(id);
+  }
+  changePassword(id: string, password: string): Promise<boolean | User> {
+    return this.iUserUseCase.changePassword(id, password);
+  }
+
+  updateUser(user: User): Promise<boolean | User> {
+    return this.iUserUseCase.updateUser(user);
   }
 }

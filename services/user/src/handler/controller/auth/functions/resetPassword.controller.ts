@@ -23,11 +23,7 @@ export const resetPassword = async (
     }
     const data = validateVerificationToken(token);
 
-    const hash = await passwordValidate(
-      password,
-      confirmPassword,
-      iAuthUseCase
-    );
+    const hash = await passwordValidate(password, confirmPassword);
 
     const user = await iAuthUseCase.resetPassword(hash, data.user);
 

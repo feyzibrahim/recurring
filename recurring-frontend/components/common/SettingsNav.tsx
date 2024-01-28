@@ -13,17 +13,17 @@ const SettingsNav = () => {
           pathName === "/dashboard/settings" ? "text-foreground font-bold" : ""
         }`}
       >
-        My Details
+        Profile
       </Link>
       <Link
-        href="/dashboard/settings/profile"
+        href="/dashboard/settings/organization"
         className={` ${
-          pathName === "/dashboard/settings/profile"
+          pathName === "/dashboard/settings/organization"
             ? "text-foreground font-bold"
             : ""
         }`}
       >
-        Profile
+        Organization
       </Link>
       <Link
         href="/dashboard/settings/password"
@@ -54,16 +54,6 @@ const SettingsNav = () => {
         }`}
       >
         Plan
-      </Link>
-      <Link
-        href="/dashboard/settings/billing"
-        className={` ${
-          pathName === "/dashboard/settings/billing"
-            ? "text-foreground font-bold"
-            : ""
-        }`}
-      >
-        Billing
       </Link>
       <Link
         href="/dashboard/settings/email"

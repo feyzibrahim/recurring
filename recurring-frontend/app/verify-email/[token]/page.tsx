@@ -4,15 +4,18 @@ import RecurringVertical from "@/components/common/RecurringVertical";
 import { Button } from "@/components/ui/button";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect } from "react";
 
-const page = async ({ params }: { params: { token: string } }) => {
-  await commonRequest({
-    method: "GET",
-    url: `/auth/verify-email/${params.token}`,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+const page = ({ params }: { params: { token: string } }) => {
+  useEffect(() => {
+    commonRequest({
+      method: "GET",
+      url: `/auth/verify-email/${params.token}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
