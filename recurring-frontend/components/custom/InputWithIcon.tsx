@@ -27,7 +27,7 @@ const InputWithIcon: React.FC<InputWithIconProps> = ({
           type === "password" ? (!showPassword ? "text" : "password") : type
         }
         {...field}
-        className="pl-8 bg-backgroundAccent"
+        className="px-8 bg-backgroundAccent"
       />
       {type === "password" && (
         <div

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { cookies } from "next/headers";
 
-export const BACKEND_URL = "http://localhost:4001/api";
+export const BACKEND_URL = "http://localhost:4002/api";
 
 const apiInstance = axios.create({
   baseURL: BACKEND_URL,
@@ -17,11 +17,10 @@ interface RequestProps {
   data?: {};
   headers: {};
   withCredentials?: boolean;
-  rejectWithValue?: any;
   Cookie?: any;
 }
 
-export const commonRequest = async ({
+export const commonRequestProject = async ({
   method,
   url,
   data,
