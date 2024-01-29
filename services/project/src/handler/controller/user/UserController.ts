@@ -1,7 +1,13 @@
 import { inject } from "inversify";
 import { TYPES } from "../../../constants/types/types";
 import { UserUseCaseInterface } from "../../../interface/user/UserUseCaseInterface";
-import { controller, httpGet, httpPatch } from "inversify-express-utils";
+import {
+  controller,
+  httpGet,
+  httpPatch,
+  httpPost,
+} from "inversify-express-utils";
+// import { User } from "../../../Entities/User";
 import { Request, Response } from "express";
 import { requireAuth } from "../../middleware/AuthMiddleware";
 import { validateJwt } from "../../../util/JWT/validate.jwt";

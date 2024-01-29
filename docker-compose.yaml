@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  user:
+    build: ./services/user
+    ports: 
+      - 4001:4001
+      
+
+  mongodb: 
+    image: "mongo:4.0-xenial"
+    ports: 
+      - 27017:27017
