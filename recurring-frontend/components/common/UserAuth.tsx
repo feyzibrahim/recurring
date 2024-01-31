@@ -21,7 +21,7 @@ const UserAuth = ({ children }: UserAuthProps) => {
       dispatch(loadUser());
     }
     setLoading(false);
-  }, [user]);
+  }, [user, dispatch, router]);
 
   if (test || loading) {
     return (

@@ -1,3 +1,4 @@
+import EmptyProject from "@/components/empty/EmptyProjects";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
 
 const page = async () => {
@@ -5,12 +6,10 @@ const page = async () => {
 
   return (
     <div className="min-h-screen p-10 overflow-y-scroll w-full">
-      <div className="flex gap-5">
-        <div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            Hello World
-          </div>
-        </div>
+      <div className="flex flex-col items-center justify-center h-full">
+        <EmptyProject />
+        <p className="mt-2">Dashboard Yet To be designed</p>
+        <p className="text-sm py-2">Will be updated Later</p>
       </div>
     </div>
   );

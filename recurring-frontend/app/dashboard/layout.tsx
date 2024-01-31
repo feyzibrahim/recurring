@@ -1,5 +1,6 @@
 import SideBar from "@/components/common/SideBar";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
+import StoreProvider from "../lib/StoreProvider";
 
 export default async function DashboardLayout({
   children,
@@ -10,7 +11,7 @@ export default async function DashboardLayout({
   return (
     <section className="md:flex md:h-screen md:overflow-hidden">
       <SideBar />
-      {children}
+      <StoreProvider>{children}</StoreProvider>
     </section>
   );
 }

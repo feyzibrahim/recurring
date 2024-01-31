@@ -38,7 +38,7 @@ const page = async () => {
               <DialogTitle>Change Email</DialogTitle>
               <DialogDescription>
                 We will sent you a link to the below email to confirm your
-                identity. Click send when you're done.
+                identity. Click send when you&apos;re done.
               </DialogDescription>
             </DialogHeader>
             <EmailChangeForm />

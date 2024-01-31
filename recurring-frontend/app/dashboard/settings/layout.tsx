@@ -1,6 +1,7 @@
 import SettingsNav from "@/components/common/SettingsNav";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
 import UserAvatar from "../../../public/img/user-avatar.png";
+import ProfileBanner from "../../../public/profile_banner.png";
 import Image from "next/image";
 
 export default async function DashboardLayout({
@@ -13,10 +14,8 @@ export default async function DashboardLayout({
   return (
     <section className="min-h-screen p-5 w-full overflow-y-auto">
       <div className="h-48 overflow-clip w-full bg-slate-400">
-        <img
-          src={
-            "https://img.freepik.com/premium-photo/gradient-banner-background-image-jpg-gradient-background-header_873925-53376.jpg"
-          }
+        <Image
+          src={ProfileBanner}
           alt="Background in settings"
           className="w-full h-full object-cover"
         />

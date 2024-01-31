@@ -4,6 +4,14 @@ services:
     build: ./services/user
     ports: 
       - 4001:4001
+  employee:
+    build: ./services/employee
+    ports: 
+      - 4002:4002
+  project:
+    build: ./services/project
+    ports: 
+      - 4003:4003
       
 
   mongodb: 

@@ -27,7 +27,7 @@ export default async function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:mb-10">
           <div>
             <h1 className="text-4xl md:text-6xl font-bold ">
-              We're here to Enhance your Work & Company
+              We&apos;re here to Enhance your Work & Company
             </h1>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ export default async function Home() {
               />
             </svg>
             <p className="text-lg font-semibold lg:w-4/5 pb-5">
-              Let's make your work more organize and easily using the{" "}
+              Let&apos;s make your work more organize and easily using the{" "}
               <Recurring />
               Dashboard with many of the latest features in managing work every
               day.

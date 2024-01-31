@@ -143,7 +143,7 @@ const PasswordForm = () => {
             <AlertDialogHeader>
               <AlertDialogTitle>Confirm Password Change?</AlertDialogTitle>
               <AlertDialogDescription>
-                Don't forget the new password!
+                Don&apos;t forget the new password!
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

@@ -17,11 +17,11 @@ export default function Footer() {
             Everything you need to manage and grow your company anywhere on
             planet
           </p>
-          <h2 className="text-5xl">"</h2>
+          <h2 className="text-5xl">&quot;</h2>
           <p>
             I am very helped by this recurring application, my days are very
-            easy to use this application and its very helpful in my life , even
-            I can pay a short time 😍
+            easy to use this application and its very helpful in my life, even I
+            can pay a short time 😍
           </p>
           <p className="py-5 text-foregroundAccent">_ Feyz Ibrahim</p>
         </div>

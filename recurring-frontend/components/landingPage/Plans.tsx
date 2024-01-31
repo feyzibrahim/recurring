@@ -5,7 +5,7 @@ export default function Plans() {
   return (
     <div className="text-center">
       <h1 className="text-3xl font-bold">Choose Plan </h1>
-      <h1 className="text-3xl font-bold">That's Right For You</h1>
+      <h1 className="text-3xl font-bold">That&apos;s Right For You</h1>
       <p className="text-foregroundAccent py-5">
         Choose plan that works best for you, feel free to contact us
       </p>

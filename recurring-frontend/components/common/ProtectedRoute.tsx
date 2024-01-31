@@ -15,7 +15,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     if (!user) {
       router.push("/");
     }
-  }, []);
+  }, [user, router]);
 
   return <ProtectedRoute>{children}</ProtectedRoute>;
 };
