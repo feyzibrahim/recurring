@@ -7,7 +7,7 @@ const EmployeeSchema: Schema = new Schema({
     required: true,
   },
   lastName: {
-    type: Date,
+    type: String,
   },
   organization: {
     type: Schema.Types.ObjectId,

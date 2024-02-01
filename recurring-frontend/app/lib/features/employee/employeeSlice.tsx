@@ -2,21 +2,22 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { createEmployee, getEmployee } from "./employeeActions";
+import { EmployeeTypes } from "@/constants/Types";
 
-interface EmployeeType {
-  employee: any;
+interface EmployeeSliceType {
+  employees: EmployeeTypes[] | null;
   loading: boolean;
   error: any;
 }
 
-const initialState: EmployeeType = {
-  employee: null,
+const initialState: EmployeeSliceType = {
+  employees: [],
   loading: false,
   error: null,
 };
 
 export const employeeSLice = createSlice({
-  name: "employee",
+  name: "employees",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -25,26 +26,29 @@ export const employeeSLice = createSlice({
     });
     builder.addCase(getEmployee.rejected, (state, { payload }) => {
       state.loading = false;
-      state.employee = null;
+      state.employees = null;
       state.error = payload;
     });
     builder.addCase(getEmployee.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.error = null;
-      state.employee = payload.user;
+      state.employees = payload.employees;
     });
     builder.addCase(createEmployee.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(createEmployee.rejected, (state, { payload }) => {
       state.loading = false;
-      state.employee = null;
-      state.error = [payload];
+      state.employees = null;
+      state.error = payload;
     });
     builder.addCase(createEmployee.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.error = null;
-      state.employee = [...state.employee, ...payload.employee];
+      state.employees = [
+        ...(state.employees || []),
+        payload.employee,
+      ] as EmployeeTypes[];
     });
   },
 });

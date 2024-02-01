@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/form";
 import FormInputCustom from "@/components/common/FormInputCustom";
 import DatePickerLimited from "@/components/custom/DatePickerLimited";
-import { commonRequestProject } from "@/api/client_project";
 import {
   Select,
   SelectContent,
@@ -24,8 +23,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import PhotoUpload from "./PhotoUpload";
-import { useAppDispatch } from "@/app/lib/hook";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { createEmployee } from "@/app/lib/features/employee/employeeActions";
+import { EmployeeTypes } from "@/constants/Types";
 
 const projectSchema = z.object({
   firstName: z
@@ -36,7 +36,7 @@ const projectSchema = z.object({
     .min(2, { message: "Last name must be at least 2 characters." }),
   role: z.string().min(2, { message: "Role must be at least 2 characters." }),
   phoneNumber: z
-    .string()
+    .number()
     .min(8, { message: "Phone Number be at least 8 characters." }),
   email: z
     .string()
@@ -50,7 +50,7 @@ const projectSchema = z.object({
     .string()
     .min(2, { message: "Designation must be at least 2 characters." }),
   salary: z
-    .string()
+    .number()
     .min(2, { message: "Salary must be at least 2 characters." }),
   hireDate: z.date(),
 
@@ -81,41 +81,37 @@ const projectSchema = z.object({
       message: "Country must be at least 2 characters.",
     })
     .max(30, { message: "Country should be less than 30 characters" }),
-  zipCode: z
-    .string()
-    .min(2, {
-      message: "zipCode must be at least 2 characters.",
-    })
-    .max(30, { message: "zipCode should be less than 30 characters" }),
+  zipCode: z.number(),
 });
 
 const CreateForm = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { loading, error } = useAppSelector((state) => state.employee);
 
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      role: "",
-      phoneNumber: "",
-      email: "",
-      employeeType: "",
-      designation: "",
-      salary: "",
-      street: "",
-      state: "",
-      city: "",
-      country: "",
-      zipCode: "",
+      firstName: "test",
+      lastName: "test",
+      role: "employee",
+      phoneNumber: 344444444,
+      username: "test",
+      email: "test@gmail.com",
+      employeeType: "fulltime",
+      gender: "male",
+      designation: "test",
+      salary: 20000,
+      street: "test",
+      state: "test",
+      city: "test",
+      country: "test",
+      zipCode: 32333,
+      hireDate: new Date("01/01/2024"),
     },
   });
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
-    console.log("Log: onSubmit -> values", values);
     await dispatch(createEmployee(values));
   };
 
@@ -357,60 +353,3 @@ const CreateForm = () => {
 };
 
 export default CreateForm;
-
-{
-  /* <FormItem className="flex flex-col mt-3">
-  <FormLabel>Gender</FormLabel>
-  <Popover>
-  <PopoverTrigger asChild>
-    <FormControl>
-      <Button
-        variant="outline"
-        role="combobox"
-        className={cn(
-          "w-[200px] justify-between bg-backgroundAccent w-full",
-          !field.value && "text-muted-foreground"
-        )}
-      >
-        {field.value
-          ? gender.find((data) => data.value === field.value)?.label
-          : "Select gender"}
-        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-      </Button>
-    </FormControl>
-  </PopoverTrigger>
-  <PopoverContent className="w-[200px] p-0">
-    <Command>
-      <CommandInput
-        placeholder="Search Gender..."
-        className="h-9"
-      />
-      <CommandEmpty>No framework found.</CommandEmpty>
-      <CommandGroup>
-        {gender.map((data: any) => (
-          <CommandItem
-            value={data.label}
-            key={data.value}
-            onSelect={() => {
-              form.setValue("gender", data.value);
-            }}
-          >
-            {data.label}
-            <CheckIcon
-              className={cn(
-                "ml-auto h-4 w-4",
-                data.value === field.value
-                  ? "opacity-100"
-                  : "opacity-0"
-              )}
-            />
-          </CommandItem>
-        ))}
-      </CommandGroup>
-    </Command>
-  </PopoverContent>
-  </Popover>
-
-  <FormMessage />
-  </FormItem> */
-}

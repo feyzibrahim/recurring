@@ -12,8 +12,6 @@ services:
     build: ./services/project
     ports: 
       - 4003:4003
-      
-
   mongodb: 
     image: "mongo:4.0-xenial"
     ports: 

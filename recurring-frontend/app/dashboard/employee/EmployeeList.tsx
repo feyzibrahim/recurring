@@ -1,25 +1,31 @@
 "use client";
-
 import { getEmployee } from "@/app/lib/features/employee/employeeActions";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import EmptyEmployee from "@/components/empty/EmptyEmployee";
 import { Button } from "@/components/ui/button";
+import { EmployeeTypes } from "@/constants/Types";
 import Link from "next/link";
 import { useEffect } from "react";
+import EmployeeCard from "./EmployeeCard";
+
 
 const EmployeeList = () => {
   const dispatch = useAppDispatch();
 
-  const { employee } = useAppSelector((state) => state.employee);
+  const { employees } = useAppSelector((state) => state.employee);
 
   useEffect(() => {
     dispatch(getEmployee());
   }, [dispatch]);
 
   return (
-    <div className="h-full">
-      {employee ? (
-        <div>Hello</div>
+    <div>
+      {employees ? (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+          {employees.map((employee: EmployeeTypes, index: number) => {
+            return <EmployeeCard employee={employee} key={index}/>
+          })}
+        </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-full">
           <EmptyEmployee />
