@@ -1,5 +1,5 @@
 "use client";
-import { getEmployee } from "@/app/lib/features/employee/employeeActions";
+import { getEmployees } from "@/app/lib/features/employee/employeeActions";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import EmptyEmployee from "@/components/empty/EmptyEmployee";
 import { Button } from "@/components/ui/button";
@@ -8,22 +8,22 @@ import Link from "next/link";
 import { useEffect } from "react";
 import EmployeeCard from "./EmployeeCard";
 
-
 const EmployeeList = () => {
   const dispatch = useAppDispatch();
 
   const { employees } = useAppSelector((state) => state.employee);
+  console.log("🚀 ~ EmployeeList ~ employees:", employees);
 
   useEffect(() => {
-    dispatch(getEmployee());
+    dispatch(getEmployees());
   }, [dispatch]);
 
   return (
-    <div>
-      {employees ? (
+    <>
+      {employees && employees.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
           {employees.map((employee: EmployeeTypes, index: number) => {
-            return <EmployeeCard employee={employee} key={index}/>
+            return <EmployeeCard employee={employee} key={index} />;
           })}
         </div>
       ) : (
@@ -36,7 +36,7 @@ const EmployeeList = () => {
           </Link>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

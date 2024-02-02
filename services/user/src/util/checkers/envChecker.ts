@@ -16,6 +16,8 @@ const envChecker = () => {
     if (!process.env.MAIL_PASS) throw new Error(".env | MAIL_PASS IS REQUIRED");
     if (!process.env.VERIFICATION_SECRET)
       throw new Error(".env | VERIFICATION_SECRET IS REQUIRED");
+    if (!process.env.RABBITMQ_URL)
+      throw new Error(".env | RABBITMQ_URL IS REQUIRED");
 
     console.log("Log: envChecker -> Env Check Passed");
   } catch (error: any) {

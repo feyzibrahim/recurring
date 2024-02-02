@@ -10,9 +10,13 @@ import { EmployeeAdapterInterface } from "./interface/employee/EmployeeAdapterIn
 import { TYPES } from "./constants/types/types";
 import { EmployeeUseCaseInterface } from "./interface/employee/EmployeeUseCaseInterface";
 import { EmployeeController } from "./handler/controller/project/EmployeeController";
+import { connectRabbitMq } from "./infra/rabbitMQ/rabbitmqConnection";
 
 // Database connection
 connectToDatabase();
+
+// Message Broker Connection | RabbitMQ
+connectRabbitMq();
 
 const container = new Container();
 

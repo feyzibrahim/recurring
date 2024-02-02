@@ -2,9 +2,10 @@ import InputWithIcon from "@/components/custom/InputWithIcon";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
-import { AiOutlineCheck, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineCheck } from "react-icons/ai";
 import { format } from "date-fns";
 import EditButton from "./EditButton";
+import InputBox from "@/components/common/InputBox";
 
 const page = async () => {
   const user = await checkUserWithoutRedirect();
@@ -16,67 +17,45 @@ const page = async () => {
           <Label>
             <p className="pt-5 pb-2">First Name</p>
           </Label>
-          <Input
-            placeholder="First Name"
-            defaultValue={user && user.firstName}
-            className="bg-backgroundAccent"
-          />
+          <InputBox data={user && user.firstName} />
         </div>
         <div className="md:w-1/2">
           <Label>
             <p className="pt-5 pb-2">Last Name</p>
           </Label>
-          <Input
-            placeholder="Last Name"
-            defaultValue={user && user.lastName}
-            className="bg-backgroundAccent"
-          />
+          <InputBox data={user && user.lastName} />
         </div>
       </div>
       <div className="md:w-1/2">
         <Label>
           <p className="pt-5 pb-2">Username</p>
         </Label>
-        <InputWithIcon
-          icon={<AiOutlineUser />}
-          placeholder="Username"
-          field={{ defaultValue: user && user.username }}
-        />
+        <InputBox data={user && user.username} />
       </div>
 
       <div className="md:w-1/2">
         <Label>
           <p className="pt-5 pb-2">Phone Number</p>
         </Label>
-        <Input
-          placeholder="Phone Number"
-          defaultValue={user && user.phoneNumber}
-          className="bg-backgroundAccent"
-        />
+        <InputBox data={user && user.phoneNumber} />
       </div>
       <div className="md:w-1/2">
         <Label>
           <p className="pt-5 pb-2">Date of Birth</p>
         </Label>
-        <Input
-          placeholder="Date of Birth"
-          defaultValue={
+        <InputBox
+          data={
             user &&
             user.dateOfBirth &&
             format(new Date(user.dateOfBirth), "MMMM d, yyyy")
           }
-          className="bg-backgroundAccent"
         />
       </div>
       <div className="md:w-1/2">
         <Label>
           <p className="pt-5 pb-2">Role</p>
         </Label>
-        <Input
-          placeholder="Role"
-          defaultValue={user && user.role}
-          className="bg-backgroundAccent capitalize"
-        />
+        <InputBox data={user && user.role} />
       </div>
       <div className="md:w-1/2 mb-5">
         <Label>

@@ -104,4 +104,35 @@ export class AuthAdapter implements AuthAdapterInterface {
       return false;
     }
   }
+
+  // Validate Email, Username and Phone Number
+  async checkCredentialExists(
+    email?: string,
+    phoneNumber?: string,
+    username?: string
+  ): Promise<boolean> {
+    try {
+      let filter: Record<string, string | undefined> = {};
+      if (email) {
+        filter.email = email;
+      }
+      if (phoneNumber) {
+        filter.phoneNumber = phoneNumber;
+      }
+      if (username) {
+        filter.username = username;
+      }
+
+      const user = await UserModal.findOne(filter);
+
+      if (user) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log("🚀 ~ AuthAdapter ~ error:", error);
+      return false;
+    }
+  }
 }

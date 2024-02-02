@@ -86,11 +86,25 @@ export default function OrganizationUpdateForm({
       description: (organization && organization.description) || "",
       industry: (organization && organization.industry) || "",
       website: (organization && organization.website) || "",
-      street: (organization && organization.address.street) || "",
-      state: (organization && organization.address.state) || "",
-      city: (organization && organization.address.city) || "",
-      country: (organization && organization.address.country) || "",
-      zipCode: (organization && organization.address.zipCode) || "",
+      street:
+        (organization && organization.address && organization.address.street) ||
+        "",
+      state:
+        (organization && organization.address && organization.address.state) ||
+        "",
+      city:
+        (organization && organization.address && organization.address.city) ||
+        "",
+      country:
+        (organization &&
+          organization.address &&
+          organization.address.country) ||
+        "",
+      zipCode:
+        (organization &&
+          organization.address &&
+          organization.address.zipCode) ||
+        "",
     },
   });
 

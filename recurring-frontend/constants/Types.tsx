@@ -9,23 +9,25 @@ interface EmployeeTypes {
   _id: string;
   firstName: string;
   lastName: string;
-  phoneNumber: number;
+  phoneNumber: string;
   email: string;
-  username: Date;
-  hireDate: Date;
+  username: string;
+  hiringDate: Date;
   organization: string;
   isActive: boolean;
-  salary?: number;
+  salary?: string;
   role?: string;
   profileImageURL?: string;
   employeeType?: string;
   gender?: string;
   designation?: string;
-  street?: string;
-  state?: string;
-  city?: string;
-  country?: string;
-  zipCode?: number;
+  address?: {
+    street?: string;
+    state?: string;
+    city?: string;
+    country?: string;
+    zipCode?: string;
+  };
 }
 
 export type { InputWithIconProps, EmployeeTypes };

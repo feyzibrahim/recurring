@@ -2,10 +2,10 @@ import EmployeeModal from "../../Modal/EmployeeModal";
 
 export const getEmployees = async (organizationId: string) => {
   try {
-    const project = await EmployeeModal.find({
+    const employees = await EmployeeModal.find({
       organization: organizationId,
     });
-    return project;
+    return employees;
   } catch (error) {
     console.log("EmployeeAdapter: getEmployees -> error", error);
     return false;

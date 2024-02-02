@@ -20,9 +20,13 @@ import { OrganizationUseCase } from "./useCases/OrganizationUseCase";
 import { OrganizationUseCaseInterface } from "./interface/organization/OrganizationUseCaseInterface";
 import { OrganizationAdapterInterface } from "./interface/organization/OrganizationAdapterInterface";
 import { OrganizationAdapter } from "./adapter/Database/MongoDB/OrganizationAdapter";
+import { connectRabbitMq } from "./infra/rabbitmq/rabbitmqConnection";
 
 // Database connection
 connectToDatabase();
+
+// Message Brocker Connection | RabbitMQ
+connectRabbitMq();
 
 const container = new Container();
 

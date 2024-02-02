@@ -6,22 +6,24 @@ import { validateJwt } from "../../../../util/JWT/validate.jwt";
 export const updateEmployee = async (
   req: Request,
   res: Response,
-  iOrgUseCase: EmployeeUseCaseInterface
+  iEmployeeUseCase: EmployeeUseCaseInterface
 ) => {
   try {
     const { access_token } = req.cookies;
 
     const data = validateJwt(access_token);
-    const project = req.body as Employee;
-    console.log("updateEmployee: project", project);
+    const employee = req.body as Employee;
 
-    let org = await iOrgUseCase.updateEmployee(data.user, project);
-    if (!org) {
-      throw Error("No project found");
+    let updatedEmployee = await iEmployeeUseCase.updateEmployee(
+      data.user,
+      employee
+    );
+    if (!updatedEmployee) {
+      throw Error("No employee found");
     }
 
     return res.status(200).json({
-      project: org,
+      employee: updatedEmployee,
       success: true,
       message: "Employee successfully Fetched",
     });

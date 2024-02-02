@@ -8,4 +8,9 @@ export interface AuthAdapterInterface {
   fetchUserWithUsername(username: string): Promise<User | boolean>;
   updateUserStatusAfterEmailValidation(id: string): Promise<User | boolean>;
   resetPassword(password: string, id: string): Promise<User | boolean>;
+  checkCredentialExists(
+    email?: string,
+    phoneNumber?: string,
+    username?: string
+  ): Promise<boolean>;
 }

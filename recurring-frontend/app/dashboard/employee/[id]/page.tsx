@@ -1,10 +1,11 @@
+import EmployeeDetails from "./EmployeeDetails";
 import EmployeeNav from "./EmployeeNav";
 
-const page = ({ params }: { params: { id: string } }) => {
+const page = async ({ params }: { params: { id: string } }) => {
   return (
     <div>
       <EmployeeNav params={params} />
-      Hello World {params.id}
+      <EmployeeDetails id={params.id} />
     </div>
   );
 };

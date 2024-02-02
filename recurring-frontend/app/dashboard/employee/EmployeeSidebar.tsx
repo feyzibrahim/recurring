@@ -35,6 +35,15 @@ const EmployeeSidebar = () => {
             Leave Requests
           </div>
         </Link>
+        <Link href={"/dashboard/employee/ex"} className="hover-text">
+          <div
+            className={`px-3 py-2 rounded ${
+              pathName === "/dashboard/employee/ex" ? " bg-backgroundAccent text-foregroundAccent" : ""
+            }`}
+          >
+            Ex-employees
+          </div>
+        </Link>
       </div>
     </div>
   );

@@ -6,4 +6,5 @@ export interface EmployeeAdapterInterface {
   getEmployeeByUserId(userId: string): Promise<Employee | boolean>;
   createEmployee(employee: Employee): Promise<Employee | boolean>;
   updateEmployee(id: string, employee: Employee): Promise<Employee | boolean>;
+  deleteEmployee(id: string): Promise<Employee | boolean>;
 }

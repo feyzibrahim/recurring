@@ -1,19 +1,27 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { createEmployee, getEmployee } from "./employeeActions";
+import {
+  createEmployee,
+  getEmployees,
+  getEmployee,
+  editEmployee,
+  deleteEmployee,
+} from "./employeeActions";
 import { EmployeeTypes } from "@/constants/Types";
 
 interface EmployeeSliceType {
   employees: EmployeeTypes[] | null;
   loading: boolean;
   error: any;
+  employee: EmployeeTypes | null;
 }
 
 const initialState: EmployeeSliceType = {
   employees: [],
   loading: false,
   error: null,
+  employee: null,
 };
 
 export const employeeSLice = createSlice({
@@ -21,35 +29,81 @@ export const employeeSLice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getEmployee.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(getEmployee.rejected, (state, { payload }) => {
-      state.loading = false;
-      state.employees = null;
-      state.error = payload;
-    });
-    builder.addCase(getEmployee.fulfilled, (state, { payload }) => {
-      state.loading = false;
-      state.error = null;
-      state.employees = payload.employees;
-    });
-    builder.addCase(createEmployee.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(createEmployee.rejected, (state, { payload }) => {
-      state.loading = false;
-      state.employees = null;
-      state.error = payload;
-    });
-    builder.addCase(createEmployee.fulfilled, (state, { payload }) => {
-      state.loading = false;
-      state.error = null;
-      state.employees = [
-        ...(state.employees || []),
-        payload.employee,
-      ] as EmployeeTypes[];
-    });
+    // Get all employees
+    builder
+      .addCase(getEmployees.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getEmployees.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.employees = null;
+        state.error = payload;
+      })
+      .addCase(getEmployees.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.employees = payload.employees;
+      })
+      // Get single employee details
+      .addCase(getEmployee.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getEmployee.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.employee = null;
+        state.error = payload;
+      })
+      .addCase(getEmployee.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.employee = payload.employee;
+      })
+      .addCase(createEmployee.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createEmployee.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.employees = null;
+        state.error = payload;
+      })
+      .addCase(createEmployee.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.employees = [
+          ...(state.employees || []),
+          payload.employee,
+        ] as EmployeeTypes[];
+      })
+      .addCase(editEmployee.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(editEmployee.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.employee = null;
+        state.error = payload;
+      })
+      .addCase(editEmployee.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.employee = payload.employee;
+      })
+      .addCase(deleteEmployee.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteEmployee.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.employees = null;
+        state.error = payload;
+      })
+      .addCase(deleteEmployee.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        if (state.employees !== null) {
+          state.employees = state.employees.filter(
+            (emp) => emp._id === payload.employee._id
+          );
+        }
+      });
   },
 });
 

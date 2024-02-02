@@ -42,6 +42,7 @@ export const reduxCommonRequest = async ({
 
   try {
     const response = await apiInstance(requestConfig);
+    console.log("🚀 ~ response:", response);
 
     return response;
   } catch (error) {

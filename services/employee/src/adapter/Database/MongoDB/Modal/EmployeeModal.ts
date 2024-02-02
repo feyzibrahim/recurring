@@ -45,6 +45,16 @@ const EmployeeSchema: Schema = new Schema({
     type: String,
     enum: ["male", "female", "other"],
   },
+  address: {
+    city: { type: String },
+    country: { type: String },
+    state: { type: String },
+    street: { type: String },
+    zipCode: { type: String },
+  },
+  designation: {
+    type: String,
+  },
 });
 
 export default mongoose.model<Employee>("Employee", EmployeeSchema);

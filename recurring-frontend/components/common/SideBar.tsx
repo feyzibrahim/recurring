@@ -76,7 +76,7 @@ const SideBar = () => {
         <Link href={"/dashboard/employee"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/employee" ? " bg-primary text-white" : ""
+              pathName.includes("/employee") ? " bg-primary text-white" : ""
             }`}
           >
             <FaRegAddressCard className="m-1" />

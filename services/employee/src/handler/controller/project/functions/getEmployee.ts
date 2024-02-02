@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { EmployeeUseCaseInterface } from "../../../../interface/employee/EmployeeUseCaseInterface";
-import { validateJwt } from "../../../../util/JWT/validate.jwt";
 
 export const getEmployee = async (
   req: Request,
@@ -8,17 +7,15 @@ export const getEmployee = async (
   iEmployeeUseCAse: EmployeeUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const { id } = req.params;
 
-    const data = validateJwt(access_token);
-
-    let org = await iEmployeeUseCAse.getEmployeeByUserId(data.user);
-    if (!org) {
-      throw Error("No project found");
+    let employee = await iEmployeeUseCAse.getEmployee(id);
+    if (!employee) {
+      throw Error("No employee found");
     }
 
     return res.status(200).json({
-      project: org,
+      employee: employee,
       success: true,
       message: "Employee successfully Fetched",
     });

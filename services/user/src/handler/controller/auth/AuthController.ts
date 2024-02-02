@@ -10,6 +10,7 @@ import { verifyEmail } from "./functions/verifyEmail.controller";
 import { forgotPassword } from "./functions/forgotPassword.controller";
 import { verifyPasswordReset } from "./functions/verifyPasswordReset.controller";
 import { resetPassword } from "./functions/resetPassword.controller";
+import { checkCredentials } from "./functions/checkCredentials.controller";
 
 @controller("/api/auth")
 export class AuthController {
@@ -57,5 +58,10 @@ export class AuthController {
   @httpPost("/reset-password/:token")
   async resetPassword(req: Request, res: Response) {
     await resetPassword(req, res, this.iAuthUseCase);
+  }
+
+  @httpGet("/check-credintials")
+  async checkCredentials(req: Request, res: Response) {
+    await checkCredentials(req, res, this.iAuthUseCase);
   }
 }

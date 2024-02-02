@@ -17,22 +17,8 @@ export default async function EmployeeProfile({
         />
       </div>
 
-      <div className="bg-backgroundAccent w-full md:px-10 -mt-10">
-        <div className="flex items-center">
-          <div className="w-28 h-28 rounded-full mr-4 overflow-clip bg-background border-8 border-backgroundAccent">
-            <Image
-              src={UserAvatar}
-              alt="Profile"
-              className="w-full h-full object-cover"
-              width={100}
-              height={100}
-            />
-          </div>
-          <div className="pt-5">
-            <p className="text-3xl font-semibold ">Employee Details</p>
-          </div>
-        </div>
-
+      <div className="bg-backgroundAccent w-full md:px-5">
+        <p className="text-3xl font-semibold py-5">Employee Details</p>
       </div>
       {children}
     </section>

@@ -4,6 +4,8 @@ import { createEmployee } from "./functions/createEmployee.adapter";
 import { getEmployee } from "./functions/getEmployee.adapter";
 import { EmployeeAdapterInterface } from "../../../../interface/employee/EmployeeAdapterInterface";
 import { getEmployees } from "./functions/getEmployees.adapter";
+import { updateEmployee } from "./functions/updateEmployee.adapter";
+import { deleteEmployee } from "./functions/deleteEmployee.adapter";
 
 @injectable()
 export class EmployeeAdapter implements EmployeeAdapterInterface {
@@ -26,10 +28,12 @@ export class EmployeeAdapter implements EmployeeAdapterInterface {
   }
   async updateEmployee(
     id: string,
-    project: Employee
+    employee: Employee
   ): Promise<boolean | Employee> {
-    throw new Error(
-      "EmployeeAdapter -> updateEmployee -> Method not implemented."
-    );
+    return updateEmployee(employee);
+  }
+
+  async deleteEmployee(id: string): Promise<boolean | Employee> {
+    return deleteEmployee(id);
   }
 }

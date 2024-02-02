@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { EmployeeUseCaseInterface } from "../../../../interface/employee/EmployeeUseCaseInterface";
 import { Employee } from "../../../../Entities/Employee";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import { sendDataToQueue } from "../../../../infra/rabbitMQ/sendDataToQueue";
+import { QUEUES } from "../../../../constants/types/queue";
 
 export const createEmployee = async (
   req: Request,
@@ -15,17 +17,14 @@ export const createEmployee = async (
 
     const data = validateJwt(access_token);
 
-    // let project = await iEmployeeUseCase.getEmployeeByUserId(data.user);
-    // if (project) {
-    //   throw Error("Employee Already Exists");
-    // }
-
     body.organization = data.organization;
 
-    let org = (await iEmployeeUseCase.createEmployee(body)) as Employee;
+    let employee = (await iEmployeeUseCase.createEmployee(body)) as Employee;
+
+    sendDataToQueue(QUEUES.EMPLOYEECREATION, employee);
 
     return res.status(200).json({
-      project: org,
+      employee: employee,
       success: true,
       message: "Employee successfully Created",
     });

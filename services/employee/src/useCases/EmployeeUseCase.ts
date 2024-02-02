@@ -9,6 +9,7 @@ export class EmployeeUseCase implements EmployeeUseCaseInterface {
     @inject(TYPES.EmployeeAdapterInterface)
     private iEmployeeUseCase: EmployeeUseCaseInterface
   ) {}
+
   getEmployee(id: string): Promise<boolean | Employee> {
     return this.iEmployeeUseCase.getEmployee(id);
   }
@@ -23,5 +24,8 @@ export class EmployeeUseCase implements EmployeeUseCaseInterface {
   }
   updateEmployee(id: string, employee: Employee): Promise<boolean | Employee> {
     return this.iEmployeeUseCase.updateEmployee(id, employee);
+  }
+  deleteEmployee(id: string): Promise<boolean | Employee> {
+    return this.iEmployeeUseCase.deleteEmployee(id);
   }
 }

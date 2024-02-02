@@ -31,4 +31,16 @@ export class AuthUseCase implements AuthUseCaseInterface {
   resetPassword(password: string, id: string): Promise<boolean | User> {
     return this.iAuthUseCase.resetPassword(password, id);
   }
+
+  checkCredentialExists(
+    email?: string,
+    phoneNumber?: string,
+    username?: string
+  ): Promise<boolean> {
+    return this.iAuthUseCase.checkCredentialExists(
+      email,
+      phoneNumber,
+      username
+    );
+  }
 }

@@ -52,7 +52,6 @@ export default function LoginForm() {
       },
     });
 
-    console.log("Log: onSubmit -> res", res);
     if (!res.success) {
       setError(res.error);
     }
