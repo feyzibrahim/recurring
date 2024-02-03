@@ -7,4 +7,8 @@ export interface EmployeeAdapterInterface {
   createEmployee(employee: Employee): Promise<Employee | boolean>;
   updateEmployee(id: string, employee: Employee): Promise<Employee | boolean>;
   deleteEmployee(id: string): Promise<Employee | boolean>;
+  getEmployeesWithRole(
+    organizationId: string,
+    role: string
+  ): Promise<Employee[] | boolean>;
 }

@@ -17,6 +17,8 @@ import FormInputCustom from "@/components/common/FormInputCustom";
 import { Textarea } from "@/components/ui/textarea";
 import DatePickerLimited from "@/components/custom/DatePickerLimited";
 import { commonRequestProject } from "@/api/client_project";
+import { ManagerList } from "./ManagerList";
+import { MemberTable } from "./MemberTable";
 
 const projectSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -31,7 +33,7 @@ const projectSchema = z.object({
   //     ["planning", "active", "completed", "archive", "backlog"].includes(status)
   //   ),
   description: z.string().optional(),
-  // manager: z.string().optional(),
+  manager: z.string(),
   // client: z.string().optional(),
   // deal: z.string().optional(),
 });
@@ -52,7 +54,7 @@ const CreateForm = () => {
       // members: [],
       // status: "",
       description: "",
-      // manager: "",
+      manager: "",
       // client: "",
       // deal: "",
     },
@@ -116,6 +118,9 @@ const CreateForm = () => {
                 </FormItem>
               )}
             />
+            <div>
+              <MemberTable />
+            </div>
           </div>
           <div>
             <FormField
@@ -131,6 +136,18 @@ const CreateForm = () => {
               name="endDate"
               render={({ field }) => (
                 <DatePickerLimited title="End Date" field={field} />
+              )}
+            />
+            <div className="py-2"></div>
+            <FormField
+              control={form.control}
+              name="manager"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Choose Manager</FormLabel>
+                  <ManagerList field={field} />
+                  <FormMessage />
+                </FormItem>
               )}
             />
           </div>

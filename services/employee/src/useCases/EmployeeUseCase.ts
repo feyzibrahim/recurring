@@ -28,4 +28,10 @@ export class EmployeeUseCase implements EmployeeUseCaseInterface {
   deleteEmployee(id: string): Promise<boolean | Employee> {
     return this.iEmployeeUseCase.deleteEmployee(id);
   }
+  getEmployeesWithRole(
+    organizationId: string,
+    role: string
+  ): Promise<boolean | Employee[]> {
+    return this.iEmployeeUseCase.getEmployeesWithRole(organizationId, role);
+  }
 }

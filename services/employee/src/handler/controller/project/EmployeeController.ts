@@ -14,6 +14,7 @@ import { updateEmployee } from "./functions/updateEmployee";
 import { getEmployees } from "./functions/getEmployees";
 import { getEmployee } from "./functions/getEmployee";
 import { deleteEmployee } from "./functions/deleteEmployee";
+import { getEmployeesWithRole } from "./functions/getEmployeesWithRole";
 
 @controller("/api/employee")
 export class EmployeeController {
@@ -26,6 +27,12 @@ export class EmployeeController {
   async getEmployees(req: Request, res: Response) {
     await getEmployees(req, res, this.iEmployeeUseCase);
   }
+
+  @httpGet("/with-role")
+  async getEmployeesWithRole(req: Request, res: Response) {
+    await getEmployeesWithRole(req, res, this.iEmployeeUseCase);
+  }
+
   @httpGet("/:id")
   async getEmployee(req: Request, res: Response) {
     await getEmployee(req, res, this.iEmployeeUseCase);

@@ -6,8 +6,7 @@ export const sendDataToQueue = async (queue: string, data: any) => {
 
     await channel.assertQueue(queue);
 
-    const ddd = channel.sendToQueue(queue, Buffer.from(JSON.stringify(data)));
-    console.log("🚀 ~ sendDataToQueue ~ data:", ddd);
+    channel.sendToQueue(queue, Buffer.from(JSON.stringify(data)));
   } catch (error) {
     console.log("🚀 ~ sendDataToQueue ~ error:", error);
   }

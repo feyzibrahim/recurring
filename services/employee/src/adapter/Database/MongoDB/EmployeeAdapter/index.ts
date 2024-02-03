@@ -6,6 +6,7 @@ import { EmployeeAdapterInterface } from "../../../../interface/employee/Employe
 import { getEmployees } from "./functions/getEmployees.adapter";
 import { updateEmployee } from "./functions/updateEmployee.adapter";
 import { deleteEmployee } from "./functions/deleteEmployee.adapter";
+import { getEmployeesWithRole } from "./functions/getEmployeesWithRole.adapter";
 
 @injectable()
 export class EmployeeAdapter implements EmployeeAdapterInterface {
@@ -35,5 +36,12 @@ export class EmployeeAdapter implements EmployeeAdapterInterface {
 
   async deleteEmployee(id: string): Promise<boolean | Employee> {
     return deleteEmployee(id);
+  }
+
+  async getEmployeesWithRole(
+    organizationId: string,
+    role: string
+  ): Promise<boolean | Employee[]> {
+    return getEmployeesWithRole(organizationId, role);
   }
 }
