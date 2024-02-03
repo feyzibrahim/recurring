@@ -39,4 +39,15 @@ export class UserAdapter implements UserAdapterInterface {
       return false;
     }
   }
+
+  async createEmployee(employee: User): Promise<boolean | User> {
+    try {
+      const newEmployee = await UserModal.create(employee);
+
+      return newEmployee;
+    } catch (error) {
+      console.log("Log: UserAdapter -> createEmployee -> error", error);
+      return false;
+    }
+  }
 }

@@ -20,13 +20,14 @@ import { OrganizationUseCase } from "./useCases/OrganizationUseCase";
 import { OrganizationUseCaseInterface } from "./interface/organization/OrganizationUseCaseInterface";
 import { OrganizationAdapterInterface } from "./interface/organization/OrganizationAdapterInterface";
 import { OrganizationAdapter } from "./adapter/Database/MongoDB/OrganizationAdapter";
-import { connectRabbitMq } from "./infra/rabbitmq/rabbitmqConnection";
+import { RabbitMQService } from "./infra/rabbitmq/rabbitmq.service";
+// import { connectRabbitMq } from "./infra/rabbitmq/rabbitmqConnection";
 
 // Database connection
 connectToDatabase();
 
 // Message Brocker Connection | RabbitMQ
-connectRabbitMq();
+// connectRabbitMq();
 
 const container = new Container();
 
@@ -59,6 +60,12 @@ container
 container
   .bind<OrganizationAdapterInterface>(TYPES.OrganizationAdapterInterface)
   .to(OrganizationAdapter);
+
+// RabbitMQ
+
+container
+  .bind<RabbitMQService>(TYPES.RabbitMQServiceInitializer)
+  .to(RabbitMQService);
 
 // Disconnect From Database
 process.on("SIGINT", async () => {

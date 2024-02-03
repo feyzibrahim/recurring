@@ -7,10 +7,13 @@ import express from "express";
 import cors from "cors";
 import envChecker from "./util/checkers/envChecker";
 import cookieParser from "cookie-parser";
+import { RabbitMQService } from "./infra/rabbitmq/rabbitmq.service";
+import { TYPES } from "./constants/types/types";
+import { QUEUES } from "./constants/types/queue";
 
 const server = new InversifyExpressServer(container);
 
-server.setConfig((app) => {
+server.setConfig(async (app) => {
   const url = process.env.FRONTEND_URL ?? "";
 
   app.use(cookieParser());
@@ -22,6 +25,12 @@ server.setConfig((app) => {
       credentials: true,
     })
   );
+
+  const rabbitMQService = container.get<RabbitMQService>(
+    TYPES.RabbitMQServiceInitializer
+  );
+  await rabbitMQService.connect();
+  await rabbitMQService.consumeMessages(QUEUES.EMPLOYEECREATION);
 });
 
 envChecker();
