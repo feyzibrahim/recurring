@@ -2,7 +2,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -10,7 +9,7 @@ import MembersList from "./MembersList";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
-const MemberAddButton = () => {
+const MemberAddButton = ({ setMembers }: { setMembers: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -26,11 +25,11 @@ const MemberAddButton = () => {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Choose below members</DialogTitle>
-            <DialogDescription>
-              Update in the below form. After your done click the save button
-            </DialogDescription>
           </DialogHeader>
-          <MembersList setIsModalOpen={setIsModalOpen} />
+          <MembersList
+            setIsModalOpen={setIsModalOpen}
+            setMembers={setMembers}
+          />
         </DialogContent>
       </Dialog>
     </>

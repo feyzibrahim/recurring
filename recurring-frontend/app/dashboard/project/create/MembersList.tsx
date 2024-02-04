@@ -1,161 +1,152 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { actualCommonRequest } from "@/api/actual_client";
 import { Button } from "@/components/ui/button";
-import { Form, FormField } from "@/components/ui/form";
-import { FiUser } from "react-icons/fi";
-import { RiLockPasswordLine } from "react-icons/ri";
-import FormInputWithIcon from "@/components/common/FormInputWithIcon";
-import { useRouter } from "next/navigation";
-import { commonRequest } from "@/api/client";
-import { useState } from "react";
-import DatePicker from "@/components/custom/DatePicker";
-
-const formSchema = z.object({
-  firstName: z
-    .string()
-    .min(2, {
-      message: "Email must be at least 2 characters.",
-    })
-    .max(30, { message: "Name should be Less than 30 characters" }),
-  lastName: z
-    .string()
-    .min(2, {
-      message: "Email must be at least 2 characters.",
-    })
-    .max(30, { message: "Name should be Less than 30 characters" }),
-  username: z
-    .string()
-    .min(2, {
-      message: "Email must be at least 2 characters.",
-    })
-    .max(30, { message: "Name should be Less than 30 characters" }),
-  phoneNumber: z
-    .string()
-    .min(2, {
-      message: "Email must be at least 2 characters.",
-    })
-    .max(30, { message: "Name should be Less than 30 characters" }),
-  dateOfBirth: z.date(),
-  role: z
-    .string()
-    .min(2, {
-      message: "Email must be at least 2 characters.",
-    })
-    .max(30, { message: "Name should be Less than 30 characters" }),
-});
+import { Checkbox } from "@/components/ui/checkbox";
+import { EmployeeTypes } from "@/constants/Types";
+import { API_ROUTES } from "@/lib/routes";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import UserAvatar from "@/public/img/user-avatar.png";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import InputWithIcon from "@/components/custom/InputWithIcon";
+import { FiSearch } from "react-icons/fi";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function MembersList({
   setIsModalOpen,
+  setMembers,
 }: {
   setIsModalOpen: any;
+  setMembers: any;
 }) {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      username: "",
-      phoneNumber: undefined,
-      dateOfBirth: undefined,
-      role: "",
-    },
-  });
+  const [membersList, setMembersList] = useState<
+    (EmployeeTypes & { selected?: boolean })[]
+  >([]);
+  const { setValue } = useFormContext();
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setLoading(true);
-    let res = await commonRequest({
-      method: "PATCH",
-      url: "/user/update-profile",
-      data: { ...values },
-      headers: {
-        "Content-Type": "application/json",
-      },
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const res = await actualCommonRequest({
+        route: API_ROUTES.EMPLOYEE,
+        method: "GET",
+        url: "/api/employee/with-role?role=employee",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setLoading(false);
+
+      if (res.employees) {
+        const membersWithSelection: (EmployeeTypes & { selected?: boolean })[] =
+          res.employees.map((member: EmployeeTypes) => ({
+            ...member,
+            selected: false,
+          }));
+        setMembersList(membersWithSelection);
+      }
+    };
+    loadData();
+  }, []);
+
+  const handleCheckboxChange = (id: string) => {
+    const updatedMembers = membersList.map((member) =>
+      member._id === id ? { ...member, selected: !member.selected } : member
+    );
+    setMembersList(updatedMembers);
+  };
+
+  const handleAddMembers = () => {
+    const selectedMembers = membersList.filter((member) => member.selected);
+    console.log(
+      "file: MembersList.tsx:66 -> handleAddMembers -> selectedMembers",
+      selectedMembers
+    );
+    const selectedMembersId = membersList.map((member) => {
+      let mem = member.selected;
+      return mem && member._id;
     });
 
-    if (!res.success) {
-      setError(res.error);
-    }
+    setValue("members", selectedMembersId);
 
-    if (res.success) {
-      router.refresh();
-      setIsModalOpen(false);
-    }
-    setLoading(false);
-  }
+    setMembers(selectedMembers);
+    setIsModalOpen(false);
+  };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<FiUser />}
-              placeholder="Enter your first name"
-              title="First Name"
-              showTitle={true}
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<FiUser />}
-              placeholder="Enter your last name"
-              title="Last Name"
-              showTitle={true}
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<RiLockPasswordLine />}
-              placeholder="Enter your username"
-              title="Username"
-              showTitle={true}
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<RiLockPasswordLine />}
-              placeholder="Enter your phone number"
-              title="Phone Number"
-              showTitle={true}
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="dateOfBirth"
-          render={({ field }) => (
-            <DatePicker title="Date of Birth" field={field} />
-          )}
-        />
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Loading..." : "Update Details"}
-        </Button>
-        {error && <p className="text-sm text-red-500">{error}</p>}
-      </form>
-    </Form>
+    <div>
+      <InputWithIcon icon={<FiSearch />} placeholder="Search..." />
+      <ScrollArea className="h-52 py-2">
+        {loading ? (
+          <div className="p-2">
+            <div className="flex items-center gap-3 mt-5">
+              <Skeleton className="w-10 h-10 rounded-full bg-backgroundAccent" />
+              <div>
+                <Skeleton className="w-36 h-4 rounded-md bg-backgroundAccent" />
+                <Skeleton className="w-52 h-4 rounded-md mt-1 bg-backgroundAccent" />
+              </div>
+            </div>
+            <div className="flex items-center gap-3 mt-5">
+              <Skeleton className="w-10 h-10 rounded-full bg-backgroundAccent" />
+              <div>
+                <Skeleton className="w-36 h-4 rounded-md bg-backgroundAccent" />
+                <Skeleton className="w-52 h-4 rounded-md mt-1 bg-backgroundAccent" />
+              </div>
+            </div>
+            <div className="flex items-center gap-3 mt-5">
+              <Skeleton className="w-10 h-10 rounded-full bg-backgroundAccent" />
+              <div>
+                <Skeleton className="w-36 h-4 rounded-md bg-backgroundAccent" />
+                <Skeleton className="w-52 h-4 rounded-md mt-1 bg-backgroundAccent" />
+              </div>
+            </div>
+          </div>
+        ) : (
+          membersList.map((member, index: number) => (
+            <label
+              htmlFor={`member_${member._id}`}
+              className="cursor-pointer"
+              key={index}
+            >
+              <div
+                key={member._id}
+                className="flex items-center space-x-4 p-2 hover:bg-backgroundAccent active:opacity-80"
+              >
+                <Checkbox
+                  id={`member_${member._id}`}
+                  checked={member.selected}
+                  onCheckedChange={() => handleCheckboxChange(member._id)}
+                />
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10">
+                    <Image
+                      src={UserAvatar}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                  <div>
+                    <p>
+                      {member.firstName} {member.lastName}
+                    </p>
+                    <p>{member.email}</p>
+                  </div>
+                </div>
+              </div>
+            </label>
+          ))
+        )}
+      </ScrollArea>
+      <Button className="w-full mt-5" onClick={handleAddMembers}>
+        Add Members
+      </Button>
+    </div>
   );
 }

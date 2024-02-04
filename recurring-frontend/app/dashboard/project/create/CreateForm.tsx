@@ -26,7 +26,7 @@ const projectSchema = z.object({
   // organization: z.string(),
   // tasks: z.array(z.string()),
   endDate: z.date(),
-  // members: z.array(z.string()),
+  members: z.array(z.string()),
   // status: z
   //   .string()
   //   .refine((status) =>
@@ -51,7 +51,7 @@ const CreateForm = () => {
       // organization: "",
       // tasks: [],
       endDate: undefined,
-      // members: [],
+      members: [],
       // status: "",
       description: "",
       manager: "",
@@ -118,9 +118,7 @@ const CreateForm = () => {
                 </FormItem>
               )}
             />
-            <div>
-              <MemberTable />
-            </div>
+            <MemberTable />
           </div>
           <div>
             <FormField

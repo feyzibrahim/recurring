@@ -49,7 +49,7 @@ const SideBar = () => {
         <Link href={"/dashboard/project"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/project" ? " bg-primary text-white" : ""
+              pathName.includes("/project") ? " bg-primary text-white" : ""
             }`}
           >
             <RiDashboardLine className="m-1" />

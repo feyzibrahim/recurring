@@ -5,7 +5,8 @@ import { useState } from "react";
 import MemberAddButton from "./MemberAddButton";
 
 interface MemberType {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   username: string;
   phoneNumber: number;
@@ -29,7 +30,9 @@ export function MemberTable() {
         <tbody>
           {members.map((member, index) => (
             <tr key={index}>
-              <td className="border-t border-background p-3">{member.name}</td>
+              <td className="border-t border-background p-3">
+                {member.firstName} {member.lastName}
+              </td>
               <td className="border-t border-background p-3">{member.email}</td>
               <td className="border-t border-background p-3">
                 {member.username}
@@ -44,7 +47,7 @@ export function MemberTable() {
               className="border-t border-background p-3 hover:opacity-50 cursor-pointer"
               colSpan={4}
             >
-              <MemberAddButton />
+              <MemberAddButton setMembers={setMembers} />
             </td>
           </tr>
         </tbody>
