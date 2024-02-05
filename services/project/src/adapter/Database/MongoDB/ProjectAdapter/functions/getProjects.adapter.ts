@@ -1,5 +1,5 @@
 import { Project } from "../../../../../Entities/Project";
-import ProjectModal from "../../Modal/ProjectModal";
+import ProjectModal from "../../Modal/ProjectModel";
 
 export const getProjects = async (id: string) => {
   try {

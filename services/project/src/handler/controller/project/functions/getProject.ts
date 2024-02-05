@@ -7,9 +7,9 @@ export const getProject = async (
   iOrgUseCase: ProjectUseCaseInterface
 ) => {
   try {
-    const { id } = req.params;
+    const { slug } = req.params;
 
-    let org = await iOrgUseCase.getProject(id);
+    let org = await iOrgUseCase.getProject(slug);
     if (!org) {
       throw Error("No project found");
     }

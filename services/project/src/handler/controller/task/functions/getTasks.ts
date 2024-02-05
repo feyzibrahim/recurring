@@ -1,25 +1,25 @@
 import { Request, Response } from "express";
-import { ProjectUseCaseInterface } from "../../../../interface/project/ProjectUseCaseInterface";
+import { TaskUseCaseInterface } from "../../../../interface/task/TaskUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
 
-export const getProjects = async (
+export const getTasks = async (
   req: Request,
   res: Response,
-  iProjectUseCase: ProjectUseCaseInterface
+  iTaskUseCase: TaskUseCaseInterface
 ) => {
   try {
     const { access_token } = req.cookies;
     const data = validateJwt(access_token);
 
-    let projects = await iProjectUseCase.getProjects(data.organization);
-    if (!projects) {
-      throw Error("No project found");
+    let tasks = await iTaskUseCase.getTasks(data.organization);
+    if (!tasks) {
+      throw Error("No task found");
     }
 
     return res.status(200).json({
-      projects: projects,
+      tasks: tasks,
       success: true,
-      message: "Projects successfully Fetched",
+      message: "Tasks successfully Fetched",
     });
   } catch (error: any) {
     res.status(400).json({ success: false, error: error.message });

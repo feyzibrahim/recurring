@@ -1,10 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 import { Project } from "../../../../Entities/Project";
+import { uuid } from "uuidv4";
 
 const ProjectsSchema: Schema = new Schema({
   name: {
     type: String,
     required: true,
+  },
+  slug: {
+    type: String,
+    default: uuid(),
   },
   startDate: {
     type: Date,

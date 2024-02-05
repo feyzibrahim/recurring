@@ -1,5 +1,4 @@
 import InputWithIcon from "@/components/custom/InputWithIcon";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
 import { AiOutlineCheck } from "react-icons/ai";

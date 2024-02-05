@@ -4,11 +4,12 @@ import { createProject } from "./functions/createProject.adapter";
 import { getProject } from "./functions/getProject.adapter";
 import { getProjects } from "./functions/getProjects.adapter";
 import { ProjectAdapterInterface } from "../../../../interface/project/ProjectAdapterInterface";
+import { deleteProject } from "./functions/deleteProject.adapter";
 
 @injectable()
 export class ProjectAdapter implements ProjectAdapterInterface {
-  async getProject(id: string): Promise<boolean | Project> {
-    return getProject(id);
+  async getProject(slug: string): Promise<boolean | Project> {
+    return getProject(slug);
   }
 
   async createProject(Project: Project): Promise<boolean | Project> {
@@ -18,6 +19,7 @@ export class ProjectAdapter implements ProjectAdapterInterface {
   async getProjectByUserId(userId: string): Promise<boolean | Project> {
     throw new Error("Method not implemented.");
   }
+
   async updateProject(
     id: string,
     project: Project
@@ -27,5 +29,9 @@ export class ProjectAdapter implements ProjectAdapterInterface {
 
   async getProjects(organizationId: string): Promise<boolean | Project[]> {
     return getProjects(organizationId);
+  }
+
+  async deleteProject(id: string): Promise<boolean | Project> {
+    return deleteProject(id);
   }
 }

@@ -3,6 +3,8 @@
 import { FormLabel } from "@/components/ui/form";
 import { useState } from "react";
 import MemberAddButton from "./MemberAddButton";
+import Image from "next/image";
+import UserAvatar from "@/public/img/user-avatar.png";
 
 interface MemberType {
   firstName: string;
@@ -31,7 +33,18 @@ export function MemberTable() {
           {members.map((member, index) => (
             <tr key={index}>
               <td className="border-t border-background p-3">
-                {member.firstName} {member.lastName}
+                <div className="flex gap-3 items-center">
+                  <div className="w-7 h-7">
+                    <Image
+                      src={UserAvatar}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                  {member.firstName} {member.lastName}
+                </div>
               </td>
               <td className="border-t border-background p-3">{member.email}</td>
               <td className="border-t border-background p-3">

@@ -29,18 +29,36 @@ interface EmployeeTypes {
     zipCode?: string;
   };
 }
+
 interface ProjectTypes {
   _id: string;
+  slug: string;
   name: string;
   startDate: Date;
   // tasks: [],
   endDate: Date;
   members: [];
-  // status: string,
+  status: string;
   description: string;
   manager: string;
   // client: string,
   // deal: string,
 }
 
-export type { InputWithIconProps, EmployeeTypes, ProjectTypes };
+interface TaskTypes {
+  _id: string;
+  title: string;
+  slug: string;
+  organization: string;
+  project: string;
+  startDate: Date;
+  dueDate: Date;
+  status: string;
+  priority: string;
+  assignee: string;
+  description: string;
+  tags: [];
+  subTasks: [TaskTypes];
+}
+
+export type { InputWithIconProps, EmployeeTypes, ProjectTypes, TaskTypes };

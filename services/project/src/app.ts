@@ -7,6 +7,7 @@ import express from "express";
 import cors from "cors";
 import envChecker from "./util/checkers/envChecker";
 import cookieParser from "cookie-parser";
+import morgan from "morgan";
 
 const server = new InversifyExpressServer(container);
 
@@ -15,6 +16,7 @@ server.setConfig((app) => {
 
   app.use(cookieParser());
   app.use(express.json());
+  app.use(morgan("dev"));
   app.use(
     cors({
       origin: [url],

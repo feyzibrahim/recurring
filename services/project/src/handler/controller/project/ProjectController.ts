@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   controller,
+  httpDelete,
   httpGet,
   httpPatch,
   httpPost,
@@ -12,6 +13,7 @@ import { createProject } from "./functions/createProject";
 import { getProject } from "./functions/getProject";
 import { updateProject } from "./functions/updateProject";
 import { getProjects } from "./functions/getProjects";
+import { deleteProject } from "./functions/deleteProject";
 
 @controller("/api/project")
 export class ProjectController {
@@ -25,7 +27,7 @@ export class ProjectController {
     await getProjects(req, res, this.iProjectUseCase);
   }
 
-  @httpGet("/:id")
+  @httpGet("/:slug")
   async getProject(req: Request, res: Response) {
     await getProject(req, res, this.iProjectUseCase);
   }
@@ -38,5 +40,9 @@ export class ProjectController {
   @httpPatch("/")
   async updateProject(req: Request, res: Response) {
     await updateProject(req, res, this.iProjectUseCase);
+  }
+  @httpDelete("/:slug")
+  async deleteProject(req: Request, res: Response) {
+    await deleteProject(req, res, this.iProjectUseCase);
   }
 }

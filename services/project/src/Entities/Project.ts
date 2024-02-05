@@ -1,6 +1,8 @@
 export class Project {
   constructor(
+    public _id: string,
     public name: string,
+    public slug: string,
     public startDate: Date,
     public organization: string,
     public tasks: string[],

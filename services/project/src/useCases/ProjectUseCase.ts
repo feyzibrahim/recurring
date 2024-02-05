@@ -9,8 +9,9 @@ export class ProjectUseCase implements ProjectUseCaseInterface {
     @inject(TYPES.ProjectAdapterInterface)
     private iProjectUseCase: ProjectUseCaseInterface
   ) {}
-  getProject(id: string): Promise<boolean | Project> {
-    return this.iProjectUseCase.getProject(id);
+
+  getProject(slug: string): Promise<boolean | Project> {
+    return this.iProjectUseCase.getProject(slug);
   }
   getProjectByUserId(userId: string): Promise<boolean | Project> {
     return this.iProjectUseCase.getProjectByUserId(userId);
@@ -23,5 +24,8 @@ export class ProjectUseCase implements ProjectUseCaseInterface {
   }
   getProjects(organizationId: string): Promise<boolean | Project[]> {
     return this.iProjectUseCase.getProjects(organizationId);
+  }
+  deleteProject(id: string): Promise<boolean | Project> {
+    return this.iProjectUseCase.deleteProject(id);
   }
 }

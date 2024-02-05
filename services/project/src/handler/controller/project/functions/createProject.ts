@@ -17,10 +17,11 @@ export const createProject = async (
 
     body.organization = data.organization;
 
-    let org = (await iOrgUseCase.createProject(body)) as Project;
+    let project = (await iOrgUseCase.createProject(body)) as Project;
+    console.log("file: createProject.ts:21 -> project", project);
 
     return res.status(200).json({
-      project: org,
+      project: project,
       success: true,
       message: "Project successfully Created",
     });

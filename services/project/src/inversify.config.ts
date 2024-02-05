@@ -10,6 +10,11 @@ import { ProjectAdapterInterface } from "./interface/project/ProjectAdapterInter
 import { TYPES } from "./constants/types/types";
 import { ProjectUseCaseInterface } from "./interface/project/ProjectUseCaseInterface";
 import { ProjectController } from "./handler/controller/project/ProjectController";
+import { TaskAdapterInterface } from "./interface/task/TaskAdapterInterface";
+import { TaskAdapter } from "./adapter/Database/MongoDB/TaskAdapter";
+import { TaskUseCaseInterface } from "./interface/task/TaskUseCaseInterface";
+import { TaskUseCase } from "./useCases/TaskUseCase";
+import { TaskController } from "./handler/controller/task/TaskController";
 
 // Database connection
 connectToDatabase();
@@ -25,6 +30,16 @@ container
   .to(ProjectUseCase);
 container.bind<ProjectController>(ProjectController).toSelf();
 container.bind<ProjectUseCase>(ProjectUseCase).toSelf();
+
+// Task Injection
+container
+  .bind<TaskAdapterInterface>(TYPES.TaskAdapterInterface)
+  .to(TaskAdapter);
+container
+  .bind<TaskUseCaseInterface>(TYPES.TaskUseCaseInterface)
+  .to(TaskUseCase);
+container.bind<TaskController>(TaskController).toSelf();
+container.bind<TaskUseCase>(TaskUseCase).toSelf();
 
 // Disconnect From Database
 process.on("SIGINT", async () => {

@@ -8,11 +8,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import UserAvatar from "@/public/img/user-avatar.png";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import InputWithIcon from "@/components/custom/InputWithIcon";
 import { FiSearch } from "react-icons/fi";
-import { Skeleton } from "@/components/ui/skeleton";
+import MembersListLoading from "./MembersListLoading";
 
 export default function MembersList({
   setIsModalOpen,
@@ -83,29 +82,7 @@ export default function MembersList({
       <InputWithIcon icon={<FiSearch />} placeholder="Search..." />
       <ScrollArea className="h-52 py-2">
         {loading ? (
-          <div className="p-2">
-            <div className="flex items-center gap-3 mt-5">
-              <Skeleton className="w-10 h-10 rounded-full bg-backgroundAccent" />
-              <div>
-                <Skeleton className="w-36 h-4 rounded-md bg-backgroundAccent" />
-                <Skeleton className="w-52 h-4 rounded-md mt-1 bg-backgroundAccent" />
-              </div>
-            </div>
-            <div className="flex items-center gap-3 mt-5">
-              <Skeleton className="w-10 h-10 rounded-full bg-backgroundAccent" />
-              <div>
-                <Skeleton className="w-36 h-4 rounded-md bg-backgroundAccent" />
-                <Skeleton className="w-52 h-4 rounded-md mt-1 bg-backgroundAccent" />
-              </div>
-            </div>
-            <div className="flex items-center gap-3 mt-5">
-              <Skeleton className="w-10 h-10 rounded-full bg-backgroundAccent" />
-              <div>
-                <Skeleton className="w-36 h-4 rounded-md bg-backgroundAccent" />
-                <Skeleton className="w-52 h-4 rounded-md mt-1 bg-backgroundAccent" />
-              </div>
-            </div>
-          </div>
+          <MembersListLoading />
         ) : (
           membersList.map((member, index: number) => (
             <label

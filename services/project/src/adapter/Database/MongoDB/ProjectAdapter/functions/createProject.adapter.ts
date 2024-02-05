@@ -1,5 +1,5 @@
 import { Project } from "../../../../../Entities/Project";
-import ProjectModal from "../../Modal/ProjectModal";
+import ProjectModal from "../../Modal/ProjectModel";
 
 export const createProject = async (project: Project) => {
   try {

@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,14 +15,14 @@ import {
 import FormInputCustom from "@/components/common/FormInputCustom";
 import { Textarea } from "@/components/ui/textarea";
 import DatePickerLimited from "@/components/custom/DatePickerLimited";
-import { commonRequestProject } from "@/api/client_project";
 import { ManagerList } from "./ManagerList";
 import { MemberTable } from "./MemberTable";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
+import { createProject } from "@/app/lib/features/project/projectActions";
 
 const projectSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   startDate: z.date(),
-  // organization: z.string(),
   // tasks: z.array(z.string()),
   endDate: z.date(),
   members: z.array(z.string()),
@@ -39,16 +38,16 @@ const projectSchema = z.object({
 });
 
 const CreateForm = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+
+  const { loading, error } = useAppSelector((state) => state.project);
 
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
       name: "",
       startDate: undefined,
-      // organization: "",
       // tasks: [],
       endDate: undefined,
       members: [],
@@ -61,26 +60,9 @@ const CreateForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
-    setLoading(true);
-    let res = await commonRequestProject({
-      method: "POST",
-      url: "/project",
-      data: { ...values },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("Log: onSubmit -> res", res);
-
-    if (!res.success) {
-      setError(res.error);
-    }
-
-    if (res.success) {
+    dispatch(createProject(values)).then(() => {
       router.back();
-    }
-
-    setLoading(false);
+    });
   };
 
   return (
