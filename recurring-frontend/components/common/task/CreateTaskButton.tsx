@@ -7,16 +7,32 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-// import ProfileChangeForm from "./ProfileChangeForm";
 import { useState } from "react";
 import TaskForm from "./TaskForm";
+import { AiOutlinePlus } from "react-icons/ai";
 
-const CreateTaskButton = ({ slug }: { slug: string }) => {
+const CreateTaskButton = ({
+  slug,
+  customButton,
+}: {
+  slug?: string;
+  customButton?: boolean;
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)}>New Task</Button>
+      {!customButton ? (
+        <Button onClick={() => setIsModalOpen(true)}>New Task</Button>
+      ) : (
+        <div
+          className="flex items-center gap-3 w-full"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <AiOutlinePlus />
+          New Task
+        </div>
+      )}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>

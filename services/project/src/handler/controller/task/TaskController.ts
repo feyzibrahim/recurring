@@ -15,6 +15,7 @@ import { updateTask } from "./functions/updateTask";
 import { getTasks } from "./functions/getTasks";
 import { deleteTask } from "./functions/deleteTask";
 import { ProjectUseCaseInterface } from "../../../interface/project/ProjectUseCaseInterface";
+import { getTasksByProjectId } from "./functions/getTasksByProjectId";
 
 @controller("/api/task")
 export class TaskController {
@@ -28,6 +29,16 @@ export class TaskController {
   @httpGet("/")
   async getTasks(req: Request, res: Response) {
     await getTasks(req, res, this.iTaskUseCase);
+  }
+
+  @httpGet("/project/:projectSlug")
+  async getTasksByProjectId(req: Request, res: Response) {
+    await getTasksByProjectId(
+      req,
+      res,
+      this.iTaskUseCase,
+      this.iProjectUseCase
+    );
   }
 
   @httpGet("/:slug")

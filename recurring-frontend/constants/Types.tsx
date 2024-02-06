@@ -46,6 +46,7 @@ interface ProjectTypes {
 }
 
 interface TaskTypes {
+  id: string;
   _id: string;
   title: string;
   slug: string;

@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/select";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { createTask } from "@/app/lib/features/task/taskActions";
+import { ProjectList } from "./ProjectList";
 
 const formSchema = z.object({
   title: z
@@ -81,7 +82,7 @@ export default function TaskForm({
   slug,
 }: {
   setIsModalOpen: any;
-  slug: string;
+  slug?: string;
 }) {
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -92,7 +93,7 @@ export default function TaskForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      project: slug,
+      project: slug ?? "",
       startDate: undefined,
       dueDate: undefined,
       status: "",
@@ -165,6 +166,7 @@ export default function TaskForm({
                       <SelectItem value="planning">Planning</SelectItem>
                       <SelectItem value="active">Active</SelectItem>
                       <SelectItem value="completed">Completed</SelectItem>
+                      <SelectItem value="backlog">Backlog</SelectItem>
                       <SelectItem value="archive">Archive</SelectItem>
                     </SelectContent>
                   </Select>
@@ -212,6 +214,19 @@ export default function TaskForm({
             </FormItem>
           )}
         />
+        {!slug && (
+          <FormField
+            control={form.control}
+            name="project"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Choose Project</FormLabel>
+                <ProjectList field={field} />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Loading..." : "Update Details"}

@@ -5,6 +5,7 @@ import { getTask } from "./functions/getTask.adapter";
 import { getTasks } from "./functions/getTasks.adapter";
 import { TaskAdapterInterface } from "../../../../interface/task/TaskAdapterInterface";
 import { deleteTask } from "./functions/deleteTask.adapter";
+import { getTasksByProjectId } from "./functions/getTasksByProjectId.adapter";
 
 @injectable()
 export class TaskAdapter implements TaskAdapterInterface {
@@ -16,8 +17,8 @@ export class TaskAdapter implements TaskAdapterInterface {
     return getTasks(organizationId);
   }
 
-  async getTasksByProjectId(projectId: string): Promise<boolean | Task[]> {
-    throw new Error("Method not implemented.");
+  async getTasksByProjectId(projectSlug: string): Promise<boolean | Task[]> {
+    return getTasksByProjectId(projectSlug);
   }
 
   async createTask(Task: Task): Promise<boolean | Task> {
