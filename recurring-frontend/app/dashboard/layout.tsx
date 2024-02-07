@@ -9,7 +9,7 @@ export default async function DashboardLayout({
 }) {
   await checkUserWithoutRedirect();
   return (
-    <section className="md:flex md:h-screen md:overflow-hidden">
+    <section className="md:flex md:min-h-screen">
       <SideBar />
       <StoreProvider>{children}</StoreProvider>
     </section>

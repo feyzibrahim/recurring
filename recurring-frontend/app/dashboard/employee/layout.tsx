@@ -2,7 +2,7 @@ import EmployeeSidebar from "./EmployeeSidebar";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <section className="md:flex md:h-screen md:overflow-hidden w-full">
+    <section className="md:flex w-full min-h-screen">
       <EmployeeSidebar /> {children}
     </section>
   );

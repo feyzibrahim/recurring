@@ -41,7 +41,6 @@ export function ProjectList({ field }: { field: any }) {
           "Content-Type": "application/json",
         },
       });
-      console.log("file: ProjectList.tsx:59 -> loadData -> res", res);
 
       if (res.projects) {
         const projects: ProjectTypes[] = res.projects;

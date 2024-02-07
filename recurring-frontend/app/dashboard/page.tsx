@@ -5,7 +5,7 @@ const page = async () => {
   await checkUserWithoutRedirect();
 
   return (
-    <div className="min-h-screen p-10 overflow-y-scroll w-full">
+    <div className="min-h-screen p-10 w-full">
       <div className="flex flex-col items-center justify-center h-full">
         <EmptyProject />
         <p className="mt-2">Dashboard Yet To be designed</p>

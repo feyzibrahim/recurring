@@ -12,7 +12,6 @@ const EmployeeList = () => {
   const dispatch = useAppDispatch();
 
   const { employees } = useAppSelector((state) => state.employee);
-  console.log("🚀 ~ EmployeeList ~ employees:", employees);
 
   useEffect(() => {
     dispatch(getEmployees());

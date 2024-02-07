@@ -10,15 +10,19 @@ const EmployeeNav = ({ params }: { params: { id: string } }) => {
       <Link
         href={`/dashboard/employee/${params.id}`}
         className={`shrink-0 pb-2 ${
-          pathName === `/dashboard/employee/${params.id}` ? "text-foreground font-bold" : ""
+          pathName === `/dashboard/employee/${params.id}`
+            ? "text-foreground font-bold"
+            : ""
         }`}
       >
         Details
       </Link>
       <Link
-        href={`/dashboard/employee/${params.id}/attendence`}
+        href={`/dashboard/employee/${params.id}/attendance`}
         className={` ${
-          pathName === `/dashboard/employee/${params.id}/attendence` ? "text-foreground font-bold" : ""
+          pathName === `/dashboard/employee/${params.id}/attendance`
+            ? "text-foreground font-bold"
+            : ""
         }`}
       >
         Attendance
@@ -26,7 +30,9 @@ const EmployeeNav = ({ params }: { params: { id: string } }) => {
       <Link
         href={`/dashboard/employee/${params.id}/salary`}
         className={` ${
-          pathName === `/dashboard/employee/${params.id}/salary` ? "text-foreground font-bold" : ""
+          pathName === `/dashboard/employee/${params.id}/salary`
+            ? "text-foreground font-bold"
+            : ""
         }`}
       >
         Salary
@@ -34,7 +40,9 @@ const EmployeeNav = ({ params }: { params: { id: string } }) => {
       <Link
         href={`/dashboard/employee/${params.id}/history`}
         className={` ${
-          pathName === `/dashboard/employee/${params.id}/history` ? "text-foreground font-bold" : ""
+          pathName === `/dashboard/employee/${params.id}/history`
+            ? "text-foreground font-bold"
+            : ""
         }`}
       >
         History

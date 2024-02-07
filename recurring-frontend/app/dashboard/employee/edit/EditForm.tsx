@@ -113,7 +113,7 @@ const EditForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-5">
         <div className="md:grid grid-cols-4 gap-10">
           <div>
             <PhotoUpload />

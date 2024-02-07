@@ -2,8 +2,8 @@ import EmployeeNav from "../EmployeeNav";
 
 const page = ({ params }: { params: { id: string } }) => {
   return (
-    <div>
-      <EmployeeNav params={params}/>
+    <div className="mx-5">
+      <EmployeeNav params={params} />
       Test
     </div>
   );

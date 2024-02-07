@@ -1,3 +1,4 @@
+import { ScrollArea } from "@/components/ui/scroll-area";
 import UserAvatar from "@/public/img/user-avatar.png";
 import ProfileBanner from "@/public/profile_banner.png";
 import Image from "next/image";
@@ -8,8 +9,8 @@ export default async function EmployeeProfile({
   children: React.ReactNode;
 }) {
   return (
-    <section className="min-h-screen p-5 w-full overflow-y-auto">
-      <div className="h-48 overflow-clip w-full bg-slate-400">
+    <ScrollArea className="w-full h-screen overflow-clip">
+      <div className="px-5 pt-5 h-48 w-full">
         <Image
           src={ProfileBanner}
           alt="Background in settings"
@@ -17,10 +18,10 @@ export default async function EmployeeProfile({
         />
       </div>
 
-      <div className="bg-backgroundAccent w-full md:px-5">
+      <div className="mx-5 px-5 bg-backgroundAccent">
         <p className="text-3xl font-semibold py-5">Employee Details</p>
       </div>
       {children}
-    </section>
+    </ScrollArea>
   );
 }
