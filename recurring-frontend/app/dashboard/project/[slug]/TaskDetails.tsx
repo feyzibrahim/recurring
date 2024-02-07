@@ -13,7 +13,7 @@ const TaskDetails = ({ slug }: { slug: string }) => {
 
   useEffect(() => {
     dispatch(getTasksByProjectId(slug));
-  }, [dispatch]);
+  }, [dispatch, slug]);
 
   return (
     <div className="col-span-3 p-5">

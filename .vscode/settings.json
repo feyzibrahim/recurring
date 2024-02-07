@@ -3,6 +3,7 @@
     "CLOUDINARY",
     "inversify",
     "Kanban",
+    "pangea",
     "reduxjs",
     "Timelapse"
   ]

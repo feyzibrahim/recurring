@@ -34,7 +34,7 @@ const EmployeeDetails = ({ id }: { id: string }) => {
 
   useEffect(() => {
     dispatch(getEmployee(id));
-  }, []);
+  }, [dispatch, id]);
 
   const deleteHandler = () => {
     dispatch(deleteEmployee(id)).then(() => {
@@ -190,7 +190,7 @@ const EmployeeDetails = ({ id }: { id: string }) => {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Confirm Delete Employee?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action can't be undone...
+                    This action can&apos;t be undone...
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
