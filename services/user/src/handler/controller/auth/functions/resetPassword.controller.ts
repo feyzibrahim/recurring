@@ -3,9 +3,10 @@ import { AuthUseCaseInterface } from "../../../../interface/auth/AuthUseCaseInte
 import { validateVerificationToken } from "../../../../util/JWT/emailVerification.jwt";
 import passwordValidate from "../../../../util/validation/password.validate";
 import {
+  JWTPayload,
   createJwtAccessToken,
   createJwtRefreshToken,
-} from "../../../../util/JWT/create.jwt";
+} from "@recurring/shared_library";
 import cookieConfig from "../../../../constants/cookieConfig";
 import { User } from "../../../../Entities/User";
 
@@ -27,9 +28,24 @@ export const resetPassword = async (
 
     const user = await iAuthUseCase.resetPassword(hash, data.user);
 
+    let tempUser = user as User;
+
     // Setting JWT Tokens
-    const access_token = createJwtAccessToken(user as User);
-    const refresh_token = createJwtRefreshToken(user as User);
+    const payload: JWTPayload = {
+      user: tempUser._id,
+      role: tempUser.role,
+      organization: tempUser.organization,
+    };
+
+    // Setting JWT Tokens
+    const access_token = createJwtAccessToken(
+      payload,
+      process.env.ACCESS_SECRET as string
+    );
+    const refresh_token = createJwtRefreshToken(
+      payload,
+      process.env.REFRESH_SECRET as string
+    );
     res.cookie("access_token", access_token, cookieConfig);
     res.cookie("refresh_token", refresh_token, cookieConfig);
 

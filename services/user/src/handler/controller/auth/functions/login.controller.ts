@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { AuthUseCaseInterface } from "../../../../interface/auth/AuthUseCaseInterface";
 import { User } from "../../../../Entities/User";
 import {
+  JWTPayload,
   createJwtAccessToken,
   createJwtRefreshToken,
-} from "../../../../util/JWT/create.jwt";
+} from "@recurring/shared_library";
 import validateUserOnLogin from "../../../../util/validation/login.validate";
 import cookieConfig from "../../../../constants/cookieConfig";
 
@@ -22,8 +23,22 @@ export const login = async (
     );
 
     // Setting JWT Tokens
-    const access_token = createJwtAccessToken(user);
-    const refresh_token = createJwtRefreshToken(user);
+
+    const payload: JWTPayload = {
+      user: user._id,
+      role: user.role,
+      organization: user.organization,
+    };
+
+    const access_token = createJwtAccessToken(
+      payload,
+      process.env.ACCESS_SECRET as string
+    );
+    const refresh_token = createJwtRefreshToken(
+      payload,
+      process.env.REFRESH_SECRET as string
+    );
+
     res.cookie("access_token", access_token, cookieConfig);
     res.cookie("refresh_token", refresh_token, cookieConfig);
 
@@ -35,4 +50,8 @@ export const login = async (
   } catch (error: any) {
     res.status(400).json({ success: false, error: error.message });
   }
+  console.log(
+    "file: login.controller.ts:59 -> process.env.REFRESH_SECRET",
+    process.env.REFRESH_SECRET
+  );
 };

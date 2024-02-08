@@ -4,7 +4,7 @@ import { UserUseCaseInterface } from "../../../interface/user/UserUseCaseInterfa
 import { controller, httpGet, httpPatch } from "inversify-express-utils";
 import { Request, Response } from "express";
 import { requireAuth } from "../../middleware/AuthMiddleware";
-import { validateJwt } from "../../../util/JWT/validate.jwt";
+import { validateJwt } from "@recurring/shared_library";
 import { changePassword } from "./functions/changePassword.controller";
 import { updateProfile } from "./functions/updateProfile.controller";
 
@@ -20,7 +20,11 @@ export class UserController {
     try {
       const { access_token } = req.cookies;
 
-      const data = validateJwt(access_token);
+      const data = validateJwt(
+        access_token,
+        process.env.ACCESS_SECRET as string
+      );
+
       const user = await this.iUserUseCase.getUser(data.user);
 
       if (!user) {

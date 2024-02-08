@@ -23,36 +23,32 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
   };
 
   return (
-    <div className="bg-backgroundAccent p-8 rounded-md shadow-md">
+    <div className="bg-secondary p-5 shadow-md">
       {project && (
         <div>
           <h2 className="text-2xl font-bold mb-4">{project.name}</h2>
           <Label>
             <p className="py-2">Project Status</p>
           </Label>
-          <InputBox data={project.status} bg="black" />
+          <InputBox data={project.status} />
           <Label>
             <p className="py-2">Start Date:</p>
           </Label>
           <InputBox
             data={format(new Date(project.startDate), "MMMM d, yyyy")}
-            bg="black"
           />
           <Label>
             <p className="py-2">End Date:</p>
           </Label>
-          <InputBox
-            data={format(new Date(project.endDate), "MMMM d, yyyy")}
-            bg="black"
-          />
+          <InputBox data={format(new Date(project.endDate), "MMMM d, yyyy")} />
           <Label>
             <p className="py-2">Description</p>
           </Label>
-          <InputBox data={project.description} bg="black" />
+          <InputBox data={project.description} />
           <Label>
             <p className="py-2">Manager</p>
           </Label>
-          <InputBox data={project.manager} bg="black" />
+          <InputBox data={project.manager} />
           <Label>
             <p className="py-2">Members</p>
           </Label>
@@ -61,13 +57,13 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
               <p key={index}>{member}</p>
             ))}
           </div>
-          <Button
+          {/* <Button
             variant="destructive"
             className="w-full"
             onClick={handleDelete}
           >
             Delete Project
-          </Button>
+          </Button> */}
         </div>
       )}
     </div>

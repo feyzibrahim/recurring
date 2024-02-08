@@ -10,6 +10,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import EmployeeNameFromStore from "@/components/common/EmployeeNameFromStore";
 
 export function TaskListTable({ slug }: { slug: string }) {
   const { tasks } = useAppSelector((state) => state.task);
@@ -50,7 +51,7 @@ export function TaskListTable({ slug }: { slug: string }) {
                   </HoverCard>
                 </td>
                 <td className="border-t border-background p-3">
-                  <div className="flex gap-3 items-center">
+                  <div className="flex gap-2 items-center">
                     <div className="w-5 h-5">
                       <Image
                         src={UserAvatar}
@@ -60,14 +61,16 @@ export function TaskListTable({ slug }: { slug: string }) {
                         height={100}
                       />
                     </div>
-                    {task.assignee}
+                    <p className="line-clamp-1 max-w-36">
+                      <EmployeeNameFromStore id={task.assignee} />
+                    </p>
                   </div>
                 </td>
                 <td className="border-t border-background p-3">
-                  {format(new Date(task.startDate), "MMMM d, yyyy")}
+                  {format(new Date(task.startDate), "MMM d, yyyy")}
                 </td>
                 <td className="border-t border-background p-3">
-                  {format(new Date(task.dueDate), "MMMM d, yyyy")}
+                  {format(new Date(task.dueDate), "MMM d, yyyy")}
                 </td>
                 <td className="border-t border-background p-3 capitalize">
                   {task.status}

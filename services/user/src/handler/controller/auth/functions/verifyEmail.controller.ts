@@ -3,9 +3,10 @@ import { AuthUseCaseInterface } from "../../../../interface/auth/AuthUseCaseInte
 import { User } from "../../../../Entities/User";
 import { validateVerificationToken } from "../../../../util/JWT/emailVerification.jwt";
 import {
+  JWTPayload,
   createJwtAccessToken,
   createJwtRefreshToken,
-} from "../../../../util/JWT/create.jwt";
+} from "@recurring/shared_library";
 
 const cookieConfig = {
   secure: true,
@@ -38,8 +39,22 @@ export const verifyEmail = async (
     let temp = user as User;
     user = await iAuthUseCase.updateUserStatusAfterEmailValidation(temp._id);
 
-    const access_token = createJwtAccessToken(user as User);
-    const refresh_token = createJwtRefreshToken(user as User);
+    // Setting JWT Tokens
+    const payload: JWTPayload = {
+      user: temp._id,
+      role: temp.role,
+      organization: temp.organization,
+    };
+
+    // Setting JWT Tokens
+    const access_token = createJwtAccessToken(
+      payload,
+      process.env.ACCESS_SECRET as string
+    );
+    const refresh_token = createJwtRefreshToken(
+      payload,
+      process.env.REFRESH_SECRET as string
+    );
     res.cookie("access_token", access_token, cookieConfig);
     res.cookie("refresh_token", refresh_token, cookieConfig);
 

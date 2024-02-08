@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { AuthUseCaseInterface } from "../../../../interface/auth/AuthUseCaseInterface";
 import { User } from "../../../../Entities/User";
 import {
+  JWTPayload,
   createJwtAccessToken,
   createJwtRefreshToken,
-} from "../../../../util/JWT/create.jwt";
+} from "@recurring/shared_library";
 import validateUser from "../../../../util/validation/signup.validate";
 import hashPassword from "../../../../util/hash/password.hash";
 import { sendVerificationLink } from "../../../../util/nodemailer/sendVerificationLink";
@@ -33,9 +34,24 @@ export const signup = async (
 
     await sendVerificationLink(newUser as User);
 
+    let tempUser = newUser as User;
+
     // Setting JWT Tokens
-    const access_token = createJwtAccessToken(newUser as User);
-    const refresh_token = createJwtRefreshToken(newUser as User);
+    const payload: JWTPayload = {
+      user: tempUser._id,
+      role: tempUser.role,
+      organization: tempUser.organization,
+    };
+
+    // Setting JWT Tokens
+    const access_token = createJwtAccessToken(
+      payload,
+      process.env.ACCESS_SECRET as string
+    );
+    const refresh_token = createJwtRefreshToken(
+      payload,
+      process.env.REFRESH_SECRET as string
+    );
     res.cookie("access_token", access_token, cookieConfig);
     res.cookie("refresh_token", refresh_token, cookieConfig);
 

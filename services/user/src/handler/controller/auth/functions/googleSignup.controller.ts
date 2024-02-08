@@ -3,9 +3,10 @@ import { AuthUseCaseInterface } from "../../../../interface/auth/AuthUseCaseInte
 import { User } from "../../../../Entities/User";
 import validateUserOnGoogleAuth from "../../../../util/google/validate.google";
 import {
+  JWTPayload,
   createJwtAccessToken,
   createJwtRefreshToken,
-} from "../../../../util/JWT/create.jwt";
+} from "@recurring/shared_library";
 import cookieConfig from "../../../../constants/cookieConfig";
 
 export const googleSignup = async (
@@ -32,9 +33,23 @@ export const googleSignup = async (
       user = await iAuthUseCase.signup(temp as User);
     }
 
+    let tempUser = user as User;
+
+    const payload: JWTPayload = {
+      user: tempUser._id,
+      role: tempUser.role,
+      organization: tempUser.organization,
+    };
+
     // Setting JWT Tokens
-    const access_token = createJwtAccessToken(user as User);
-    const refresh_token = createJwtRefreshToken(user as User);
+    const access_token = createJwtAccessToken(
+      payload,
+      process.env.ACCESS_SECRET as string
+    );
+    const refresh_token = createJwtRefreshToken(
+      payload,
+      process.env.REFRESH_SECRET as string
+    );
     res.cookie("access_token", access_token, cookieConfig);
     res.cookie("refresh_token", refresh_token, cookieConfig);
 
