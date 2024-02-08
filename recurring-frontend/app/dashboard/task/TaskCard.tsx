@@ -20,6 +20,7 @@ const TaskCard: React.FC<ItemProps> = ({ task, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
+          <div>{typeof task.project !== "string" ? task.project.name : ""}</div>
           <h1 className="text-lg font-bold">{task.title}</h1>
           <p className="text-foregroundAccent">
             {task.description ?? "No description were added"}

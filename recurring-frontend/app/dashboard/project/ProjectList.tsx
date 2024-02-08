@@ -17,7 +17,7 @@ const ProjectList = () => {
 
   return (
     <>
-      {projects && projects.length > 1 ? (
+      {projects && projects.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project: any, index: number) => {
             return <ProjectCard project={project} key={index} />;

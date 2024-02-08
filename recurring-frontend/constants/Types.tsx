@@ -51,7 +51,7 @@ interface TaskTypes {
   title: string;
   slug: string;
   organization: string;
-  project: string;
+  project: string | ProjectTypes;
   startDate: Date;
   dueDate: Date;
   status: string;

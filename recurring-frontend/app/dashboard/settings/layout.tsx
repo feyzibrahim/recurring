@@ -3,6 +3,7 @@ import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
 import UserAvatar from "../../../public/img/user-avatar.png";
 import ProfileBanner from "../../../public/profile_banner.png";
 import Image from "next/image";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default async function DashboardLayout({
   children,
@@ -12,8 +13,8 @@ export default async function DashboardLayout({
   const user = await checkUserWithoutRedirect();
 
   return (
-    <section className="min-h-screen p-5 w-full overflow-y-auto">
-      <div className="h-48 overflow-clip w-full bg-slate-400">
+    <ScrollArea className="h-screen overflow-clip w-full">
+      <div className="h-48 overflow-clip m-5">
         <Image
           src={ProfileBanner}
           alt="Background in settings"
@@ -21,7 +22,7 @@ export default async function DashboardLayout({
         />
       </div>
 
-      <div className="bg-backgroundAccent rounded-lg shadow-md w-full md:px-10 -mt-10">
+      <div className="bg-backgroundAccent rounded-lg shadow-md md:px-10 -mt-10 mx-5">
         <div className="flex items-center mb-4">
           <div className="w-28 h-28 rounded-full mr-4 overflow-clip bg-background border-8 border-backgroundAccent">
             <Image
@@ -40,6 +41,6 @@ export default async function DashboardLayout({
         <SettingsNav />
       </div>
       {children}
-    </section>
+    </ScrollArea>
   );
 }

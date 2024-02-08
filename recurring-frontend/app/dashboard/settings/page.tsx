@@ -10,7 +10,7 @@ const page = async () => {
   const user = await checkUserWithoutRedirect();
 
   return (
-    <div className="md:px-10 md:py-5 w-full">
+    <div className="md:px-10 pb-5 w-full">
       <div className="md:flex gap-5 md:w-1/2">
         <div className="md:w-1/2">
           <Label>
