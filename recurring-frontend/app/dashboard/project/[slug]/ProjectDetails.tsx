@@ -9,6 +9,8 @@ import { format } from "date-fns";
 import { Label } from "@/components/ui/label";
 import InputBox from "@/components/common/InputBox";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import UserAvatar from "@/public/img/user-avatar.png";
 
 const ProjectDetails = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
@@ -48,22 +50,37 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
           <Label>
             <p className="py-2">Manager</p>
           </Label>
-          <InputBox data={project.manager} />
+          <InputBox
+            data={
+              typeof project.manager !== "string"
+                ? `${project.manager.firstName} ${project.manager.lastName}`
+                : "Cannot Read Name"
+            }
+          />
           <Label>
             <p className="py-2">Members</p>
           </Label>
           <div className="mb-4">
             {project.members.map((member, index) => (
-              <p key={index}>{member}</p>
+              <div className="w-9 h-9 rounded-full overflow-clip" key={index}>
+                <Image
+                  src={
+                    (member &&
+                      typeof member !== "string" &&
+                      (member.profileImageURL as string)) ||
+                    UserAvatar
+                  }
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  width={100}
+                  height={100}
+                />
+              </div>
             ))}
           </div>
-          {/* <Button
-            variant="destructive"
-            className="w-full"
-            onClick={handleDelete}
-          >
+          <Button variant="outline" className="w-full" onClick={handleDelete}>
             Delete Project
-          </Button> */}
+          </Button>
         </div>
       )}
     </div>

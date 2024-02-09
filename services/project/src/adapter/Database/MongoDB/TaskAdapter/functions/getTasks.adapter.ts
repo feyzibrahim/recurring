@@ -3,7 +3,9 @@ import TaskModal from "../../Modal/TaskModel";
 
 export const getTasks = async (id: string) => {
   try {
-    const task = await TaskModal.find({ organization: id }).populate("project");
+    const task = await TaskModal.find({ organization: id })
+      .populate("project")
+      .populate("assignee");
     return task as Task[];
   } catch (error) {
     console.log("TaskAdapter: getTask -> error", error);

@@ -22,6 +22,7 @@ export const createEmployee = async (
     let employee = (await iEmployeeUseCase.createEmployee(body)) as Employee;
 
     sendDataToQueue(QUEUES.EMPLOYEECREATION, employee);
+    sendDataToQueue(QUEUES.PROJECT_USER_CREATION, employee);
 
     return res.status(200).json({
       employee: employee,

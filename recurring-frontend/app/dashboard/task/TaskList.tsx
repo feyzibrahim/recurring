@@ -1,12 +1,13 @@
 "use client";
 import { DragDropContext } from "@hello-pangea/dnd";
-import CreateTaskButton from "@/components/common/task/CreateTaskButton";
 import Column from "./Column";
-import useTaskHook from "./useTaskHook";
+import { useContext, useState } from "react";
+import TaskDetailSheet from "./TaskDetailSheet";
+import { TaskContext } from "./TaskContextProvider";
+import CreateTaskButton from "./CreateTaskButton";
 
 const TaskList = () => {
-  const { columns, onDragEnd } = useTaskHook();
-
+  const { columns, onDragEnd } = useContext(TaskContext);
   return (
     <div>
       <div className="flex items-center justify-between p-5">
@@ -21,6 +22,7 @@ const TaskList = () => {
             ))}
         </div>
       </DragDropContext>
+      <TaskDetailSheet />
     </div>
   );
 };

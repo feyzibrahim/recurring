@@ -28,7 +28,7 @@ const ProjectsSchema: Schema = new Schema(
       type: Date,
       required: true,
     },
-    members: [{ type: Schema.Types.ObjectId }],
+    members: [{ type: Schema.Types.ObjectId, ref: "User" }],
     status: {
       type: String,
       default: "planning",
@@ -36,6 +36,7 @@ const ProjectsSchema: Schema = new Schema(
     },
     manager: {
       type: Schema.Types.ObjectId,
+      ref: "User",
     },
     client: {
       type: Schema.Types.ObjectId,

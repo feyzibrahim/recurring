@@ -16,6 +16,7 @@ import { getTasks } from "./functions/getTasks";
 import { deleteTask } from "./functions/deleteTask";
 import { ProjectUseCaseInterface } from "../../../interface/project/ProjectUseCaseInterface";
 import { getTasksByProjectId } from "./functions/getTasksByProjectId";
+import { updateTaskStatus } from "./functions/updateTaskStatus";
 
 @controller("/api/task")
 export class TaskController {
@@ -51,10 +52,16 @@ export class TaskController {
     await createTask(req, res, this.iTaskUseCase, this.iProjectUseCase);
   }
 
+  @httpPatch("/by-task/:slug")
+  async updateTaskStatus(req: Request, res: Response) {
+    await updateTaskStatus(req, res, this.iTaskUseCase);
+  }
+
   @httpPatch("/")
   async updateTask(req: Request, res: Response) {
     await updateTask(req, res, this.iTaskUseCase);
   }
+
   @httpDelete("/:slug")
   async deleteTask(req: Request, res: Response) {
     await deleteTask(req, res, this.iTaskUseCase);

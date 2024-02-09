@@ -14,8 +14,14 @@ const EmployeeCard = ({ employee }: { employee: EmployeeTypes }) => {
       onClick={() => router.push(`employee/${employee._id}`)}
     >
       <div className="text-center py-5">
-        <div className="w-1/2 mx-auto">
-          <Image src={UserAvatar} alt="profile iamge" />
+        <div className="w-32 h-32 mx-auto rounded-full overflow-clip">
+          <Image
+            src={(employee && employee.profileImageURL) || UserAvatar}
+            alt="profile image"
+            width={200}
+            height={200}
+            className="w-full h-full object-cover"
+          />
         </div>
         <h3 className="text-lg font-semibold">
           {employee && `${employee.firstName} ${employee.lastName}`}

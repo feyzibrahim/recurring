@@ -1,8 +1,12 @@
+import { EmployeeTypes } from "@/constants/Types";
 import React from "react";
 
-const EmployeeNameFromStore = ({ id }: { id: string }) => {
-  const name = "Faiz";
-  return <>{name}</>;
+const EmployeeNameFromStore = ({ employee }: { employee: EmployeeTypes }) => {
+  return (
+    <>
+      {employee.firstName} {employee.lastName}
+    </>
+  );
 };
 
 export default EmployeeNameFromStore;

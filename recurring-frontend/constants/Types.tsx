@@ -37,10 +37,10 @@ interface ProjectTypes {
   startDate: Date;
   // tasks: [],
   endDate: Date;
-  members: [];
+  members: [string | EmployeeTypes];
   status: string;
   description: string;
-  manager: string;
+  manager: string | EmployeeTypes;
   // client: string,
   // deal: string,
 }
@@ -56,7 +56,7 @@ interface TaskTypes {
   dueDate: Date;
   status: string;
   priority: string;
-  assignee: string;
+  assignee: string | EmployeeTypes;
   description: string;
   tags: [];
   subTasks: [TaskTypes];

@@ -38,6 +38,7 @@ const TaskSchema: Schema = new Schema(
     },
     assignee: {
       type: Schema.Types.ObjectId,
+      ref: "User",
     },
     description: {
       type: String,

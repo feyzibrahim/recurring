@@ -21,11 +21,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import PhotoUpload from "./PhotoUpload";
+import PhotoUpload from "@/components/common/PhotoUpload";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { createEmployee } from "@/app/lib/features/employee/employeeActions";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
+import { useState } from "react";
+import axios from "axios";
 
 const checkCredentials = async ({
   key,
@@ -119,7 +121,7 @@ const projectSchema = z.object({
     .min(2, { message: "Designation must be at least 2 characters." }),
   salary: z.string(),
   hiringDate: z.date(),
-
+  profileImageURL: z.string().optional(),
   gender: z
     .string()
     .min(2, { message: "Gender must be at least 2 characters." }),
@@ -129,6 +131,7 @@ const projectSchema = z.object({
 const CreateForm = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [selectedFile, setSelectedFile] = useState<any>();
   const { loading, error } = useAppSelector((state) => state.employee);
 
   const form = useForm<z.infer<typeof projectSchema>>({
@@ -146,7 +149,7 @@ const CreateForm = () => {
       salary: "20000",
       hiringDate: new Date("01/01/2024"),
       address: {
-        city: "tesafsadt",
+        city: "test",
         country: "test",
         state: "test",
         street: "test",
@@ -155,7 +158,30 @@ const CreateForm = () => {
     },
   });
 
+  const photoUpload = async () => {
+    const formData = new FormData();
+    formData.append("file", selectedFile as Blob);
+    formData.append(
+      "upload_preset",
+      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string
+    );
+
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
+    const profileImageURL = selectedFile && (await photoUpload());
+    if (profileImageURL) {
+      values.profileImageURL = profileImageURL;
+    }
     await dispatch(createEmployee(values)).then(() => {
       router.back();
     });
@@ -163,10 +189,13 @@ const CreateForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 px-5 ">
         <div className="md:grid grid-cols-4 gap-10">
           <div>
-            <PhotoUpload />
+            <PhotoUpload
+              selectedFile={selectedFile}
+              setSelectedFile={setSelectedFile}
+            />
             <FormField
               control={form.control}
               name="hiringDate"

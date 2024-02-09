@@ -12,8 +12,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
-import { commonRequest } from "@/api/client";
-import { useState } from "react";
 import FormInputCustom from "../FormInputCustom";
 import DatePickerLimited from "@/components/custom/DatePickerLimited";
 import { EmployeeList } from "./EmployeeList";
@@ -105,6 +103,7 @@ export default function TaskForm({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    // console.log("file: TaskForm.tsx:106 -> onSubmit -> values", values);
     dispatch(createTask(values)).then(() => {
       setIsModalOpen(false);
     });

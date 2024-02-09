@@ -3,4 +3,6 @@ export const TYPES = {
   ProjectUseCaseInterface: Symbol.for("ProjectUseCaseInterface"),
   TaskAdapterInterface: Symbol.for("TaskAdapterInterface"),
   TaskUseCaseInterface: Symbol.for("TaskUseCaseInterface"),
+  UserAdapterInterface: Symbol.for("UserAdapterInterface"),
+  RabbitMQServiceInitializer: Symbol.for("RabbitMQServiceInitializer"),
 };

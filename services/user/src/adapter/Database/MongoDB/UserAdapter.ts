@@ -30,7 +30,7 @@ export class UserAdapter implements UserAdapterInterface {
       const newUser = await UserModal.findOneAndUpdate(
         { _id: user._id },
         { $set: { ...user } },
-        { new: true }
+        { new: true, upsert: true }
       );
 
       return newUser as User;

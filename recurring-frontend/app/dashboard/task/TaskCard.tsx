@@ -2,6 +2,8 @@
 import { format } from "date-fns";
 import { TaskTypes } from "@/constants/Types";
 import { Draggable } from "@hello-pangea/dnd";
+import { useContext } from "react";
+import { TaskContext } from "./TaskContextProvider";
 
 interface ItemProps {
   task: TaskTypes;
@@ -9,6 +11,8 @@ interface ItemProps {
 }
 
 const TaskCard: React.FC<ItemProps> = ({ task, index }) => {
+  const { setOnOpenChange, setSheetData } = useContext(TaskContext);
+
   return (
     <Draggable draggableId={task._id} index={index} key={index}>
       {(provided, snapshot) => (
@@ -19,6 +23,10 @@ const TaskCard: React.FC<ItemProps> = ({ task, index }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          onClick={() => {
+            setOnOpenChange(true);
+            setSheetData(task);
+          }}
         >
           <div>{typeof task.project !== "string" ? task.project.name : ""}</div>
           <h1 className="text-lg font-bold">{task.title}</h1>

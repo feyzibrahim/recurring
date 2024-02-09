@@ -13,15 +13,14 @@ export const updateTask = async (
 
     const data = validateJwt(access_token);
     const task = req.body as Task;
-    console.log("updateTask: task", task);
 
-    let org = await iTaskUseCase.updateTask(data.user, task);
-    if (!org) {
+    let newTask = await iTaskUseCase.updateTask(data.user, task);
+    if (!newTask) {
       throw Error("No task found");
     }
 
     return res.status(200).json({
-      task: org,
+      task: newTask,
       success: true,
       message: "Task successfully Fetched",
     });

@@ -45,7 +45,7 @@ export function ProjectList({ field }: { field: any }) {
       if (res.projects) {
         const projects: ProjectTypes[] = res.projects;
         const transformedManagers = projects.map((project) => ({
-          value: project._id,
+          value: project.slug,
           label: project.name,
         }));
 

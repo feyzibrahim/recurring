@@ -15,6 +15,9 @@ import { TaskAdapter } from "./adapter/Database/MongoDB/TaskAdapter";
 import { TaskUseCaseInterface } from "./interface/task/TaskUseCaseInterface";
 import { TaskUseCase } from "./useCases/TaskUseCase";
 import { TaskController } from "./handler/controller/task/TaskController";
+import { RabbitMQService } from "./infra/rabbitmq/rabbitmq.service";
+import { UserAdapterInterface } from "./interface/user/UserAdapterInterface";
+import { UserAdapter } from "./adapter/Database/MongoDB/UserAdapter/UserAdapter";
 
 // Database connection
 connectToDatabase();
@@ -40,6 +43,16 @@ container
   .to(TaskUseCase);
 container.bind<TaskController>(TaskController).toSelf();
 container.bind<TaskUseCase>(TaskUseCase).toSelf();
+
+// User Injection
+container
+  .bind<UserAdapterInterface>(TYPES.UserAdapterInterface)
+  .to(UserAdapter);
+
+// RabbitMQ injection
+container
+  .bind<RabbitMQService>(TYPES.RabbitMQServiceInitializer)
+  .to(RabbitMQService);
 
 // Disconnect From Database
 process.on("SIGINT", async () => {

@@ -31,7 +31,7 @@ export class RabbitMQService {
           const response = Buffer.from(data.content).toString();
           const employee = JSON.parse(response) as User;
 
-          await this.userAdapter.createEmployee(employee);
+          await this.userAdapter.updateUser(employee);
 
           this.channel.ack(data);
         }

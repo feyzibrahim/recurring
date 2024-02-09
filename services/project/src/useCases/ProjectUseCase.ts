@@ -13,18 +13,23 @@ export class ProjectUseCase implements ProjectUseCaseInterface {
   getProject(slug: string): Promise<boolean | Project> {
     return this.iProjectUseCase.getProject(slug);
   }
+
   getProjectByUserId(userId: string): Promise<boolean | Project> {
     return this.iProjectUseCase.getProjectByUserId(userId);
   }
+
   createProject(project: Project): Promise<boolean | Project> {
     return this.iProjectUseCase.createProject(project);
   }
+
   updateProject(id: string, project: Project): Promise<boolean | Project> {
     return this.iProjectUseCase.updateProject(id, project);
   }
+
   getProjects(organizationId: string): Promise<boolean | Project[]> {
     return this.iProjectUseCase.getProjects(organizationId);
   }
+
   deleteProject(id: string): Promise<boolean | Project> {
     return this.iProjectUseCase.deleteProject(id);
   }

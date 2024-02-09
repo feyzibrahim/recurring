@@ -11,6 +11,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import EmployeeNameFromStore from "@/components/common/EmployeeNameFromStore";
+import { EmployeeTypes } from "@/constants/Types";
 
 export function TaskListTable({ slug }: { slug: string }) {
   const { tasks } = useAppSelector((state) => state.task);
@@ -52,9 +53,14 @@ export function TaskListTable({ slug }: { slug: string }) {
                 </td>
                 <td className="border-t border-background p-3">
                   <div className="flex gap-2 items-center">
-                    <div className="w-5 h-5">
+                    <div className="w-6 h-6 rounded-full overflow-clip">
                       <Image
-                        src={UserAvatar}
+                        src={
+                          (task.assignee &&
+                            typeof task.assignee !== "string" &&
+                            (task.assignee.profileImageURL as string)) ||
+                          UserAvatar
+                        }
                         alt="Profile"
                         className="w-full h-full object-cover"
                         width={100}
@@ -62,7 +68,9 @@ export function TaskListTable({ slug }: { slug: string }) {
                       />
                     </div>
                     <p className="line-clamp-1 max-w-36">
-                      <EmployeeNameFromStore id={task.assignee} />
+                      <EmployeeNameFromStore
+                        employee={task.assignee as EmployeeTypes}
+                      />
                     </p>
                   </div>
                 </td>
