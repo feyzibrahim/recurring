@@ -54,11 +54,11 @@ export const getProject: any = createAsyncThunk(
 // Project details Editing
 export const editProject: any = createAsyncThunk(
   "project/editProject",
-  async (data: any, { rejectWithValue }) => {
+  async ({ slug, data }: { slug: string; data: any }, { rejectWithValue }) => {
     return reduxCommonRequest({
       route: API_ROUTES.PROJECT,
       method: "PATCH",
-      url: "/api/project",
+      url: `/api/project/${slug}`,
       data: data,
       headers: {
         "Content-Type": "application/json",

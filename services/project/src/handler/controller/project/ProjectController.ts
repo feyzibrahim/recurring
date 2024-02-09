@@ -37,7 +37,7 @@ export class ProjectController {
     await createProject(req, res, this.iProjectUseCase);
   }
 
-  @httpPatch("/")
+  @httpPatch("/:slug")
   async updateProject(req: Request, res: Response) {
     await updateProject(req, res, this.iProjectUseCase);
   }

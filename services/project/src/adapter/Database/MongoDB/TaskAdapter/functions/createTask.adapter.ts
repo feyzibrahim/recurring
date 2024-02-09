@@ -6,10 +6,6 @@ export const createTask = async (task: Task) => {
     const creation = await TaskModal.create(task);
 
     const newTask = await TaskModal.findById(creation._id).populate("assignee");
-    console.log(
-      "file: createTask.adapter.ts:9 -> createTask -> newTask",
-      newTask
-    );
 
     return newTask as Task;
   } catch (error) {

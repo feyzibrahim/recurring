@@ -12,6 +12,7 @@ interface MemberType {
   email: string;
   username: string;
   phoneNumber: number;
+  profileImageURL: string;
 }
 
 export function MemberTable() {
@@ -34,9 +35,9 @@ export function MemberTable() {
             <tr key={index}>
               <td className="border-t border-background p-3">
                 <div className="flex gap-3 items-center">
-                  <div className="w-7 h-7">
+                  <div className="w-7 h-7 rounded-full overflow-clip">
                     <Image
-                      src={UserAvatar}
+                      src={member.profileImageURL || UserAvatar}
                       alt="Profile"
                       className="w-full h-full object-cover"
                       width={100}

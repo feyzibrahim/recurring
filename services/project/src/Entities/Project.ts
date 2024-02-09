@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export class Project {
   constructor(
     public _id: string,
@@ -7,7 +9,7 @@ export class Project {
     public organization: string,
     public tasks: string[],
     public endDate: Date,
-    public members: string[],
+    public members: string[] | User[],
     public status: "planning" | "active" | "completed" | "archive" | "backlog",
     public description?: string,
     public manager?: string,

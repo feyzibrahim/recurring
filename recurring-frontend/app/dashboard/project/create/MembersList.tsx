@@ -100,9 +100,9 @@ export default function MembersList({
                   onCheckedChange={() => handleCheckboxChange(member._id)}
                 />
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10">
+                  <div className="w-10 h-10 rounded-full overflow-clip">
                     <Image
-                      src={UserAvatar}
+                      src={member.profileImageURL || UserAvatar}
                       alt="Profile"
                       className="w-full h-full object-cover"
                       width={100}

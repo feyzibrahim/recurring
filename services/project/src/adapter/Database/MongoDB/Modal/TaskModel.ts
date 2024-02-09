@@ -2,6 +2,17 @@ import mongoose, { Schema } from "mongoose";
 import { Task } from "../../../../Entities/Task";
 import { uuid } from "uuidv4";
 
+const SubTask: Schema = new Schema({
+  title: {
+    type: String,
+  },
+  status: {
+    type: String,
+    default: "planning",
+    enum: ["planning", "active", "completed", "archive", "backlog"],
+  },
+});
+
 const TaskSchema: Schema = new Schema(
   {
     title: {
@@ -47,7 +58,10 @@ const TaskSchema: Schema = new Schema(
       type: [String],
     },
     subTasks: {
-      type: [this],
+      type: [SubTask],
+    },
+    notes: {
+      type: [String],
     },
   },
   { timestamps: true }

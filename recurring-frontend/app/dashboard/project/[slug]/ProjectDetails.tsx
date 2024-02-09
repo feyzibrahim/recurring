@@ -1,6 +1,7 @@
 "use client";
 import {
   deleteProject,
+  editProject,
   getProject,
 } from "@/app/lib/features/project/projectActions";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
@@ -11,6 +12,13 @@ import InputBox from "@/components/common/InputBox";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import UserAvatar from "@/public/img/user-avatar.png";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const ProjectDetails = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
@@ -24,6 +32,17 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
     dispatch(deleteProject(slug));
   };
 
+  const handleStatusUpdate = async (value: string) => {
+    const data = {
+      status: `${value}`,
+    };
+    console.log(
+      "file: ProjectDetails.tsx:39 -> handleStatusUpdate -> data",
+      data
+    );
+    dispatch(editProject({ slug, data }));
+  };
+
   return (
     <div className="bg-secondary p-5 shadow-md">
       {project && (
@@ -32,7 +51,21 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
           <Label>
             <p className="py-2">Project Status</p>
           </Label>
-          <InputBox data={project.status} />
+          <Select
+            defaultValue={project.status}
+            onValueChange={handleStatusUpdate}
+          >
+            <SelectTrigger className="bg-backgroundAccent">
+              <SelectValue placeholder="Select Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="planning">Planning</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="backlog">Backlog</SelectItem>
+              <SelectItem value="archive">Archive</SelectItem>
+            </SelectContent>
+          </Select>
           <Label>
             <p className="py-2">Start Date:</p>
           </Label>
@@ -60,9 +93,14 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
           <Label>
             <p className="py-2">Members</p>
           </Label>
-          <div className="mb-4">
+          <div className="mb-4 flex flex-wrap">
             {project.members.map((member, index) => (
-              <div className="w-9 h-9 rounded-full overflow-clip" key={index}>
+              <div
+                className={`w-10 h-10 rounded-full overflow-clip border-4 ${
+                  index > 0 && `-ml-2`
+                }`}
+                key={index}
+              >
                 <Image
                   src={
                     (member &&

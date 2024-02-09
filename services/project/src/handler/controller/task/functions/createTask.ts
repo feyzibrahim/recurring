@@ -25,10 +25,24 @@ export const createTask = async (
     body.project = project._id;
 
     let task = (await iTaskUseCase.createTask(body)) as Task;
-    console.log("file: createTask.ts:21 -> task", task);
+
+    const test = project.members.filter((mem: any) => {
+      if (typeof task.assignee !== "string") {
+        return mem._id.toString() !== task.assignee._id.toString() && mem;
+      }
+    });
+
+    let newProject;
+    if (test.length > 0 && typeof task.assignee !== "string") {
+      newProject = await iProjectUseCase.appendProjectMember(
+        project._id,
+        task.assignee._id
+      );
+    }
 
     return res.status(200).json({
       task: task,
+      project: newProject,
       success: true,
       message: "Task successfully Created",
     });

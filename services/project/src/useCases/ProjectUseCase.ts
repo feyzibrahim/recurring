@@ -22,8 +22,8 @@ export class ProjectUseCase implements ProjectUseCaseInterface {
     return this.iProjectUseCase.createProject(project);
   }
 
-  updateProject(id: string, project: Project): Promise<boolean | Project> {
-    return this.iProjectUseCase.updateProject(id, project);
+  updateProject(slug: string, project: Project): Promise<boolean | Project> {
+    return this.iProjectUseCase.updateProject(slug, project);
   }
 
   getProjects(organizationId: string): Promise<boolean | Project[]> {
@@ -32,5 +32,12 @@ export class ProjectUseCase implements ProjectUseCaseInterface {
 
   deleteProject(id: string): Promise<boolean | Project> {
     return this.iProjectUseCase.deleteProject(id);
+  }
+
+  appendProjectMember(
+    projectId: string,
+    userId: string
+  ): Promise<boolean | Project> {
+    return this.iProjectUseCase.appendProjectMember(projectId, userId);
   }
 }

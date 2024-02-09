@@ -17,7 +17,7 @@ export function TaskListTable({ slug }: { slug: string }) {
   const { tasks } = useAppSelector((state) => state.task);
 
   return (
-    <div className="w-full text-sm mt-5">
+    <div className="w-full text-sm px-5">
       <table className="w-full border-collapse my-2 bg-backgroundAccent rounded-lg">
         <thead>
           <tr className="text-left">

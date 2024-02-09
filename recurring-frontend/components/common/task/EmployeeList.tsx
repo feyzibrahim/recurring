@@ -99,9 +99,9 @@ export function EmployeeList({ field }: { field: any }) {
                     )}
                   />
                   <div className="flex gap-2">
-                    <div className="w-5 h-5 rounded-full">
+                    <div className="w-5 h-5 rounded-full overflow-clip">
                       <Image
-                        src={UserAvatar}
+                        src={emp.profileImageURL || UserAvatar}
                         alt="Profile"
                         className="w-full h-full object-cover"
                         width={100}
