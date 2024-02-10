@@ -10,11 +10,14 @@ import validateUser from "../../../../util/validation/signup.validate";
 import hashPassword from "../../../../util/hash/password.hash";
 import { sendVerificationLink } from "../../../../util/nodemailer/sendVerificationLink";
 import cookieConfig from "../../../../constants/cookieConfig";
+import { OrganizationUseCaseInterface } from "../../../../interface/organization/OrganizationUseCaseInterface";
+import { Organization } from "../../../../Entities/Organization";
 
 export const signup = async (
   req: Request,
   res: Response,
-  iAuthUseCase: AuthUseCaseInterface
+  iAuthUseCase: AuthUseCaseInterface,
+  iOrgUseCase: OrganizationUseCaseInterface
 ) => {
   const userData: any = req.body;
 
@@ -36,11 +39,22 @@ export const signup = async (
 
     let tempUser = newUser as User;
 
+    const orgDetails = {
+      admin: tempUser._id,
+    };
+    const organization = await iOrgUseCase.createOrganization(
+      orgDetails as Organization
+    );
+
+    if (!organization) {
+      throw Error("Cannot Create Organization");
+    }
+
     // Setting JWT Tokens
     const payload: JWTPayload = {
       user: tempUser._id,
       role: tempUser.role,
-      organization: tempUser.organization,
+      organization: typeof organization !== "boolean" ? organization._id : "",
     };
 
     // Setting JWT Tokens

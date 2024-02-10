@@ -189,7 +189,10 @@ const CreateForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 px-5 ">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 px-5 pb-5"
+      >
         <div className="md:grid grid-cols-4 gap-10">
           <div>
             <PhotoUpload

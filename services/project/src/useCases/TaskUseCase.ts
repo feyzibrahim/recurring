@@ -26,8 +26,8 @@ export class TaskUseCase implements TaskUseCaseInterface {
     return this.iTaskUseCase.createTask(task);
   }
 
-  getTaskByUserId(userId: string): Promise<boolean | Task> {
-    return this.iTaskUseCase.getTaskByUserId(userId);
+  getTasksByUserId(userId: string): Promise<boolean | Task[]> {
+    return this.iTaskUseCase.getTasksByUserId(userId);
   }
 
   updateTask(id: string, task: Task): Promise<boolean | Task> {

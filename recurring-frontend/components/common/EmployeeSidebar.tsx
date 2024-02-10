@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { logout } from "@/client/logout";
 
-const SideBar = () => {
+const EmployeeSidebar = () => {
   const pathName = usePathname();
   const router = useRouter();
 
@@ -37,16 +37,16 @@ const SideBar = () => {
         </h1>
       </div>
       <div className="flex flex-col items-center gap-3 py-5">
-        <Link href={"/dashboard"} className="hover-text text-xl">
+        <Link href={"/home"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard" ? " bg-primary text-white" : ""
+              pathName === "/home" ? " bg-primary text-white" : ""
             }`}
           >
             <AiOutlineDashboard className="m-1" />
           </div>
         </Link>
-        <Link href={"/dashboard/project"} className="hover-text text-xl">
+        <Link href={"/home/project"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
               pathName.includes("/project") ? " bg-primary text-white" : ""
@@ -55,25 +55,25 @@ const SideBar = () => {
             <RiDashboardLine className="m-1" />
           </div>
         </Link>
-        <Link href={"/dashboard/timeline"} className="hover-text text-xl">
+        <Link href={"/home/timeline"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/timeline" ? " bg-primary text-white" : ""
+              pathName === "/home/timeline" ? " bg-primary text-white" : ""
             }`}
           >
             <CgTimelapse className="m-1" />
           </div>
         </Link>
-        <Link href={"/dashboard/task"} className="hover-text text-xl">
+        <Link href={"/home/task"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/task" ? " bg-primary text-white" : ""
+              pathName === "/home/task" ? " bg-primary text-white" : ""
             }`}
           >
             <FaTasks className="m-1" />
           </div>
         </Link>
-        <Link href={"/dashboard/employee"} className="hover-text text-xl">
+        <Link href={"/home/employee"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
               pathName.includes("/employee") ? " bg-primary text-white" : ""
@@ -82,46 +82,29 @@ const SideBar = () => {
             <FaRegAddressCard className="m-1" />
           </div>
         </Link>
-        <Link href={"/dashboard/billing"} className="hover-text text-xl">
+        <Link href={"/home/billing"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/billing" ? " bg-primary text-white" : ""
+              pathName === "/home/billing" ? " bg-primary text-white" : ""
             }`}
           >
             <BiCreditCard className="m-1" />
           </div>
         </Link>
-        <Link href={"/dashboard/clients"} className="hover-text text-xl">
+
+        <Link href={"/home/chat"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/clients" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <IoIosPeople className="m-1" />
-          </div>
-        </Link>
-        <Link href={"/dashboard/deals"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/deals" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <FaMoneyCheckAlt className="m-1" />
-          </div>
-        </Link>
-        <Link href={"/dashboard/chat"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/chat" ? " bg-primary text-white" : ""
+              pathName === "/home/chat" ? " bg-primary text-white" : ""
             }`}
           >
             <BiChat className="m-1" />
           </div>
         </Link>
-        <Link href={"/dashboard/settings"} className="hover-text text-xl">
+        <Link href={"/home/settings"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
-              pathName.includes("/dashboard/settings")
+              pathName.includes("/home/settings")
                 ? " bg-primary text-white"
                 : ""
             }`}
@@ -159,4 +142,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default EmployeeSidebar;

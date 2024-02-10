@@ -15,6 +15,7 @@ import { getEmployees } from "./functions/getEmployees";
 import { getEmployee } from "./functions/getEmployee";
 import { deleteEmployee } from "./functions/deleteEmployee";
 import { getEmployeesWithRole } from "./functions/getEmployeesWithRole";
+import { sendEmployeeInvitation } from "./functions/sendEmployeeInvitation";
 
 @controller("/api/employee")
 export class EmployeeController {
@@ -31,6 +32,11 @@ export class EmployeeController {
   @httpGet("/with-role")
   async getEmployeesWithRole(req: Request, res: Response) {
     await getEmployeesWithRole(req, res, this.iEmployeeUseCase);
+  }
+
+  @httpGet("/employee-send-verification-email/:id")
+  async sendEmployeeInvitation(req: Request, res: Response) {
+    await sendEmployeeInvitation(req, res, this.iEmployeeUseCase);
   }
 
   @httpGet("/:id")

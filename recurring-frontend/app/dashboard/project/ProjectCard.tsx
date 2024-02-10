@@ -6,7 +6,7 @@ import { CgWorkAlt } from "react-icons/cg";
 const ProjectCard = ({ project }: { project: ProjectTypes }) => {
   return (
     <Link href={`project/${project.slug}`}>
-      <div className="bg-backgroundAccent p-5 text-sm hover:opacity-80">
+      <div className="bg-backgroundAccent p-5 text-sm hover:opacity-80 rounded-md">
         <div>
           <div className="flex gap-5 pb-3">
             <div className="bg-background p-2 text-2xl rounded-sm">

@@ -11,12 +11,15 @@ import { forgotPassword } from "./functions/forgotPassword.controller";
 import { verifyPasswordReset } from "./functions/verifyPasswordReset.controller";
 import { resetPassword } from "./functions/resetPassword.controller";
 import { checkCredentials } from "./functions/checkCredentials.controller";
+import { OrganizationUseCaseInterface } from "../../../interface/organization/OrganizationUseCaseInterface";
 
 @controller("/api/auth")
 export class AuthController {
   constructor(
     @inject(TYPES.AuthUseCaseInterface)
-    private iAuthUseCase: AuthUseCaseInterface
+    private iAuthUseCase: AuthUseCaseInterface,
+    @inject(TYPES.OrganizationUseCaseInterface)
+    private iOrgUseCase: OrganizationUseCaseInterface
   ) {}
 
   // User Login Function
@@ -28,7 +31,7 @@ export class AuthController {
   // User Signup Function
   @httpPost("/register")
   async signup(req: Request, res: Response) {
-    await signup(req, res, this.iAuthUseCase);
+    await signup(req, res, this.iAuthUseCase, this.iOrgUseCase);
   }
 
   // Google Sign Up

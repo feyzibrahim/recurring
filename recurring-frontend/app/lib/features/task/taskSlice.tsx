@@ -8,6 +8,7 @@ import {
   editTask,
   deleteTask,
   getTasksByProjectId,
+  getTasksByUserId,
 } from "./taskActions";
 import { TaskTypes } from "@/constants/Types";
 
@@ -74,6 +75,20 @@ export const taskSlice = createSlice({
         state.error = payload;
       })
       .addCase(getTasksByProjectId.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.tasks = payload.tasks;
+      })
+      // Task By user id
+      .addCase(getTasksByUserId.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getTasksByUserId.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.tasks = null;
+        state.error = payload;
+      })
+      .addCase(getTasksByUserId.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
         state.tasks = payload.tasks;

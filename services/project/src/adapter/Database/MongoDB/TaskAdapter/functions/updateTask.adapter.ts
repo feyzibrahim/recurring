@@ -7,10 +7,7 @@ export const updateTask = async (slug: string, task: Task) => {
     const populatedTask = await TaskModel.findOne({ slug })
       .populate("project")
       .populate("assignee");
-    console.log(
-      "file: updateTask.adapter.ts:10 -> updateTask -> populatedTask",
-      populatedTask
-    );
+
     return populatedTask as Task;
   } catch (error) {
     console.log("TaskAdapter: updateTask -> error", error);

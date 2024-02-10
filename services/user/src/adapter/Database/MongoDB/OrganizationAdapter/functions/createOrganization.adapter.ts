@@ -12,7 +12,6 @@ export const createOrganization = async (organization: Organization) => {
       { new: true }
     );
 
-    console.log("Log: createOrganization -> user", user);
     return org;
   } catch (error) {
     console.log("OrganizationAdapter: createOrganization -> error", error);

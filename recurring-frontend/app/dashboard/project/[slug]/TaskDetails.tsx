@@ -18,7 +18,10 @@ const TaskDetails = ({ slug }: { slug: string }) => {
 
   return (
     <ScrollArea className="col-span-3 h-screen flex flex-col">
-      <h1 className="font-bold text-3xl px-5 pt-5">Tasks</h1>
+      <div className="flex justify-between items-center px-5 pt-5">
+        <h1 className="font-bold text-3xl">Tasks</h1>
+        <CreateProjectButton slug={slug} />
+      </div>
       {tasks && tasks.length > 0 ? (
         <TaskListTable slug={slug} />
       ) : (

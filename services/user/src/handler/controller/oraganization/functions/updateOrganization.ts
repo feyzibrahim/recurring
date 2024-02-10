@@ -13,7 +13,6 @@ export const updateOrganization = async (
 
     const data = validateJwt(access_token);
     const organization = req.body as Organization;
-    console.log("updateOrganization: organization", organization);
 
     let org = await iOrgUseCase.updateOrganization(
       data.organization,

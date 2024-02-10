@@ -1,6 +1,5 @@
 "use client";
 import {
-  deleteProject,
   editProject,
   getProject,
 } from "@/app/lib/features/project/projectActions";
@@ -9,7 +8,6 @@ import { useEffect } from "react";
 import { format } from "date-fns";
 import { Label } from "@/components/ui/label";
 import InputBox from "@/components/common/InputBox";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import UserAvatar from "@/public/img/user-avatar.png";
 import {
@@ -27,10 +25,6 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
   useEffect(() => {
     dispatch(getProject(slug));
   }, [dispatch, slug]);
-
-  const handleDelete = () => {
-    dispatch(deleteProject(slug));
-  };
 
   const handleStatusUpdate = async (value: string) => {
     const data = {
@@ -116,9 +110,6 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
               </div>
             ))}
           </div>
-          <Button variant="outline" className="w-full" onClick={handleDelete}>
-            Delete Project
-          </Button>
         </div>
       )}
     </div>

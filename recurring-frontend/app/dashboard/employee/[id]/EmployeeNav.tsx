@@ -18,6 +18,16 @@ const EmployeeNav = ({ params }: { params: { id: string } }) => {
         Details
       </Link>
       <Link
+        href={`/dashboard/employee/${params.id}/tasks`}
+        className={` ${
+          pathName === `/dashboard/employee/${params.id}/tasks`
+            ? "text-foreground font-bold"
+            : ""
+        }`}
+      >
+        Tasks
+      </Link>
+      <Link
         href={`/dashboard/employee/${params.id}/attendance`}
         className={` ${
           pathName === `/dashboard/employee/${params.id}/attendance`
@@ -46,6 +56,16 @@ const EmployeeNav = ({ params }: { params: { id: string } }) => {
         }`}
       >
         History
+      </Link>
+      <Link
+        href={`/dashboard/employee/${params.id}/settings`}
+        className={` ${
+          pathName === `/dashboard/employee/${params.id}/settings`
+            ? "text-foreground font-bold"
+            : ""
+        }`}
+      >
+        Settings
       </Link>
     </div>
   );

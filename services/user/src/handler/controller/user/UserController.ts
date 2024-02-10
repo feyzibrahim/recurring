@@ -7,6 +7,7 @@ import { requireAuth } from "../../middleware/AuthMiddleware";
 import { validateJwt } from "@recurring/shared_library";
 import { changePassword } from "./functions/changePassword.controller";
 import { updateProfile } from "./functions/updateProfile.controller";
+import { newPassword } from "./functions/newPassword.controller";
 
 @controller("/api/user")
 export class UserController {
@@ -58,6 +59,11 @@ export class UserController {
   @httpPatch("/change-password", requireAuth)
   async changePassword(req: Request, res: Response) {
     await changePassword(req, res, this.iUserUseCase);
+  }
+
+  @httpPatch("/new-password", requireAuth)
+  async newPassword(req: Request, res: Response) {
+    await newPassword(req, res, this.iUserUseCase);
   }
 
   @httpPatch("/update-profile", requireAuth)

@@ -50,7 +50,7 @@ const EmployeeDetails = ({ id }: { id: string }) => {
             <div className="rounded-md bg-backgroundAccent py-10">
               <div className="w-36 h-36 rounded-full overflow-clip mx-auto">
                 <Image
-                  src={UserAvatar}
+                  src={(employee && employee.profileImageURL) || UserAvatar}
                   alt="Profile"
                   className="w-full h-full object-cover"
                   width={100}
@@ -114,7 +114,7 @@ const EmployeeDetails = ({ id }: { id: string }) => {
               <Label>
                 <p className="pt-5 pb-2">Email</p>
               </Label>
-              <InputBox data={employee && employee.email} />
+              <InputBox data={employee && employee.email} noCapitalize={true} />
             </div>
             <div>
               <Label>

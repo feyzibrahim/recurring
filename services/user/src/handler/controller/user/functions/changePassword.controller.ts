@@ -34,7 +34,7 @@ export const changePassword = async (
     }
 
     const hash = await passwordValidate(body.password, body.confirmPassword);
-    const updatedUser = iUserUseCase.changePassword(temp._id, hash);
+    const updatedUser = await iUserUseCase.changePassword(temp._id, hash);
 
     return res.status(200).json({
       user: updatedUser,

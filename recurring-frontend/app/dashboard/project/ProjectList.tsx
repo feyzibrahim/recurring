@@ -18,10 +18,39 @@ const ProjectList = () => {
   return (
     <>
       {projects && projects.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {projects.map((project: any, index: number) => {
-            return <ProjectCard project={project} key={index} />;
-          })}
+        <div className="px-5 pb-5">
+          <p className="bg-secondary p-2 mb-2 rounded-md">Planning</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projects.map((project: any, index: number) => {
+              if (project.status === "planning") {
+                return <ProjectCard project={project} key={index} />;
+              }
+            })}
+          </div>
+          <p className="bg-secondary p-2 my-2 rounded-md">Active</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projects.map((project: any, index: number) => {
+              if (project.status === "active") {
+                return <ProjectCard project={project} key={index} />;
+              }
+            })}
+          </div>
+          <p className="bg-secondary p-2 my-2 rounded-md">Completed</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projects.map((project: any, index: number) => {
+              if (project.status === "completed") {
+                return <ProjectCard project={project} key={index} />;
+              }
+            })}
+          </div>
+          <p className="bg-secondary p-2 my-2 rounded-md">Backlog</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projects.map((project: any, index: number) => {
+              if (project.status === "backlog") {
+                return <ProjectCard project={project} key={index} />;
+              }
+            })}
+          </div>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-full">

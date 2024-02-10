@@ -1,19 +1,32 @@
 "use client";
 import { commonRequest } from "@/api/client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RecurringVertical from "@/components/common/RecurringVertical";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { EmployeeTypes } from "@/constants/Types";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const VerifiedForm = (params: any) => {
+  const [user, setUser] = useState<EmployeeTypes>();
+
   useEffect(() => {
-    commonRequest({
-      method: "GET",
-      url: `/auth/verify-email/${params.token}`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const verifyUser = async () => {
+      const res = await actualCommonRequest({
+        route: API_ROUTES.AUTH,
+        method: "GET",
+        url: `/api/auth/verify-email/${params.token}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.success) {
+        console.log(res);
+        setUser(res.user);
+      }
+    };
+    verifyUser();
   }, [params]);
 
   return (
@@ -29,9 +42,17 @@ const VerifiedForm = (params: any) => {
       <p className="mb-6">
         Your email has been successfully verified. Welcome to Recurring App!
       </p>
-      <Link href="/dashboard">
-        <Button className="hover:underline">Go to Dashboard</Button>
-      </Link>
+      {user?.role === "employee" ? (
+        <Link href="/set-new-password">
+          <Button className="hover:underline">
+            Set password for your account
+          </Button>
+        </Link>
+      ) : (
+        <Link href="/onboarding">
+          <Button className="hover:underline">Complete Registration</Button>
+        </Link>
+      )}
     </div>
   );
 };

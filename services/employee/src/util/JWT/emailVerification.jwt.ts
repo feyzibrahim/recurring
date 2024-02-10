@@ -1,12 +1,12 @@
 import Jwt from "jsonwebtoken";
-import { User } from "../../Entities/User";
+import { Employee } from "../../Entities/Employee";
 
 interface JwtPayload {
   user: string;
   role: string;
 }
 
-const createVerificationLink = (user: User): string => {
+const createVerificationLink = (user: Employee): string => {
   const secret = process.env.VERIFICATION_SECRET || "";
 
   if (!user.email) {

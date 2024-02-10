@@ -10,7 +10,6 @@ const OrganizationSchema: Schema = new Schema(
     },
     name: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
