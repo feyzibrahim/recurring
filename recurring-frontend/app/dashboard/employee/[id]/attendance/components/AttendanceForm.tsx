@@ -35,11 +35,11 @@ const formSchema = z.object({
   remarks: z.string().optional(),
 });
 
-export default function AttendanceForm({
-  setIsModalOpen,
-}: {
+interface PropsTypes {
   setIsModalOpen: any;
-}) {
+}
+
+export default function AttendanceForm({ setIsModalOpen }: PropsTypes) {
   const pathName = usePathname();
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.attendance);
@@ -66,7 +66,6 @@ export default function AttendanceForm({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const data = await dispatch(createAttendanceByAdmin(values));
     if (createAttendanceByAdmin.fulfilled.match(data)) {
-      console.log("file: AttendanceForm.tsx:66 -> onSubmit -> data", data);
       setIsModalOpen(false);
     }
   }

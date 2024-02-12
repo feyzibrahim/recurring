@@ -1,5 +1,5 @@
-import ProjectDetails from "./ProjectDetails";
-import TaskDetails from "./TaskDetails";
+import ProjectDetails from "./components/ProjectDetails";
+import TaskDetails from "./components/TaskDetails";
 
 const page = ({ params }: { params: { slug: string } }) => {
   return (

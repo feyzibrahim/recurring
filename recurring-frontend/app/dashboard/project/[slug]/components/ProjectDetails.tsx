@@ -27,6 +27,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { FiEdit } from "react-icons/fi";
+import EditButton from "./EditButton";
 
 const ProjectDetails = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
@@ -57,7 +59,10 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
     <div className="bg-secondary p-5 shadow-md">
       {project && (
         <div>
-          <h2 className="text-2xl font-bold mb-4">{project.name}</h2>
+          <div className="flex justify-between">
+            <h2 className="text-2xl font-bold mb-4">{project.name}</h2>
+            <EditButton />
+          </div>
           <Label>
             <p className="py-2">Project Status</p>
           </Label>

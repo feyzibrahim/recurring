@@ -79,7 +79,7 @@ export const employeeSLice = createSlice({
       })
       .addCase(editProject.rejected, (state, { payload }) => {
         state.loading = false;
-        state.project = null;
+        // state.project = null;
         state.error = payload;
       })
       .addCase(editProject.fulfilled, (state, { payload }) => {
@@ -92,6 +92,7 @@ export const employeeSLice = createSlice({
             state.projects = state.projects.filter(
               (emp) => emp._id === payload.project._id
             );
+            state.project = payload.project;
           }
         }
       })
