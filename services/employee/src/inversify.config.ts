@@ -11,6 +11,11 @@ import { TYPES } from "./constants/types/types";
 import { EmployeeUseCaseInterface } from "./interface/employee/EmployeeUseCaseInterface";
 import { EmployeeController } from "./handler/controller/project/EmployeeController";
 import { connectRabbitMq } from "./infra/rabbitMQ/rabbitmqConnection";
+import { AttendanceAdapterInterface } from "./interface/attendance/AttendanceAdapterInterface";
+import { AttendanceAdapter } from "./adapter/Database/MongoDB/AttendanceAdapter";
+import { AttendanceUseCaseInterface } from "./interface/attendance/AttendanceUseCaseInterface";
+import { AttendanceUseCase } from "./useCases/AttendanceUseCase";
+import { AttendanceController } from "./handler/controller/attendance/AttendanceController";
 
 // Database connection
 connectToDatabase();
@@ -29,6 +34,16 @@ container
   .to(EmployeeUseCase);
 container.bind<EmployeeController>(EmployeeController).toSelf();
 container.bind<EmployeeUseCase>(EmployeeUseCase).toSelf();
+
+// Attendance Injection
+container
+  .bind<AttendanceAdapterInterface>(TYPES.AttendanceAdapterInterface)
+  .to(AttendanceAdapter);
+container
+  .bind<AttendanceUseCaseInterface>(TYPES.AttendanceUseCaseInterface)
+  .to(AttendanceUseCase);
+container.bind<AttendanceController>(AttendanceController).toSelf();
+container.bind<AttendanceUseCase>(AttendanceUseCase).toSelf();
 
 // Disconnect From Database
 process.on("SIGINT", async () => {

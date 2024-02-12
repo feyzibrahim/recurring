@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import employeeSlice from "./features/employee/employeeSlice";
 import projectSlice from "./features/project/projectSlice";
 import taskSlice from "./features/task/taskSlice";
+import attendanceSlice from "./features/attendance/attendanceSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -9,6 +10,7 @@ export const makeStore = () => {
       employee: employeeSlice,
       project: projectSlice,
       task: taskSlice,
+      attendance: attendanceSlice,
     },
   });
 };

@@ -7,12 +7,13 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export function TaskListTable() {
   const { tasks } = useAppSelector((state) => state.task);
 
   return (
-    <div className="w-full text-sm">
+    <ScrollArea className="w-72 md:w-full text-sm  whitespace-nowrap">
       <table className="w-full border-collapse my-2 bg-backgroundAccent rounded-lg">
         <thead>
           <tr className="text-left">
@@ -65,6 +66,7 @@ export function TaskListTable() {
             ))}
         </tbody>
       </table>
-    </div>
+      <ScrollBar orientation="horizontal" />
+    </ScrollArea>
   );
 }

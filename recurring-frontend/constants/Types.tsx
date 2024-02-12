@@ -44,6 +44,16 @@ interface ProjectTypes {
   // client: string,
   // deal: string,
 }
+interface AttendanceTypes {
+  _id: string;
+  employeeId: string;
+  date: Date;
+  checkInTime: Date;
+  checkOutTime: Date;
+  status: string;
+  description: string;
+  remarks: string;
+}
 
 interface TaskTypes {
   id: string;
@@ -62,4 +72,10 @@ interface TaskTypes {
   subTasks: [TaskTypes];
 }
 
-export type { InputWithIconProps, EmployeeTypes, ProjectTypes, TaskTypes };
+export type {
+  InputWithIconProps,
+  EmployeeTypes,
+  ProjectTypes,
+  TaskTypes,
+  AttendanceTypes,
+};

@@ -6,7 +6,7 @@ const EmployeeNav = ({ params }: { params: { id: string } }) => {
   const pathName = usePathname();
 
   return (
-    <div className="flex gap-8 text-foregroundAccent text-sm overflow-x-auto bg-backgroundAccent px-5 rounded-b-md">
+    <div className="flex flex-wrap pb-3 md:pb-0 gap-2 md:gap-8 text-foregroundAccent text-sm bg-backgroundAccent px-5 rounded-b-md">
       <Link
         href={`/dashboard/employee/${params.id}`}
         className={`shrink-0 pb-2 ${

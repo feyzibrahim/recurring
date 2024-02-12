@@ -44,7 +44,7 @@ const EmployeeDetails = ({ id }: { id: string }) => {
 
   return (
     <div>
-      <div className="md:py-5">
+      <div className="py-5">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
           <div>
             <div className="rounded-md bg-backgroundAccent py-10">

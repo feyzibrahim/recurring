@@ -9,7 +9,7 @@ export default async function EmployeeProfile({
   children: React.ReactNode;
 }) {
   return (
-    <ScrollArea className="w-full h-screen overflow-clip">
+    <ScrollArea className="w-full h-screen">
       <div className="px-5 pt-5 h-48 w-full">
         <Image
           src={ProfileBanner}
