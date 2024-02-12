@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { TaskUseCaseInterface } from "../../../../interface/task/TaskUseCaseInterface";
 import { Task } from "../../../../Entities/Task";
-import { validateJwt } from "../../../../util/JWT/validate.jwt";
 
 export const updateTask = async (
   req: Request,
@@ -9,18 +8,16 @@ export const updateTask = async (
   iTaskUseCase: TaskUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
-
-    const data = validateJwt(access_token);
+    const { slug } = req.params;
     const task = req.body as Task;
 
-    let newTask = await iTaskUseCase.updateTask(data.user, task);
-    if (!newTask) {
+    let updatedTask = await iTaskUseCase.updateTask(slug, task);
+    if (!updatedTask) {
       throw Error("No task found");
     }
 
     return res.status(200).json({
-      task: newTask,
+      task: updatedTask,
       success: true,
       message: "Task successfully Fetched",
     });

@@ -3,7 +3,10 @@ import TaskModal from "../../Modal/TaskModel";
 
 export const getTasks = async (id: string) => {
   try {
-    const task = await TaskModal.find({ organization: id })
+    const task = await TaskModal.find({
+      organization: id,
+      status: { $ne: "archive" },
+    })
       .populate("project")
       .populate("assignee");
     return task as Task[];

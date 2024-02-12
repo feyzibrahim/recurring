@@ -62,7 +62,7 @@ export class TaskController {
     await updateTaskStatus(req, res, this.iTaskUseCase);
   }
 
-  @httpPatch("/")
+  @httpPatch("/:slug")
   async updateTask(req: Request, res: Response) {
     await updateTask(req, res, this.iTaskUseCase);
   }

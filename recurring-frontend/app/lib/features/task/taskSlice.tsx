@@ -29,27 +29,7 @@ const initialState: TaskSliceType = {
 export const taskSlice = createSlice({
   name: "tasks",
   initialState,
-  reducers: {
-    updateTaskList: (
-      state,
-      action: PayloadAction<{
-        source: string;
-        destination: string;
-        taskId: string;
-      }>
-    ) => {
-      const { source, destination, taskId } = action.payload;
-
-      // Find the task in the tasks array
-      const taskToUpdate =
-        state.tasks && state.tasks.find((task) => task._id === taskId);
-
-      // Update the task's status if found
-      if (taskToUpdate) {
-        taskToUpdate.status = destination;
-      }
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // Get all tasks
     builder
@@ -132,6 +112,21 @@ export const taskSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.task = payload.task;
+        if (payload.task.status === "archive" && state.tasks) {
+          state.tasks = state.tasks.filter(
+            (item) => item._id !== payload.task._id
+          );
+        } else {
+          if (state.tasks !== null) {
+            const index = state.tasks.findIndex(
+              (item) => item._id === payload.task._id
+            );
+
+            if (index !== -1) {
+              state.tasks[index] = payload.task;
+            }
+          }
+        }
       })
       .addCase(deleteTask.pending, (state) => {
         state.loading = true;
@@ -152,7 +147,5 @@ export const taskSlice = createSlice({
       });
   },
 });
-
-export const { updateTaskList } = taskSlice.actions;
 
 export default taskSlice.reducer;

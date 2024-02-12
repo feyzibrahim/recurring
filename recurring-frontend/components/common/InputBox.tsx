@@ -8,13 +8,13 @@ const InputBox = ({
   noCapitalize?: boolean;
 }) => {
   return (
-    <div
-      className={`px-2 w-full h-10 rounded-md border border-border flex items-center text-sm ${
+    <p
+      className={`p-3 w-full max-h-24 line-clamp-4 rounded-md border border-border text-sm ${
         !noCapitalize && "capitalize"
       } ${bg === "black" ? "bg-background" : "bg-backgroundAccent"}`}
     >
-      <p>{data ?? "-"}</p>
-    </div>
+      {data ?? "-"}
+    </p>
   );
 };
 

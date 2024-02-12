@@ -28,7 +28,9 @@ const ProjectTable: React.FC = () => {
             <th className="border-t border-background p-3">Start Date</th>
             <th className="border-t border-background p-3">End Date</th>
             <th className="border-t border-background p-3">Status</th>
-            <th className="border-t border-background p-3">Description</th>
+            <th className="border-t border-background p-3  w-96">
+              Description
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -77,7 +79,7 @@ const ProjectTable: React.FC = () => {
                 <td className="border-t border-background p-3 capitalize">
                   {project.status}
                 </td>
-                <td className="border-t border-background p-3">
+                <td className="border-t border-background px-3 pt-3 line-clamp-1 w-96">
                   {project.description || "No description provided"}
                 </td>
               </tr>

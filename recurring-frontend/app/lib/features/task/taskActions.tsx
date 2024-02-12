@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { reduxCommonRequest } from "@/api/redux_common";
 import { API_ROUTES } from "@/lib/routes";
+import { TaskTypes } from "@/constants/Types";
 
 // Task details finding
 export const getTasks = createAsyncThunk(
@@ -86,11 +87,14 @@ export const getTask: any = createAsyncThunk(
 // Task details Editing
 export const editTask: any = createAsyncThunk(
   "task/editTask",
-  async (data: any, { rejectWithValue }) => {
+  async (
+    { slug, data }: { slug: string; data: TaskTypes },
+    { rejectWithValue }
+  ) => {
     return reduxCommonRequest({
       route: API_ROUTES.PROJECT,
       method: "PATCH",
-      url: "/api/task",
+      url: `/api/task/${slug}`,
       data: data,
       headers: {
         "Content-Type": "application/json",

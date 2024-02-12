@@ -3,7 +3,7 @@
 import CreateProjectButton from "@/components/common/task/CreateTaskButton";
 import Image from "next/image";
 import UserAvatar from "@/public/img/user-avatar.png";
-import { useAppSelector } from "@/app/lib/hook";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { format } from "date-fns";
 import {
   HoverCard,
@@ -12,12 +12,21 @@ import {
 } from "@/components/ui/hover-card";
 import EmployeeNameFromStore from "@/components/common/EmployeeNameFromStore";
 import { EmployeeTypes } from "@/constants/Types";
+import { useState } from "react";
+import TaskDetailSheet from "./TaskDetailSheet";
+import { getTask } from "@/app/lib/features/task/taskActions";
 
 export function TaskListTable({ slug }: { slug: string }) {
+  const dispatch = useAppDispatch();
   const { tasks } = useAppSelector((state) => state.task);
+  const [onEditSheet, setOnEditSheet] = useState(false);
 
   return (
     <div className="w-full text-sm px-5">
+      <TaskDetailSheet
+        onOpenChange={onEditSheet}
+        setOnOpenChange={setOnEditSheet}
+      />
       <table className="w-full border-collapse my-2 bg-backgroundAccent rounded-lg">
         <thead>
           <tr className="text-left">
@@ -27,13 +36,19 @@ export function TaskListTable({ slug }: { slug: string }) {
             <th className="border-t border-background p-3">End Date</th>
             <th className="border-t border-background p-3">Status</th>
             <th className="border-t border-background p-3">Priority</th>
-            <th className="border-t border-background p-3">Tags</th>
           </tr>
         </thead>
         <tbody>
           {tasks &&
             tasks.map((task, index) => (
-              <tr key={index}>
+              <tr
+                key={index}
+                className="hover:bg-secondary cursor-pointer"
+                onClick={async () => {
+                  setOnEditSheet(true);
+                  dispatch(getTask(task.slug));
+                }}
+              >
                 <td className="border-t border-background p-3">
                   <HoverCard>
                     <HoverCardTrigger asChild>
@@ -86,14 +101,15 @@ export function TaskListTable({ slug }: { slug: string }) {
                 <td className="border-t border-background p-3 capitalize">
                   {task.priority}
                 </td>
-                <td className="border-t border-background p-3">
+                {/* Will add later | Tags */}
+                {/* <td className="border-t border-background p-3">
                   {task.tags && task.tags.length > 0 ? task.tags : "-"}
-                </td>
+                </td> */}
               </tr>
             ))}
           <tr>
             <td
-              className="border-t border-background p-3 hover:opacity-50 cursor-pointer"
+              className="border-t border-background p-3 hover:bg-secondary cursor-pointer"
               colSpan={7}
             >
               <CreateProjectButton slug={slug} customButton={true} />
