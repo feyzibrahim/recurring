@@ -30,25 +30,8 @@ export const attendanceSlice = createSlice({
   name: "attendances",
   initialState,
   reducers: {
-    updateAttendanceList: (
-      state,
-      action: PayloadAction<{
-        source: string;
-        destination: string;
-        attendanceId: string;
-      }>
-    ) => {
-      const { source, destination, attendanceId } = action.payload;
-
-      // Find the attendance in the attendances array
-      const attendanceToUpdate =
-        state.attendances &&
-        state.attendances.find((attendance) => attendance._id === attendanceId);
-
-      // Update the attendance's status if found
-      if (attendanceToUpdate) {
-        attendanceToUpdate.status = destination;
-      }
+    removeErrorOnClose: (state) => {
+      return { ...state, error: null };
     },
   },
   extraReducers: (builder) => {
@@ -104,8 +87,11 @@ export const attendanceSlice = createSlice({
       })
       .addCase(createAttendance.rejected, (state, { payload }) => {
         state.loading = false;
-        state.attendances = null;
         state.error = payload;
+        console.log(
+          "file: attendanceSlice.tsx:109 -> .addCase -> payload",
+          payload
+        );
       })
       .addCase(createAttendance.fulfilled, (state, { payload }) => {
         state.loading = false;
@@ -120,7 +106,7 @@ export const attendanceSlice = createSlice({
       })
       .addCase(createAttendanceByAdmin.rejected, (state, { payload }) => {
         state.loading = false;
-        state.attendances = null;
+        // state.attendances = null;
         state.error = payload;
       })
       .addCase(createAttendanceByAdmin.fulfilled, (state, { payload }) => {
@@ -164,6 +150,6 @@ export const attendanceSlice = createSlice({
   },
 });
 
-export const { updateAttendanceList } = attendanceSlice.actions;
+export const { removeErrorOnClose } = attendanceSlice.actions;
 
 export default attendanceSlice.reducer;

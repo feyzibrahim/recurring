@@ -23,14 +23,9 @@ export const reduxCommonRequest = async ({
     baseURL: route,
   });
 
-  apiInstance.interceptors.response.use(
-    (response) => {
-      return response.data;
-    },
-    (error) => {
-      return error.response.data;
-    }
-  );
+  apiInstance.interceptors.response.use((response) => {
+    return response.data;
+  });
 
   let requestConfig: RequestProps = {
     method,
@@ -45,6 +40,7 @@ export const reduxCommonRequest = async ({
 
     return response;
   } catch (error) {
+    console.log("file: redux_common.tsx:48 -> error", error);
     return handleError(error, rejectWithValue);
   }
 };

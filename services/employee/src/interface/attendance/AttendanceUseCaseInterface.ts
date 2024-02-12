@@ -12,4 +12,5 @@ export interface AttendanceUseCaseInterface {
     id: string,
     attendance: Attendance
   ): Promise<Attendance | boolean>;
+  checkExistingDate(attendance: Attendance): Promise<Attendance | boolean>;
 }

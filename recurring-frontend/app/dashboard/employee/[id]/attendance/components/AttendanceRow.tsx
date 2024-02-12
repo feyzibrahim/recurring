@@ -8,7 +8,7 @@ interface Props {
 
 export function AttendanceRow({ attendances }: Props) {
   return (
-    <ScrollArea className="w-full md:w-full text-sm  whitespace-nowrap">
+    <ScrollArea className="w-full md:w-full text-sm  whitespace-nowrap col-span-3">
       <table className="w-full border-collapse my-2 bg-backgroundAccent rounded-lg">
         <thead>
           <tr className="text-left">
@@ -28,9 +28,9 @@ export function AttendanceRow({ attendances }: Props) {
                   format(new Date(attendance.date), "MMM d, yyyy")}
               </td>
               <td className="border-t border-background p-3">
-                {attendance &&
-                  attendance.checkInTime &&
-                  format(new Date(attendance.checkInTime), "h:mm a")}
+                {attendance && attendance.checkInTime
+                  ? format(new Date(attendance.checkInTime), "h:mm a")
+                  : "-"}
               </td>
               <td className="border-t border-background p-3">
                 {attendance && attendance.checkOutTime

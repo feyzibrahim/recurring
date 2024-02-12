@@ -16,6 +16,11 @@ import { AttendanceAdapter } from "./adapter/Database/MongoDB/AttendanceAdapter"
 import { AttendanceUseCaseInterface } from "./interface/attendance/AttendanceUseCaseInterface";
 import { AttendanceUseCase } from "./useCases/AttendanceUseCase";
 import { AttendanceController } from "./handler/controller/attendance/AttendanceController";
+import { SalaryAdapterInterface } from "./interface/salary/SalaryAdapterInterface";
+import { SalaryAdapter } from "./adapter/Database/MongoDB/SalaryAdapter";
+import { SalaryUseCaseInterface } from "./interface/salary/SalaryUseCaseInterface";
+import { SalaryUseCase } from "./useCases/SalaryUseCase";
+import { SalaryController } from "./handler/controller/salary/SalaryController";
 
 // Database connection
 connectToDatabase();
@@ -44,6 +49,16 @@ container
   .to(AttendanceUseCase);
 container.bind<AttendanceController>(AttendanceController).toSelf();
 container.bind<AttendanceUseCase>(AttendanceUseCase).toSelf();
+
+// Salary Injection
+container
+  .bind<SalaryAdapterInterface>(TYPES.SalaryAdapterInterface)
+  .to(SalaryAdapter);
+container
+  .bind<SalaryUseCaseInterface>(TYPES.SalaryUseCaseInterface)
+  .to(SalaryUseCase);
+container.bind<SalaryController>(SalaryController).toSelf();
+container.bind<SalaryUseCase>(SalaryUseCase).toSelf();
 
 // Disconnect From Database
 process.on("SIGINT", async () => {

@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { AttendanceRow } from "./AttendanceRow";
 import EmptyProject from "@/components/empty/EmptyProjects";
 import { useSearchParams } from "next/navigation";
+import AttendanceBarChart from "./AttendanceBarChart";
 
 interface Props {
   id: string;
@@ -32,7 +33,10 @@ const AttendanceList = ({ id }: Props) => {
   return (
     <div>
       {attendances && attendances.length > 0 ? (
-        <AttendanceRow attendances={attendances} />
+        <div className="grid grid-cols-1 md:grid-cols-4">
+          <AttendanceBarChart data={attendances} />
+          <AttendanceRow attendances={attendances} />
+        </div>
       ) : (
         <div className="flex flex-col items-center justify-center">
           <EmptyProject />

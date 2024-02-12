@@ -30,4 +30,8 @@ export class AttendanceUseCase implements AttendanceUseCaseInterface {
   ): Promise<boolean | Attendance> {
     return this.iAttendanceUseCase.updateAttendance(id, attendance);
   }
+
+  checkExistingDate(attendance: Attendance): Promise<boolean | Attendance> {
+    return this.iAttendanceUseCase.checkExistingDate(attendance);
+  }
 }

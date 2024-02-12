@@ -14,13 +14,22 @@ export const createAttendanceByAdmin = async (
 
     const formattedBody = {
       ...body,
-      checkInTime: new Date(
-        `${body.date.toString().split("T")[0]}T${checkInTime}:00.000Z`
-      ),
-      checkOutTime: new Date(
-        `${body.date.toString().split("T")[0]}T${checkOutTime}:00.000Z`
-      ),
+      ...(checkInTime && {
+        checkInTime: new Date(
+          `${body.date.toString().split("T")[0]}T${checkInTime}:00.000Z`
+        ),
+      }),
+      ...(checkOutTime && {
+        checkOutTime: new Date(
+          `${body.date.toString().split("T")[0]}T${checkOutTime}:00.000Z`
+        ),
+      }),
     };
+
+    const exists = await iAttendanceUseCase.checkExistingDate(formattedBody);
+    if (exists) {
+      throw Error("Already attendance added for this date");
+    }
 
     let attendance = (await iAttendanceUseCase.createAttendance(
       formattedBody

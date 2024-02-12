@@ -19,16 +19,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import DatePickerNoLimit from "@/components/custom/DatePickerNoLimit";
 import { usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { createAttendanceByAdmin } from "@/app/lib/features/attendance/attendanceActions";
+import { useEffect } from "react";
+import { removeErrorOnClose } from "@/app/lib/features/attendance/attendanceSlice";
+import DatePicker from "@/components/custom/DatePicker";
 
 const formSchema = z.object({
   employeeId: z.string(),
   date: z.date(),
-  checkInTime: z.string(),
-  checkOutTime: z.string(),
+  checkInTime: z.string().optional(),
+  checkOutTime: z.string().optional(),
   status: z.string(),
   remarks: z.string().optional(),
 });
@@ -62,8 +64,18 @@ export default function AttendanceForm({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    dispatch(createAttendanceByAdmin(values)).then(() => setIsModalOpen(false));
+    const data = await dispatch(createAttendanceByAdmin(values));
+    if (createAttendanceByAdmin.fulfilled.match(data)) {
+      console.log("file: AttendanceForm.tsx:66 -> onSubmit -> data", data);
+      setIsModalOpen(false);
+    }
   }
+
+  useEffect(() => {
+    return () => {
+      dispatch(removeErrorOnClose());
+    };
+  }, [dispatch]);
 
   return (
     <Form {...form}>
@@ -71,9 +83,7 @@ export default function AttendanceForm({
         <FormField
           control={form.control}
           name="date"
-          render={({ field }) => (
-            <DatePickerNoLimit title="Date" field={field} />
-          )}
+          render={({ field }) => <DatePicker title="Date" field={field} />}
         />
         <FormField
           control={form.control}
@@ -134,10 +144,10 @@ export default function AttendanceForm({
             />
           )}
         />
+        {error && <p className="text-sm text-red-500">{error}</p>}
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Loading..." : "Update Attendance"}
         </Button>
-        {error && <p className="text-sm text-red-500">{error}</p>}
       </form>
     </Form>
   );
