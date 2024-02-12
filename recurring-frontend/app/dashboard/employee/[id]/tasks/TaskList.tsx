@@ -7,6 +7,7 @@ import EmptyTask from "@/components/empty/EmptyTask";
 import { useEffect, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TaskListTable } from "./TaskListTable";
+import TasksBarChart from "./TasksBarChart";
 
 const TaskList = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +43,10 @@ const TaskList = () => {
         </h1>
       </div>
       {tasks && tasks.length > 0 ? (
-        <TaskListTable />
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          <TasksBarChart data={tasks} />
+          <TaskListTable />
+        </div>
       ) : (
         <div className="flex-1 flex justify-center flex-col items-center ">
           <EmptyTask />

@@ -1,14 +1,12 @@
 "use client";
-import Image from "next/image";
-import UserAvatar from "@/public/img/user-avatar.png";
-import { EmployeeTypes, ProjectTypes } from "@/constants/Types";
+
 import { format } from "date-fns";
-import EmployeeNameFromStore from "@/components/common/EmployeeNameFromStore";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { useEffect } from "react";
 import { getProjects } from "@/app/lib/features/project/projectActions";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
+import AvatarFallbackImage from "@/components/common/AvatarFallbackImage";
 
 const ProjectTable: React.FC = () => {
   const router = useRouter();
@@ -48,21 +46,22 @@ const ProjectTable: React.FC = () => {
                 </td>
                 <td className="border-t border-background px-3 ">
                   <div className="flex items-center">
-                    {project.members.map(
-                      (member, index) =>
-                        typeof member !== "string" && (
-                          <Avatar
-                            key={index}
-                            className={`w-7 h-7 border ${
-                              index !== 0 ? "-ml-2" : ""
-                            }`}
-                          >
-                            <AvatarImage src={member.profileImageURL} />
-                            <AvatarFallback>CN</AvatarFallback>
-                          </Avatar>
-                        )
-                    )}
-                    {project.members.length > 4 && (
+                    {project.members &&
+                      project.members.map(
+                        (member, index) =>
+                          typeof member !== "string" && (
+                            <Avatar
+                              key={index}
+                              className={`w-7 h-7 border ${
+                                index !== 0 ? "-ml-2" : ""
+                              }`}
+                            >
+                              <AvatarImage src={member.profileImageURL} />
+                              <AvatarFallbackImage />
+                            </Avatar>
+                          )
+                      )}
+                    {project.members && project.members.length > 4 && (
                       <div className="relative flex items-center justify-center w-7 h-7 border -ml-2 rounded-full bg-background text-sm">
                         +{project.members.length - 4}
                       </div>

@@ -11,7 +11,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useRouter } from "next/navigation";
 import FormInputCustom from "../FormInputCustom";
 import DatePickerLimited from "@/components/custom/DatePickerLimited";
 import { EmployeeList } from "./EmployeeList";
@@ -83,7 +82,6 @@ export default function TaskForm({
   slug?: string;
 }) {
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   const { loading, error } = useAppSelector((state) => state.task);
 
@@ -103,7 +101,6 @@ export default function TaskForm({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log("file: TaskForm.tsx:106 -> onSubmit -> values", values);
     dispatch(createTask(values)).then(() => {
       setIsModalOpen(false);
     });

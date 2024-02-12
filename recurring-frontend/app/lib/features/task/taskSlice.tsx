@@ -116,10 +116,6 @@ export const taskSlice = createSlice({
         state.error = payload;
       })
       .addCase(createTask.fulfilled, (state, { payload }) => {
-        console.log(
-          "file: taskSlice.tsx:70 -> .addCase -> payload",
-          payload.task
-        );
         state.loading = false;
         state.error = null;
         state.tasks = [...(state.tasks || []), payload.task] as TaskTypes[];

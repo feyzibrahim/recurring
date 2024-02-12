@@ -4,7 +4,7 @@ import {
   getProject,
 } from "@/app/lib/features/project/projectActions";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Label } from "@/components/ui/label";
 import InputBox from "@/components/common/InputBox";
@@ -17,10 +17,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const ProjectDetails = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
+  const [openArchiveConfirmModal, setOpenArchiveConfirmModal] = useState(false);
+  const [archiveData, setArchiveData] = useState<Record<string, any> | null>(
+    null
+  );
 
   useEffect(() => {
     dispatch(getProject(slug));
@@ -30,11 +44,13 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
     const data = {
       status: `${value}`,
     };
-    console.log(
-      "file: ProjectDetails.tsx:39 -> handleStatusUpdate -> data",
-      data
-    );
-    dispatch(editProject({ slug, data }));
+
+    if (value === "archive") {
+      setArchiveData(data);
+      setOpenArchiveConfirmModal(true);
+    } else {
+      dispatch(editProject({ slug, data }));
+    }
   };
 
   return (
@@ -112,6 +128,29 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
           </div>
         </div>
       )}
+      <AlertDialog
+        open={openArchiveConfirmModal}
+        onOpenChange={setOpenArchiveConfirmModal}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are your sure to archive this project?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Please Confirm this action...
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>No</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => dispatch(editProject({ slug, data: archiveData }))}
+            >
+              Yes!
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

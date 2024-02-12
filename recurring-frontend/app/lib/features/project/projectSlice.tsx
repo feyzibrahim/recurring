@@ -85,7 +85,15 @@ export const employeeSLice = createSlice({
       .addCase(editProject.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
-        state.project = payload.project;
+        if (payload.project.status !== "archive") {
+          state.project = payload.project;
+        } else {
+          if (state.projects !== null) {
+            state.projects = state.projects.filter(
+              (emp) => emp._id === payload.project._id
+            );
+          }
+        }
       })
       .addCase(deleteProject.pending, (state) => {
         state.loading = true;

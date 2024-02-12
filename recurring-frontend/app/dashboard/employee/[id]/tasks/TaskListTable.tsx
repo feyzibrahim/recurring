@@ -13,7 +13,7 @@ export function TaskListTable() {
   const { tasks } = useAppSelector((state) => state.task);
 
   return (
-    <ScrollArea className="w-72 md:w-full text-sm  whitespace-nowrap">
+    <ScrollArea className="w-72 md:w-full text-sm  whitespace-nowrap col-span-2">
       <table className="w-full border-collapse my-2 bg-backgroundAccent rounded-lg">
         <thead>
           <tr className="text-left">

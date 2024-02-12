@@ -62,11 +62,8 @@ export default function MembersList({
 
   const handleAddMembers = () => {
     const selectedMembers = membersList.filter((member) => member.selected);
-    console.log(
-      "file: MembersList.tsx:66 -> handleAddMembers -> selectedMembers",
-      selectedMembers
-    );
-    const selectedMembersId = membersList.map((member) => {
+
+    const selectedMembersId = selectedMembers.map((member) => {
       let mem = member.selected;
       return mem && member._id;
     });

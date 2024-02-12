@@ -23,14 +23,8 @@ import { createProject } from "@/app/lib/features/project/projectActions";
 const projectSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   startDate: z.date(),
-  // tasks: z.array(z.string()),
   endDate: z.date(),
-  members: z.array(z.string()),
-  // status: z
-  //   .string()
-  //   .refine((status) =>
-  //     ["planning", "active", "completed", "archive", "backlog"].includes(status)
-  //   ),
+  members: z.array(z.string()).optional(),
   description: z.string().optional(),
   manager: z.string(),
   // client: z.string().optional(),
@@ -48,10 +42,8 @@ const CreateForm = () => {
     defaultValues: {
       name: "",
       startDate: undefined,
-      // tasks: [],
       endDate: undefined,
       members: [],
-      // status: "",
       description: "",
       manager: "",
       // client: "",
@@ -60,6 +52,7 @@ const CreateForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
+    console.log("file: CreateForm.tsx:63 -> onSubmit -> values", values);
     dispatch(createProject(values)).then(() => {
       router.back();
     });
