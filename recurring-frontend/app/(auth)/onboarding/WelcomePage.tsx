@@ -33,7 +33,7 @@ const WelcomePage = () => {
           <div>
             <h2 className="text-xl font-bold mb-4">Step 1: Get Started</h2>
             <p>
-              Welcome to <Recurring />! Let's get started.
+              Welcome to <Recurring />! Let&apos;s get started.
             </p>
           </div>
         )}

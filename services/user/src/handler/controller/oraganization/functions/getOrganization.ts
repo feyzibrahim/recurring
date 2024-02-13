@@ -12,7 +12,7 @@ export const getOrganization = async (
 
     const data = validateJwt(access_token);
 
-    let org = await iOrgUseCase.getOrganizationByUserId(data.user);
+    let org = await iOrgUseCase.getOrganization(data.organization);
     if (!org) {
       throw Error("No organization found");
     }

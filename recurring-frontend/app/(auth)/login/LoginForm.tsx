@@ -56,13 +56,12 @@ export default function LoginForm() {
       setError(res.error);
     }
 
-    console.log("file: LoginForm.tsx:66 -> onSubmit -> res", res);
     if (res.success) {
       if (res.user.role === "owner") {
-        router.push("/dashboard");
+        router.replace("/dashboard");
       }
       if (res.user.role === "employee") {
-        router.push("/home");
+        router.replace("/home");
       }
     }
     setLoading(false);

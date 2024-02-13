@@ -18,6 +18,7 @@ import { ProjectUseCaseInterface } from "../../../interface/project/ProjectUseCa
 import { getTasksByProjectId } from "./functions/getTasksByProjectId";
 import { updateTaskStatus } from "./functions/updateTaskStatus";
 import { getTasksByUserId } from "./functions/getTasksByUserId";
+import { getTasksForUser } from "./functions/getTasksForUser";
 
 @controller("/api/task")
 export class TaskController {
@@ -31,6 +32,10 @@ export class TaskController {
   @httpGet("/")
   async getTasks(req: Request, res: Response) {
     await getTasks(req, res, this.iTaskUseCase);
+  }
+  @httpGet("/for-user")
+  async getTasksForUser(req: Request, res: Response) {
+    await getTasksForUser(req, res, this.iTaskUseCase);
   }
 
   @httpGet("/project/:projectSlug")

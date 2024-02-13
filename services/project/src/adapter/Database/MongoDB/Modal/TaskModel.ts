@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { Task } from "../../../../Entities/Task";
-import { uuid } from "uuidv4";
+import { v4 as uuid } from "uuid";
 
 const SubTask: Schema = new Schema({
   title: {

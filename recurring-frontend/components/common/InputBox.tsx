@@ -9,7 +9,7 @@ const InputBox = ({
 }) => {
   return (
     <p
-      className={`p-3 w-full max-h-24 line-clamp-4 rounded-md border border-border text-sm ${
+      className={`p-2 w-full max-h-24 line-clamp-4 rounded-md border border-border text-sm ${
         !noCapitalize && "capitalize"
       } ${bg === "black" ? "bg-background" : "bg-backgroundAccent"}`}
     >

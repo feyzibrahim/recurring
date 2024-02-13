@@ -11,7 +11,7 @@ export default async function HomeLayout({
   return (
     <section className="md:flex md:min-h-screen">
       <EmployeeSidebar />
-      {children}
+      <StoreProvider>{children}</StoreProvider>
     </section>
   );
 }

@@ -10,6 +10,6 @@ export const logout = async (router: any) => {
   });
   console.log("Log: logout -> data", data);
   if (data.success) {
-    router.push("/");
+    router.replace("/");
   }
 };

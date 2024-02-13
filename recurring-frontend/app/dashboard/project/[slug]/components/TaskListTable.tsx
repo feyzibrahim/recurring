@@ -45,8 +45,8 @@ export function TaskListTable({ slug }: { slug: string }) {
                 key={index}
                 className="hover:bg-secondary cursor-pointer"
                 onClick={async () => {
-                  setOnEditSheet(true);
                   dispatch(getTask(task.slug));
+                  setOnEditSheet(true);
                 }}
               >
                 <td className="border-t border-background p-3">

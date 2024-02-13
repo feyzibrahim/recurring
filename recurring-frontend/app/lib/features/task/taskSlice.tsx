@@ -1,6 +1,6 @@
 "use client";
 
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   createTask,
   getTasks,
@@ -29,7 +29,12 @@ const initialState: TaskSliceType = {
 export const taskSlice = createSlice({
   name: "tasks",
   initialState,
-  reducers: {},
+  reducers: {
+    removeTaskOnClose: (state) => {
+      console.log("file: taskSlice.tsx:34 -> state", state);
+      return { ...state, task: null };
+    },
+  },
   extraReducers: (builder) => {
     // Get all tasks
     builder
@@ -147,5 +152,7 @@ export const taskSlice = createSlice({
       });
   },
 });
+
+export const { removeTaskOnClose } = taskSlice.actions;
 
 export default taskSlice.reducer;

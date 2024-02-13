@@ -24,7 +24,7 @@ const initialState: ProjectSliceType = {
   project: null,
 };
 
-export const employeeSLice = createSlice({
+export const projectSLice = createSlice({
   name: "projects",
   initialState,
   reducers: {},
@@ -116,4 +116,4 @@ export const employeeSLice = createSlice({
   },
 });
 
-export default employeeSLice.reducer;
+export default projectSLice.reducer;

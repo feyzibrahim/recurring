@@ -10,11 +10,13 @@ export const getOrganizationData = async () => {
     },
   });
 
-  if (!data.success) {
-    redirect("/dashboard/settings/organization-create");
-  }
+  // if (!data.success) {
+  //   redirect("/dashboard/settings/organization-create");
+  // }
 
   if (data.organization) {
     return data.organization;
+  } else {
+    return null;
   }
 };

@@ -73,7 +73,7 @@ const UserDetails = ({ handleNext }: { handleNext: any }) => {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Step 2: User Registration!</h2>
-      <p>Enjoy using our app! You're all set up.</p>
+      <p>Enjoy using our app! You&apos;re all set up.</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField

@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { Project } from "../../../../Entities/Project";
-import { uuid } from "uuidv4";
+import { v4 as uuid } from "uuid";
 
 const ProjectsSchema: Schema = new Schema(
   {
