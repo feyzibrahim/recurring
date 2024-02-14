@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-// import { actualServerCommonRequest } from "./api/actual_server";
 import { API_ROUTES } from "./lib/routes";
 
 export async function middleware(req: NextRequest) {

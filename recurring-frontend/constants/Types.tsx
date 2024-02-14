@@ -72,10 +72,22 @@ interface TaskTypes {
   subTasks: [TaskTypes];
 }
 
+interface LeaveTypes {
+  _id: string;
+  employeeId: string;
+  startDate: Date;
+  endDate: Date;
+  reason: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export type {
   InputWithIconProps,
   EmployeeTypes,
   ProjectTypes,
   TaskTypes,
   AttendanceTypes,
+  LeaveTypes,
 };

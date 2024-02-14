@@ -4,7 +4,7 @@ import Column from "./Column";
 import { useContext, useState } from "react";
 import TaskDetailSheet from "./TaskDetailSheet";
 import { TaskContext } from "./TaskContextProvider";
-import CreateTaskButton from "./CreateTaskButton";
+// import CreateTaskButton from "./CreateTaskButton";
 
 const TaskList = () => {
   const { columns, onDragEnd } = useContext(TaskContext);
@@ -12,7 +12,7 @@ const TaskList = () => {
     <div>
       <div className="flex items-center justify-between p-5">
         <h1 className="text-2xl font-bold">Task</h1>
-        <CreateTaskButton />
+        {/* <CreateTaskButton /> */}
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 text-sm">

@@ -6,6 +6,7 @@ import { AttendanceAdapterInterface } from "../../../../interface/attendance/Att
 import { getAttendanceByUserId } from "./functions/getAttendanceByUserId.adapter";
 import { SimpleFilter } from "../../../../constants/props/SimpleFilter";
 import { checkExistingDate } from "./functions/checkExistingDate.adapter";
+import { updateAttendance } from "./functions/updateAttendance.adapter";
 
 @injectable()
 export class AttendanceAdapter implements AttendanceAdapterInterface {
@@ -26,10 +27,9 @@ export class AttendanceAdapter implements AttendanceAdapterInterface {
     return getAttendanceByUserId(userId, filter);
   }
   async updateAttendance(
-    id: string,
     attendance: Attendance
   ): Promise<boolean | Attendance> {
-    throw new Error("Method not implemented.");
+    return updateAttendance(attendance);
   }
 
   async checkExistingDate(

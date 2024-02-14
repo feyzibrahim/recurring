@@ -10,4 +10,8 @@ export const TYPES = {
   // Salary
   SalaryAdapterInterface: Symbol.for("SalaryAdapterInterface"),
   SalaryUseCaseInterface: Symbol.for("SalaryUseCaseInterface"),
+
+  // Leave
+  LeaveAdapterInterface: Symbol.for("LeaveAdapterInterface"),
+  LeaveUseCaseInterface: Symbol.for("LeaveUseCaseInterface"),
 };

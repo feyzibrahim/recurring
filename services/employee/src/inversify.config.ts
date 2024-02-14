@@ -21,6 +21,11 @@ import { SalaryAdapter } from "./adapter/Database/MongoDB/SalaryAdapter";
 import { SalaryUseCaseInterface } from "./interface/salary/SalaryUseCaseInterface";
 import { SalaryUseCase } from "./useCases/SalaryUseCase";
 import { SalaryController } from "./handler/controller/salary/SalaryController";
+import { LeaveAdapterInterface } from "./interface/leave/LeaveAdapterInterface";
+import { LeaveAdapter } from "./adapter/Database/MongoDB/LeaveAdapter";
+import { LeaveUseCaseInterface } from "./interface/leave/LeaveUseCaseInterface";
+import { LeaveUseCase } from "./useCases/LeaveUseCase";
+import { LeaveController } from "./handler/controller/leave/LeaveController";
 
 // Database connection
 connectToDatabase();
@@ -59,6 +64,16 @@ container
   .to(SalaryUseCase);
 container.bind<SalaryController>(SalaryController).toSelf();
 container.bind<SalaryUseCase>(SalaryUseCase).toSelf();
+
+// Leave Injection
+container
+  .bind<LeaveAdapterInterface>(TYPES.LeaveAdapterInterface)
+  .to(LeaveAdapter);
+container
+  .bind<LeaveUseCaseInterface>(TYPES.LeaveUseCaseInterface)
+  .to(LeaveUseCase);
+container.bind<LeaveController>(LeaveController).toSelf();
+container.bind<LeaveUseCase>(LeaveUseCase).toSelf();
 
 // Disconnect From Database
 process.on("SIGINT", async () => {

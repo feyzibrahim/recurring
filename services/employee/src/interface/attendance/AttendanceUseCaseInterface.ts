@@ -8,9 +8,6 @@ export interface AttendanceUseCaseInterface {
     filter: SimpleFilter
   ): Promise<Attendance[] | boolean>;
   createAttendance(attendance: Attendance): Promise<Attendance | boolean>;
-  updateAttendance(
-    id: string,
-    attendance: Attendance
-  ): Promise<Attendance | boolean>;
+  updateAttendance(attendance: Attendance): Promise<Attendance | boolean>;
   checkExistingDate(attendance: Attendance): Promise<Attendance | boolean>;
 }

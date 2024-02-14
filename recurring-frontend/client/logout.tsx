@@ -8,7 +8,6 @@ export const logout = async (router: any) => {
       "Content-Type": "application/json",
     },
   });
-  console.log("Log: logout -> data", data);
   if (data.success) {
     router.replace("/");
   }

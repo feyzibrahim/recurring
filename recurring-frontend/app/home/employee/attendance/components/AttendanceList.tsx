@@ -1,5 +1,8 @@
 "use client";
-import { getAttendanceByUserId } from "@/app/lib/features/attendance/attendanceActions";
+import {
+  getAttendanceByUserId,
+  getAttendances,
+} from "@/app/lib/features/attendance/attendanceActions";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import React, { useEffect } from "react";
 import { AttendanceRow } from "./AttendanceRow";
@@ -7,11 +10,7 @@ import EmptyProject from "@/components/empty/EmptyProjects";
 import { useSearchParams } from "next/navigation";
 import AttendanceBarChart from "./AttendanceBarChart";
 
-interface Props {
-  id: string;
-}
-
-const AttendanceList = ({ id }: Props) => {
+const AttendanceList = () => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const from = searchParams.get("from");
@@ -27,8 +26,8 @@ const AttendanceList = ({ id }: Props) => {
     if (to) {
       filter.push(`to=${to}`);
     }
-    dispatch(getAttendanceByUserId({ userSlug: id, filter: filter.join("&") }));
-  }, [dispatch, from, to, searchParams, id]);
+    dispatch(getAttendances({ filter: filter.join("&") }));
+  }, [dispatch, from, to, searchParams]);
 
   return (
     <div>

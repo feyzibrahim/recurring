@@ -9,29 +9,17 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
-import FormInputCustom from "@/components/common/FormInputCustom";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { usePathname } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
-import { createAttendanceByAdmin } from "@/app/lib/features/attendance/attendanceActions";
+import { createAttendance } from "@/app/lib/features/attendance/attendanceActions";
 import { useEffect } from "react";
 import { removeErrorOnClose } from "@/app/lib/features/attendance/attendanceSlice";
-import DatePicker from "@/components/custom/DatePicker";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const formSchema = z.object({
-  employeeId: z.string(),
-  date: z.date(),
-  checkInTime: z.string().optional(),
-  checkOutTime: z.string().optional(),
-  status: z.string(),
+  type: z.string(),
   remarks: z.string().optional(),
 });
 
@@ -40,32 +28,20 @@ interface PropsTypes {
 }
 
 export default function AttendanceForm({ setIsModalOpen }: PropsTypes) {
-  const pathName = usePathname();
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.attendance);
-
-  let id = "";
-  const parts = pathName.split("/");
-  const idIndex = parts.indexOf("employee") + 1;
-  if (parts.length > idIndex) {
-    id = parts[idIndex];
-  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      employeeId: id || "",
-      date: undefined,
-      checkInTime: "",
-      checkOutTime: "",
-      status: "",
+      type: "",
       remarks: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const data = await dispatch(createAttendanceByAdmin(values));
-    if (createAttendanceByAdmin.fulfilled.match(data)) {
+    const data = await dispatch(createAttendance(values));
+    if (createAttendance.fulfilled.match(data)) {
       setIsModalOpen(false);
     }
   }
@@ -79,59 +55,37 @@ export default function AttendanceForm({ setIsModalOpen }: PropsTypes) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="date"
-          render={({ field }) => <DatePicker title="Date" field={field} />}
-        />
-        <FormField
-          control={form.control}
-          name="checkInTime"
-          render={({ field }) => (
-            <FormInputCustom
-              field={field}
-              showTitle={true}
-              title="Check-In Time"
-              type="time"
-              placeholder="Check-In Time"
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="checkOutTime"
-          render={({ field }) => (
-            <FormInputCustom
-              field={field}
-              showTitle={true}
-              title="Check-In Time"
-              type="time"
-              placeholder="Check-Out Time"
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Status</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <div>
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
                 <FormControl>
-                  <SelectTrigger className="bg-backgroundAccent">
-                    <SelectValue placeholder="Choose Status" />
-                  </SelectTrigger>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="check-in" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Check-In</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="check-out" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Check-Out</FormLabel>
+                    </FormItem>
+                  </RadioGroup>
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="present">Present</SelectItem>
-                  <SelectItem value="absent">Absent</SelectItem>
-                  <SelectItem value="half-day">Half-day</SelectItem>
-                  <SelectItem value="late">Late</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="remarks"
@@ -145,7 +99,7 @@ export default function AttendanceForm({ setIsModalOpen }: PropsTypes) {
         />
         {error && <p className="text-sm text-red-500">{error}</p>}
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Loading..." : "Update Attendance"}
+          {loading ? "Loading..." : "Mark Attendance"}
         </Button>
       </form>
     </Form>

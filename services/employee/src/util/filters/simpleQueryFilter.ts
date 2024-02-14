@@ -16,12 +16,14 @@ const simpleQueryFilter = (
 
   let filter: SimpleFilter = {};
   if (from) {
-    const date = new Date(from);
-    filter.date = { $gte: date };
+    const fromDate = new Date(from);
+    fromDate.setHours(0, 0, 0, 0);
+    filter.date = { ...filter.date, $gte: fromDate };
   }
   if (to) {
-    const date = new Date(to);
-    filter.date = { ...filter.date, $lte: date };
+    const toDate = new Date(to);
+    toDate.setHours(23, 59, 59, 999);
+    filter.date = { ...filter.date, $lte: toDate };
   }
   const skip = (parseInt(page) - 1) * parseInt(limit);
 

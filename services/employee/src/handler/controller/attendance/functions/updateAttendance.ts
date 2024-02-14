@@ -15,7 +15,7 @@ export const updateAttendance = async (
     const attendance = req.body as Attendance;
     console.log("updateAttendance: attendance", attendance);
 
-    let org = await iAttendanceUseCase.updateAttendance(data.user, attendance);
+    let org = await iAttendanceUseCase.updateAttendance(attendance);
     if (!org) {
       throw Error("No attendance found");
     }

@@ -5,11 +5,11 @@ import { API_ROUTES } from "@/lib/routes";
 // Attendance details finding
 export const getAttendances = createAsyncThunk(
   "attendance/getAttendances",
-  async (_: undefined, { rejectWithValue }) => {
+  async ({ filter }: { filter: string }, { rejectWithValue }) => {
     return reduxCommonRequest({
       route: API_ROUTES.EMPLOYEE,
       method: "GET",
-      url: "/api/attendance/",
+      url: `/api/attendance${filter && `?${filter}`}`,
       headers: {
         "Content-Type": "application/json",
       },

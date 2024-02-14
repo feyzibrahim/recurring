@@ -46,10 +46,6 @@ export const attendanceSlice = createSlice({
         state.error = payload;
       })
       .addCase(getAttendances.fulfilled, (state, { payload }) => {
-        console.log(
-          "file: attendanceSlice.tsx:65 -> .addCase -> payload",
-          payload
-        );
         state.loading = false;
         state.error = null;
         state.attendances = payload.attendances;
@@ -88,18 +84,26 @@ export const attendanceSlice = createSlice({
       .addCase(createAttendance.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
-        console.log(
-          "file: attendanceSlice.tsx:109 -> .addCase -> payload",
-          payload
-        );
       })
       .addCase(createAttendance.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
-        state.attendances = [
-          ...(state.attendances || []),
-          payload.attendance,
-        ] as AttendanceTypes[];
+        if (payload.update) {
+          if (state.attendances !== null) {
+            const index = state.attendances.findIndex(
+              (item) => item._id === payload.task._id
+            );
+
+            if (index !== -1) {
+              state.attendances[index] = payload.task;
+            }
+          }
+        } else {
+          state.attendances = [
+            ...(state.attendances || []),
+            payload.attendance,
+          ] as AttendanceTypes[];
+        }
       })
       .addCase(createAttendanceByAdmin.pending, (state) => {
         state.loading = true;
