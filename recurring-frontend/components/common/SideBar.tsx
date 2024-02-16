@@ -23,6 +23,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { logout } from "@/client/logout";
+import { ToolTipWrapper } from "../custom/ToolTipWrapper";
 
 const SideBar = () => {
   const pathName = usePathname();
@@ -38,97 +39,130 @@ const SideBar = () => {
       </div>
       <div className="flex flex-col items-center gap-3 py-5">
         <Link href={"/dashboard"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <AiOutlineDashboard className="m-1" />
-          </div>
+          <ToolTipWrapper title="Dashboard">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName === "/dashboard" ? " bg-primary text-white" : ""
+              }`}
+            >
+              <AiOutlineDashboard className="m-1" />
+            </div>
+          </ToolTipWrapper>
         </Link>
         <Link href={"/dashboard/project"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName.includes("/project") ? " bg-primary text-white" : ""
-            }`}
-          >
-            <RiDashboardLine className="m-1" />
-          </div>
+          <ToolTipWrapper title="Project">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName.includes("/project") ? " bg-primary text-white" : ""
+              }`}
+            >
+              <RiDashboardLine className="m-1" />
+            </div>
+          </ToolTipWrapper>
         </Link>
-        <Link href={"/dashboard/timeline"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/timeline" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <CgTimelapse className="m-1" />
-          </div>
-        </Link>
-        <Link href={"/dashboard/task"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/task" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <FaTasks className="m-1" />
-          </div>
-        </Link>
-        <Link href={"/dashboard/employee"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName.includes("/employee") ? " bg-primary text-white" : ""
-            }`}
-          >
-            <FaRegAddressCard className="m-1" />
-          </div>
-        </Link>
-        <Link href={"/dashboard/billing"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/billing" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <BiCreditCard className="m-1" />
-          </div>
-        </Link>
-        <Link href={"/dashboard/clients"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/clients" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <IoIosPeople className="m-1" />
-          </div>
-        </Link>
-        <Link href={"/dashboard/deals"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/deals" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <FaMoneyCheckAlt className="m-1" />
-          </div>
-        </Link>
-        <Link href={"/dashboard/chat"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/dashboard/chat" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <BiChat className="m-1" />
-          </div>
-        </Link>
-        <Link href={"/dashboard/settings"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName.includes("/dashboard/settings")
-                ? " bg-primary text-white"
-                : ""
-            }`}
-          >
-            <FiSettings className="m-1" />
-          </div>
-        </Link>
+        <ToolTipWrapper title="Timeline">
+          <Link href={"/dashboard/timeline"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName === "/dashboard/timeline"
+                  ? " bg-primary text-white"
+                  : ""
+              }`}
+            >
+              <CgTimelapse className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+
+        <ToolTipWrapper title="Task">
+          <Link href={"/dashboard/task"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName === "/dashboard/task" ? " bg-primary text-white" : ""
+              }`}
+            >
+              <FaTasks className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+
+        <ToolTipWrapper title="Employee">
+          <Link href={"/dashboard/employee"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName.includes("/employee") ? " bg-primary text-white" : ""
+              }`}
+            >
+              <FaRegAddressCard className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+
+        <ToolTipWrapper title="Billing">
+          <Link href={"/dashboard/billing"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName === "/dashboard/billing"
+                  ? " bg-primary text-white"
+                  : ""
+              }`}
+            >
+              <BiCreditCard className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+
+        <ToolTipWrapper title="Clients">
+          <Link href={"/dashboard/clients"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName === "/dashboard/clients"
+                  ? " bg-primary text-white"
+                  : ""
+              }`}
+            >
+              <IoIosPeople className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+
+        <ToolTipWrapper title="Deals">
+          <Link href={"/dashboard/deals"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName === "/dashboard/deals" ? " bg-primary text-white" : ""
+              }`}
+            >
+              <FaMoneyCheckAlt className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+
+        <ToolTipWrapper title="Chat">
+          <Link href={"/dashboard/chat"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName === "/dashboard/chat" ? " bg-primary text-white" : ""
+              }`}
+            >
+              <BiChat className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+
+        <ToolTipWrapper title="Settings">
+          <Link href={"/dashboard/settings"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName.includes("/dashboard/settings")
+                  ? " bg-primary text-white"
+                  : ""
+              }`}
+            >
+              <FiSettings className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
 
         <AlertDialog>
           <AlertDialogTrigger asChild>

@@ -1,5 +1,14 @@
 import EmptyProject from "@/components/empty/EmptyProjects";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ToolTipWrapper } from "@/components/custom/ToolTipWrapper";
+import { AiOutlineDashboard } from "react-icons/ai";
 
 const page = async () => {
   await checkUserWithoutRedirect();
@@ -10,6 +19,9 @@ const page = async () => {
         <EmptyProject />
         <p className="mt-2">Dashboard Yet To be designed</p>
         <p className="text-sm py-2">Will be updated Later</p>
+        <ToolTipWrapper title="Add to library">
+          <AiOutlineDashboard className="m-1" />
+        </ToolTipWrapper>
       </div>
     </div>
   );
