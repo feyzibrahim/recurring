@@ -83,6 +83,15 @@ interface LeaveTypes {
   updatedAt: Date;
 }
 
+interface ChatTypes {
+  _id: string;
+  participants: [EmployeeTypes];
+  groupName: string;
+  createdAt: Date;
+  updatedAt: Date;
+  type: string;
+}
+
 export type {
   InputWithIconProps,
   EmployeeTypes,
@@ -90,4 +99,5 @@ export type {
   TaskTypes,
   AttendanceTypes,
   LeaveTypes,
+  ChatTypes,
 };

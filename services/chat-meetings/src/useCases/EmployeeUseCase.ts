@@ -22,4 +22,10 @@ export class ChatUseCase implements ChatUseCaseInterface {
   updateChat(id: string, chat: Chat): Promise<boolean | Chat> {
     return this.iChatUseCase.updateChat(id, chat);
   }
+  getChatsWithUserIds(
+    userId: string,
+    otherUser: string
+  ): Promise<boolean | Chat[]> {
+    return this.iChatUseCase.getChatsWithUserIds(userId, otherUser);
+  }
 }

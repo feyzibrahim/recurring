@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ChatUseCaseInterface } from "../../../../interface/chat/ChatUseCaseInterface";
 import { Chat } from "../../../../Entities/Chat";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import { User } from "../../../../Entities/User";
 
 export const createChat = async (
   req: Request,
@@ -17,7 +18,17 @@ export const createChat = async (
 
     body.organization = data.organization;
     body.participants.push(data.user);
-    console.log("file: createChat.ts:31 -> body", body);
+
+    let otherUser = body.participants[0] as string;
+
+    let chatExists = await iChatUseCase.getChatsWithUserIds(
+      data.user,
+      otherUser
+    );
+
+    if (typeof chatExists !== "boolean" && chatExists.length > 0) {
+      throw Error("Chat Exists");
+    }
 
     let chat = (await iChatUseCase.createChat(body)) as Chat;
 

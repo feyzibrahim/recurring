@@ -1,7 +1,6 @@
 "use client";
 import { useAppSelector } from "@/app/lib/hook";
-import AvatarFallbackImage from "@/components/common/AvatarFallbackImage";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import UserAvatar from "@/components/common/UserAvatar";
 import { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
 
@@ -13,7 +12,7 @@ const ChatHeader = ({ socket }: PropsTypes) => {
   const [typing, setTyping] = useState(false);
   const [handler, setHandler] = useState("");
 
-  const { activeChatUser } = useAppSelector((state) => state.chat);
+  const { activeChat } = useAppSelector((state) => state.chat);
 
   useEffect(() => {
     socket.on("typing", (data) => {
@@ -32,19 +31,18 @@ const ChatHeader = ({ socket }: PropsTypes) => {
 
   return (
     <div className="flex gap-2 items-center shadow-md p-5 ">
-      <Avatar>
-        <AvatarImage
-          src={
-            typeof activeChatUser?.profileImageURL === "string"
-              ? activeChatUser.profileImageURL
+      {activeChat && (
+        <UserAvatar
+          profileImageURL={
+            typeof activeChat.participants[0].profileImageURL === "string"
+              ? activeChat.participants[0].profileImageURL
               : ""
           }
         />
-        <AvatarFallbackImage />
-      </Avatar>
+      )}
       <div className="w-full">
-        {activeChatUser &&
-          `${activeChatUser.firstName} ${activeChatUser.lastName}`}
+        {activeChat &&
+          `${activeChat.participants[0].firstName} ${activeChat.participants[0].lastName}`}
         {typing && <p>{handler} is typing...</p>}
       </div>
     </div>

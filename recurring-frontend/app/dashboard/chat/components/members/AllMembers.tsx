@@ -10,7 +10,6 @@ import InputWithIcon from "@/components/custom/InputWithIcon";
 import { FiSearch } from "react-icons/fi";
 import Link from "next/link";
 import { useAppDispatch } from "@/app/lib/hook";
-import { setActiveChatUser } from "@/app/lib/features/chat/chatSlice";
 import { createChat } from "@/app/lib/features/chat/chatActions";
 
 export default function MembersList({
@@ -37,7 +36,6 @@ export default function MembersList({
         },
       });
       setLoading(false);
-      console.log("file: AllMembers.tsx:50 -> loadData -> res", res);
 
       if (res.users) {
         const membersWithSelection: (EmployeeTypes & { selected?: boolean })[] =

@@ -17,7 +17,7 @@ const SeeAllButton = () => {
         className="text-xs hover:text-foregroundAccent cursor-pointer"
         onClick={() => setIsModalOpen(true)}
       >
-        See All
+        New Chat
       </p>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>

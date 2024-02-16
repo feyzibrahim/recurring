@@ -1,39 +1,44 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createChat } from "./chatActions";
-import { EmployeeTypes } from "@/constants/Types";
-
-interface ChatTypes {
-  _id: string;
-  participants: [string | EmployeeTypes];
-  groupName: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { createChat, getChats } from "./chatActions";
+import { ChatTypes } from "@/constants/Types";
 
 interface ChatSliceType {
-  chatList: ChatTypes[] | null;
+  chats: ChatTypes[] | null;
   loading: boolean;
   error: any;
-  activeChatUser: EmployeeTypes | null;
+  activeChat: ChatTypes | null;
 }
 
 const initialState: ChatSliceType = {
-  chatList: [],
+  chats: [],
   loading: false,
   error: null,
-  activeChatUser: null,
+  activeChat: null,
 };
 
 export const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    setActiveChatUser: (state, { payload }) => {
-      return { ...state, activeChatUser: payload.user };
+    setActiveChat: (state, { payload }) => {
+      return { ...state, activeChat: payload.chat };
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getChats.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getChats.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.chats = null;
+        state.error = payload;
+      })
+      .addCase(getChats.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.chats = payload.chats;
+      })
       .addCase(createChat.pending, (state) => {
         state.loading = true;
       })
@@ -45,14 +50,11 @@ export const chatSlice = createSlice({
         state.loading = false;
         state.error = null;
 
-        state.chatList = [
-          ...(state.chatList || []),
-          payload.chat,
-        ] as ChatTypes[];
+        state.chats = [payload.chat, ...(state.chats || [])] as ChatTypes[];
       });
   },
 });
 
-export const { setActiveChatUser } = chatSlice.actions;
+export const { setActiveChat } = chatSlice.actions;
 
 export default chatSlice.reducer;

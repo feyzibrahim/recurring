@@ -5,6 +5,7 @@ import { getChat } from "./functions/getChat.adapter";
 import { ChatAdapterInterface } from "../../../../interface/chat/ChatAdapterInterface";
 import { getChats } from "./functions/getChats.adapter";
 import { updateChat } from "./functions/updateChat.adapter";
+import { getChatsWithUserIds } from "./functions/getChatsWithUserIds";
 
 @injectable()
 export class ChatAdapter implements ChatAdapterInterface {
@@ -22,5 +23,12 @@ export class ChatAdapter implements ChatAdapterInterface {
 
   async updateChat(id: string, chat: Chat): Promise<boolean | Chat> {
     return updateChat(chat);
+  }
+
+  async getChatsWithUserIds(
+    userId: string,
+    otherUser: string
+  ): Promise<boolean | Chat[]> {
+    return getChatsWithUserIds(userId, otherUser);
   }
 }
