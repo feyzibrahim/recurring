@@ -23,6 +23,7 @@ export const createEmployee = async (
 
     sendDataToQueue(QUEUES.EMPLOYEECREATION, employee);
     sendDataToQueue(QUEUES.PROJECT_USER_CREATION, employee);
+    sendDataToQueue(QUEUES.CHAT_MEETING_USER_CREATION, employee);
 
     return res.status(200).json({
       employee: employee,

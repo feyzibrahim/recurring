@@ -2,7 +2,8 @@ import { inject, injectable } from "inversify";
 import amqp, { Channel, Connection } from "amqplib";
 import { UserAdapterInterface } from "../../interface/user/UserAdapterInterface";
 import { TYPES } from "../../constants/types/types";
-import { User } from "../../Entities/User";
+import { consumeMessages } from "./functions/ConsumeMessages";
+import { SendDataToQueue } from "./functions/SendDataToQueue";
 
 @injectable()
 export class RabbitMQService {
@@ -24,20 +25,10 @@ export class RabbitMQService {
   }
 
   async consumeMessages(queue: string) {
-    try {
-      await this.channel.assertQueue(queue);
-      this.channel.consume(queue, async (data) => {
-        if (data) {
-          const response = Buffer.from(data.content).toString();
-          const employee = JSON.parse(response) as User;
+    consumeMessages(this.channel, queue, this.userAdapter);
+  }
 
-          await this.userAdapter.updateUser(employee);
-
-          this.channel.ack(data);
-        }
-      });
-    } catch (error) {
-      console.error("Error consuming messages:", error);
-    }
+  async sendDataToQueue(queue: string, data: any) {
+    SendDataToQueue(this.channel, this.connection, queue, data);
   }
 }

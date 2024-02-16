@@ -1,6 +1,6 @@
 "use client";
 
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   createAttendance,
   getAttendances,

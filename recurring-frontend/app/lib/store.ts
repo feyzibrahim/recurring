@@ -4,6 +4,7 @@ import projectSlice from "./features/project/projectSlice";
 import taskSlice from "./features/task/taskSlice";
 import attendanceSlice from "./features/attendance/attendanceSlice";
 import leaveSlice from "./features/leave/leaveSlice";
+import chatSlice from "./features/chat/chatSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -13,6 +14,7 @@ export const makeStore = () => {
       task: taskSlice,
       attendance: attendanceSlice,
       leave: leaveSlice,
+      chat: chatSlice,
     },
   });
 };

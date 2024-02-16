@@ -24,8 +24,9 @@ export const updateEmployee = async (
       throw Error("No employee found");
     }
 
-    sendDataToQueue(QUEUES.EMPLOYEECREATION, employee);
-    sendDataToQueue(QUEUES.PROJECT_USER_CREATION, employee);
+    sendDataToQueue(QUEUES.EMPLOYEECREATION, updatedEmployee);
+    sendDataToQueue(QUEUES.PROJECT_USER_CREATION, updatedEmployee);
+    sendDataToQueue(QUEUES.CHAT_MEETING_USER_CREATION, updatedEmployee);
 
     return res.status(200).json({
       employee: updatedEmployee,

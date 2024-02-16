@@ -20,4 +20,11 @@ export class UserUseCase implements UserUseCaseInterface {
   updateUser(user: User): Promise<boolean | User> {
     return this.iUserUseCase.updateUser(user);
   }
+
+  getUsersInOrgWithoutMe(
+    organizationId: string,
+    userId: string
+  ): Promise<boolean | User[]> {
+    return this.iUserUseCase.getUsersInOrgWithoutMe(organizationId, userId);
+  }
 }

@@ -4,31 +4,46 @@ import {
   disconnectFromDatabase,
 } from "./config/dbConnection";
 
-import { EmployeeUseCase } from "./useCases/EmployeeUseCase";
-import { EmployeeAdapter } from "./adapter/Database/MongoDB/EmployeeAdapter";
-import { EmployeeAdapterInterface } from "./interface/employee/EmployeeAdapterInterface";
+import { ChatAdapter } from "./adapter/Database/MongoDB/ChatAdapter";
+import { ChatAdapterInterface } from "./interface/chat/ChatAdapterInterface";
 import { TYPES } from "./constants/types/types";
-import { EmployeeUseCaseInterface } from "./interface/employee/EmployeeUseCaseInterface";
-import { EmployeeController } from "./handler/controller/project/EmployeeController";
-import { connectRabbitMq } from "./infra/rabbitMQ/rabbitmqConnection";
+import { ChatUseCaseInterface } from "./interface/chat/ChatUseCaseInterface";
+import { UserAdapterInterface } from "./interface/user/UserAdapterInterface";
+import { UserAdapter } from "./adapter/Database/MongoDB/UserAdapter/UserAdapter";
+import { RabbitMQService } from "./infra/rabbitmq/rabbitmq.service";
+import { ChatUseCase } from "./useCases/EmployeeUseCase";
+import { ChatController } from "./handler/controller/chat";
+import { SocketIOService } from "./infra/SocketIO/socket.service";
 
 // Database connection
 connectToDatabase();
 
-// Message Broker Connection | RabbitMQ
-connectRabbitMq();
-
 const container = new Container();
 
-// Employee Injection
+// Chat Injection
 container
-  .bind<EmployeeAdapterInterface>(TYPES.EmployeeAdapterInterface)
-  .to(EmployeeAdapter);
+  .bind<ChatAdapterInterface>(TYPES.ChatAdapterInterface)
+  .to(ChatAdapter);
 container
-  .bind<EmployeeUseCaseInterface>(TYPES.EmployeeUseCaseInterface)
-  .to(EmployeeUseCase);
-container.bind<EmployeeController>(EmployeeController).toSelf();
-container.bind<EmployeeUseCase>(EmployeeUseCase).toSelf();
+  .bind<ChatUseCaseInterface>(TYPES.ChatUseCaseInterface)
+  .to(ChatUseCase);
+container.bind<ChatController>(ChatController).toSelf();
+container.bind<ChatUseCase>(ChatUseCase).toSelf();
+
+// User Injection
+container
+  .bind<UserAdapterInterface>(TYPES.UserAdapterInterface)
+  .to(UserAdapter);
+
+// RabbitMQ injection
+container
+  .bind<RabbitMQService>(TYPES.RabbitMQServiceInitializer)
+  .to(RabbitMQService);
+
+// Socket injection
+container
+  .bind<SocketIOService>(TYPES.SocketIOServiceInitializer)
+  .to(SocketIOService);
 
 // Disconnect From Database
 process.on("SIGINT", async () => {

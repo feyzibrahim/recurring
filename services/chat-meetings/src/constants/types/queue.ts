@@ -1,3 +1,3 @@
 export const QUEUES = {
-  EMPLOYEECREATION: "employee-creation",
+  CHAT_MEETING_USER_CREATION: "chat-meeting-user-creation",
 };

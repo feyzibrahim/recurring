@@ -8,12 +8,16 @@ import { validateJwt } from "@recurring/shared_library";
 import { changePassword } from "./functions/changePassword.controller";
 import { updateProfile } from "./functions/updateProfile.controller";
 import { newPassword } from "./functions/newPassword.controller";
+import { getUsersInOrgWithoutMe } from "./functions/getUsersInOrgWithoutMe.controller";
+import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 
 @controller("/api/user")
 export class UserController {
   constructor(
     @inject(TYPES.UserUseCaseInterface)
-    private iUserUseCase: UserUseCaseInterface
+    private iUserUseCase: UserUseCaseInterface,
+    @inject(TYPES.RabbitMQUseCaseInterface)
+    private iRabbitMQUseCase: RabbitMQUseCaseInterface
   ) {}
 
   @httpGet("/", requireAuth)
@@ -68,6 +72,11 @@ export class UserController {
 
   @httpPatch("/update-profile", requireAuth)
   async updateProfile(req: Request, res: Response) {
-    await updateProfile(req, res, this.iUserUseCase);
+    await updateProfile(req, res, this.iUserUseCase, this.iRabbitMQUseCase);
+  }
+
+  @httpGet("/in-org-without-me", requireAuth)
+  async getUsersInOrgWithoutMe(req: Request, res: Response) {
+    await getUsersInOrgWithoutMe(req, res, this.iUserUseCase);
   }
 }

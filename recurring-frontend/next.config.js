@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   swcMinify: true,
   images: {
     remotePatterns: [
@@ -20,12 +21,12 @@ const nextConfig = {
       source: "/",
       headers: [
         {
-          key:"Cache-Control", 
-          value: "no-store"
-        }
-      ]
-    }
-  ]
+          key: "Cache-Control",
+          value: "no-store",
+        },
+      ],
+    },
+  ],
 };
 
 module.exports = nextConfig;

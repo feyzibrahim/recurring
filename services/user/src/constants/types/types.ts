@@ -7,5 +7,7 @@ export const TYPES = {
 
   OrganizationAdapterInterface: Symbol.for("OrganizationAdapterInterface"),
   OrganizationUseCaseInterface: Symbol.for("OrganizationUseCaseInterface"),
+
   RabbitMQServiceInitializer: Symbol.for("RabbitMQServiceInitializer"),
+  RabbitMQUseCaseInterface: Symbol.for("RabbitMQUseCaseInterface"),
 };

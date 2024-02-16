@@ -1,4 +1,8 @@
 export const TYPES = {
-  EmployeeAdapterInterface: Symbol.for("EmployeeAdapterInterface"),
-  EmployeeUseCaseInterface: Symbol.for("EmployeeUseCaseInterface"),
+  ChatAdapterInterface: Symbol.for("ChatAdapterInterface"),
+  ChatUseCaseInterface: Symbol.for("ChatUseCaseInterface"),
+
+  UserAdapterInterface: Symbol.for("UserAdapterInterface"),
+  RabbitMQServiceInitializer: Symbol.for("RabbitMQServiceInitializer"),
+  SocketIOServiceInitializer: Symbol.for("SocketIOServiceInitializer"),
 };

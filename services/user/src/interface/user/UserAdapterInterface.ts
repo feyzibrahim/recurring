@@ -5,4 +5,8 @@ export interface UserAdapterInterface {
   changePassword(id: string, password: string): Promise<User | boolean>;
   updateUser(user: User): Promise<User | boolean>;
   createEmployee(employee: User): Promise<User | boolean>;
+  getUsersInOrgWithoutMe(
+    organizationId: string,
+    userId: string
+  ): Promise<User[] | boolean>;
 }

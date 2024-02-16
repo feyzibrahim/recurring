@@ -50,4 +50,24 @@ export class UserAdapter implements UserAdapterInterface {
       return false;
     }
   }
+
+  async getUsersInOrgWithoutMe(
+    organizationId: string,
+    userId: string
+  ): Promise<boolean | User[]> {
+    try {
+      const users = await UserModal.find(
+        {
+          _id: { $ne: userId },
+          organization: organizationId,
+        },
+        { profileImageURL: 1, firstName: 1, lastName: 1, username: 1 }
+      );
+
+      return users;
+    } catch (error) {
+      console.log("Log: UserAdapter -> createEmployee -> error", error);
+      return false;
+    }
+  }
 }

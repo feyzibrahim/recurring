@@ -21,6 +21,8 @@ import { OrganizationUseCaseInterface } from "./interface/organization/Organizat
 import { OrganizationAdapterInterface } from "./interface/organization/OrganizationAdapterInterface";
 import { OrganizationAdapter } from "./adapter/Database/MongoDB/OrganizationAdapter";
 import { RabbitMQService } from "./infra/rabbitmq/rabbitmq.service";
+import { RabbitMQUseCaseInterface } from "./interface/rabbitmq/RabbitMQUseCaseInterface";
+import { RabbitMQUseCase } from "./useCases/RabbitMQUseCase";
 // import { connectRabbitMq } from "./infra/rabbitmq/rabbitmqConnection";
 
 // Database connection
@@ -65,8 +67,11 @@ container
 
 container
   .bind<RabbitMQService>(TYPES.RabbitMQServiceInitializer)
-  .to(RabbitMQService);
-
+  .to(RabbitMQService)
+  .inSingletonScope();
+container
+  .bind<RabbitMQUseCaseInterface>(TYPES.RabbitMQUseCaseInterface)
+  .to(RabbitMQUseCase);
 // Disconnect From Database
 process.on("SIGINT", async () => {
   await disconnectFromDatabase();

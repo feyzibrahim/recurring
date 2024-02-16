@@ -1,37 +1,25 @@
 import { inject, injectable } from "inversify";
-import { EmployeeUseCaseInterface } from "../interface/employee/EmployeeUseCaseInterface";
+import { ChatUseCaseInterface } from "../interface/chat/ChatUseCaseInterface";
 import { TYPES } from "../constants/types/types";
-import { Employee } from "../Entities/Employee";
+import { Chat } from "../Entities/Chat";
 
 @injectable()
-export class EmployeeUseCase implements EmployeeUseCaseInterface {
+export class ChatUseCase implements ChatUseCaseInterface {
   constructor(
-    @inject(TYPES.EmployeeAdapterInterface)
-    private iEmployeeUseCase: EmployeeUseCaseInterface
+    @inject(TYPES.ChatAdapterInterface)
+    private iChatUseCase: ChatUseCaseInterface
   ) {}
 
-  getEmployee(id: string): Promise<boolean | Employee> {
-    return this.iEmployeeUseCase.getEmployee(id);
+  getChat(id: string): Promise<boolean | Chat> {
+    return this.iChatUseCase.getChat(id);
   }
-  getEmployees(organizationId: string): Promise<boolean | Employee[]> {
-    return this.iEmployeeUseCase.getEmployees(organizationId);
+  getChats(userId: string): Promise<boolean | Chat[]> {
+    return this.iChatUseCase.getChats(userId);
   }
-  getEmployeeByUserId(userId: string): Promise<boolean | Employee> {
-    return this.iEmployeeUseCase.getEmployeeByUserId(userId);
+  createChat(chat: Chat): Promise<boolean | Chat> {
+    return this.iChatUseCase.createChat(chat);
   }
-  createEmployee(employee: Employee): Promise<boolean | Employee> {
-    return this.iEmployeeUseCase.createEmployee(employee);
-  }
-  updateEmployee(id: string, employee: Employee): Promise<boolean | Employee> {
-    return this.iEmployeeUseCase.updateEmployee(id, employee);
-  }
-  deleteEmployee(id: string): Promise<boolean | Employee> {
-    return this.iEmployeeUseCase.deleteEmployee(id);
-  }
-  getEmployeesWithRole(
-    organizationId: string,
-    role: string
-  ): Promise<boolean | Employee[]> {
-    return this.iEmployeeUseCase.getEmployeesWithRole(organizationId, role);
+  updateChat(id: string, chat: Chat): Promise<boolean | Chat> {
+    return this.iChatUseCase.updateChat(id, chat);
   }
 }
