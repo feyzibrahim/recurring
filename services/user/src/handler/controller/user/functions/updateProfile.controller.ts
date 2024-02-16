@@ -32,6 +32,10 @@ export const updateProfile = async (
 
     iRabbitMQUseCase.sendDataToQueue(QUEUES.PROJECT_USER_CREATION, updatedUser);
     iRabbitMQUseCase.sendDataToQueue(
+      QUEUES.EMPLOYEE_USER_CREATION,
+      updatedUser
+    );
+    iRabbitMQUseCase.sendDataToQueue(
       QUEUES.CHAT_MEETING_USER_CREATION,
       updatedUser
     );

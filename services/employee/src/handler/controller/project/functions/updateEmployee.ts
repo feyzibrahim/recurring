@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import { EmployeeUseCaseInterface } from "../../../../interface/employee/EmployeeUseCaseInterface";
 import { Employee } from "../../../../Entities/Employee";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
-import { sendDataToQueue } from "../../../../infra/rabbitMQ/sendDataToQueue";
 import { QUEUES } from "../../../../constants/types/queue";
+import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 
 export const updateEmployee = async (
   req: Request,
   res: Response,
-  iEmployeeUseCase: EmployeeUseCaseInterface
+  iEmployeeUseCase: EmployeeUseCaseInterface,
+  iRabbitMQUseCase: RabbitMQUseCaseInterface
 ) => {
   try {
     const { access_token } = req.cookies;
@@ -24,9 +25,15 @@ export const updateEmployee = async (
       throw Error("No employee found");
     }
 
-    sendDataToQueue(QUEUES.EMPLOYEECREATION, updatedEmployee);
-    sendDataToQueue(QUEUES.PROJECT_USER_CREATION, updatedEmployee);
-    sendDataToQueue(QUEUES.CHAT_MEETING_USER_CREATION, updatedEmployee);
+    iRabbitMQUseCase.sendDataToQueue(QUEUES.EMPLOYEECREATION, updatedEmployee);
+    iRabbitMQUseCase.sendDataToQueue(
+      QUEUES.PROJECT_USER_CREATION,
+      updatedEmployee
+    );
+    iRabbitMQUseCase.sendDataToQueue(
+      QUEUES.CHAT_MEETING_USER_CREATION,
+      updatedEmployee
+    );
 
     return res.status(200).json({
       employee: updatedEmployee,

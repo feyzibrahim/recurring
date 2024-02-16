@@ -64,7 +64,6 @@ container
   .to(OrganizationAdapter);
 
 // RabbitMQ
-
 container
   .bind<RabbitMQService>(TYPES.RabbitMQServiceInitializer)
   .to(RabbitMQService)
@@ -72,6 +71,7 @@ container
 container
   .bind<RabbitMQUseCaseInterface>(TYPES.RabbitMQUseCaseInterface)
   .to(RabbitMQUseCase);
+
 // Disconnect From Database
 process.on("SIGINT", async () => {
   await disconnectFromDatabase();

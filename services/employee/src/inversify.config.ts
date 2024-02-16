@@ -10,7 +10,6 @@ import { EmployeeAdapterInterface } from "./interface/employee/EmployeeAdapterIn
 import { TYPES } from "./constants/types/types";
 import { EmployeeUseCaseInterface } from "./interface/employee/EmployeeUseCaseInterface";
 import { EmployeeController } from "./handler/controller/project/EmployeeController";
-import { connectRabbitMq } from "./infra/rabbitMQ/rabbitmqConnection";
 import { AttendanceAdapterInterface } from "./interface/attendance/AttendanceAdapterInterface";
 import { AttendanceAdapter } from "./adapter/Database/MongoDB/AttendanceAdapter";
 import { AttendanceUseCaseInterface } from "./interface/attendance/AttendanceUseCaseInterface";
@@ -26,12 +25,12 @@ import { LeaveAdapter } from "./adapter/Database/MongoDB/LeaveAdapter";
 import { LeaveUseCaseInterface } from "./interface/leave/LeaveUseCaseInterface";
 import { LeaveUseCase } from "./useCases/LeaveUseCase";
 import { LeaveController } from "./handler/controller/leave/LeaveController";
+import { RabbitMQService } from "./infra/rabbitmq copy/rabbitmq.service";
+import { RabbitMQUseCaseInterface } from "./interface/rabbitmq/RabbitMQUseCaseInterface";
+import { RabbitMQUseCase } from "./useCases/RabbitMQUseCase";
 
 // Database connection
 connectToDatabase();
-
-// Message Broker Connection | RabbitMQ
-connectRabbitMq();
 
 const container = new Container();
 
@@ -74,6 +73,15 @@ container
   .to(LeaveUseCase);
 container.bind<LeaveController>(LeaveController).toSelf();
 container.bind<LeaveUseCase>(LeaveUseCase).toSelf();
+
+// RabbitMQ
+container
+  .bind<RabbitMQService>(TYPES.RabbitMQServiceInitializer)
+  .to(RabbitMQService)
+  .inSingletonScope();
+container
+  .bind<RabbitMQUseCaseInterface>(TYPES.RabbitMQUseCaseInterface)
+  .to(RabbitMQUseCase);
 
 // Disconnect From Database
 process.on("SIGINT", async () => {

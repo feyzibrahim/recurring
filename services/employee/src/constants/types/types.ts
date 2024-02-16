@@ -14,4 +14,8 @@ export const TYPES = {
   // Leave
   LeaveAdapterInterface: Symbol.for("LeaveAdapterInterface"),
   LeaveUseCaseInterface: Symbol.for("LeaveUseCaseInterface"),
+
+  // RabbitMQ
+  RabbitMQServiceInitializer: Symbol.for("RabbitMQServiceInitializer"),
+  RabbitMQUseCaseInterface: Symbol.for("RabbitMQUseCaseInterface"),
 };

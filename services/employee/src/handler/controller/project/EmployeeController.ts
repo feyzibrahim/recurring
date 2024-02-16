@@ -16,12 +16,15 @@ import { getEmployee } from "./functions/getEmployee";
 import { deleteEmployee } from "./functions/deleteEmployee";
 import { getEmployeesWithRole } from "./functions/getEmployeesWithRole";
 import { sendEmployeeInvitation } from "./functions/sendEmployeeInvitation";
+import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 
 @controller("/api/employee")
 export class EmployeeController {
   constructor(
     @inject(TYPES.EmployeeUseCaseInterface)
-    private iEmployeeUseCase: EmployeeUseCaseInterface
+    private iEmployeeUseCase: EmployeeUseCaseInterface,
+    @inject(TYPES.RabbitMQUseCaseInterface)
+    private iRabbitMQUseCase: RabbitMQUseCaseInterface
   ) {}
 
   @httpGet("/")
@@ -46,12 +49,22 @@ export class EmployeeController {
 
   @httpPost("/")
   async createEmployee(req: Request, res: Response) {
-    await createEmployee(req, res, this.iEmployeeUseCase);
+    await createEmployee(
+      req,
+      res,
+      this.iEmployeeUseCase,
+      this.iRabbitMQUseCase
+    );
   }
 
   @httpPatch("/")
   async updateEmployee(req: Request, res: Response) {
-    await updateEmployee(req, res, this.iEmployeeUseCase);
+    await updateEmployee(
+      req,
+      res,
+      this.iEmployeeUseCase,
+      this.iRabbitMQUseCase
+    );
   }
 
   @httpDelete("/:id")
