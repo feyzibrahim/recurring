@@ -12,6 +12,10 @@ services:
     build: ./services/project
     ports: 
       - 4003:4003
+  chat:
+    build: ./services/chat-meetings
+    ports: 
+      - 4004:4004
   mongodb: 
     image: "mongo:4.0-xenial"
     ports: 
