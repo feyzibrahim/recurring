@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import AvatarFallbackImage from "./AvatarFallbackImage";
 import { FiUser } from "react-icons/fi";
 
 const UserAvatar = ({ profileImageURL }: { profileImageURL: string }) => {
@@ -7,7 +6,7 @@ const UserAvatar = ({ profileImageURL }: { profileImageURL: string }) => {
     <Avatar>
       <AvatarImage src={profileImageURL} alt="@user" />
       <AvatarFallback>
-        <AvatarFallback className="bg-background">
+        <AvatarFallback className="bg-backgroundAccent">
           <FiUser />
         </AvatarFallback>
       </AvatarFallback>

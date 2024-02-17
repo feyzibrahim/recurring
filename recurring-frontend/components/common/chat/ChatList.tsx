@@ -4,18 +4,29 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { FiSearch } from "react-icons/fi";
 import SeeAllButton from "./members/SeeAllButton";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { getChats } from "@/app/lib/features/chat/chatActions";
 import SingleChat from "./SingleChat";
+import { ChatTypes, EmployeeTypes } from "@/constants/Types";
+import { UserContext } from "./UserProvider/UserContextProvider";
+import { socketNewChatUpdate } from "@/app/lib/features/chat/chatSlice";
 
 const ChatList = () => {
   const dispatch = useAppDispatch();
+  const { user, socket } = useContext(UserContext);
 
   const { chats } = useAppSelector((state) => state.chat);
 
   useEffect(() => {
+    socket &&
+      socket.on("new-chat", (data) => {
+        dispatch(socketNewChatUpdate({ chat: data }));
+      });
+  }, [socket]);
+
+  useEffect(() => {
     dispatch(getChats({ filter: "" }));
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="bg-secondary p-5">
@@ -27,8 +38,15 @@ const ChatList = () => {
       <ScrollArea className="h-[450px] mt-2">
         {chats &&
           chats.map((chat, index) => {
+            const participant = chat.participants.find(
+              (part) => part.username !== user?.username
+            );
             return (
-              <SingleChat user={chat.participants[0]} key={index} chat={chat} />
+              <SingleChat
+                user={participant as EmployeeTypes}
+                key={index}
+                chat={chat}
+              />
             );
           })}
       </ScrollArea>
@@ -37,15 +55,3 @@ const ChatList = () => {
 };
 
 export default ChatList;
-
-{
-  /* <ScrollArea className="h-[550px] py-5">
-  <div className="flex items-center gap-2">
-    <Skeleton className="w-10 h-10 rounded-full bg-background shrink-0" />
-    <div className="w-full">
-      <Skeleton className="w-full h-4 rounded-sm bg-background mb-1" />
-      <Skeleton className="w-1/2 h-4 rounded-sm bg-background" />
-    </div>
-  </div>
-</ScrollArea>; */
-}

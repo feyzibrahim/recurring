@@ -1,6 +1,6 @@
-import Chat from "../../components/Chat";
+import Chat from "@/components/common/chat/Chat";
 
-const page = () => {
+const page = async () => {
   return (
     <div className="col-span-3 h-screen overflow-clip">
       <Chat />

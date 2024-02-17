@@ -23,6 +23,10 @@ export const chatSlice = createSlice({
     setActiveChat: (state, { payload }) => {
       return { ...state, activeChat: payload.chat };
     },
+    socketNewChatUpdate: (state, { payload }) => {
+      let chats = [payload.chat, ...(state.chats || [])] as ChatTypes[];
+      return { ...state, chats };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,12 +53,12 @@ export const chatSlice = createSlice({
       .addCase(createChat.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
-
+        state.activeChat = payload.chat;
         state.chats = [payload.chat, ...(state.chats || [])] as ChatTypes[];
       });
   },
 });
 
-export const { setActiveChat } = chatSlice.actions;
+export const { setActiveChat, socketNewChatUpdate } = chatSlice.actions;
 
 export default chatSlice.reducer;

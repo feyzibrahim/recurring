@@ -3,26 +3,47 @@ import { actualCommonRequest } from "@/api/actual_client";
 import { EmployeeTypes } from "@/constants/Types";
 import { API_ROUTES } from "@/lib/routes";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserAvatar from "@/public/img/user-avatar.png";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import InputWithIcon from "@/components/custom/InputWithIcon";
 import { FiSearch } from "react-icons/fi";
-import Link from "next/link";
-import { useAppDispatch } from "@/app/lib/hook";
-import { createChat } from "@/app/lib/features/chat/chatActions";
+import { Socket, io } from "socket.io-client";
+import { UserContext } from "../UserProvider/UserContextProvider";
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
 
 export default function MembersList({
   setIsModalOpen,
 }: {
   setIsModalOpen: any;
 }) {
+  // const pathName = usePathname();
+  // let path = pathName.split("/");
+  // let curr = path[1];
   const [loading, setLoading] = useState(false);
-  const dispatch = useAppDispatch();
+  const { user } = useContext(UserContext);
+
+  let [socket, setSocket] = useState<Socket>();
+
+  useEffect(() => {
+    let connect: Socket = io(API_ROUTES.CHAT);
+    setSocket(connect);
+  }, []);
 
   const [membersList, setMembersList] = useState<
     (EmployeeTypes & { selected?: boolean })[]
   >([]);
+
+  const createNewChat = (member: EmployeeTypes) => {
+    socket &&
+      socket.emit("new-chat", {
+        from: user?._id,
+        to: member._id,
+        organization: user?.organization,
+      });
+    setIsModalOpen();
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -62,13 +83,9 @@ export default function MembersList({
               className="cursor-pointer"
               key={index}
             >
-              <Link
-                href={`/dashboard/chat/user/${member.username}`}
-                onClick={() => {
-                  let participants: any = [member._id];
-                  dispatch(createChat({ participants }));
-                  setIsModalOpen();
-                }}
+              <div
+                // href={`/${curr}/chat/user/${member.username}`}
+                onClick={() => createNewChat(member)}
               >
                 <div
                   key={member._id}
@@ -94,7 +111,7 @@ export default function MembersList({
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             </label>
           ))
         )}

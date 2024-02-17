@@ -142,7 +142,9 @@ const SideBar = () => {
           <Link href={"/dashboard/chat"} className="hover-text text-xl">
             <div
               className={`p-1 rounded-xl hover:bg-background ${
-                pathName === "/dashboard/chat" ? " bg-primary text-white" : ""
+                pathName.includes("/dashboard/chat")
+                  ? " bg-primary text-white"
+                  : ""
               }`}
             >
               <BiChat className="m-1" />

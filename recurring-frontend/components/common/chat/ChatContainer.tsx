@@ -1,9 +1,10 @@
 "use client";
 import { Socket } from "socket.io-client";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import MyChat from "./MyChat";
 import OtherChat from "./OtherChat";
 import { useAppSelector } from "@/app/lib/hook";
+import { UserContext } from "./UserProvider/UserContextProvider";
 
 interface PropsTypes {
   socket: Socket;
@@ -11,13 +12,15 @@ interface PropsTypes {
 
 interface MessageTypes {
   message: string;
-  handle: string;
+  from: string;
+  to: string;
 }
 
-const ChatContainer = ({ socket }: PropsTypes) => {
+const ChatContainer = () => {
   const [messages, setMessages] = useState<MessageTypes[]>([]);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const { activeChatUser } = useAppSelector((state) => state.chat);
+  const { activeChat } = useAppSelector((state) => state.chat);
+  const { user, socket } = useContext(UserContext);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -26,9 +29,17 @@ const ChatContainer = ({ socket }: PropsTypes) => {
   }, [messages]);
 
   useEffect(() => {
-    socket.on("chat", (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
-    });
+    socket &&
+      socket.on("message", (data) => {
+        if (
+          activeChat?.participants.find((part) => part._id !== user?._id)
+            ?._id === data.from ||
+          activeChat?.participants.find((part) => part._id === user?._id)
+            ?._id === data.from
+        ) {
+          setMessages((prevMessages) => [...prevMessages, data]);
+        }
+      });
   }, [socket]);
 
   return (
@@ -38,16 +49,10 @@ const ChatContainer = ({ socket }: PropsTypes) => {
     >
       {messages &&
         messages.map((msg, index) => {
-          if (msg.handle === activeChatUser?.username) {
+          if (msg.from === user?._id) {
             return <MyChat message={msg.message} key={index} />;
           } else {
-            return (
-              <OtherChat
-                message={msg.message}
-                handler={msg.handle}
-                key={index}
-              />
-            );
+            return <OtherChat message={msg.message} key={index} />;
           }
         })}
     </div>

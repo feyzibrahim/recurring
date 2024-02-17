@@ -2,30 +2,33 @@
 import { useAppSelector } from "@/app/lib/hook";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FiSend } from "react-icons/fi";
-import { Socket } from "socket.io-client";
+import { UserContext } from "./UserProvider/UserContextProvider";
 
-interface PropsTypes {
-  socket: Socket;
-}
+const MessageBox = () => {
+  const { user, socket } = useContext(UserContext);
 
-const MessageBox = ({ socket }: PropsTypes) => {
   const [message, setMessage] = useState("");
-  const { activeChatUser } = useAppSelector((state) => state.chat);
+  const { activeChat } = useAppSelector((state) => state.chat);
 
   const handleMessageSent = () => {
     if (message.trim() !== "") {
-      socket.emit("chat", {
-        message: message,
-        handle: activeChatUser?.username,
-      });
+      socket &&
+        socket.emit("message", {
+          message: message,
+          from: user?._id,
+          to: activeChat?.participants.find((part) => part._id !== user?._id)
+            ?._id,
+          chatId: activeChat?._id,
+        });
       setMessage("");
     }
   };
-  const typingBroadcast = () => {
-    socket.emit("typing", { handle: activeChatUser?.username });
-  };
+
+  // const typingBroadcast = () => {
+  //   socket && socket.emit("typing", { handle: activeChat?._id });
+  // };
 
   return (
     <div className="bg-backgroundAccent px-5 py-5 relative">
@@ -36,7 +39,7 @@ const MessageBox = ({ socket }: PropsTypes) => {
           value={message}
           onChange={(e) => {
             setMessage(e.target.value);
-            typingBroadcast();
+            // typingBroadcast();
           }}
           onKeyDown={(e) => {
             if (e.code === "Enter" || e.code === "NumpadEnter") {
