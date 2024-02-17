@@ -59,7 +59,7 @@ const ChatContainer = () => {
 
   return (
     <div
-      className="px-5 w-full h-full \ text-sm overflow-auto scrollbar-hide"
+      className="px-5 w-full h-full pb-2 text-sm overflow-auto scrollbar-hide"
       ref={scrollAreaRef}
     >
       {messages &&

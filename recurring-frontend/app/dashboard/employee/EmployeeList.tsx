@@ -20,7 +20,7 @@ const EmployeeList = () => {
   return (
     <>
       {employees && employees.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
           {employees.map((employee: EmployeeTypes, index: number) => {
             return <EmployeeCard employee={employee} key={index} />;
           })}

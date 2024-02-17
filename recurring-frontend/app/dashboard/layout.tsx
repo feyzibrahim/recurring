@@ -1,6 +1,7 @@
 import SideBar from "@/components/common/SideBar";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
 import StoreProvider from "../lib/StoreProvider";
+import NavbarLogged from "@/components/common/NavbarLogged";
 
 export default async function DashboardLayout({
   children,
@@ -9,7 +10,7 @@ export default async function DashboardLayout({
 }) {
   await checkUserWithoutRedirect();
   return (
-    <section className="md:flex md:min-h-screen">
+    <section className="md:flex md:h-screen">
       <SideBar />
       <StoreProvider>{children}</StoreProvider>
     </section>

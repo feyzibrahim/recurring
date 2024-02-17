@@ -4,7 +4,7 @@ import CreateForm from "./CreateForm";
 
 const page = () => {
   return (
-    <ScrollArea className="w-full h-screen">
+    <ScrollArea className="w-full h-screen pt-12">
       <div className="flex items-center justify-between  p-5 ">
         <h1 className="text-2xl font-bold">Add Employee</h1>
         <BackButton />
