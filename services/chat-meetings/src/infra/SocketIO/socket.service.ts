@@ -4,6 +4,8 @@ import { TYPES } from "../../constants/types/types";
 import { ChatUseCaseInterface } from "../../interface/chat/ChatUseCaseInterface";
 import { Chat } from "../../Entities/Chat";
 import http from "http";
+import { MessageUseCaseInterface } from "../../interface/message/MessageUseCaseInterface";
+import { Message } from "../../Entities/Message";
 
 @injectable()
 export class SocketIOService {
@@ -12,7 +14,9 @@ export class SocketIOService {
 
   constructor(
     @inject(TYPES.ChatUseCaseInterface)
-    private iChatUseCase: ChatUseCaseInterface
+    private iChatUseCase: ChatUseCaseInterface,
+    @inject(TYPES.MessageUseCaseInterface)
+    private iMessageUseCase: MessageUseCaseInterface
   ) {}
 
   public init(app: http.Server): void {
@@ -77,11 +81,17 @@ export class SocketIOService {
         }
       );
 
-      socket.on("message", (data) => {
-        console.log(
-          "file: socket.service.ts:81 -> SocketIOService -> socket.on -> data",
-          data
-        );
+      socket.on("message", async (data) => {
+        const message: Message = {
+          content: data.message,
+          type: data.type,
+          chat: data.chat,
+          from: data.from,
+          to: data.to,
+        };
+
+        await this.iMessageUseCase.createMessage(message);
+
         // this.io.sockets.emit("chat", data);
         const receiver = this.onlineUsersList.find(
           (user) => user.userId === data.to

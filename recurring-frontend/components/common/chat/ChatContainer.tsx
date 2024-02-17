@@ -1,19 +1,17 @@
 "use client";
-import { Socket } from "socket.io-client";
 import { useContext, useEffect, useRef, useState } from "react";
 import MyChat from "./MyChat";
 import OtherChat from "./OtherChat";
 import { useAppSelector } from "@/app/lib/hook";
 import { UserContext } from "./UserProvider/UserContextProvider";
-
-interface PropsTypes {
-  socket: Socket;
-}
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 interface MessageTypes {
   message: string;
   from: string;
   to: string;
+  content: string;
 }
 
 const ChatContainer = () => {
@@ -27,6 +25,23 @@ const ChatContainer = () => {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
   }, [messages]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const res = await actualCommonRequest({
+        route: API_ROUTES.CHAT,
+        url: `/api/message/${activeChat?._id}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+      });
+      if (res.messages) {
+        setMessages(res.messages);
+      }
+    };
+    loadData();
+  }, []);
 
   useEffect(() => {
     socket &&
@@ -50,9 +65,11 @@ const ChatContainer = () => {
       {messages &&
         messages.map((msg, index) => {
           if (msg.from === user?._id) {
-            return <MyChat message={msg.message} key={index} />;
+            return <MyChat message={msg.message || msg.content} key={index} />;
           } else {
-            return <OtherChat message={msg.message} key={index} />;
+            return (
+              <OtherChat message={msg.message || msg.content} key={index} />
+            );
           }
         })}
     </div>

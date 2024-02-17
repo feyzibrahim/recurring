@@ -1,6 +1,5 @@
 export class Message {
   constructor(
-    public _id: string,
     public content:
       | TextContent
       | ImageContent
@@ -9,8 +8,11 @@ export class Message {
       | VideoContent,
     public type: MessageType,
     public chat: string,
-    public createdAt: Date,
-    public updatedAt: Date
+    public from: string,
+    public to: string,
+    public _id?: string,
+    public createdAt?: Date,
+    public updatedAt?: Date
   ) {}
 }
 

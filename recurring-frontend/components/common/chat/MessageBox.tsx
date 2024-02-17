@@ -20,7 +20,8 @@ const MessageBox = () => {
           from: user?._id,
           to: activeChat?.participants.find((part) => part._id !== user?._id)
             ?._id,
-          chatId: activeChat?._id,
+          chat: activeChat?._id,
+          type: "text",
         });
       setMessage("");
     }

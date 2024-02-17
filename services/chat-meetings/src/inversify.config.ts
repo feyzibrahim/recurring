@@ -11,9 +11,14 @@ import { ChatUseCaseInterface } from "./interface/chat/ChatUseCaseInterface";
 import { UserAdapterInterface } from "./interface/user/UserAdapterInterface";
 import { UserAdapter } from "./adapter/Database/MongoDB/UserAdapter/UserAdapter";
 import { RabbitMQService } from "./infra/rabbitmq/rabbitmq.service";
-import { ChatUseCase } from "./useCases/EmployeeUseCase";
+import { ChatUseCase } from "./useCases/ChatUseCase";
 import { ChatController } from "./handler/controller/chat";
 import { SocketIOService } from "./infra/SocketIO/socket.service";
+import { MessageAdapterInterface } from "./interface/message/MessageAdapterInterface";
+import { MessageAdapter } from "./adapter/Database/MongoDB/MessageAdapter";
+import { MessageUseCaseInterface } from "./interface/message/MessageUseCaseInterface";
+import { MessageUseCase } from "./useCases/MessageUseCase";
+import { MessageController } from "./handler/controller/message";
 
 // Database connection
 connectToDatabase();
@@ -29,6 +34,16 @@ container
   .to(ChatUseCase);
 container.bind<ChatController>(ChatController).toSelf();
 container.bind<ChatUseCase>(ChatUseCase).toSelf();
+
+// Message Injection
+container
+  .bind<MessageAdapterInterface>(TYPES.MessageAdapterInterface)
+  .to(MessageAdapter);
+container
+  .bind<MessageUseCaseInterface>(TYPES.MessageUseCaseInterface)
+  .to(MessageUseCase);
+container.bind<MessageController>(MessageController).toSelf();
+container.bind<MessageUseCase>(MessageUseCase).toSelf();
 
 // User Injection
 container

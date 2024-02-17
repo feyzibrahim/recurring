@@ -34,10 +34,10 @@ const SingleChat = ({ user, chat }: PropsTypes) => {
           }
         />
         <div>
-          <h4>
+          <h4 className="line-clamp-1">
             {user.firstName} {user.lastName}
           </h4>
-          <p className="text-xs">@{user.username}</p>
+          <p className="text-xs line-clamp-1">@{user.username}</p>
         </div>
       </div>
     </Link>
