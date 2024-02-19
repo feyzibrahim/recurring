@@ -35,15 +35,15 @@ const meetingSchema: Schema = new Schema(
       type: String,
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
     startTime: {
-      type: Date,
+      type: String,
       required: true,
     },
     endTime: {
-      type: Date,
+      type: String,
       required: true,
     },
     organizer: {

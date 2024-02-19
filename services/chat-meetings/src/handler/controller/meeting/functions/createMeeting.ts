@@ -18,24 +18,11 @@ export const createMeeting = async (
     body.organization = data.organization;
     body.participants.push(data.user);
     body.organizer = data.user;
+    console.log("file: createMeeting.ts:21 -> body", body);
 
-    const formattedBody = {
-      ...body,
-      ...(body.startTime && {
-        startTime: new Date(
-          `${body.date.toString().split("T")[0]}T${body.startTime}:00.000Z`
-        ),
-      }),
-      ...(body.endTime && {
-        endTime: new Date(
-          `${body.date.toString().split("T")[0]}T${body.endTime}:00.000Z`
-        ),
-      }),
-    };
+    // throw Error("osidfj");
 
-    let meeting = (await iMeetingUseCase.createMeeting(
-      formattedBody
-    )) as Meeting;
+    let meeting = (await iMeetingUseCase.createMeeting(body)) as Meeting;
 
     return res.status(200).json({
       meeting: meeting,

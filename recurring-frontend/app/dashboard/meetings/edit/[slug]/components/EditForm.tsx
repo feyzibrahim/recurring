@@ -26,14 +26,13 @@ import {
 } from "@/components/ui/select";
 import { editMeeting } from "@/app/lib/features/meeting/meetingActions";
 import { EmployeeTypes, MeetingTypes } from "@/constants/Types";
-import { format } from "date-fns";
 
 const meetingSchema = z.object({
   title: z.string().min(2).max(30),
   description: z.string().min(2).max(1000),
   type: z.enum(["offline", "online"]),
   location: z.string().optional(),
-  date: z.date(),
+  date: z.string(),
   startTime: z.string(),
   endTime: z.string(),
   participants: z.array(z.string()),
@@ -52,10 +51,10 @@ const EditForm = ({ meeting }: { meeting: MeetingTypes }) => {
       description: meeting.description || "",
       type: meeting.type || "offline",
       location: meeting.location || "",
-      date: meeting.date || undefined,
-      startTime: format(new Date(meeting.startTime), "hh:mm aa") || undefined,
-      endTime: format(new Date(meeting.endTime), "hh:mm aa") || undefined,
-      participants: [],
+      date: meeting.date || "",
+      startTime: meeting.startTime || "",
+      endTime: meeting.endTime || "",
+      participants: meeting.participants.map((part) => part._id) || [],
     },
   });
 
@@ -192,7 +191,7 @@ const EditForm = ({ meeting }: { meeting: MeetingTypes }) => {
         </div>
 
         <Button type="submit" className="" disabled={loading}>
-          {loading ? "Loading..." : "Update Project"}
+          {loading ? "Loading..." : "Update Meeting"}
         </Button>
         {error && <p className="text-sm text-red-500">{error}</p>}
       </form>

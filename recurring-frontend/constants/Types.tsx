@@ -100,12 +100,12 @@ interface MeetingTypes {
   slug: string;
   organization: string;
   location?: string;
-  date: Date;
-  startTime: Date;
-  endTime: Date;
+  date: string;
+  startTime: string;
+  endTime: string;
   organizer: string | EmployeeTypes;
   status: string;
-  participants: string[] | EmployeeTypes[];
+  participants: EmployeeTypes[];
   createdAt: Date;
   updatedAt: Date;
 }

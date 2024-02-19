@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import FormInputCustom from "@/components/common/FormInputCustom";
 import { Textarea } from "@/components/ui/textarea";
-import DatePickerLimited from "@/components/custom/DatePickerLimited";
 import { MemberTable } from "./MemberTable";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import {
@@ -25,13 +24,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createMeeting } from "@/app/lib/features/meeting/meetingActions";
+import DatePickerLimitedString from "@/components/custom/DatePickerLimitedString";
 
 const meetingSchema = z.object({
   title: z.string().min(2).max(30),
   description: z.string().min(2).max(1000),
   type: z.enum(["offline", "online"]),
   location: z.string().optional(),
-  date: z.date(),
+  date: z.string(),
   startTime: z.string(),
   endTime: z.string(),
   participants: z.array(z.string()),
@@ -155,7 +155,7 @@ const CreateForm = () => {
               control={form.control}
               name="date"
               render={({ field }) => (
-                <DatePickerLimited title="Date" field={field} />
+                <DatePickerLimitedString title="Date" field={field} />
               )}
             />
 

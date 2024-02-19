@@ -12,24 +12,24 @@ export const updateMeeting = async (
     const meeting = req.body as Meeting;
     meeting.slug = slug;
 
-    const formattedBody = {
-      ...meeting,
-      ...(meeting.startTime && {
-        startTime: new Date(
-          `${meeting.date.toString().split("T")[0]}T${
-            meeting.startTime
-          }:00.000Z`
-        ),
-      }),
-      ...(meeting.endTime && {
-        endTime: new Date(
-          `${meeting.date.toString().split("T")[0]}T${meeting.endTime}:00.000Z`
-        ),
-      }),
-    };
-    console.log("file: updateMeeting.ts:16 -> formattedBody", formattedBody);
+    // const formattedBody = {
+    //   ...meeting,
+    //   ...(meeting.startTime && {
+    //     startTime: new Date(
+    //       `${meeting.date.toString().split("T")[0]}T${
+    //         meeting.startTime
+    //       }:00.000Z`
+    //     ),
+    //   }),
+    //   ...(meeting.endTime && {
+    //     endTime: new Date(
+    //       `${meeting.date.toString().split("T")[0]}T${meeting.endTime}:00.000Z`
+    //     ),
+    //   }),
+    // };
+    // console.log("file: updateMeeting.ts:16 -> formattedBody", formattedBody);
 
-    let updatedMeeting = await iMeetingUseCase.updateMeeting(formattedBody);
+    let updatedMeeting = await iMeetingUseCase.updateMeeting(meeting);
     if (!updatedMeeting) {
       throw Error("No meeting found");
     }

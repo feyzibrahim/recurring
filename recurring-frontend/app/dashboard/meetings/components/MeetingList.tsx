@@ -19,6 +19,30 @@ const MeetingList = () => {
     dispatch(getMeetings({ filter: "" }));
   }, []);
 
+  const formatTime = (timeString: string) => {
+    const [hours, minutes] = timeString.split(":");
+    const time = new Date();
+    time.setHours(parseInt(hours));
+    time.setMinutes(parseInt(minutes));
+    return format(time, "h:mm a");
+  };
+
+  const isExpired = (timeString: string, dateString: string) => {
+    const [hours, minutes] = timeString.split(":");
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // Month is 0-indexed, so add 1
+    const day = date.getDate();
+
+    const time = new Date();
+    time.setFullYear(year);
+    time.setMonth(month - 1); // Month is 0-indexed in JavaScript Date object
+    time.setDate(day);
+    time.setHours(parseInt(hours));
+    time.setMinutes(parseInt(minutes));
+    return isAfter(Date.now(), time);
+  };
+
   return (
     <div className="">
       {meetings && meetings.length > 0 ? (
@@ -99,8 +123,8 @@ const MeetingList = () => {
                       {format(new Date(meeting.date), "MMM d, yyyy")}
                     </td>
                     <td className="border-t border-background p-3">
-                      {format(new Date(meeting.startTime), "hh:mm aa")} -{" "}
-                      {format(new Date(meeting.endTime), "hh:mm aa")}
+                      {formatTime(meeting.startTime)} -{" "}
+                      {formatTime(meeting.endTime)}
                     </td>
                     <td className="border-t border-background p-3 capitalize">
                       {meeting.type}
@@ -109,7 +133,7 @@ const MeetingList = () => {
                       {meeting.status || "No status provided"}
                     </td>
                     <td className="border-t border-background p-3 capitalize">
-                      {isAfter(Date.now(), meeting.endTime) ? (
+                      {isExpired(meeting.endTime, meeting.date) ? (
                         <p className="text-xs text-foregroundAccent">Expired</p>
                       ) : (
                         <Link href={`meetings/edit/${meeting.slug}`}>
