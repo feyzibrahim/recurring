@@ -8,7 +8,7 @@ import { RiDashboardLine } from "react-icons/ri";
 import { CgTimelapse } from "react-icons/cg";
 import { FaMoneyCheckAlt, FaRegAddressCard, FaTasks } from "react-icons/fa";
 import { IoIosPeople } from "react-icons/io";
-import { BiChat, BiCreditCard, BiLogOut } from "react-icons/bi";
+import { BiCalendar, BiChat, BiCreditCard, BiLogOut } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -148,6 +148,19 @@ const SideBar = () => {
               }`}
             >
               <BiChat className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+        <ToolTipWrapper title="Meetings">
+          <Link href={"/dashboard/meetings"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName.includes("/dashboard/meetings")
+                  ? " bg-primary text-white"
+                  : ""
+              }`}
+            >
+              <BiCalendar className="m-1" />
             </div>
           </Link>
         </ToolTipWrapper>

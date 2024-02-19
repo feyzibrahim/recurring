@@ -12,6 +12,7 @@ import { TYPES } from "./constants/types/types";
 import { QUEUES } from "./constants/types/queue";
 import { SocketIOService } from "./infra/SocketIO/socket.service";
 import http from "http";
+import morgan from "morgan";
 
 const server = new InversifyExpressServer(container);
 
@@ -20,6 +21,8 @@ server.setConfig(async (app) => {
 
   app.use(cookieParser());
   app.use(express.json());
+  app.use(morgan("dev"));
+
   app.use(
     cors({
       origin: [url],

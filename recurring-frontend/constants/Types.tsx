@@ -92,6 +92,24 @@ interface ChatTypes {
   type: string;
 }
 
+interface MeetingTypes {
+  _id: string;
+  title: string;
+  description: string;
+  type: "offline" | "online";
+  slug: string;
+  organization: string;
+  location?: string;
+  date: Date;
+  startTime: Date;
+  endTime: Date;
+  organizer: string | EmployeeTypes;
+  status: string;
+  participants: string[] | EmployeeTypes[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export type {
   InputWithIconProps,
   EmployeeTypes,
@@ -100,4 +118,5 @@ export type {
   AttendanceTypes,
   LeaveTypes,
   ChatTypes,
+  MeetingTypes,
 };

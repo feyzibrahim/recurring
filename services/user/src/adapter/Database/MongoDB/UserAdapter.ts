@@ -61,7 +61,14 @@ export class UserAdapter implements UserAdapterInterface {
           _id: { $ne: userId },
           organization: organizationId,
         },
-        { profileImageURL: 1, firstName: 1, lastName: 1, username: 1 }
+        {
+          profileImageURL: 1,
+          firstName: 1,
+          lastName: 1,
+          username: 1,
+          email: 1,
+          phoneNumber: 1,
+        }
       );
 
       return users;

@@ -19,6 +19,11 @@ import { MessageAdapter } from "./adapter/Database/MongoDB/MessageAdapter";
 import { MessageUseCaseInterface } from "./interface/message/MessageUseCaseInterface";
 import { MessageUseCase } from "./useCases/MessageUseCase";
 import { MessageController } from "./handler/controller/message";
+import { MeetingAdapterInterface } from "./interface/meeting/MeetingAdapterInterface";
+import { MeetingAdapter } from "./adapter/Database/MongoDB/MeetingAdapter";
+import { MeetingUseCaseInterface } from "./interface/meeting/MeetingUseCaseInterface";
+import { MeetingUseCase } from "./useCases/MeetingUseCase";
+import { MeetingController } from "./handler/controller/meeting";
 
 // Database connection
 connectToDatabase();
@@ -44,6 +49,16 @@ container
   .to(MessageUseCase);
 container.bind<MessageController>(MessageController).toSelf();
 container.bind<MessageUseCase>(MessageUseCase).toSelf();
+
+// Meeting Injection
+container
+  .bind<MeetingAdapterInterface>(TYPES.MeetingAdapterInterface)
+  .to(MeetingAdapter);
+container
+  .bind<MeetingUseCaseInterface>(TYPES.MeetingUseCaseInterface)
+  .to(MeetingUseCase);
+container.bind<MeetingController>(MeetingController).toSelf();
+container.bind<MeetingUseCase>(MeetingUseCase).toSelf();
 
 // User Injection
 container
