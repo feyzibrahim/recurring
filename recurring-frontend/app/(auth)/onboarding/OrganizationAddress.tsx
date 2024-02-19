@@ -3,12 +3,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Form, FormField } from "@/components/ui/form";
+import { Form, FormField, FormLabel } from "@/components/ui/form";
 import { useState } from "react";
 import FormInputCustom from "@/components/common/FormInputCustom";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
 import { useRouter } from "next/navigation";
+import { CountryList } from "@/components/common/CountryList";
+import { StateList } from "@/components/common/StateList";
+import { CityList } from "@/components/common/CityList";
 
 const formSchema = z.object({
   street: z
@@ -46,6 +49,10 @@ const OrganizationAddress = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Address Listing
+  const [countryISO, setCountryISO] = useState("");
+  const [stateISO, setStateISO] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -113,37 +120,38 @@ const OrganizationAddress = () => {
               control={form.control}
               name="country"
               render={({ field }) => (
-                <FormInputCustom
-                  field={field}
-                  placeholder="Enter your organization country"
-                  title="Country"
-                  showTitle={true}
-                />
+                <>
+                  <FormLabel>Country</FormLabel>
+                  <CountryList field={field} setCountryISO={setCountryISO} />
+                </>
               )}
             />
             <FormField
               control={form.control}
               name="state"
               render={({ field }) => (
-                <FormInputCustom
-                  field={field}
-                  placeholder="Enter your organization state"
-                  title="State"
-                  showTitle={true}
-                />
+                <>
+                  <FormLabel>State</FormLabel>
+                  <StateList
+                    field={field}
+                    setStateISO={setStateISO}
+                    countryISO={countryISO}
+                  />
+                </>
               )}
             />
-
             <FormField
               control={form.control}
               name="city"
               render={({ field }) => (
-                <FormInputCustom
-                  field={field}
-                  placeholder="Enter your organization city"
-                  title="City"
-                  showTitle={true}
-                />
+                <>
+                  <FormLabel>City</FormLabel>
+                  <CityList
+                    field={field}
+                    stateISO={stateISO}
+                    countryISO={countryISO}
+                  />
+                </>
               )}
             />
           </div>

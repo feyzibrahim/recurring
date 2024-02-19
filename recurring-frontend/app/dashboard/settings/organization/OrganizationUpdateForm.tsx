@@ -3,13 +3,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Form, FormField } from "@/components/ui/form";
+import { Form, FormField, FormLabel } from "@/components/ui/form";
 import { FiUser } from "react-icons/fi";
-import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
 import { commonRequest } from "@/api/client";
 import { useState } from "react";
+import FormInputCustom from "@/components/common/FormInputCustom";
+import { BiGlobe } from "react-icons/bi";
+import { CountryList } from "@/components/common/CountryList";
+import { StateList } from "@/components/common/StateList";
+import { CityList } from "@/components/common/CityList";
 
 const formSchema = z.object({
   name: z
@@ -78,6 +82,8 @@ export default function OrganizationUpdateForm({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [countryISO, setCountryISO] = useState("");
+  const [stateISO, setStateISO] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -110,10 +116,19 @@ export default function OrganizationUpdateForm({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
+
+    const address = {
+      street: values.street,
+      city: values.city,
+      state: values.state,
+      country: values.country,
+      zipCode: values.zipCode,
+    };
+
     let res = await commonRequest({
       method: "PATCH",
       url: "/user/organization/",
-      data: { ...values },
+      data: { ...values, address },
       headers: {
         "Content-Type": "application/json",
       },
@@ -132,7 +147,7 @@ export default function OrganizationUpdateForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <FormField
           control={form.control}
           name="name"
@@ -150,9 +165,8 @@ export default function OrganizationUpdateForm({
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormInputWithIcon
+            <FormInputCustom
               field={field}
-              icon={<RiLockPasswordLine />}
               placeholder="Enter your organization description"
               title="Description"
               showTitle={true}
@@ -163,9 +177,8 @@ export default function OrganizationUpdateForm({
           control={form.control}
           name="industry"
           render={({ field }) => (
-            <FormInputWithIcon
+            <FormInputCustom
               field={field}
-              icon={<RiLockPasswordLine />}
               placeholder="Enter your organization industry"
               title="Industry"
               showTitle={true}
@@ -178,7 +191,7 @@ export default function OrganizationUpdateForm({
           render={({ field }) => (
             <FormInputWithIcon
               field={field}
-              icon={<RiLockPasswordLine />}
+              icon={<BiGlobe />}
               placeholder="Enter your organization website"
               title="Website"
               showTitle={true}
@@ -189,9 +202,8 @@ export default function OrganizationUpdateForm({
           control={form.control}
           name="street"
           render={({ field }) => (
-            <FormInputWithIcon
+            <FormInputCustom
               field={field}
-              icon={<RiLockPasswordLine />}
               placeholder="Enter your organization street"
               title="Street"
               showTitle={true}
@@ -200,50 +212,49 @@ export default function OrganizationUpdateForm({
         />
         <FormField
           control={form.control}
-          name="city"
+          name="country"
           render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<RiLockPasswordLine />}
-              placeholder="Enter your organization city"
-              title="City"
-              showTitle={true}
-            />
+            <>
+              <FormLabel>Country</FormLabel>
+              <CountryList field={field} setCountryISO={setCountryISO} />
+            </>
           )}
         />
         <FormField
           control={form.control}
           name="state"
           render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<RiLockPasswordLine />}
-              placeholder="Enter your organization state"
-              title="State"
-              showTitle={true}
-            />
+            <>
+              <FormLabel>State</FormLabel>
+              <StateList
+                field={field}
+                setStateISO={setStateISO}
+                countryISO={countryISO}
+              />
+            </>
           )}
         />
         <FormField
           control={form.control}
-          name="country"
+          name="city"
           render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<RiLockPasswordLine />}
-              placeholder="Enter your organization country"
-              title="Country"
-              showTitle={true}
-            />
+            <>
+              <FormLabel>City</FormLabel>
+              <CityList
+                field={field}
+                stateISO={stateISO}
+                countryISO={countryISO}
+              />
+            </>
           )}
         />
+
         <FormField
           control={form.control}
           name="zipCode"
           render={({ field }) => (
-            <FormInputWithIcon
+            <FormInputCustom
               field={field}
-              icon={<RiLockPasswordLine />}
               placeholder="Enter your organization zipCode"
               title="Zip Code"
               showTitle={true}
