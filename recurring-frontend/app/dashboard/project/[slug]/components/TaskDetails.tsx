@@ -7,6 +7,7 @@ import EmptyTask from "@/components/empty/EmptyTask";
 import { useEffect } from "react";
 import { TaskListTable } from "./TaskListTable";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { PaginationCustom } from "@/components/custom/PaginationCustom";
 
 const TaskDetails = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
@@ -30,6 +31,9 @@ const TaskDetails = ({ slug }: { slug: string }) => {
           <p className="my-3">No tasks were created yet!</p>
           <CreateProjectButton slug={slug} />
         </div>
+      )}
+      {tasks && tasks.length > 10 && (
+        <PaginationCustom totalPages={tasks.length} />
       )}
     </ScrollArea>
   );

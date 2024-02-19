@@ -7,6 +7,7 @@ import { getProjects } from "@/app/lib/features/project/projectActions";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import AvatarFallbackImage from "@/components/common/AvatarFallbackImage";
+import { PaginationCustom } from "@/components/custom/PaginationCustom";
 
 const ProjectTable: React.FC = () => {
   const router = useRouter();
@@ -86,6 +87,9 @@ const ProjectTable: React.FC = () => {
             ))}
         </tbody>
       </table>
+      {projects && projects.length > 10 && (
+        <PaginationCustom totalPages={projects.length} />
+      )}
     </div>
   );
 };

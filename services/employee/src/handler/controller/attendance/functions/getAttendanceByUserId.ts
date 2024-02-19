@@ -10,18 +10,23 @@ export const getAttendanceByUserId = async (
   try {
     const { userSlug } = req.params;
 
-    const { filter } = simpleQueryFilter(req);
+    const { filter, limit, skip } = simpleQueryFilter(req);
 
     let attendances = await iAttendanceUseCase.getAttendanceByUserId(
       userSlug,
-      filter
+      filter,
+      skip,
+      limit
     );
     if (!attendances) {
       throw Error("No attendance found");
     }
 
+    let length = await iAttendanceUseCase.getAttendanceLength(userSlug, filter);
+
     return res.status(200).json({
       attendances: attendances,
+      length: length,
       success: true,
       message: "Attendance successfully Fetched",
     });

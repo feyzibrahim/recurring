@@ -8,6 +8,8 @@ import { deleteTask } from "./functions/deleteTask.adapter";
 import { getTasksByProjectId } from "./functions/getTasksByProjectId.adapter";
 import { updateTask } from "./functions/updateTask.adapter";
 import { getTasksByUserId } from "./functions/getTasksByUserId.adapter";
+import { SimpleFilter } from "../../../../constants/props/SimpleFilter";
+import { getTaskLength } from "./functions/getTaskLength.adapter";
 
 @injectable()
 export class TaskAdapter implements TaskAdapterInterface {
@@ -27,8 +29,19 @@ export class TaskAdapter implements TaskAdapterInterface {
     return createTask(Task);
   }
 
-  async getTasksByUserId(userSlug: string): Promise<boolean | Task[]> {
-    return getTasksByUserId(userSlug);
+  async getTasksByUserId(
+    userSlug: string,
+    filter: SimpleFilter,
+    skip: number,
+    limit: number
+  ): Promise<boolean | Task[]> {
+    return getTasksByUserId(userSlug, filter, skip, limit);
+  }
+  async getTaskLength(
+    userSlug: string,
+    filter: SimpleFilter
+  ): Promise<boolean | number> {
+    return getTaskLength(userSlug, filter);
   }
 
   async updateTask(slug: string, task: Task): Promise<boolean | Task> {

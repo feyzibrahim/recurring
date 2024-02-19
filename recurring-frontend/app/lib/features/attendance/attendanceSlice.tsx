@@ -17,6 +17,7 @@ interface AttendanceSliceType {
   loading: boolean;
   error: any;
   attendance: AttendanceTypes | null;
+  length: number | null;
 }
 
 const initialState: AttendanceSliceType = {
@@ -24,6 +25,7 @@ const initialState: AttendanceSliceType = {
   loading: false,
   error: null,
   attendance: null,
+  length: null,
 };
 
 export const attendanceSlice = createSlice({
@@ -77,6 +79,7 @@ export const attendanceSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.attendances = payload.attendances;
+        state.length = payload.length;
       })
       .addCase(createAttendance.pending, (state) => {
         state.loading = true;

@@ -11,15 +11,29 @@ export class AttendanceUseCase implements AttendanceUseCaseInterface {
     private iAttendanceUseCase: AttendanceUseCaseInterface
   ) {}
 
+  getAttendanceLength(
+    id: string,
+    filter: SimpleFilter
+  ): Promise<number | boolean> {
+    return this.iAttendanceUseCase.getAttendanceLength(id, filter);
+  }
+
   getAttendanceList(id: string): Promise<boolean | Attendance> {
     return this.iAttendanceUseCase.getAttendanceList(id);
   }
 
   getAttendanceByUserId(
     userId: string,
-    filter: SimpleFilter
+    filter: SimpleFilter,
+    skip: number,
+    limit: number
   ): Promise<boolean | Attendance[]> {
-    return this.iAttendanceUseCase.getAttendanceByUserId(userId, filter);
+    return this.iAttendanceUseCase.getAttendanceByUserId(
+      userId,
+      filter,
+      skip,
+      limit
+    );
   }
   createAttendance(attendance: Attendance): Promise<boolean | Attendance> {
     return this.iAttendanceUseCase.createAttendance(attendance);

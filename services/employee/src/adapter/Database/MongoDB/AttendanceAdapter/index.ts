@@ -7,11 +7,19 @@ import { getAttendanceByUserId } from "./functions/getAttendanceByUserId.adapter
 import { SimpleFilter } from "../../../../constants/props/SimpleFilter";
 import { checkExistingDate } from "./functions/checkExistingDate.adapter";
 import { updateAttendance } from "./functions/updateAttendance.adapter";
+import { getAttendanceLength } from "./functions/getAttendanceLength";
 
 @injectable()
 export class AttendanceAdapter implements AttendanceAdapterInterface {
   async getAttendanceList(id: string): Promise<boolean | Attendance> {
     return getAttendanceList(id);
+  }
+
+  getAttendanceLength(
+    id: string,
+    filter: SimpleFilter
+  ): Promise<number | boolean> {
+    return getAttendanceLength(id, filter);
   }
 
   async createAttendance(
@@ -22,9 +30,11 @@ export class AttendanceAdapter implements AttendanceAdapterInterface {
 
   async getAttendanceByUserId(
     userId: string,
-    filter: SimpleFilter
+    filter: SimpleFilter,
+    skip: number,
+    limit: number
   ): Promise<boolean | Attendance[]> {
-    return getAttendanceByUserId(userId, filter);
+    return getAttendanceByUserId(userId, filter, skip, limit);
   }
   async updateAttendance(
     attendance: Attendance

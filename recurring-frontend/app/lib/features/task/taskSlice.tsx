@@ -17,6 +17,7 @@ interface TaskSliceType {
   loading: boolean;
   error: any;
   task: TaskTypes | null;
+  length: number | null;
 }
 
 const initialState: TaskSliceType = {
@@ -24,6 +25,7 @@ const initialState: TaskSliceType = {
   loading: false,
   error: null,
   task: null,
+  length: null,
 };
 
 export const taskSlice = createSlice({
@@ -74,9 +76,11 @@ export const taskSlice = createSlice({
         state.error = payload;
       })
       .addCase(getTasksByUserId.fulfilled, (state, { payload }) => {
+        console.log("file: taskSlice.tsx:79 -> .addCase -> payload", payload);
         state.loading = false;
         state.error = null;
         state.tasks = payload.tasks;
+        state.length = payload.length;
       })
       // Get single task details
       .addCase(getTask.pending, (state) => {

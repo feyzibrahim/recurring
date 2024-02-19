@@ -5,8 +5,14 @@ export interface AttendanceAdapterInterface {
   getAttendanceList(id: string): Promise<Attendance | boolean>;
   getAttendanceByUserId(
     userId: string,
-    filter: SimpleFilter
+    filter: SimpleFilter,
+    skip: number,
+    limit: number
   ): Promise<Attendance[] | boolean>;
+  getAttendanceLength(
+    id: string,
+    filter: SimpleFilter
+  ): Promise<number | boolean>;
   createAttendance(attendance: Attendance): Promise<Attendance | boolean>;
   updateAttendance(attendance: Attendance): Promise<Attendance | boolean>;
   checkExistingDate(attendance: Attendance): Promise<Attendance | boolean>;

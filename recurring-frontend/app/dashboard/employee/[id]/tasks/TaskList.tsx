@@ -8,18 +8,28 @@ import { useEffect, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TaskListTable } from "./TaskListTable";
 import TasksBarChart from "./TasksBarChart";
+import { useSearchParams } from "next/navigation";
 
 const TaskList = () => {
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
   const { employee } = useAppSelector((state) => state.employee);
-  const { tasks } = useAppSelector((state) => state.task);
+  const { tasks, length } = useAppSelector((state) => state.task);
   const [completedTasks, setCompleteTasks] = useState(0);
+  const page = searchParams.get("page");
 
   useEffect(() => {
     if (employee) {
-      dispatch(getTasksByUserId(employee._id));
+      let filter = [];
+      if (page) {
+        filter.push(`page=${page}`);
+      }
+
+      dispatch(
+        getTasksByUserId({ userSlug: employee._id, filter: filter.join("&") })
+      );
     }
-  }, [dispatch, employee]);
+  }, [dispatch, employee, page]);
 
   useEffect(() => {
     if (tasks) {
@@ -30,7 +40,6 @@ const TaskList = () => {
         }
         return acc;
       }, 0);
-      console.log("file: TaskList.tsx:29 -> sum -> sum", sum);
       setCompleteTasks(sum);
     }
   }, [tasks]);
@@ -39,7 +48,7 @@ const TaskList = () => {
     <div className="">
       <div className="pt-5">
         <h1 className="font-bold text-3xl">
-          Tasks ({completedTasks}/{tasks && tasks.length})
+          Tasks ({completedTasks}/{length && length})
         </h1>
       </div>
       {tasks && tasks.length > 0 ? (

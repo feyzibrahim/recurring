@@ -4,13 +4,17 @@ import AttendanceModal from "../../Modal/AttendanceModel";
 
 export const getAttendanceByUserId = async (
   id: string,
-  filter: SimpleFilter
+  filter: SimpleFilter,
+  skip: number,
+  limit: number
 ) => {
   try {
     const attendance = await AttendanceModal.find({
       employeeId: id,
       ...filter,
-    });
+    })
+      .skip(skip)
+      .limit(limit);
 
     return attendance as Attendance[];
   } catch (error) {

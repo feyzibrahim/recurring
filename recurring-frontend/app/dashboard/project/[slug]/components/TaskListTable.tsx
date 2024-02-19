@@ -27,7 +27,7 @@ export function TaskListTable({ slug }: { slug: string }) {
         onOpenChange={onEditSheet}
         setOnOpenChange={setOnEditSheet}
       />
-      <table className="w-full border-collapse my-2 bg-backgroundAccent rounded-lg">
+      <table className="w-full border-collapse mt-2 mb-3 bg-backgroundAccent rounded-lg">
         <thead>
           <tr className="text-left">
             <th className="border-t border-background p-3">Title</th>
@@ -49,7 +49,7 @@ export function TaskListTable({ slug }: { slug: string }) {
                   setOnEditSheet(true);
                 }}
               >
-                <td className="border-t border-background p-3">
+                <td className="border-t border-background px-3 py-2">
                   <HoverCard>
                     <HoverCardTrigger asChild>
                       <p className="hover:underline hover:opacity-80 cursor-pointer">
@@ -66,7 +66,7 @@ export function TaskListTable({ slug }: { slug: string }) {
                     </HoverCardContent>
                   </HoverCard>
                 </td>
-                <td className="border-t border-background p-3">
+                <td className="border-t border-background px-3 py-2">
                   <div className="flex gap-2 items-center">
                     <div className="w-6 h-6 rounded-full overflow-clip">
                       <Image
@@ -89,27 +89,27 @@ export function TaskListTable({ slug }: { slug: string }) {
                     </p>
                   </div>
                 </td>
-                <td className="border-t border-background p-3">
+                <td className="border-t border-background px-3 py-2">
                   {format(new Date(task.startDate), "MMM d, yyyy")}
                 </td>
-                <td className="border-t border-background p-3">
+                <td className="border-t border-background px-3 py-2">
                   {format(new Date(task.dueDate), "MMM d, yyyy")}
                 </td>
-                <td className="border-t border-background p-3 capitalize">
+                <td className="border-t border-background px-3 py-2 capitalize">
                   {task.status}
                 </td>
-                <td className="border-t border-background p-3 capitalize">
+                <td className="border-t border-background px-3 py-2 capitalize">
                   {task.priority}
                 </td>
                 {/* Will add later | Tags */}
-                {/* <td className="border-t border-background p-3">
+                {/* <td className="border-t border-background px-3 py-2">
                   {task.tags && task.tags.length > 0 ? task.tags : "-"}
                 </td> */}
               </tr>
             ))}
           <tr>
             <td
-              className="border-t border-background p-3 hover:bg-secondary cursor-pointer"
+              className="border-t border-background px-3 py-3 hover:bg-secondary cursor-pointer"
               colSpan={7}
             >
               <CreateProjectButton slug={slug} customButton={true} />

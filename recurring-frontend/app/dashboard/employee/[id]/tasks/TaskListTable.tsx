@@ -8,9 +8,10 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { PaginationCustom } from "@/components/custom/PaginationCustom";
 
 export function TaskListTable() {
-  const { tasks } = useAppSelector((state) => state.task);
+  const { tasks, length } = useAppSelector((state) => state.task);
 
   return (
     <ScrollArea className="w-72 md:w-full text-sm  whitespace-nowrap col-span-2">
@@ -66,6 +67,9 @@ export function TaskListTable() {
             ))}
         </tbody>
       </table>
+      {length && length > 10 && (
+        <PaginationCustom rowLength={length} rowsPerPage={10} />
+      )}
       <ScrollBar orientation="horizontal" />
     </ScrollArea>
   );

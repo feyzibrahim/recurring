@@ -38,11 +38,14 @@ export const getTasksByProjectId = createAsyncThunk(
 // Task details finding
 export const getTasksByUserId = createAsyncThunk(
   "task/getTasksByUserId",
-  async (projectSlug: string, { rejectWithValue }) => {
+  async (
+    { userSlug, filter }: { userSlug: string; filter: string },
+    { rejectWithValue }
+  ) => {
     return reduxCommonRequest({
       route: API_ROUTES.PROJECT,
       method: "GET",
-      url: `/api/task/user/${projectSlug}`,
+      url: `/api/task/user/${userSlug}${filter && `?${filter}`}`,
       headers: {
         "Content-Type": "application/json",
       },

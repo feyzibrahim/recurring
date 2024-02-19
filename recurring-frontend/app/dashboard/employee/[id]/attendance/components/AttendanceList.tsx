@@ -16,6 +16,7 @@ const AttendanceList = ({ id }: Props) => {
   const searchParams = useSearchParams();
   const from = searchParams.get("from");
   const to = searchParams.get("to");
+  const page = searchParams.get("page");
 
   const { attendances } = useAppSelector((state) => state.attendance);
 
@@ -27,6 +28,9 @@ const AttendanceList = ({ id }: Props) => {
     if (to) {
       filter.push(`to=${to}`);
     }
+    if (page) {
+      filter.push(`page=${page}`);
+    }
     dispatch(getAttendanceByUserId({ userSlug: id, filter: filter.join("&") }));
   }, [dispatch, from, to, searchParams, id]);
 
@@ -35,7 +39,7 @@ const AttendanceList = ({ id }: Props) => {
       {attendances && attendances.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-4">
           <AttendanceBarChart data={attendances} />
-          <AttendanceRow attendances={attendances} />
+          <AttendanceRow />
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center">

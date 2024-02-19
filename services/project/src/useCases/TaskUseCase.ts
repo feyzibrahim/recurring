@@ -2,6 +2,7 @@ import { inject, injectable } from "inversify";
 import { TaskUseCaseInterface } from "../interface/task/TaskUseCaseInterface";
 import { TYPES } from "../constants/types/types";
 import { Task } from "../Entities/Task";
+import { SimpleFilter } from "../constants/props/SimpleFilter";
 
 @injectable()
 export class TaskUseCase implements TaskUseCaseInterface {
@@ -9,6 +10,12 @@ export class TaskUseCase implements TaskUseCaseInterface {
     @inject(TYPES.TaskAdapterInterface)
     private iTaskUseCase: TaskUseCaseInterface
   ) {}
+  getTaskLength(
+    userId: string,
+    filter: SimpleFilter
+  ): Promise<number | boolean> {
+    return this.iTaskUseCase.getTaskLength(userId, filter);
+  }
 
   getTask(slug: string): Promise<boolean | Task> {
     return this.iTaskUseCase.getTask(slug);
@@ -26,8 +33,13 @@ export class TaskUseCase implements TaskUseCaseInterface {
     return this.iTaskUseCase.createTask(task);
   }
 
-  getTasksByUserId(userId: string): Promise<boolean | Task[]> {
-    return this.iTaskUseCase.getTasksByUserId(userId);
+  getTasksByUserId(
+    userId: string,
+    filter: SimpleFilter,
+    skip: number,
+    limit: number
+  ): Promise<boolean | Task[]> {
+    return this.iTaskUseCase.getTasksByUserId(userId, filter, skip, limit);
   }
 
   updateTask(id: string, task: Task): Promise<boolean | Task> {
