@@ -6,6 +6,7 @@ import { useAppSelector } from "@/app/lib/hook";
 import { UserContext } from "./UserProvider/UserContextProvider";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
+import EmptyMessage from "@/components/empty/EmptyMessage";
 
 interface MessageTypes {
   message: string;
@@ -28,16 +29,18 @@ const ChatContainer = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      const res = await actualCommonRequest({
-        route: API_ROUTES.CHAT,
-        url: `/api/message/${activeChat?._id}`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-      });
-      if (res.messages) {
-        setMessages(res.messages);
+      if (activeChat) {
+        const res = await actualCommonRequest({
+          route: API_ROUTES.CHAT,
+          url: `/api/message/${activeChat?._id}`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "GET",
+        });
+        if (res.messages) {
+          setMessages(res.messages);
+        }
       }
     };
     loadData();
@@ -45,7 +48,7 @@ const ChatContainer = () => {
 
   useEffect(() => {
     socket &&
-      socket.on("message", (data) => {
+      socket.off("message").on("message", (data) => {
         if (
           activeChat?.participants.find((part) => part._id !== user?._id)
             ?._id === data.from ||
@@ -62,7 +65,7 @@ const ChatContainer = () => {
       className="px-5 w-full h-full pb-2 text-sm overflow-auto scrollbar-hide"
       ref={scrollAreaRef}
     >
-      {messages &&
+      {messages && messages.length > 0 ? (
         messages.map((msg, index) => {
           if (msg.from === user?._id) {
             return <MyChat message={msg.message || msg.content} key={index} />;
@@ -71,7 +74,18 @@ const ChatContainer = () => {
               <OtherChat message={msg.message || msg.content} key={index} />
             );
           }
-        })}
+        })
+      ) : (
+        <div className="flex items-center justify-center h-full text-center">
+          <div>
+            <EmptyMessage />
+            <p className="py-2">No Message yet</p>
+            <p className="text-xs text-foregroundAccent">
+              Be the first to send a message!
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

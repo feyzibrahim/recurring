@@ -82,6 +82,10 @@ export class SocketIOService {
       );
 
       socket.on("message", async (data) => {
+        console.log(
+          "file: socket.service.ts:85 -> SocketIOService -> socket.on -> data",
+          data
+        );
         const message: Message = {
           content: data.message,
           type: data.type,

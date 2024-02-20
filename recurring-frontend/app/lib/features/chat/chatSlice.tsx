@@ -34,7 +34,6 @@ export const chatSlice = createSlice({
         );
 
         if (newChat) {
-          console.log("Found new chat:", newChat);
           return { ...state, activeChat: newChat };
         }
 
