@@ -34,11 +34,13 @@ export class SocketIOService {
         );
 
         this.onlineUsersList.push({ userId, socketId: socket.id });
+        this.io.emit("get-online-users", this.onlineUsersList);
       });
       socket.on("offline-user", (userId: string) => {
         this.onlineUsersList = this.onlineUsersList.filter(
           (user) => user.userId !== userId
         );
+        this.io.emit("get-online-users", this.onlineUsersList);
       });
 
       socket.on(

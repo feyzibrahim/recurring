@@ -10,6 +10,10 @@ export const checkUserWithoutRedirectInHome = async () => {
     },
   });
 
+  console.log(
+    "file: checkUserWithoutRedirectInHome.tsx:14 -> checkUserWithoutRedirectInHome -> data",
+    data
+  );
   if (!data.success) {
     redirect("/");
   }

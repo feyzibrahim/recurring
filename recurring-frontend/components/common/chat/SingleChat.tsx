@@ -1,33 +1,23 @@
 "use client";
-import { setActiveChat } from "@/app/lib/features/chat/chatSlice";
-import { useAppDispatch } from "@/app/lib/hook";
 import UserAvatar from "@/components/common/UserAvatar";
-import { ChatTypes, EmployeeTypes } from "@/constants/Types";
+import { EmployeeTypes } from "@/constants/Types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 interface PropsTypes {
   user: EmployeeTypes;
-  chat: ChatTypes;
+  online: boolean;
 }
 
-const SingleChat = ({ user, chat }: PropsTypes) => {
+const SingleChat = ({ user, online }: PropsTypes) => {
   const pathName = usePathname();
-  const dispatch = useAppDispatch();
   let path = pathName.split("/");
   let curr = path[1];
 
-  // const handleChatClick = () => {
-  //   dispatch(setActiveChat({ chat }));
-  // };
-
   return (
-    <Link
-      href={`/${curr}/chat/user/${user.username}`}
-      // onClick={handleChatClick}
-    >
-      <div className="hover:bg-backgroundAccent flex gap-2 items-center text-sm rounded-sm p-1 cursor-pointer">
+    <Link href={`/${curr}/chat/user/${user.username}`}>
+      <div className="hover:bg-backgroundAccent flex gap-2 items-center text-sm rounded-sm p-1 cursor-pointer relative">
         <UserAvatar
           profileImageURL={
             typeof user.profileImageURL === "string" ? user.profileImageURL : ""
@@ -39,6 +29,9 @@ const SingleChat = ({ user, chat }: PropsTypes) => {
           </h4>
           <p className="text-xs line-clamp-1">@{user.username}</p>
         </div>
+        {online && (
+          <div className="w-2 h-2 border border-foreground rounded-full absolute bg-green-600 bottom-1 left-9"></div>
+        )}
       </div>
     </Link>
   );

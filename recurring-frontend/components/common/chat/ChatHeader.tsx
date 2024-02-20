@@ -53,6 +53,17 @@ const ChatHeader = ({ username }: { username: string }) => {
             getCurrentUser(activeChat).lastName
           }`}
         {typing && <p>{handler} is typing...</p>}
+        {activeChat && activeChat.online ? (
+          <div className="flex items-center gap-1 text-xs">
+            <div className="w-2 h-2 rounded-full bg-green-600"></div>
+            <p>Online</p>
+          </div>
+        ) : (
+          <div className="flex items-center gap-1 text-xs">
+            <div className="w-2 h-2 rounded-full bg-red-600"></div>
+            <p>Offline</p>
+          </div>
+        )}
       </div>
       <Link href={`${username}/video`}>
         <AiOutlineVideoCameraAdd className="text-2xl hover:text-foregroundAccent cursor-pointer" />

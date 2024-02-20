@@ -90,6 +90,7 @@ interface ChatTypes {
   createdAt: Date;
   updatedAt: Date;
   type: string;
+  online: boolean;
 }
 
 interface MeetingTypes {

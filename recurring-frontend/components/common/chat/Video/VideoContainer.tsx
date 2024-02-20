@@ -9,7 +9,7 @@ const VideoContainer = () => {
   return (
     <div>
       Test
-      <div className="">
+      <div className="transform scale-x-[-1]">
         <video playsInline muted ref={myVideo} autoPlay />
       </div>
       <Button onClick={() => cleanupStream()}>Stop</Button>

@@ -44,6 +44,33 @@ export const chatSlice = createSlice({
       let chats = [payload.chat, ...(state.chats || [])] as ChatTypes[];
       return { ...state, chats };
     },
+    updateOnlineStatus: (state, { payload }) => {
+      const { chats } = state;
+      if (chats) {
+        const { onlineList, userId } = payload;
+
+        let newChats = chats.map((chat) => {
+          const participantsToCheck = chat.participants.filter(
+            (participant) => participant._id !== userId
+          );
+
+          const isParticipantOnline = participantsToCheck.some(
+            (participant) => {
+              return onlineList.some(
+                (onlineUser: any) => onlineUser.userId === participant._id
+              );
+            }
+          );
+
+          return {
+            ...chat,
+            online: isParticipantOnline,
+          };
+        });
+
+        state.chats = newChats;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -59,10 +86,6 @@ export const chatSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.chats = payload.chats;
-        console.log(
-          "file: chatSlice.tsx:55 -> .addCase -> payload.chats",
-          payload.chats
-        );
       })
       .addCase(createChat.pending, (state) => {
         state.loading = true;
@@ -80,7 +103,11 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { setActiveChat, socketNewChatUpdate, setActiveChatWithUserName } =
-  chatSlice.actions;
+export const {
+  setActiveChat,
+  socketNewChatUpdate,
+  setActiveChatWithUserName,
+  updateOnlineStatus,
+} = chatSlice.actions;
 
 export default chatSlice.reducer;

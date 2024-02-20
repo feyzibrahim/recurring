@@ -9,7 +9,10 @@ import { getChats } from "@/app/lib/features/chat/chatActions";
 import SingleChat from "./SingleChat";
 import { ChatTypes, EmployeeTypes } from "@/constants/Types";
 import { UserContext } from "./UserProvider/UserContextProvider";
-import { socketNewChatUpdate } from "@/app/lib/features/chat/chatSlice";
+import {
+  socketNewChatUpdate,
+  updateOnlineStatus,
+} from "@/app/lib/features/chat/chatSlice";
 
 const ChatList = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +24,11 @@ const ChatList = () => {
     socket &&
       socket.on("new-chat", (data) => {
         dispatch(socketNewChatUpdate({ chat: data }));
+      });
+
+    socket &&
+      socket.on("get-online-users", (data) => {
+        dispatch(updateOnlineStatus({ onlineList: data, userId: user?._id }));
       });
   }, [socket, dispatch]);
 
@@ -45,7 +53,7 @@ const ChatList = () => {
               <SingleChat
                 user={participant as EmployeeTypes}
                 key={index}
-                chat={chat}
+                online={chat.online}
               />
             );
           })}
