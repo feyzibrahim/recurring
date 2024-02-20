@@ -1,4 +1,4 @@
-import EmployeeSidebar from "@/components/common/EmployeeSidebar";
+import EmployeeSidebar from "@/components/common/SidebarEmployee";
 import { checkUserWithoutRedirectInHome } from "@/server/checkUserWithoutRedirectInHome";
 import StoreProvider from "../lib/StoreProvider";
 

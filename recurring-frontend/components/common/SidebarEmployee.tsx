@@ -94,7 +94,7 @@ const EmployeeSidebar = () => {
         <Link href={"/home/chat"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/home/chat" ? " bg-primary text-white" : ""
+              pathName.includes("/chat") ? " bg-primary text-white" : ""
             }`}
           >
             <BiChat className="m-1" />

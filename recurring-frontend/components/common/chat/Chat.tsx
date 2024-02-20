@@ -4,15 +4,23 @@ import React, { useEffect } from "react";
 import MessageBox from "./MessageBox";
 import ChatContainer from "./ChatContainer";
 import ChatHeader from "./ChatHeader";
-import { useAppDispatch } from "@/app/lib/hook";
+import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { setActiveChatWithUserName } from "@/app/lib/features/chat/chatSlice";
+import { getChats } from "@/app/lib/features/chat/chatActions";
 
 const Chat = ({ username }: { username: string }) => {
   const dispatch = useAppDispatch();
 
+  const { chats } = useAppSelector((state) => state.chat);
+
   useEffect(() => {
-    dispatch(setActiveChatWithUserName({ username }));
-  }, [username]);
+    if (!chats || chats.length === 0) {
+      dispatch(getChats({ filter: "" }));
+    }
+    if (chats) {
+      dispatch(setActiveChatWithUserName({ username }));
+    }
+  }, [username, chats]);
 
   return (
     <>
