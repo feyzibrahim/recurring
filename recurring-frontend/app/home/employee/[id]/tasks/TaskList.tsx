@@ -17,7 +17,7 @@ const TaskList = () => {
 
   useEffect(() => {
     if (employee) {
-      dispatch(getTasksByUserId(employee._id));
+      dispatch(getTasksByUserId({ userSlug: employee._id, filter: "" }));
     }
   }, [dispatch, employee]);
 

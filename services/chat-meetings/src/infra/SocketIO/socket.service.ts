@@ -112,6 +112,24 @@ export class SocketIOService {
       // socket.on("typing", (data) => {
       //   socket.broadcast.emit("typing", data);
       // });
+
+      // Video Call
+
+      socket.emit("me", socket.id);
+
+      socket.on("disconnect-video-call", () => {
+        socket.broadcast.emit("callEnded");
+      });
+
+      socket.on("video-call-user", ({ userToCall, signalData, from, name }) => {
+        this.io
+          .to(userToCall)
+          .emit("video-call-user", { signal: signalData, from, name });
+      });
+
+      socket.on("answer-call", (data: any) => {
+        this.io.to(data.to).emit("call-accepted", data.signal);
+      });
     });
   }
 }

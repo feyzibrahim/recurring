@@ -19,7 +19,10 @@ export const getTasksByProjectId = async (
       throw Error("No task found");
     }
 
+    let length = await iTaskUseCase.getTaskLengthByProject(project._id, {});
+
     return res.status(200).json({
+      length: length,
       tasks: tasks,
       success: true,
       message: "Task successfully Fetched",

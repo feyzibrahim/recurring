@@ -21,6 +21,8 @@ export async function middleware(req: NextRequest) {
       if (json.success) {
         if (json.user.role === "employee") {
           return NextResponse.redirect("/home");
+        } else if (json.user.role === "manager") {
+          return NextResponse.redirect("/manager");
         } else {
           return NextResponse.redirect("/dashboard");
         }

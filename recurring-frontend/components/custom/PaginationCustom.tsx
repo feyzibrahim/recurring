@@ -28,11 +28,10 @@ export function PaginationCustom({
   useEffect(() => {
     const calculatedTotalPages = Math.ceil(rowLength / rowsPerPage);
     setTotalPages(calculatedTotalPages);
-    // If the current page exceeds the total pages, reset it to the last page
     if (page > calculatedTotalPages) {
       setPage(calculatedTotalPages);
     }
-  }, [rowLength, rowsPerPage]);
+  }, [rowLength, rowsPerPage, page]);
 
   const handleClick = (type: "inc" | "decr") => {
     const newPage = type === "inc" ? page + 1 : page - 1;

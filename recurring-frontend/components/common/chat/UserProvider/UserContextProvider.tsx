@@ -30,7 +30,7 @@ const UserContextProvider = ({
     return () => {
       connect.emit("offline-user", user._id);
     };
-  }, []);
+  }, [user._id]);
 
   return (
     <UserContext.Provider

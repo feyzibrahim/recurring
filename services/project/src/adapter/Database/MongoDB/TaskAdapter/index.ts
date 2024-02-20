@@ -10,6 +10,7 @@ import { updateTask } from "./functions/updateTask.adapter";
 import { getTasksByUserId } from "./functions/getTasksByUserId.adapter";
 import { SimpleFilter } from "../../../../constants/props/SimpleFilter";
 import { getTaskLength } from "./functions/getTaskLength.adapter";
+import { getTaskLengthByProject } from "./functions/getTaskLengthByProject.adapter";
 
 @injectable()
 export class TaskAdapter implements TaskAdapterInterface {
@@ -42,6 +43,13 @@ export class TaskAdapter implements TaskAdapterInterface {
     filter: SimpleFilter
   ): Promise<boolean | number> {
     return getTaskLength(userSlug, filter);
+  }
+
+  getTaskLengthByProject(
+    projectSlug: string,
+    filter: SimpleFilter
+  ): Promise<number | boolean> {
+    return getTaskLengthByProject(projectSlug, filter);
   }
 
   async updateTask(slug: string, task: Task): Promise<boolean | Task> {

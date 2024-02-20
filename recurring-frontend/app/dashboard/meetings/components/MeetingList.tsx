@@ -17,7 +17,7 @@ const MeetingList = () => {
 
   useEffect(() => {
     dispatch(getMeetings({ filter: "" }));
-  }, []);
+  }, [dispatch]);
 
   const formatTime = (timeString: string) => {
     const [hours, minutes] = timeString.split(":");
@@ -31,18 +31,45 @@ const MeetingList = () => {
     const [hours, minutes] = timeString.split(":");
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; // Month is 0-indexed, so add 1
+    const month = date.getMonth() + 1;
     const day = date.getDate();
 
     const time = new Date();
     time.setFullYear(year);
-    time.setMonth(month - 1); // Month is 0-indexed in JavaScript Date object
+    time.setMonth(month - 1);
     time.setDate(day);
     time.setHours(parseInt(hours));
     time.setMinutes(parseInt(minutes));
     return isAfter(Date.now(), time);
   };
+  const isActive = (startTime: string, endTime: string, dateString: string) => {
+    const [startHours, startMinutes] = startTime.split(":");
+    const [endHours, endMinutes] = endTime.split(":");
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
 
+    const startTimeObject = new Date();
+    startTimeObject.setFullYear(year);
+    startTimeObject.setMonth(month - 1);
+    startTimeObject.setDate(day);
+    startTimeObject.setHours(parseInt(startHours));
+    startTimeObject.setMinutes(parseInt(startMinutes));
+
+    const endTimeObject = new Date();
+    endTimeObject.setFullYear(year);
+    endTimeObject.setMonth(month - 1);
+    endTimeObject.setDate(day);
+    endTimeObject.setHours(parseInt(endHours));
+    endTimeObject.setMinutes(parseInt(endMinutes));
+
+    const currentTime = Date.now();
+    return (
+      isAfter(currentTime, startTimeObject) &&
+      isBefore(currentTime, endTimeObject)
+    );
+  };
   return (
     <div className="">
       {meetings && meetings.length > 0 ? (
@@ -133,7 +160,20 @@ const MeetingList = () => {
                       {meeting.status || "No status provided"}
                     </td>
                     <td className="border-t border-background p-3 capitalize">
-                      {isExpired(meeting.endTime, meeting.date) ? (
+                      {isActive(
+                        meeting.startTime,
+                        meeting.endTime,
+                        meeting.date
+                      ) ? (
+                        <Link href="meetings/conference">
+                          <Button
+                            variant="link"
+                            className="border border-primary"
+                          >
+                            Start
+                          </Button>
+                        </Link>
+                      ) : isExpired(meeting.endTime, meeting.date) ? (
                         <p className="text-xs text-foregroundAccent">Expired</p>
                       ) : (
                         <Link href={`meetings/edit/${meeting.slug}`}>

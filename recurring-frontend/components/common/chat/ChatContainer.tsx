@@ -41,7 +41,7 @@ const ChatContainer = () => {
       }
     };
     loadData();
-  }, []);
+  }, [activeChat]);
 
   useEffect(() => {
     socket &&
@@ -55,7 +55,7 @@ const ChatContainer = () => {
           setMessages((prevMessages) => [...prevMessages, data]);
         }
       });
-  }, [socket]);
+  }, [socket, activeChat, user]);
 
   return (
     <div

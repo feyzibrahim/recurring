@@ -15,6 +15,10 @@ export interface TaskAdapterInterface {
     userId: string,
     filter: SimpleFilter
   ): Promise<number | boolean>;
+  getTaskLengthByProject(
+    projectSlug: string,
+    filter: SimpleFilter
+  ): Promise<number | boolean>;
   createTask(task: Task): Promise<Task | boolean>;
   updateTask(slug: string, task: Task): Promise<Task | boolean>;
   deleteTask(slug: string): Promise<Task | boolean>;

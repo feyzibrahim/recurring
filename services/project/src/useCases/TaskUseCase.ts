@@ -10,6 +10,12 @@ export class TaskUseCase implements TaskUseCaseInterface {
     @inject(TYPES.TaskAdapterInterface)
     private iTaskUseCase: TaskUseCaseInterface
   ) {}
+  getTaskLengthByProject(
+    projectSlug: string,
+    filter: SimpleFilter
+  ): Promise<number | boolean> {
+    return this.iTaskUseCase.getTaskLengthByProject(projectSlug, filter);
+  }
   getTaskLength(
     userId: string,
     filter: SimpleFilter

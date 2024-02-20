@@ -65,6 +65,7 @@ export const taskSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.tasks = payload.tasks;
+        state.length = payload.length;
       })
       // Task By user id
       .addCase(getTasksByUserId.pending, (state) => {

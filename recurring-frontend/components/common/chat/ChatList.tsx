@@ -22,7 +22,7 @@ const ChatList = () => {
       socket.on("new-chat", (data) => {
         dispatch(socketNewChatUpdate({ chat: data }));
       });
-  }, [socket]);
+  }, [socket, dispatch]);
 
   useEffect(() => {
     dispatch(getChats({ filter: "" }));

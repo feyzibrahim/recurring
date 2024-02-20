@@ -63,6 +63,9 @@ export default function LoginForm() {
       if (res.user.role === "employee") {
         router.replace("/home");
       }
+      if (res.user.role === "manager") {
+        router.replace("/man");
+      }
     }
     setLoading(false);
   }

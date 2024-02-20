@@ -4,8 +4,10 @@ import UserAvatar from "@/components/common/UserAvatar";
 import { ChatTypes, EmployeeTypes } from "@/constants/Types";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserProvider/UserContextProvider";
+import { AiOutlineVideoCameraAdd } from "react-icons/ai";
+import Link from "next/link";
 
-const ChatHeader = () => {
+const ChatHeader = ({ username }: { username: string }) => {
   const { user, socket } = useContext(UserContext);
 
   const [typing, setTyping] = useState(false);
@@ -52,6 +54,9 @@ const ChatHeader = () => {
           }`}
         {typing && <p>{handler} is typing...</p>}
       </div>
+      <Link href={`${username}/video`}>
+        <AiOutlineVideoCameraAdd className="text-2xl hover:text-foregroundAccent cursor-pointer" />
+      </Link>
     </div>
   );
 };
