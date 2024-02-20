@@ -24,12 +24,23 @@ const MessageBox = () => {
           type: "text",
         });
       setMessage("");
+      typingStoppedBroadcast();
     }
   };
 
-  // const typingBroadcast = () => {
-  //   socket && socket.emit("typing", { handle: activeChat?._id });
-  // };
+  const typingBroadcast = () => {
+    let to = activeChat?.participants.find(
+      (part) => part._id !== user?._id
+    )?._id;
+    socket && socket.emit("typing", { activeChat: activeChat?._id, to });
+  };
+  const typingStoppedBroadcast = () => {
+    let to = activeChat?.participants.find(
+      (part) => part._id !== user?._id
+    )?._id;
+    socket &&
+      socket.emit("typing-stopped", { activeChat: activeChat?._id, to });
+  };
 
   return (
     <div className="bg-backgroundAccent px-5 py-5 relative">
@@ -40,7 +51,7 @@ const MessageBox = () => {
           value={message}
           onChange={(e) => {
             setMessage(e.target.value);
-            // typingBroadcast();
+            typingBroadcast();
           }}
           onKeyDown={(e) => {
             if (e.code === "Enter" || e.code === "NumpadEnter") {

@@ -29,6 +29,7 @@ const UserContextProvider = ({
     setSocket(connect);
     return () => {
       connect.emit("offline-user", user._id);
+      connect.disconnect();
     };
   }, [user._id]);
 

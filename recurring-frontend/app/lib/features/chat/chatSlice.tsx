@@ -45,21 +45,21 @@ export const chatSlice = createSlice({
       return { ...state, chats };
     },
     updateOnlineStatus: (state, { payload }) => {
-      const { chats } = state;
-      if (chats) {
-        const { onlineList, userId } = payload;
+      const { chats, activeChat } = state;
+      const { onlineList, userId } = payload;
 
-        let newChats = chats.map((chat) => {
+      let newChats = state.chats || [];
+
+      if (chats) {
+        newChats = chats.map((chat) => {
           const participantsToCheck = chat.participants.filter(
             (participant) => participant._id !== userId
           );
 
-          const isParticipantOnline = participantsToCheck.some(
-            (participant) => {
-              return onlineList.some(
-                (onlineUser: any) => onlineUser.userId === participant._id
-              );
-            }
+          const isParticipantOnline = participantsToCheck.some((participant) =>
+            onlineList.some(
+              (onlineUser: any) => onlineUser.userId === participant._id
+            )
           );
 
           return {
@@ -67,9 +67,31 @@ export const chatSlice = createSlice({
             online: isParticipantOnline,
           };
         });
-
-        state.chats = newChats;
       }
+
+      let newActiveChat = activeChat;
+
+      if (activeChat) {
+        const participantsToCheck = activeChat.participants.filter(
+          (participant) => participant._id !== userId
+        );
+        const isParticipantOnline = participantsToCheck.some((participant) =>
+          onlineList.some(
+            (onlineUser: any) => onlineUser.userId === participant._id
+          )
+        );
+
+        newActiveChat = {
+          ...activeChat,
+          online: isParticipantOnline,
+        };
+      }
+
+      return {
+        ...state,
+        chats: newChats,
+        activeChat: newActiveChat,
+      };
     },
   },
   extraReducers: (builder) => {

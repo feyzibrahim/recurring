@@ -11,16 +11,21 @@ const ChatHeader = ({ username }: { username: string }) => {
   const { user, socket } = useContext(UserContext);
 
   const [typing, setTyping] = useState(false);
-  const [handler, setHandler] = useState("");
 
   const { activeChat } = useAppSelector((state) => state.chat);
 
   useEffect(() => {
     socket &&
       socket.on("typing", (data) => {
-        console.log("file: ChatHeader.tsx:17 -> socket.on -> data", data);
-        setTyping(true);
-        setHandler(data.handle);
+        if (data.to === user?._id) {
+          setTyping(true);
+        }
+      });
+    socket &&
+      socket.on("typing-stopped", (data) => {
+        if (data.to === user?._id) {
+          setTyping(false);
+        }
       });
   }, [socket]);
 
@@ -28,9 +33,14 @@ const ChatHeader = ({ username }: { username: string }) => {
     socket &&
       socket.on("chat", (data) => {
         setTyping(false);
-        setHandler("");
       });
   }, [socket]);
+
+  useEffect(() => {
+    if (typing) {
+      setTimeout(() => setTyping(false), 3000);
+    }
+  }, [typing]);
 
   const getCurrentUser = (chat: ChatTypes) => {
     let temp = chat.participants.find(
@@ -52,11 +62,14 @@ const ChatHeader = ({ username }: { username: string }) => {
           `${getCurrentUser(activeChat).firstName} ${
             getCurrentUser(activeChat).lastName
           }`}
-        {typing && <p>{handler} is typing...</p>}
         {activeChat && activeChat.online ? (
           <div className="flex items-center gap-1 text-xs">
             <div className="w-2 h-2 rounded-full bg-green-600"></div>
-            <p>Online</p>
+            {typing ? (
+              <p className="text-xs animate-pulse">typing...</p>
+            ) : (
+              <p>Online</p>
+            )}
           </div>
         ) : (
           <div className="flex items-center gap-1 text-xs">

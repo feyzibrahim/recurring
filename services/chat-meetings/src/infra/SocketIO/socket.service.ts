@@ -28,6 +28,8 @@ export class SocketIOService {
     });
 
     this.io.on("connection", (socket: Socket) => {
+      this.io.emit("get-online-users", this.onlineUsersList);
+
       socket.on("online-user", (userId: string) => {
         this.onlineUsersList = this.onlineUsersList.filter(
           (user) => user.userId !== userId
@@ -39,6 +41,12 @@ export class SocketIOService {
       socket.on("offline-user", (userId: string) => {
         this.onlineUsersList = this.onlineUsersList.filter(
           (user) => user.userId !== userId
+        );
+        this.io.emit("get-online-users", this.onlineUsersList);
+      });
+      socket.on("disconnect", () => {
+        this.onlineUsersList = this.onlineUsersList.filter(
+          (user) => user.socketId !== socket.id
         );
         this.io.emit("get-online-users", this.onlineUsersList);
       });
@@ -84,10 +92,6 @@ export class SocketIOService {
       );
 
       socket.on("message", async (data) => {
-        console.log(
-          "file: socket.service.ts:85 -> SocketIOService -> socket.on -> data",
-          data
-        );
         const message: Message = {
           content: data.message,
           type: data.type,
@@ -115,9 +119,25 @@ export class SocketIOService {
           this.io.to(sender.socketId).emit("message", data);
         }
       });
-      // socket.on("typing", (data) => {
-      //   socket.broadcast.emit("typing", data);
-      // });
+
+      socket.on("typing", (data: { to: string; chat: string }) => {
+        const receiver = this.onlineUsersList.find(
+          (user) => user.userId === data.to
+        );
+
+        if (receiver) {
+          this.io.to(receiver.socketId).emit("typing", data);
+        }
+      });
+      socket.on("typing-stopped", (data: { to: string; chat: string }) => {
+        const receiver = this.onlineUsersList.find(
+          (user) => user.userId === data.to
+        );
+
+        if (receiver) {
+          this.io.to(receiver.socketId).emit("typing-stopped", data);
+        }
+      });
 
       // Video Call
 
