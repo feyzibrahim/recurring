@@ -1,12 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import MessageBox from "./MessageBox";
 import ChatContainer from "./ChatContainer";
 import ChatHeader from "./ChatHeader";
+import { useAppDispatch } from "@/app/lib/hook";
+import { setActiveChatWithUserName } from "@/app/lib/features/chat/chatSlice";
 
 const Chat = ({ username }: { username: string }) => {
-  console.log("file: Chat.tsx:9 -> Chat -> username", username);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setActiveChatWithUserName({ username }));
+  }, [username]);
+
   return (
     <>
       {/* Chat Header */}

@@ -18,14 +18,14 @@ const SingleChat = ({ user, chat }: PropsTypes) => {
   let path = pathName.split("/");
   let curr = path[1];
 
-  const handleChatClick = () => {
-    dispatch(setActiveChat({ chat }));
-  };
+  // const handleChatClick = () => {
+  //   dispatch(setActiveChat({ chat }));
+  // };
 
   return (
     <Link
       href={`/${curr}/chat/user/${user.username}`}
-      onClick={handleChatClick}
+      // onClick={handleChatClick}
     >
       <div className="hover:bg-backgroundAccent flex gap-2 items-center text-sm rounded-sm p-1 cursor-pointer">
         <UserAvatar

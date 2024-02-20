@@ -23,6 +23,24 @@ export const chatSlice = createSlice({
     setActiveChat: (state, { payload }) => {
       return { ...state, activeChat: payload.chat };
     },
+    setActiveChatWithUserName: (state, { payload }) => {
+      const { chats } = state;
+
+      if (chats) {
+        const newChat = chats.find((chat) =>
+          chat.participants.some(
+            (participant) => participant.username === payload.username
+          )
+        );
+
+        if (newChat) {
+          console.log("Found new chat:", newChat);
+          return { ...state, activeChat: newChat };
+        }
+
+        return state;
+      }
+    },
     socketNewChatUpdate: (state, { payload }) => {
       let chats = [payload.chat, ...(state.chats || [])] as ChatTypes[];
       return { ...state, chats };
@@ -42,6 +60,10 @@ export const chatSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.chats = payload.chats;
+        console.log(
+          "file: chatSlice.tsx:55 -> .addCase -> payload.chats",
+          payload.chats
+        );
       })
       .addCase(createChat.pending, (state) => {
         state.loading = true;
@@ -59,6 +81,7 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { setActiveChat, socketNewChatUpdate } = chatSlice.actions;
+export const { setActiveChat, socketNewChatUpdate, setActiveChatWithUserName } =
+  chatSlice.actions;
 
 export default chatSlice.reducer;
