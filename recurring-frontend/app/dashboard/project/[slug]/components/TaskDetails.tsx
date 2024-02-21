@@ -1,30 +1,47 @@
 "use client";
 
-import { getTasksByProjectId } from "@/app/lib/features/task/taskActions";
+import {
+  getTask,
+  getTasksByProjectId,
+} from "@/app/lib/features/task/taskActions";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import CreateProjectButton from "@/components/common/task/CreateTaskButton";
 import EmptyTask from "@/components/empty/EmptyTask";
-import { useEffect } from "react";
-import { TaskListTable } from "./TaskListTable";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { PaginationCustom } from "@/components/custom/PaginationCustom";
+import { useEffect, useState } from "react";
+import { DataTableDemo } from "../DataTableDemo";
+import { columns } from "../columns";
+import TaskDetailSheet from "./TaskDetailSheet";
 
 const TaskDetails = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
-  const { tasks, length } = useAppSelector((state) => state.task);
+  const { tasks } = useAppSelector((state) => state.task);
+
+  const [onEditSheet, setOnEditSheet] = useState(false);
 
   useEffect(() => {
     dispatch(getTasksByProjectId(slug));
   }, [dispatch, slug]);
 
+  const rowOnCLick = (something: string) => {
+    dispatch(getTask(something));
+    setOnEditSheet(true);
+  };
+
   return (
-    <ScrollArea className="col-span-3 h-screen flex flex-col">
-      <div className="flex justify-between items-center px-5 pt-5">
-        <h1 className="font-bold text-3xl">Tasks</h1>
-        <CreateProjectButton slug={slug} />
-      </div>
+    <div className="col-span-3 h-screen">
+      <TaskDetailSheet
+        onOpenChange={onEditSheet}
+        setOnOpenChange={setOnEditSheet}
+      />
       {tasks && tasks.length > 0 ? (
-        <TaskListTable slug={slug} />
+        <DataTableDemo
+          columns={columns}
+          data={tasks}
+          pageTitle="Tasks"
+          newButton={<CreateProjectButton slug={slug} />}
+          searchField="title"
+          rowOnCLick={rowOnCLick}
+        />
       ) : (
         <div className="flex-1 flex justify-center flex-col items-center ">
           <EmptyTask />
@@ -32,10 +49,7 @@ const TaskDetails = ({ slug }: { slug: string }) => {
           <CreateProjectButton slug={slug} />
         </div>
       )}
-      {length && length > 10 && (
-        <PaginationCustom rowLength={length} rowsPerPage={10} />
-      )}
-    </ScrollArea>
+    </div>
   );
 };
 

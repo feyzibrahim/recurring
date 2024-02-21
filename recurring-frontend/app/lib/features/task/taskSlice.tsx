@@ -33,7 +33,6 @@ export const taskSlice = createSlice({
   initialState,
   reducers: {
     removeTaskOnClose: (state) => {
-      console.log("file: taskSlice.tsx:34 -> state", state);
       return { ...state, task: null };
     },
   },

@@ -15,6 +15,7 @@ import { EmployeeTypes } from "@/constants/Types";
 import { useState } from "react";
 import TaskDetailSheet from "./TaskDetailSheet";
 import { getTask } from "@/app/lib/features/task/taskActions";
+import LowMediumHigh from "@/components/common/LowMediumHigh";
 
 export function TaskListTable({ slug }: { slug: string }) {
   const dispatch = useAppDispatch();
@@ -98,8 +99,8 @@ export function TaskListTable({ slug }: { slug: string }) {
                 <td className="border-t border-background px-3 py-2 capitalize">
                   {task.status}
                 </td>
-                <td className="border-t border-background px-3 py-2 capitalize">
-                  {task.priority}
+                <td className="border-t border-background px-3 capitalize">
+                  <LowMediumHigh priority={task.priority} />
                 </td>
                 {/* Will add later | Tags */}
                 {/* <td className="border-t border-background px-3 py-2">

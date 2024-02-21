@@ -4,6 +4,7 @@ import { TaskTypes } from "@/constants/Types";
 import { Draggable } from "@hello-pangea/dnd";
 import { useContext } from "react";
 import { TaskContext } from "./TaskContextProvider";
+import LowMediumHigh from "@/components/common/LowMediumHigh";
 
 interface ItemProps {
   task: TaskTypes;
@@ -33,8 +34,11 @@ const TaskCard: React.FC<ItemProps> = ({ task, index }) => {
           <p className="text-foregroundAccent">
             {task.description ?? "No description were added"}
           </p>
-          <div className="border-2 border-secondary rounded-md w-fit px-2 py-1 mt-3">
-            {format(new Date(task.dueDate), "MMM d, yyyy")}
+          <div className="flex gap-2 items-center mt-3">
+            <div className="border-2 border-secondary rounded-md w-fit px-2 py-1 ">
+              {format(new Date(task.dueDate), "MMM d, yyyy")}
+            </div>
+            <LowMediumHigh priority={task.priority} />
           </div>
         </div>
       )}
