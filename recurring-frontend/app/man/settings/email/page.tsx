@@ -10,11 +10,11 @@ import { Label } from "@/components/ui/label";
 import { AiOutlineMail } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
 import InputWithIcon from "@/components/custom/InputWithIcon";
-import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
 import EmailChangeForm from "./EmailChangeForm";
+import { checkUserWithoutRedirectInManager } from "@/server/checkUserWithoutRedirectInManager";
 
 const page = async () => {
-  const user = await checkUserWithoutRedirect();
+  const user = await checkUserWithoutRedirectInManager();
 
   return (
     <div className="md:px-10 md:py-5 w-full">

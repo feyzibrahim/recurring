@@ -17,6 +17,9 @@ export class ProjectUseCase implements ProjectUseCaseInterface {
   getProjectByUserId(userId: string): Promise<boolean | Project> {
     return this.iProjectUseCase.getProjectByUserId(userId);
   }
+  getProjectsByManagerId(managerId: string): Promise<boolean | Project[]> {
+    return this.iProjectUseCase.getProjectsByManagerId(managerId);
+  }
 
   createProject(project: Project): Promise<boolean | Project> {
     return this.iProjectUseCase.createProject(project);

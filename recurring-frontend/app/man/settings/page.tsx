@@ -1,13 +1,13 @@
 import InputWithIcon from "@/components/custom/InputWithIcon";
 import { Label } from "@/components/ui/label";
-import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
 import { AiOutlineCheck } from "react-icons/ai";
 import { format } from "date-fns";
 import EditButton from "./EditButton";
 import InputBox from "@/components/common/InputBox";
+import { checkUserWithoutRedirectInManager } from "@/server/checkUserWithoutRedirectInManager";
 
 const page = async () => {
-  const user = await checkUserWithoutRedirect();
+  const user = await checkUserWithoutRedirectInManager();
 
   return (
     <div className="md:px-10 pb-5 w-full">

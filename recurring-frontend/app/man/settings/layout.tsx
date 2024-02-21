@@ -1,16 +1,16 @@
 import SettingsNav from "@/components/common/SettingsNav";
-import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
 import UserAvatar from "../../../public/img/user-avatar.png";
 import ProfileBanner from "../../../public/profile_banner.png";
 import Image from "next/image";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { checkUserWithoutRedirectInManager } from "@/server/checkUserWithoutRedirectInManager";
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await checkUserWithoutRedirect();
+  const user = await checkUserWithoutRedirectInManager();
 
   return (
     <ScrollArea className="h-screen overflow-clip w-full">

@@ -94,17 +94,6 @@ const ManagerSideBar = () => {
             </div>
           </Link>
         </ToolTipWrapper>
-        <ToolTipWrapper title="Deals">
-          <Link href={"/man/deals"} className="hover-text text-xl">
-            <div
-              className={`p-1 rounded-xl hover:bg-background ${
-                pathName === "/man/deals" ? " bg-primary text-white" : ""
-              }`}
-            >
-              <FaMoneyCheckAlt className="m-1" />
-            </div>
-          </Link>
-        </ToolTipWrapper>
 
         <ToolTipWrapper title="Chat">
           <Link href={"/man/chat"} className="hover-text text-xl">

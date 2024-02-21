@@ -21,6 +21,9 @@ export const checkUserWithoutRedirectInHome = async () => {
   if (data.user && data.user.role && data.user.role === "owner") {
     redirect("/dashboard");
   }
+  if (data.user && data.user.role && data.user.role === "manager") {
+    redirect("/man");
+  }
 
   if (data.user) {
     return data.user;

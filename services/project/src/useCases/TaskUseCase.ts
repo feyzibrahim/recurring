@@ -10,6 +10,7 @@ export class TaskUseCase implements TaskUseCaseInterface {
     @inject(TYPES.TaskAdapterInterface)
     private iTaskUseCase: TaskUseCaseInterface
   ) {}
+
   getTaskLengthByProject(
     projectSlug: string,
     filter: SimpleFilter

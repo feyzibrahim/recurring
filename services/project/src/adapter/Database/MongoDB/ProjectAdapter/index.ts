@@ -7,6 +7,7 @@ import { ProjectAdapterInterface } from "../../../../interface/project/ProjectAd
 import { deleteProject } from "./functions/deleteProject.adapter";
 import { appendProjectMember } from "./functions/appendProjectMember";
 import { updateProject } from "./functions/updateProject.adapter";
+import { getProjectsByManagerId } from "./functions/getProjectsByManagerId.adapter";
 
 @injectable()
 export class ProjectAdapter implements ProjectAdapterInterface {
@@ -20,6 +21,11 @@ export class ProjectAdapter implements ProjectAdapterInterface {
 
   async getProjectByUserId(userId: string): Promise<boolean | Project> {
     throw new Error("Method not implemented.");
+  }
+  async getProjectsByManagerId(
+    managerId: string
+  ): Promise<boolean | Project[]> {
+    return getProjectsByManagerId(managerId);
   }
 
   async updateProject(

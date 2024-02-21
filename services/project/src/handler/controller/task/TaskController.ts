@@ -19,6 +19,7 @@ import { getTasksByProjectId } from "./functions/getTasksByProjectId";
 import { updateTaskStatus } from "./functions/updateTaskStatus";
 import { getTasksByUserId } from "./functions/getTasksByUserId";
 import { getTasksForUser } from "./functions/getTasksForUser";
+import { getTasksByManagerId } from "./functions/getTasksByManagerId";
 
 @controller("/api/task")
 export class TaskController {
@@ -50,6 +51,15 @@ export class TaskController {
   @httpGet("/user/:userSlug")
   async getTasksByUserId(req: Request, res: Response) {
     await getTasksByUserId(req, res, this.iTaskUseCase);
+  }
+  @httpGet("/manager")
+  async getTasksByManagerId(req: Request, res: Response) {
+    await getTasksByManagerId(
+      req,
+      res,
+      this.iTaskUseCase,
+      this.iProjectUseCase
+    );
   }
 
   @httpGet("/:slug")

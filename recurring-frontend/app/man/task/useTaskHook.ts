@@ -44,11 +44,12 @@ const useTaskHook = () => {
       const res = await actualCommonRequest({
         route: API_ROUTES.PROJECT,
         method: "GET",
-        url: "/api/task",
+        url: "/api/task/manager",
         headers: {
           "Content-Type": "application/json",
         },
       });
+
       if (res && res.tasks) {
         setTasks(res.tasks);
 

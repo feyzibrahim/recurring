@@ -15,10 +15,10 @@ import {
 import FormInputCustom from "@/components/common/FormInputCustom";
 import { Textarea } from "@/components/ui/textarea";
 import DatePickerLimited from "@/components/custom/DatePickerLimited";
-import { ManagerList } from "./ManagerList";
 import { MemberTable } from "./MemberTable";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { createProject } from "@/app/lib/features/project/projectActions";
+import { EmployeeTypes } from "@/constants/Types";
 
 const projectSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -31,7 +31,7 @@ const projectSchema = z.object({
   // deal: z.string().optional(),
 });
 
-const CreateForm = () => {
+const CreateForm = ({ user }: { user: EmployeeTypes }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -45,14 +45,13 @@ const CreateForm = () => {
       endDate: undefined,
       members: [],
       description: "",
-      manager: "",
+      manager: user._id || "",
       // client: "",
       // deal: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
-    console.log("file: CreateForm.tsx:63 -> onSubmit -> values", values);
     dispatch(createProject(values)).then(() => {
       router.back();
     });
@@ -112,18 +111,6 @@ const CreateForm = () => {
               name="endDate"
               render={({ field }) => (
                 <DatePickerLimited title="End Date" field={field} />
-              )}
-            />
-            <div className="py-2"></div>
-            <FormField
-              control={form.control}
-              name="manager"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Choose Manager</FormLabel>
-                  <ManagerList field={field} />
-                  <FormMessage />
-                </FormItem>
               )}
             />
           </div>

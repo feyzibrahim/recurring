@@ -1,6 +1,6 @@
 import { checkUserWithoutRedirectInManager } from "@/server/checkUserWithoutRedirectInManager";
 import StoreProvider from "../lib/StoreProvider";
-import ManagerSideBar from "@/components/common/ManagerSidebar";
+import ManagerSideBar from "@/components/common/SidebarManager";
 
 export default async function DashboardLayout({
   children,

@@ -21,9 +21,11 @@ export async function middleware(req: NextRequest) {
       if (json.success) {
         if (json.user.role === "employee") {
           return NextResponse.redirect("/home");
-        } else if (json.user.role === "manager") {
-          return NextResponse.redirect("/manager");
-        } else {
+        }
+        if (json.user.role === "manager") {
+          return NextResponse.redirect("/man");
+        }
+        if (json.user.role === "owner") {
           return NextResponse.redirect("/dashboard");
         }
       }

@@ -4,21 +4,23 @@ import { usePathname } from "next/navigation";
 
 const SettingsNav = () => {
   const pathName = usePathname();
+  let path = pathName.split("/");
+  let curr = path[1];
 
   return (
     <div className="flex gap-8 text-foregroundAccent text-sm overflow-x-auto">
       <Link
-        href="/dashboard/settings"
+        href={`/${curr}/settings`}
         className={`shrink-0 pb-2 ${
-          pathName === "/dashboard/settings" ? "text-foreground font-bold" : ""
+          pathName === `/${curr}/settings` ? "text-foreground font-bold" : ""
         }`}
       >
         Profile
       </Link>
       <Link
-        href="/dashboard/settings/organization"
+        href={`/${curr}/settings/organization`}
         className={` ${
-          pathName === "/dashboard/settings/organization"
+          pathName === `/${curr}/settings/organization`
             ? "text-foreground font-bold"
             : ""
         }`}
@@ -26,9 +28,9 @@ const SettingsNav = () => {
         Organization
       </Link>
       <Link
-        href="/dashboard/settings/password"
+        href={`/${curr}/settings/password`}
         className={` ${
-          pathName === "/dashboard/settings/password"
+          pathName === `/${curr}/settings/password`
             ? "text-foreground font-bold"
             : ""
         }`}
@@ -36,9 +38,9 @@ const SettingsNav = () => {
         Password
       </Link>
       <Link
-        href="/dashboard/settings/theme"
+        href={`/${curr}/settings/theme`}
         className={` ${
-          pathName === "/dashboard/settings/theme"
+          pathName === `/${curr}/settings/theme`
             ? "text-foreground font-bold"
             : ""
         }`}
@@ -46,9 +48,9 @@ const SettingsNav = () => {
         Theme
       </Link>
       <Link
-        href="/dashboard/settings/plan"
+        href={`/${curr}/settings/plan`}
         className={` ${
-          pathName === "/dashboard/settings/plan"
+          pathName === `/${curr}/settings/plan`
             ? "text-foreground font-bold"
             : ""
         }`}
@@ -56,9 +58,9 @@ const SettingsNav = () => {
         Plan
       </Link>
       <Link
-        href="/dashboard/settings/email"
+        href={`/${curr}/settings/email`}
         className={` ${
-          pathName === "/dashboard/settings/email"
+          pathName === `/${curr}/settings/email`
             ? "text-foreground font-bold"
             : ""
         }`}
@@ -66,9 +68,9 @@ const SettingsNav = () => {
         Email
       </Link>
       <Link
-        href="/dashboard/settings/notification"
+        href={`/${curr}/settings/notification`}
         className={` ${
-          pathName === "/dashboard/settings/notification"
+          pathName === `/${curr}/settings/notification`
             ? "text-foreground font-bold"
             : ""
         }`}

@@ -3,7 +3,7 @@ import UserAvatar from "../../../public/img/user-avatar.png";
 import ProfileBanner from "../../../public/profile_banner.png";
 import Image from "next/image";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import SettingsNavHome from "@/components/common/SettingsNavHome";
+import SettingsNav from "@/components/common/SettingsNav";
 
 export default async function DashboardLayout({
   children,
@@ -38,7 +38,7 @@ export default async function DashboardLayout({
           </div>
         </div>
 
-        <SettingsNavHome />
+        <SettingsNav />
       </div>
       {children}
     </ScrollArea>

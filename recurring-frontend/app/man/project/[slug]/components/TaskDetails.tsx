@@ -32,7 +32,7 @@ const TaskDetails = ({ slug }: { slug: string }) => {
           <CreateProjectButton slug={slug} />
         </div>
       )}
-      {length && length > 10 && (
+      {tasks && tasks.length > 0 && length && length > 10 && (
         <PaginationCustom rowLength={length} rowsPerPage={10} />
       )}
     </ScrollArea>
