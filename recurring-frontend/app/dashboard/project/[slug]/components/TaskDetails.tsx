@@ -8,8 +8,8 @@ import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import CreateProjectButton from "@/components/common/task/CreateTaskButton";
 import EmptyTask from "@/components/empty/EmptyTask";
 import { useEffect, useState } from "react";
-import { DataTableDemo } from "../DataTableDemo";
-import { columns } from "../columns";
+import { TanStackDataTable } from "@/components/custom/TanStackDataTable";
+import { columns } from "./taskColumns";
 import TaskDetailSheet from "./TaskDetailSheet";
 
 const TaskDetails = ({ slug }: { slug: string }) => {
@@ -28,13 +28,13 @@ const TaskDetails = ({ slug }: { slug: string }) => {
   };
 
   return (
-    <div className="col-span-3 h-screen">
+    <div className="col-span-3 h-screen pt-5">
       <TaskDetailSheet
         onOpenChange={onEditSheet}
         setOnOpenChange={setOnEditSheet}
       />
       {tasks && tasks.length > 0 ? (
-        <DataTableDemo
+        <TanStackDataTable
           columns={columns}
           data={tasks}
           pageTitle="Tasks"

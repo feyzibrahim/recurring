@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { FiEdit } from "react-icons/fi";
 import EditButton from "./EditButton";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ProjectDetails = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
@@ -56,9 +57,9 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
   };
 
   return (
-    <div className="bg-secondary p-5 shadow-md">
+    <ScrollArea className="h-screen bg-secondary shadow-md">
       {project && (
-        <div>
+        <div className="p-5">
           <div className="flex justify-between">
             <h2 className="text-2xl font-bold mb-4">{project.name}</h2>
             <EditButton />
@@ -156,7 +157,7 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </ScrollArea>
   );
 };
 

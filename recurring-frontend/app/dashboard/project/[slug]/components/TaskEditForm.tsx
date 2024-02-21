@@ -23,6 +23,7 @@ import { editTask } from "@/app/lib/features/task/taskActions";
 import FormInputCustom from "@/components/common/FormInputCustom";
 import { EmployeeList } from "@/components/common/task/EmployeeList";
 import DatePickerNoLimit from "@/components/custom/DatePickerNoLimit";
+import { format } from "date-fns";
 
 const formSchema = z.object({
   title: z
@@ -31,8 +32,8 @@ const formSchema = z.object({
       message: "Email must be at least 2 characters.",
     })
     .max(30, { message: "Name should be Less than 30 characters" }),
-  startDate: z.date(),
-  dueDate: z.date(),
+  startDate: z.string(),
+  dueDate: z.string(),
   status: z
     .string()
     .min(2, {
@@ -75,8 +76,10 @@ export default function TaskEditForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: (task && task.title) || "",
-      startDate: (task && task.startDate) || undefined,
-      dueDate: (task && task.dueDate) || undefined,
+      startDate:
+        (task && format(new Date(task.startDate), "MMM d, yyyy")) || undefined,
+      dueDate:
+        (task && format(new Date(task.dueDate), "MMM d, yyyy")) || undefined,
       status: (task && task.status) || "",
       priority: (task && task.priority) || "",
       assignee: (task && task.assignee) || "",

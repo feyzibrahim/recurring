@@ -4,7 +4,7 @@ import ProjectTable from "./ProjectTable";
 
 const ProjectList = () => {
   return (
-    <Tabs defaultValue="table" className="">
+    <Tabs defaultValue="table" className="pt-5">
       <TabsList className="mx-5 bg-backgroundAccent">
         <TabsTrigger value="table">Table</TabsTrigger>
         <TabsTrigger value="tiles">Tiles</TabsTrigger>

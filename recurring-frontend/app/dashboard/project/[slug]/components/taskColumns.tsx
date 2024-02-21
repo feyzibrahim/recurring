@@ -1,5 +1,4 @@
 import EmployeeNameFromStore from "@/components/common/EmployeeNameFromStore";
-import LowMediumHigh from "@/components/common/LowMediumHigh";
 import UserAvatar from "@/public/img/user-avatar.png";
 import {
   HoverCard,
@@ -11,6 +10,8 @@ import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { format } from "date-fns";
+import StatusDiv from "@/components/common/StatusDiv";
+import LowMediumHigh from "@/components/common/LowMediumHigh";
 
 export const columns: ColumnDef<TaskTypes>[] = [
   {
@@ -111,9 +112,7 @@ export const columns: ColumnDef<TaskTypes>[] = [
         </div>
       );
     },
-    cell: ({ row }) => (
-      <span className="capitalize">{row.getValue("status")}</span>
-    ),
+    cell: ({ row }) => <StatusDiv status={row.getValue("status")} />,
   },
   {
     accessorKey: "priority",

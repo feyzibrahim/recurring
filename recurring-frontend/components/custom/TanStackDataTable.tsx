@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/pagination";
 import { ReactNode, useState } from "react";
 
-export function DataTableDemo<TData, TValue>({
+export function TanStackDataTable<TData, TValue>({
   columns,
   data,
   pageTitle,
@@ -52,15 +52,18 @@ export function DataTableDemo<TData, TValue>({
 }: {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  pageTitle: string;
-  newButton: ReactNode;
-  searchField: string;
-  rowOnCLick?: (something: string) => void;
+  pageTitle?: string;
+  newButton?: ReactNode;
+  searchField?: string;
+  rowOnCLick?: (slug: string) => void;
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     slug: false,
+    description: false,
+    endTime: false,
+    startTime: false,
   });
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -139,18 +142,20 @@ export function DataTableDemo<TData, TValue>({
 
   return (
     <div className="w-full px-5">
-      <div className="flex items-center gap-2 py-4">
-        <h1 className="font-bold text-3xl">{pageTitle}</h1>
-        <Input
-          placeholder={`Search ${searchField}...`}
-          value={
-            (table.getColumn(searchField)?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn(searchField)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+      <div className="flex items-center gap-2 pb-4">
+        {pageTitle && <h1 className="font-bold text-3xl">{pageTitle}</h1>}
+        {searchField && (
+          <Input
+            placeholder={`Search ${searchField}...`}
+            value={
+              (table.getColumn(searchField)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn(searchField)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -162,7 +167,12 @@ export function DataTableDemo<TData, TValue>({
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
-                if (column.id === "slug") {
+                if (
+                  column.id === "slug" ||
+                  column.id === "description" ||
+                  column.id === "endTime" ||
+                  column.id === "startTime"
+                ) {
                   return;
                 }
                 return (
@@ -188,7 +198,7 @@ export function DataTableDemo<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="bg-backgroundAccent border-background"
+                className="bg-backgroundAccent hover:bg-backgroundAccent border-background"
               >
                 {headerGroup.headers.map((header) => {
                   return (
@@ -210,7 +220,7 @@ export function DataTableDemo<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  className="bg-backgroundAccent border-background"
+                  className="bg-backgroundAccent border-background cursor-pointer"
                   onClick={() => rowOnCLick && rowOnCLick(row.getValue("slug"))}
                 >
                   {row.getVisibleCells().map((cell) => (
