@@ -21,6 +21,7 @@ export class Employee {
       street?: string;
       zipCode?: string;
     },
-    public designation?: string
+    public designation?: string,
+    public terminationReason?: string
   ) {}
 }

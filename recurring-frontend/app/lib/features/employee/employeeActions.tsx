@@ -17,6 +17,21 @@ export const getEmployees = createAsyncThunk(
     });
   }
 );
+// Employee details finding
+export const getExEmployees = createAsyncThunk(
+  "employee/getExEmployees",
+  async (_: undefined, { rejectWithValue }) => {
+    return reduxCommonRequest({
+      route: API_ROUTES.EMPLOYEE,
+      method: "GET",
+      url: "/api/employee/ex",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      rejectWithValue,
+    });
+  }
+);
 
 // Employee details finding
 export const createEmployee: any = createAsyncThunk(
@@ -76,6 +91,23 @@ export const deleteEmployee: any = createAsyncThunk(
       route: API_ROUTES.EMPLOYEE,
       method: "DELETE",
       url: `/api/employee/${id}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      rejectWithValue,
+    });
+  }
+);
+
+// Employee details Editing
+export const terminateEmployee: any = createAsyncThunk(
+  "employee/terminateEmployee",
+  async ({ data, id }: { data: any; id: string }, { rejectWithValue }) => {
+    return reduxCommonRequest({
+      route: API_ROUTES.EMPLOYEE,
+      method: "POST",
+      url: `/api/employee/terminate/${id}`,
+      data: data,
       headers: {
         "Content-Type": "application/json",
       },

@@ -56,6 +56,9 @@ const EmployeeSchema: Schema = new Schema(
     designation: {
       type: String,
     },
+    terminationReason: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

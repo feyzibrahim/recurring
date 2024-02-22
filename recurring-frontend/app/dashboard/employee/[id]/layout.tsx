@@ -10,7 +10,7 @@ export default async function EmployeeProfile({
 }) {
   return (
     <ScrollArea className="w-full h-screen">
-      <div className="px-5 pt-5 h-48 w-full">
+      <div className="px-5 h-48 w-full pt-16">
         <Image
           src={ProfileBanner}
           alt="Background in settings"

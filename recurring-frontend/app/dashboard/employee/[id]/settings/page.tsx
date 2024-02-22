@@ -1,5 +1,5 @@
 import EmployeeNav from "../EmployeeNav";
-import SettingsPage from "./SettingsPage";
+import SettingsPage from "./components/SettingsPage";
 
 const page = ({ params }: { params: { id: string } }) => {
   return (

@@ -7,6 +7,8 @@ import {
   getEmployee,
   editEmployee,
   deleteEmployee,
+  terminateEmployee,
+  getExEmployees,
 } from "./employeeActions";
 import { EmployeeTypes } from "@/constants/Types";
 
@@ -40,6 +42,20 @@ export const employeeSLice = createSlice({
         state.error = payload;
       })
       .addCase(getEmployees.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.employees = payload.employees;
+      })
+      // Terminated Employees
+      .addCase(getExEmployees.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getExEmployees.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.employees = null;
+        state.error = payload;
+      })
+      .addCase(getExEmployees.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
         state.employees = payload.employees;
@@ -96,6 +112,23 @@ export const employeeSLice = createSlice({
         state.error = payload;
       })
       .addCase(deleteEmployee.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        if (state.employees !== null) {
+          state.employees = state.employees.filter(
+            (emp) => emp._id === payload.employee._id
+          );
+        }
+      })
+      .addCase(terminateEmployee.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(terminateEmployee.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.employees = null;
+        state.error = payload;
+      })
+      .addCase(terminateEmployee.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
         if (state.employees !== null) {

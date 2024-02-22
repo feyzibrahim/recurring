@@ -22,6 +22,10 @@ export const login = async (
       iAuthUseCase
     );
 
+    if (typeof user !== "boolean" && !user.isActive) {
+      throw Error("Account Blocked Check your email");
+    }
+
     // Setting JWT Tokens
 
     const payload: JWTPayload = {

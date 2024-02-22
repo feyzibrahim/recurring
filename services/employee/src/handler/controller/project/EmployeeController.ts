@@ -17,6 +17,8 @@ import { deleteEmployee } from "./functions/deleteEmployee";
 import { getEmployeesWithRole } from "./functions/getEmployeesWithRole";
 import { sendEmployeeInvitation } from "./functions/sendEmployeeInvitation";
 import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
+import { terminateEmployee } from "./functions/terminateEmployee";
+import { getExEmployees } from "./functions/getExEmployees";
 
 @controller("/api/employee")
 export class EmployeeController {
@@ -30,6 +32,10 @@ export class EmployeeController {
   @httpGet("/")
   async getEmployees(req: Request, res: Response) {
     await getEmployees(req, res, this.iEmployeeUseCase);
+  }
+  @httpGet("/ex")
+  async getExEmployees(req: Request, res: Response) {
+    await getExEmployees(req, res, this.iEmployeeUseCase);
   }
 
   @httpGet("/with-role")
@@ -50,6 +56,15 @@ export class EmployeeController {
   @httpPost("/")
   async createEmployee(req: Request, res: Response) {
     await createEmployee(
+      req,
+      res,
+      this.iEmployeeUseCase,
+      this.iRabbitMQUseCase
+    );
+  }
+  @httpPost("/terminate/:id")
+  async terminateEmployee(req: Request, res: Response) {
+    await terminateEmployee(
       req,
       res,
       this.iEmployeeUseCase,

@@ -1,14 +1,14 @@
 import EmployeeModal from "../../Modal/EmployeeModal";
 
-export const getEmployees = async (organizationId: string) => {
+export const getExEmployees = async (organizationId: string) => {
   try {
     const employees = await EmployeeModal.find({
       organization: organizationId,
-      isActive: true,
+      isActive: false,
     });
     return employees;
   } catch (error) {
-    console.log("EmployeeAdapter: getEmployees -> error", error);
+    console.log("EmployeeAdapter: getExEmployees -> error", error);
     return false;
   }
 };

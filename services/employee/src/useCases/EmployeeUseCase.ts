@@ -16,6 +16,9 @@ export class EmployeeUseCase implements EmployeeUseCaseInterface {
   getEmployees(organizationId: string): Promise<boolean | Employee[]> {
     return this.iEmployeeUseCase.getEmployees(organizationId);
   }
+  getExEmployees(organizationId: string): Promise<boolean | Employee[]> {
+    return this.iEmployeeUseCase.getExEmployees(organizationId);
+  }
   getEmployeeByUserId(userId: string): Promise<boolean | Employee> {
     return this.iEmployeeUseCase.getEmployeeByUserId(userId);
   }
@@ -24,6 +27,9 @@ export class EmployeeUseCase implements EmployeeUseCaseInterface {
   }
   updateEmployee(id: string, employee: Employee): Promise<boolean | Employee> {
     return this.iEmployeeUseCase.updateEmployee(id, employee);
+  }
+  terminateEmployee(employee: Employee): Promise<boolean | Employee> {
+    return this.iEmployeeUseCase.terminateEmployee(employee);
   }
   deleteEmployee(id: string): Promise<boolean | Employee> {
     return this.iEmployeeUseCase.deleteEmployee(id);

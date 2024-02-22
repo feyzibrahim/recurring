@@ -7,19 +7,28 @@ import { getEmployees } from "./functions/getEmployees.adapter";
 import { updateEmployee } from "./functions/updateEmployee.adapter";
 import { deleteEmployee } from "./functions/deleteEmployee.adapter";
 import { getEmployeesWithRole } from "./functions/getEmployeesWithRole.adapter";
+import { terminateEmployee } from "./functions/terminateEmployee.adapter";
+import { getExEmployees } from "./functions/getExEmployees.adapter";
 
 @injectable()
 export class EmployeeAdapter implements EmployeeAdapterInterface {
-  getEmployees(organizationId: string): Promise<boolean | Employee[]> {
+  async getEmployees(organizationId: string): Promise<boolean | Employee[]> {
     return getEmployees(organizationId);
   }
 
   async getEmployee(id: string): Promise<boolean | Employee> {
     return getEmployee(id);
   }
+  async getExEmployees(id: string): Promise<boolean | Employee[]> {
+    return getExEmployees(id);
+  }
 
   async createEmployee(Employee: Employee): Promise<boolean | Employee> {
     return createEmployee(Employee);
+  }
+
+  async terminateEmployee(employee: Employee): Promise<boolean | Employee> {
+    return terminateEmployee(employee);
   }
 
   async getEmployeeByUserId(userId: string): Promise<boolean | Employee> {
