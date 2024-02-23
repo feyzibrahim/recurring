@@ -98,3 +98,19 @@
   background: rgba(0, 0, 0, 0.8); 
   border-radius: 10px;
 }
+
+.chart-box-parent {
+  @apply w-full h-full bg-backgroundAccent rounded-md shadow-lg p-3;
+}
+
+.chart-box-header {
+  @apply flex items-center gap-2 pb-3 p-2 border-b mb-2;
+}
+
+.chart-box-icon {
+  @apply bg-secondary p-2 rounded-full;
+}
+
+.chart-box-content {
+  @apply flex gap-2 items-center pt-2;
+}

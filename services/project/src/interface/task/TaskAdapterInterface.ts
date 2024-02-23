@@ -1,5 +1,7 @@
 import { Task } from "../../Entities/Task";
 import { SimpleFilter } from "../../constants/props/SimpleFilter";
+import CountByDay from "../../constants/types/CountByDay";
+import TaskCount from "../../constants/types/TaskCount";
 
 export interface TaskAdapterInterface {
   getTask(slug: string): Promise<Task | boolean>;
@@ -22,4 +24,10 @@ export interface TaskAdapterInterface {
   createTask(task: Task): Promise<Task | boolean>;
   updateTask(slug: string, task: Task): Promise<Task | boolean>;
   deleteTask(slug: string): Promise<Task | boolean>;
+  getTaskCompletedCount(organizationId: string): Promise<CountByDay[] | false>;
+  getNewTaskCount(organizationId: string): Promise<CountByDay[] | false>;
+  getTaskCount(
+    organizationId: string,
+    interval: string
+  ): Promise<TaskCount[] | false>;
 }

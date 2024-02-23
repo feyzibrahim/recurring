@@ -20,6 +20,8 @@ import { updateTaskStatus } from "./functions/updateTaskStatus";
 import { getTasksByUserId } from "./functions/getTasksByUserId";
 import { getTasksForUser } from "./functions/getTasksForUser";
 import { getTasksByManagerId } from "./functions/getTasksByManagerId";
+import { getTaskCompletedCount } from "./functions/getTaskCompletedCount";
+import { getTaskCount } from "./functions/getTaskCount";
 
 @controller("/api/task")
 export class TaskController {
@@ -34,6 +36,16 @@ export class TaskController {
   async getTasks(req: Request, res: Response) {
     await getTasks(req, res, this.iTaskUseCase);
   }
+
+  @httpGet("/completed-count")
+  async getTaskCompletedCount(req: Request, res: Response) {
+    await getTaskCompletedCount(req, res, this.iTaskUseCase);
+  }
+  @httpGet("/task-count")
+  async getTaskCount(req: Request, res: Response) {
+    await getTaskCount(req, res, this.iTaskUseCase);
+  }
+
   @httpGet("/for-user")
   async getTasksForUser(req: Request, res: Response) {
     await getTasksForUser(req, res, this.iTaskUseCase);

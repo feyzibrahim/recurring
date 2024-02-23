@@ -1,63 +1,124 @@
 "use client";
-import React from "react";
-import { Tooltip, Area, AreaChart, XAxis, YAxis } from "recharts";
-const data = [
-  { name: "Jan", uv: 4000, pv: 2400, amt: 2400 },
-  { name: "Feb", uv: 3000, pv: 1398, amt: 2210 },
-  { name: "Mar", uv: 2000, pv: 9800, amt: 2290 },
-  { name: "Apr", uv: 2780, pv: 3908, amt: 2000 },
-  { name: "May", uv: 1890, pv: 4800, amt: 2181 },
-  { name: "Jun", uv: 2390, pv: 3800, amt: 2500 },
-  { name: "Jul", uv: 3490, pv: 4300, amt: 2100 },
-];
+import { actualCommonRequest } from "@/api/actual_client";
+import CustomTooltip from "@/components/custom/CustomTooltip";
+import { TaskCount } from "@/constants/Types";
+import { API_ROUTES } from "@/lib/routes";
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
+import { Tooltip, Area, XAxis, YAxis } from "recharts";
 
-const TaskDone: React.FC = () => {
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-backgroundAccent border border-border p-2 rounded-md shadow ">
-          <p className="label">{`${label} : ${payload[0].value}`}</p>
-        </div>
-      );
-    }
+const AreaChart = dynamic(
+  () => import("recharts").then((recharts) => recharts.AreaChart),
+  { ssr: false }
+);
 
-    return null;
-  };
+const TaskDone = () => {
+  const [interval, setInterval] = useState("daily");
+  const [data, setData] = useState<TaskCount[]>();
+
+  useEffect(() => {
+    const loadData = async () => {
+      const res = await actualCommonRequest({
+        route: API_ROUTES.PROJECT,
+        method: "GET",
+        url: `/api/task/task-count?interval=${interval}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.success) {
+        setData(res.taskDone);
+      }
+    };
+    loadData();
+  }, [interval]);
 
   return (
     <div className="w-full bg-backgroundAccent rounded-md shadow-lg p-3 mt-5">
       <div className="flex items-center justify-between gap-2 p-2 border-b mb-2">
         <h1 className="text-xl font-bold">Task Done</h1>
-        <div className="flex gap-2">
-          <p className="hover:underline cursor-pointer">Daily</p>
-          <p className="hover:underline cursor-pointer">Weekly</p>
-          <p className="hover:underline cursor-pointer">Monthly</p>
+        <div className="flex gap-4">
+          <p
+            className={`hover:underline cursor-pointer ${
+              interval === "daily" && "underline"
+            }`}
+            onClick={() => setInterval("daily")}
+          >
+            Daily
+          </p>
+          <p
+            className={`hover:underline cursor-pointer ${
+              interval === "weekly" && "underline"
+            }`}
+            onClick={() => setInterval("weekly")}
+          >
+            Weekly
+          </p>
+          <p
+            className={`hover:underline cursor-pointer ${
+              interval === "monthly" && "underline"
+            }`}
+            onClick={() => setInterval("monthly")}
+          >
+            Monthly
+          </p>
         </div>
       </div>
-      <div className="px-5">
-        <AreaChart width={900} height={350} data={data}>
-          <XAxis axisLine={false} tickLine={false} domain={["auto", "auto"]} />
+      <div className="">
+        <AreaChart width={1020} height={350} data={data}>
+          <XAxis
+            axisLine={false}
+            tickLine={false}
+            domain={["auto", "auto"]}
+            dataKey="date"
+          />
           <YAxis axisLine={false} tickLine={false} domain={["auto", "auto"]} />
           <Area
             type="monotone"
-            dataKey="uv"
+            dataKey="completed"
             stroke="#4787FA"
-            fill="url(#colorUv1)" // Shade color
+            fill="url(#colorUv1)"
             strokeWidth={3}
             dot={true}
           />
           <Area
             type="monotone"
-            dataKey="amt"
+            dataKey="planning"
             stroke="#1EA7FF"
-            fill="url(#colorUv2)" // Shade color
+            fill="url(#colorUv2)"
             strokeWidth={3}
             dot={true}
           />
-          <Tooltip
-            content={<CustomTooltip />}
-            cursor={{ fill: "transparent" }}
+          <Area
+            type="monotone"
+            dataKey="active"
+            stroke="#2eff70"
+            fill="url(#colorUv7)"
+            strokeWidth={3}
+            dot={true}
           />
+          <Area
+            type="monotone"
+            dataKey="backlog"
+            stroke="#ff5353"
+            fill="url(#colorUv6)"
+            strokeWidth={3}
+            dot={true}
+          />
+          <Tooltip content={<CustomTooltip />} cursor={false} />
+          <defs>
+            <linearGradient id="colorUv6" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#ff5353" stopOpacity={0.2} />
+              <stop offset="70%" stopColor="#ff5353" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <defs>
+            <linearGradient id="colorUv7" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#2eff70" stopOpacity={0.2} />
+              <stop offset="70%" stopColor="#2eff70" stopOpacity={0} />
+            </linearGradient>
+          </defs>
         </AreaChart>
       </div>
     </div>

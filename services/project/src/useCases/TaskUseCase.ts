@@ -3,6 +3,8 @@ import { TaskUseCaseInterface } from "../interface/task/TaskUseCaseInterface";
 import { TYPES } from "../constants/types/types";
 import { Task } from "../Entities/Task";
 import { SimpleFilter } from "../constants/props/SimpleFilter";
+import CountByDay from "../constants/types/CountByDay";
+import TaskCount from "../constants/types/TaskCount";
 
 @injectable()
 export class TaskUseCase implements TaskUseCaseInterface {
@@ -10,6 +12,18 @@ export class TaskUseCase implements TaskUseCaseInterface {
     @inject(TYPES.TaskAdapterInterface)
     private iTaskUseCase: TaskUseCaseInterface
   ) {}
+  getTaskCount(
+    organizationId: string,
+    interval: string
+  ): Promise<false | TaskCount[]> {
+    return this.iTaskUseCase.getTaskCount(organizationId, interval);
+  }
+  getNewTaskCount(organizationId: string): Promise<false | CountByDay[]> {
+    return this.iTaskUseCase.getNewTaskCount(organizationId);
+  }
+  getTaskCompletedCount(organizationId: string): Promise<false | CountByDay[]> {
+    return this.iTaskUseCase.getTaskCompletedCount(organizationId);
+  }
 
   getTaskLengthByProject(
     projectSlug: string,

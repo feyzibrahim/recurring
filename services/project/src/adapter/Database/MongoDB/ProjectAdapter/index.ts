@@ -8,9 +8,16 @@ import { deleteProject } from "./functions/deleteProject.adapter";
 import { appendProjectMember } from "./functions/appendProjectMember";
 import { updateProject } from "./functions/updateProject.adapter";
 import { getProjectsByManagerId } from "./functions/getProjectsByManagerId.adapter";
+import { getProjectsCompletedCount } from "./functions/getProjectsCompletedCount.adapter";
+import ProjectCountByDay from "../../../../constants/types/CountByDay";
 
 @injectable()
 export class ProjectAdapter implements ProjectAdapterInterface {
+  getProjectsCompletedCount(
+    organizationId: string
+  ): Promise<ProjectCountByDay[] | false> {
+    return getProjectsCompletedCount(organizationId);
+  }
   async getProject(slug: string): Promise<boolean | Project> {
     return getProject(slug);
   }

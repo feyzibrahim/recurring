@@ -1,4 +1,5 @@
 import { Project } from "../../Entities/Project";
+import CountByDay from "../../constants/types/CountByDay";
 
 export interface ProjectAdapterInterface {
   getProject(slug: string): Promise<Project | boolean>;
@@ -12,4 +13,7 @@ export interface ProjectAdapterInterface {
     projectId: string,
     userId: string
   ): Promise<Project | boolean>;
+  getProjectsCompletedCount(
+    organizationId: string
+  ): Promise<CountByDay[] | false>;
 }

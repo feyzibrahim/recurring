@@ -2,6 +2,7 @@ import { inject, injectable } from "inversify";
 import { ProjectUseCaseInterface } from "../interface/project/ProjectUseCaseInterface";
 import { TYPES } from "../constants/types/types";
 import { Project } from "../Entities/Project";
+import ProjectCountByDay from "../constants/types/CountByDay";
 
 @injectable()
 export class ProjectUseCase implements ProjectUseCaseInterface {
@@ -42,5 +43,10 @@ export class ProjectUseCase implements ProjectUseCaseInterface {
     userId: string
   ): Promise<boolean | Project> {
     return this.iProjectUseCase.appendProjectMember(projectId, userId);
+  }
+  getProjectsCompletedCount(
+    organizationId: string
+  ): Promise<ProjectCountByDay[] | false> {
+    return this.iProjectUseCase.getProjectsCompletedCount(organizationId);
   }
 }

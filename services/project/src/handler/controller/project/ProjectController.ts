@@ -14,6 +14,7 @@ import { getProject } from "./functions/getProject";
 import { updateProject } from "./functions/updateProject";
 import { getProjects } from "./functions/getProjects";
 import { deleteProject } from "./functions/deleteProject";
+import { getProjectsCompletedCount } from "./functions/getProjectsCompletedCount";
 
 @controller("/api/project")
 export class ProjectController {
@@ -25,6 +26,11 @@ export class ProjectController {
   @httpGet("/")
   async getProjects(req: Request, res: Response) {
     await getProjects(req, res, this.iProjectUseCase);
+  }
+
+  @httpGet("/completed-count")
+  async getProjectsCompletedCount(req: Request, res: Response) {
+    await getProjectsCompletedCount(req, res, this.iProjectUseCase);
   }
 
   @httpGet("/:slug")

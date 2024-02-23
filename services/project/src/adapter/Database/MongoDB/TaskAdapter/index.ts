@@ -11,9 +11,31 @@ import { getTasksByUserId } from "./functions/getTasksByUserId.adapter";
 import { SimpleFilter } from "../../../../constants/props/SimpleFilter";
 import { getTaskLength } from "./functions/getTaskLength.adapter";
 import { getTaskLengthByProject } from "./functions/getTaskLengthByProject.adapter";
+import CountByDay from "../../../../constants/types/CountByDay";
+import { getTaskCompletedCount } from "./functions/getTaskCompletedCount.adapter";
+import { getNewTaskCount } from "./functions/getNewTaskCount.adapter";
+import { getTaskCount } from "./functions/getTaskCount.adapter";
+import TaskCount from "../../../../constants/types/TaskCount";
 
 @injectable()
 export class TaskAdapter implements TaskAdapterInterface {
+  async getTaskCount(
+    organizationId: string,
+    interval: string
+  ): Promise<false | TaskCount[]> {
+    return getTaskCount(organizationId, interval);
+  }
+
+  async getNewTaskCount(organizationId: string): Promise<false | CountByDay[]> {
+    return getNewTaskCount(organizationId);
+  }
+
+  async getTaskCompletedCount(
+    organizationId: string
+  ): Promise<false | CountByDay[]> {
+    return getTaskCompletedCount(organizationId);
+  }
+
   async getTask(slug: string): Promise<boolean | Task> {
     return getTask(slug);
   }
