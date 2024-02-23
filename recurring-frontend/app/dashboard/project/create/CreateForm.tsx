@@ -52,7 +52,6 @@ const CreateForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
-    console.log("file: CreateForm.tsx:63 -> onSubmit -> values", values);
     dispatch(createProject(values)).then(() => {
       router.back();
     });

@@ -27,7 +27,7 @@ const ChatHeader = ({ username }: { username: string }) => {
           setTyping(false);
         }
       });
-  }, [socket]);
+  }, [socket, user?._id]);
 
   useEffect(() => {
     socket &&

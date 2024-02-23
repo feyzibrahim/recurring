@@ -34,6 +34,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const ProjectDetails = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
+  console.log(
+    "file: ProjectDetails.tsx:37 -> ProjectDetails -> project",
+    project
+  );
   const [openArchiveConfirmModal, setOpenArchiveConfirmModal] = useState(false);
   const [archiveData, setArchiveData] = useState<Record<string, any> | null>(
     null
@@ -110,27 +114,30 @@ const ProjectDetails = ({ slug }: { slug: string }) => {
             <p className="py-2">Members</p>
           </Label>
           <div className="mb-4 flex flex-wrap">
-            {project.members.map((member, index) => (
-              <div
-                className={`w-10 h-10 rounded-full overflow-clip border-4 ${
-                  index > 0 && `-ml-2`
-                }`}
-                key={index}
-              >
-                <Image
-                  src={
-                    (member &&
-                      typeof member !== "string" &&
-                      (member.profileImageURL as string)) ||
-                    UserAvatar
-                  }
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                  width={100}
-                  height={100}
-                />
-              </div>
-            ))}
+            {project &&
+              project.members &&
+              typeof project.members !== "string" &&
+              project.members.map((member, index) => (
+                <div
+                  className={`w-10 h-10 rounded-full overflow-clip border-4 ${
+                    index > 0 && `-ml-2`
+                  }`}
+                  key={index}
+                >
+                  <Image
+                    src={
+                      (member &&
+                        typeof member !== "string" &&
+                        (member.profileImageURL as string)) ||
+                      UserAvatar
+                    }
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                    width={100}
+                    height={100}
+                  />
+                </div>
+              ))}
           </div>
         </div>
       )}

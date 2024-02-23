@@ -12,12 +12,15 @@ import { sendVerificationLink } from "../../../../util/nodemailer/sendVerificati
 import cookieConfig from "../../../../constants/cookieConfig";
 import { OrganizationUseCaseInterface } from "../../../../interface/organization/OrganizationUseCaseInterface";
 import { Organization } from "../../../../Entities/Organization";
+import { QUEUES } from "../../../../constants/types/queue";
+import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 
 export const signup = async (
   req: Request,
   res: Response,
   iAuthUseCase: AuthUseCaseInterface,
-  iOrgUseCase: OrganizationUseCaseInterface
+  iOrgUseCase: OrganizationUseCaseInterface,
+  iRabbitMQUseCase: RabbitMQUseCaseInterface
 ) => {
   const userData: any = req.body;
 
@@ -36,6 +39,12 @@ export const signup = async (
     }
 
     await sendVerificationLink(newUser as User);
+    iRabbitMQUseCase.sendDataToQueue(QUEUES.EMPLOYEECREATION, newUser);
+    iRabbitMQUseCase.sendDataToQueue(QUEUES.PROJECT_USER_CREATION, newUser);
+    iRabbitMQUseCase.sendDataToQueue(
+      QUEUES.CHAT_MEETING_USER_CREATION,
+      newUser
+    );
 
     let tempUser = newUser as User;
 

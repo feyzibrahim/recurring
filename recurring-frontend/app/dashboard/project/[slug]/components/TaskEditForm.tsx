@@ -24,6 +24,7 @@ import FormInputCustom from "@/components/common/FormInputCustom";
 import { EmployeeList } from "@/components/common/task/EmployeeList";
 import DatePickerNoLimit from "@/components/custom/DatePickerNoLimit";
 import { format } from "date-fns";
+import DatePickerLimitedString from "@/components/custom/DatePickerLimitedString";
 
 const formSchema = z.object({
   title: z
@@ -117,7 +118,7 @@ export default function TaskEditForm({
             control={form.control}
             name="startDate"
             render={({ field }) => (
-              <DatePickerNoLimit title="Starting Date" field={field} />
+              <DatePickerLimitedString title="Starting Date" field={field} />
             )}
           />
         </div>
@@ -126,7 +127,7 @@ export default function TaskEditForm({
             control={form.control}
             name="dueDate"
             render={({ field }) => (
-              <DatePickerNoLimit title="Due Date" field={field} />
+              <DatePickerLimitedString title="Due Date" field={field} />
             )}
           />
         </div>

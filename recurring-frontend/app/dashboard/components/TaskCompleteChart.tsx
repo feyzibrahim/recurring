@@ -20,38 +20,44 @@ const TaskCompleteChart = ({ data }: { data: CountByDay[] }) => {
         </div>
         <p>Task Completed</p>
       </div>
-      <div className="chart-box-content">
-        <AreaChart width={230} height={100} data={data}>
-          <XAxis
-            axisLine={false}
-            tickLine={false}
-            dataKey="date"
-            tick={false}
-          />
-          <defs>
-            <linearGradient id="colorUv1" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#4787FA" stopOpacity={0.2} />
-              <stop offset="70%" stopColor="#4787FA" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <Area
-            type="monotone"
-            dataKey="count"
-            stroke="#4787FA"
-            fill="url(#colorUv1)"
-            dot={false}
-            strokeWidth={3}
-          />
-          <Tooltip
-            content={<CustomTooltip />}
-            cursor={{ fill: "transparent" }}
-          />
-        </AreaChart>
-        <div className="text-xs">
-          <p>{countTotal(data)}+ more</p>
-          <p>from last month</p>
+      {data && data.length > 0 ? (
+        <div className="chart-box-content">
+          <AreaChart width={230} height={100} data={data}>
+            <XAxis
+              axisLine={false}
+              tickLine={false}
+              dataKey="date"
+              tick={false}
+            />
+            <defs>
+              <linearGradient id="colorUv1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#4787FA" stopOpacity={0.2} />
+                <stop offset="70%" stopColor="#4787FA" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <Area
+              type="monotone"
+              dataKey="count"
+              stroke="#4787FA"
+              fill="url(#colorUv1)"
+              dot={false}
+              strokeWidth={3}
+            />
+            <Tooltip
+              content={<CustomTooltip />}
+              cursor={{ fill: "transparent" }}
+            />
+          </AreaChart>
+          <div className="text-xs">
+            <p>{countTotal(data)}+ more</p>
+            <p>from last month</p>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex items-center justify-center h-24">
+          <p>No data to show Yet!</p>
+        </div>
+      )}
     </div>
   );
 };

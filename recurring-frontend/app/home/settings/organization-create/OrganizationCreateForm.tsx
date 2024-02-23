@@ -8,8 +8,9 @@ import { FiUser } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
-import { commonRequest } from "@/api/client";
 import { useState } from "react";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const formSchema = z.object({
   name: z
@@ -94,9 +95,10 @@ export default function OrganizationCreateForm({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    let res = await commonRequest({
+    let res = await actualCommonRequest({
+      route: API_ROUTES.AUTH,
       method: "POST",
-      url: "/user/organization/",
+      url: "/api/user/organization/",
       data: { ...values },
       headers: {
         "Content-Type": "application/json",

@@ -7,13 +7,14 @@ import { Form, FormField, FormLabel } from "@/components/ui/form";
 import { FiUser } from "react-icons/fi";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
-import { commonRequest } from "@/api/client";
 import { useState } from "react";
 import FormInputCustom from "@/components/common/FormInputCustom";
 import { BiGlobe } from "react-icons/bi";
 import { CountryList } from "@/components/common/CountryList";
 import { StateList } from "@/components/common/StateList";
 import { CityList } from "@/components/common/CityList";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const formSchema = z.object({
   name: z
@@ -125,9 +126,10 @@ export default function OrganizationUpdateForm({
       zipCode: values.zipCode,
     };
 
-    let res = await commonRequest({
+    let res = await actualCommonRequest({
+      route: API_ROUTES.AUTH,
       method: "PATCH",
-      url: "/user/organization/",
+      url: "/api/user/organization/",
       data: { ...values, address },
       headers: {
         "Content-Type": "application/json",

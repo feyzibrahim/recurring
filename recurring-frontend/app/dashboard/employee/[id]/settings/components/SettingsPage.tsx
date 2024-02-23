@@ -68,7 +68,8 @@ const SettingsPage = ({ id }: { id: string }) => {
             <DialogHeader>
               <DialogTitle>Confirm Termination</DialogTitle>
               <DialogDescription>
-                This action can't be undone are you sure about the termination?
+                This action can&apos;t be undone are you sure about the
+                termination?
               </DialogDescription>
             </DialogHeader>
             <TerminationForm setIsModalOpen={setIsModalOpen} id={id} />

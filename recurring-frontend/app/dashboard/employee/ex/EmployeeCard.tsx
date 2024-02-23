@@ -11,7 +11,7 @@ const EmployeeCard = ({ employee }: { employee: EmployeeTypes }) => {
   return (
     <div
       className="bg-backgroundAccent p-5 rounded-lg cursor-pointer hover:opacity-80"
-      onClick={() => router.push(`employee/${employee._id}`)}
+      onClick={() => router.push(`/dashboard/employee/${employee._id}`)}
     >
       <div className="text-center py-5">
         <div className="w-32 h-32 mx-auto rounded-full overflow-clip">

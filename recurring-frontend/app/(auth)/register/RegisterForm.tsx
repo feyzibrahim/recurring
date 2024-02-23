@@ -9,7 +9,8 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { commonRequest } from "@/api/client";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -57,9 +58,10 @@ export default function RegisterForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    let res = await commonRequest({
+    let res = await actualCommonRequest({
+      route: API_ROUTES.AUTH,
       method: "POST",
-      url: "/auth/register",
+      url: "/api/auth/register",
       data: { ...values },
       headers: {
         "Content-Type": "application/json",

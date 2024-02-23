@@ -8,8 +8,9 @@ import { FiMail } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
-import { commonRequest } from "@/api/client";
 import { useState } from "react";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -43,9 +44,10 @@ export default function EmailChangeForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    let res = await commonRequest({
+    let res = await actualCommonRequest({
+      route: API_ROUTES.AUTH,
       method: "POST",
-      url: "/auth/login",
+      url: "/api/auth/login",
       data: { ...values },
       headers: {
         "Content-Type": "application/json",

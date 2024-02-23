@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AttendanceUseCaseInterface } from "../../../../interface/attendance/AttendanceUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import simpleQueryFilter from "../../../../util/filters/simpleQueryFilter";
 
 export const getAttendance = async (
   req: Request,
@@ -12,9 +13,13 @@ export const getAttendance = async (
 
     const data = validateJwt(access_token);
 
+    const { filter, limit, skip } = simpleQueryFilter(req);
+
     let attendance = await iAttendanceUseCase.getAttendanceByUserId(
       data.user,
-      {}
+      filter,
+      limit,
+      skip
     );
     if (!attendance) {
       throw Error("No attendance found");

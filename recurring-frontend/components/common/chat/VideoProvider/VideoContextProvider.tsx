@@ -1,6 +1,13 @@
 "use client";
 import { EmployeeTypes } from "@/constants/Types";
-import { ReactNode, createContext, useEffect, useState, useRef } from "react";
+import {
+  ReactNode,
+  createContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 import { Socket } from "socket.io-client";
 import Peer from "simple-peer";
 import { useRouter } from "next/navigation";
@@ -60,7 +67,7 @@ const VideoContextProvider = ({
   const userVideo = useRef<any>();
   const connectionRef = useRef<any>();
 
-  const cleanupStream = () => {
+  const cleanupStream = useCallback(() => {
     if (stream) {
       const tracks = stream.getTracks();
       tracks.forEach((ele) => {
@@ -68,7 +75,7 @@ const VideoContextProvider = ({
         router.back();
       });
     }
-  };
+  }, [stream, router]);
 
   useEffect(() => {
     navigator.mediaDevices
@@ -84,7 +91,7 @@ const VideoContextProvider = ({
       });
 
     return cleanupStream;
-  }, []);
+  }, [socket, cleanupStream]);
 
   const answerCall = () => {
     setCallAccepted(true);

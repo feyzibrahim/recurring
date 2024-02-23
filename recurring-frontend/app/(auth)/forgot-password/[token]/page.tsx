@@ -3,17 +3,19 @@ import Head from "next/head";
 import RecurringVertical from "@/components/common/RecurringVertical";
 import PasswordResetForm from "./PasswordResetForm";
 import Footer from "@/components/common/Footer";
-import { commonRequest } from "@/api/client";
 import { redirect } from "next/navigation";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const PasswordResetChangePage = async ({
   params,
 }: {
   params: { token: string };
 }) => {
-  const res = await commonRequest({
+  const res = await actualCommonRequest({
+    route: API_ROUTES.AUTH,
     method: "GET",
-    url: `/auth/verify-password-link/${params.token}`,
+    url: `/api/auth/verify-password-link/${params.token}`,
     headers: {
       "Content-Type": "application/json",
     },

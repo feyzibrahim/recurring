@@ -65,7 +65,7 @@ const TaskDone = () => {
           </p>
         </div>
       </div>
-      <div className="">
+      {data && data.length > 0 ? (
         <AreaChart width={1020} height={350} data={data}>
           <XAxis
             axisLine={false}
@@ -120,7 +120,11 @@ const TaskDone = () => {
             </linearGradient>
           </defs>
         </AreaChart>
-      </div>
+      ) : (
+        <div className="flex items-center justify-center h-24">
+          <p>No data to show Yet!</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -15,11 +15,12 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { AiOutlineLock } from "react-icons/ai";
 import { useState } from "react";
-import { commonRequest } from "@/api/client";
 import { Form, FormField } from "@/components/ui/form";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -58,9 +59,10 @@ const PasswordForm = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setError("");
     setLoading(true);
-    let res = await commonRequest({
+    let res = await actualCommonRequest({
+      route: API_ROUTES.AUTH,
       method: "PATCH",
-      url: "/user/change-password",
+      url: "/api/user/change-password",
       data: { ...values },
       headers: {
         "Content-Type": "application/json",

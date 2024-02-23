@@ -8,9 +8,10 @@ import { FiUser } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
-import { commonRequest } from "@/api/client";
 import { useState } from "react";
 import DatePicker from "@/components/custom/DatePicker";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const formSchema = z.object({
   firstName: z
@@ -71,9 +72,10 @@ export default function ProfileChangeForm({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
-    let res = await commonRequest({
+    let res = await actualCommonRequest({
+      route: API_ROUTES.AUTH,
       method: "PATCH",
-      url: "/user/update-profile",
+      url: "/api/user/update-profile",
       data: { ...values },
       headers: {
         "Content-Type": "application/json",

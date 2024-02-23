@@ -20,7 +20,7 @@ const Chat = ({ username }: { username: string }) => {
     if (chats) {
       dispatch(setActiveChatWithUserName({ username }));
     }
-  }, [username, chats]);
+  }, [username, chats, dispatch]);
 
   return (
     <>

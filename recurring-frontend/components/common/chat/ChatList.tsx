@@ -13,6 +13,7 @@ import {
   socketNewChatUpdate,
   updateOnlineStatus,
 } from "@/app/lib/features/chat/chatSlice";
+import EmptyEmployee from "@/components/empty/EmptyEmployee";
 
 const ChatList = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ const ChatList = () => {
       socket.on("get-online-users", (data) => {
         dispatch(updateOnlineStatus({ onlineList: data, userId: user?._id }));
       });
-  }, [socket, dispatch]);
+  }, [socket, dispatch, user?._id]);
 
   useEffect(() => {
     dispatch(getChats({ filter: "" }));
@@ -44,7 +45,7 @@ const ChatList = () => {
       </div>
       <InputWithIcon placeholder="search..." icon={<FiSearch />} />
       <ScrollArea className="h-[450px] mt-2">
-        {chats &&
+        {chats && chats.length > 0 ? (
           chats.map((chat, index) => {
             const participant = chat.participants.find(
               (part) => part.username !== user?.username
@@ -56,7 +57,15 @@ const ChatList = () => {
                 online={chat.online}
               />
             );
-          })}
+          })
+        ) : (
+          <div className="flex flex-col items-center justify-center h-[450px]">
+            <EmptyEmployee />
+            <p>No chats were created</p>
+            <p>Please create one</p>
+            <SeeAllButton />
+          </div>
+        )}
       </ScrollArea>
     </div>
   );

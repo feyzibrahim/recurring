@@ -1,5 +1,6 @@
 "use client";
-import { commonRequest } from "@/api/client";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 import { GoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
 
@@ -7,9 +8,10 @@ const GoogleAuth = () => {
   const router = useRouter();
 
   const googleLogin = async (values: any) => {
-    const res = await commonRequest({
+    const res = await actualCommonRequest({
+      route: API_ROUTES.AUTH,
       method: "POST",
-      url: "/auth/google",
+      url: "/api/auth/google",
       data: { ...values },
       headers: {
         "Content-Type": "application/json",

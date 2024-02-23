@@ -12,6 +12,7 @@ import { verifyPasswordReset } from "./functions/verifyPasswordReset.controller"
 import { resetPassword } from "./functions/resetPassword.controller";
 import { checkCredentials } from "./functions/checkCredentials.controller";
 import { OrganizationUseCaseInterface } from "../../../interface/organization/OrganizationUseCaseInterface";
+import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 
 @controller("/api/auth")
 export class AuthController {
@@ -19,7 +20,9 @@ export class AuthController {
     @inject(TYPES.AuthUseCaseInterface)
     private iAuthUseCase: AuthUseCaseInterface,
     @inject(TYPES.OrganizationUseCaseInterface)
-    private iOrgUseCase: OrganizationUseCaseInterface
+    private iOrgUseCase: OrganizationUseCaseInterface,
+    @inject(TYPES.RabbitMQUseCaseInterface)
+    private iRabbitMQUseCase: RabbitMQUseCaseInterface
   ) {}
 
   // User Login Function
@@ -31,7 +34,13 @@ export class AuthController {
   // User Signup Function
   @httpPost("/register")
   async signup(req: Request, res: Response) {
-    await signup(req, res, this.iAuthUseCase, this.iOrgUseCase);
+    await signup(
+      req,
+      res,
+      this.iAuthUseCase,
+      this.iOrgUseCase,
+      this.iRabbitMQUseCase
+    );
   }
 
   // Google Sign Up

@@ -10,17 +10,12 @@ import InputWithIcon from "@/components/custom/InputWithIcon";
 import { FiSearch } from "react-icons/fi";
 import { Socket, io } from "socket.io-client";
 import { UserContext } from "../UserProvider/UserContextProvider";
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
 
 export default function MembersList({
   setIsModalOpen,
 }: {
   setIsModalOpen: any;
 }) {
-  // const pathName = usePathname();
-  // let path = pathName.split("/");
-  // let curr = path[1];
   const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
 

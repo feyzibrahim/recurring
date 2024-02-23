@@ -1,10 +1,12 @@
-import { commonRequest } from "@/api/server";
+import { actualServerCommonRequest } from "@/api/actual_server";
+import { API_ROUTES } from "@/lib/routes";
 import { redirect } from "next/navigation";
 
 export const checkUserWithoutRedirectInHome = async () => {
-  const data = await commonRequest({
+  const data = await actualServerCommonRequest({
+    route: API_ROUTES.AUTH,
     method: "GET",
-    url: "/user",
+    url: "/api/user",
     headers: {
       "Content-Type": "application/json",
     },
