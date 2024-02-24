@@ -62,7 +62,7 @@ const PasswordForm = () => {
     let res = await actualCommonRequest({
       route: API_ROUTES.AUTH,
       method: "PATCH",
-      url: "/user/change-password",
+      url: "/api/user/change-password",
       data: { ...values },
       headers: {
         "Content-Type": "application/json",

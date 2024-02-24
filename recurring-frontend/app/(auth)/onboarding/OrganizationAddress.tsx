@@ -99,7 +99,7 @@ const OrganizationAddress = () => {
 
   return (
     <div>
-      <h2 className="text-xl font-bold mb-4">Step 4: Organization Address</h2>
+      <h2 className="text-xl font-bold">Step 4: Organization Address</h2>
       <p>Explore the features and functionalities of our app.</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -115,46 +115,45 @@ const OrganizationAddress = () => {
               />
             )}
           />
-          <div className="flex gap-2">
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <>
-                  <FormLabel>Country</FormLabel>
-                  <CountryList field={field} setCountryISO={setCountryISO} />
-                </>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="state"
-              render={({ field }) => (
-                <>
-                  <FormLabel>State</FormLabel>
-                  <StateList
-                    field={field}
-                    setStateISO={setStateISO}
-                    countryISO={countryISO}
-                  />
-                </>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <>
-                  <FormLabel>City</FormLabel>
-                  <CityList
-                    field={field}
-                    stateISO={stateISO}
-                    countryISO={countryISO}
-                  />
-                </>
-              )}
-            />
-          </div>
+
+          <FormField
+            control={form.control}
+            name="country"
+            render={({ field }) => (
+              <>
+                <FormLabel>Country</FormLabel>
+                <CountryList field={field} setCountryISO={setCountryISO} />
+              </>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="state"
+            render={({ field }) => (
+              <>
+                <FormLabel>State</FormLabel>
+                <StateList
+                  field={field}
+                  setStateISO={setStateISO}
+                  countryISO={countryISO}
+                />
+              </>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <>
+                <FormLabel>City</FormLabel>
+                <CityList
+                  field={field}
+                  stateISO={stateISO}
+                  countryISO={countryISO}
+                />
+              </>
+            )}
+          />
           <FormField
             control={form.control}
             name="zipCode"

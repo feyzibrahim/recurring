@@ -75,7 +75,7 @@ export default function ProfileChangeForm({
     let res = await actualCommonRequest({
       route: API_ROUTES.AUTH,
       method: "PATCH",
-      url: "/user/update-profile",
+      url: "/api/user/update-profile",
       data: { ...values },
       headers: {
         "Content-Type": "application/json",

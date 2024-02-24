@@ -53,6 +53,7 @@ export default function LoginForm() {
         "Content-Type": "application/json",
       },
     });
+    console.log("file: LoginForm.tsx:76 -> onSubmit -> res", res);
 
     if (!res.success) {
       setError(res.error);

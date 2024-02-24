@@ -5,6 +5,7 @@ import { API_ROUTES } from "./lib/routes";
 export async function middleware(req: NextRequest) {
   try {
     const access_token = req.cookies.get("access_token")?.value;
+
     const refresh_token = req.cookies.get("refresh_token")?.value;
 
     const data = await fetch(`${API_ROUTES.AUTH}/api/user`, {

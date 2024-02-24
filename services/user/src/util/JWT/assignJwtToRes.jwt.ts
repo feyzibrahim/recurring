@@ -1,12 +1,7 @@
 import { Response } from "express";
 import { createJwtAccessToken, createJwtRefreshToken } from "./create.jwt";
 import { User } from "../../Entities/User";
-
-const cookieConfig = {
-  secure: true,
-  httpOnly: true,
-  maxAge: 1000 * 60 * 60 * 24 * 30,
-};
+import cookieConfig from "../../constants/cookieConfig";
 
 const assignJwtToRes = (res: Response, user: User) => {
   // Setting JWT Tokens

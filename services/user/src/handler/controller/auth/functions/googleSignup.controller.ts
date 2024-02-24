@@ -8,11 +8,14 @@ import {
   createJwtRefreshToken,
 } from "@recurring/shared_library";
 import cookieConfig from "../../../../constants/cookieConfig";
+import { QUEUES } from "../../../../constants/types/queue";
+import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 
 export const googleSignup = async (
   req: Request,
   res: Response,
-  iAuthUseCase: AuthUseCaseInterface
+  iAuthUseCase: AuthUseCaseInterface,
+  iRabbitMQUseCase: RabbitMQUseCaseInterface
 ) => {
   const body: any = req.body;
 
@@ -32,6 +35,10 @@ export const googleSignup = async (
     if (!user) {
       user = await iAuthUseCase.signup(temp as User);
     }
+
+    iRabbitMQUseCase.sendDataToQueue(QUEUES.EMPLOYEECREATION, user);
+    iRabbitMQUseCase.sendDataToQueue(QUEUES.PROJECT_USER_CREATION, user);
+    iRabbitMQUseCase.sendDataToQueue(QUEUES.CHAT_MEETING_USER_CREATION, user);
 
     let tempUser = user as User;
 

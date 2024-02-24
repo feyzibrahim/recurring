@@ -46,7 +46,7 @@ export class AuthController {
   // Google Sign Up
   @httpPost("/google")
   async googleSignup(req: Request, res: Response) {
-    await googleSignup(req, res, this.iAuthUseCase);
+    await googleSignup(req, res, this.iAuthUseCase, this.iRabbitMQUseCase);
   }
   // Forget Password Link Sent
   @httpPost("/forgot-password")
@@ -57,7 +57,7 @@ export class AuthController {
   // Verify Email
   @httpGet("/verify-email/:token")
   async verifyEmail(req: Request, res: Response) {
-    await verifyEmail(req, res, this.iAuthUseCase);
+    await verifyEmail(req, res, this.iAuthUseCase, this.iRabbitMQUseCase);
   }
 
   // Verify Password Link

@@ -54,8 +54,4 @@ export const login = async (
   } catch (error: any) {
     res.status(400).json({ success: false, error: error.message });
   }
-  console.log(
-    "file: login.controller.ts:59 -> process.env.REFRESH_SECRET",
-    process.env.REFRESH_SECRET
-  );
 };

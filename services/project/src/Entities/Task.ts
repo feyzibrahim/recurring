@@ -14,7 +14,12 @@ export class Task {
     public assignee: string | User,
     public description?: string,
     public tags?: [string],
-    public subTasks?: [{ title: string; status: string }],
+    public subTasks?: [
+      {
+        title: string;
+        status: "planning" | "active" | "completed" | "archive" | "backlog";
+      }
+    ],
     public notes?: [string]
   ) {}
 }

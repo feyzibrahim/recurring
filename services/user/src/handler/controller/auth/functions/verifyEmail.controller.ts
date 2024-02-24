@@ -7,17 +7,15 @@ import {
   createJwtAccessToken,
   createJwtRefreshToken,
 } from "@recurring/shared_library";
-
-const cookieConfig = {
-  secure: true,
-  httpOnly: true,
-  maxAge: 1000 * 60 * 60 * 24 * 30,
-};
+import { QUEUES } from "../../../../constants/types/queue";
+import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
+import cookieConfig from "../../../../constants/cookieConfig";
 
 export const verifyEmail = async (
   req: Request,
   res: Response,
-  iAuthUseCase: AuthUseCaseInterface
+  iAuthUseCase: AuthUseCaseInterface,
+  iRabbitMQUseCase: RabbitMQUseCaseInterface
 ) => {
   try {
     const { token } = req.params;
@@ -38,6 +36,10 @@ export const verifyEmail = async (
     }
     let temp = user as User;
     user = await iAuthUseCase.updateUserStatusAfterEmailValidation(temp._id);
+
+    // iRabbitMQUseCase.sendDataToQueue(QUEUES.EMPLOYEECREATION, user);
+    iRabbitMQUseCase.sendDataToQueue(QUEUES.PROJECT_USER_CREATION, user);
+    iRabbitMQUseCase.sendDataToQueue(QUEUES.CHAT_MEETING_USER_CREATION, user);
 
     // Setting JWT Tokens
     const payload: JWTPayload = {

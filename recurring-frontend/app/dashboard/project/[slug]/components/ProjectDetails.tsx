@@ -34,10 +34,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const ProjectDetails = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
-  console.log(
-    "file: ProjectDetails.tsx:37 -> ProjectDetails -> project",
-    project
-  );
+
   const [openArchiveConfirmModal, setOpenArchiveConfirmModal] = useState(false);
   const [archiveData, setArchiveData] = useState<Record<string, any> | null>(
     null

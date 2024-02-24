@@ -98,7 +98,7 @@ export default function OrganizationCreateForm({
     let res = await actualCommonRequest({
       route: API_ROUTES.AUTH,
       method: "POST",
-      url: "/user/organization/",
+      url: "/api/user/organization/",
       data: { ...values },
       headers: {
         "Content-Type": "application/json",

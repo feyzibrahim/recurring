@@ -6,7 +6,7 @@ export const checkUser = async () => {
   const data = await actualServerCommonRequest({
     route: API_ROUTES.AUTH,
     method: "GET",
-    url: "/user",
+    url: "/api/user",
     headers: {
       "Content-Type": "application/json",
     },

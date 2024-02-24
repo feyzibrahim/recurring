@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 import { RabbitMQService } from "./infra/rabbitmq/rabbitmq.service";
 import { TYPES } from "./constants/types/types";
 import { QUEUES } from "./constants/types/queue";
+import morgan from "morgan";
 
 const server = new InversifyExpressServer(container);
 
@@ -17,6 +18,7 @@ server.setConfig(async (app) => {
   const url = process.env.FRONTEND_URL ?? "";
 
   app.use(cookieParser());
+  app.use(morgan("dev"));
   app.use(express.json());
   app.use(
     cors({

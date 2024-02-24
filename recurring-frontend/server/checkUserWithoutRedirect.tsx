@@ -6,7 +6,7 @@ export const checkUserWithoutRedirect = async () => {
   const data = await actualServerCommonRequest({
     route: API_ROUTES.AUTH,
     method: "GET",
-    url: "api/user",
+    url: "/api/user",
     headers: {
       "Content-Type": "application/json",
     },

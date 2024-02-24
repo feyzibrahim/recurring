@@ -69,7 +69,13 @@ interface TaskTypes {
   assignee: string | EmployeeTypes;
   description: string;
   tags: [];
-  subTasks: [TaskTypes];
+  subTasks: [SubTaskTypes];
+}
+
+interface SubTaskTypes {
+  _id: string;
+  title: string;
+  status: "planning" | "active" | "completed" | "archive" | "backlog";
 }
 
 interface LeaveTypes {
@@ -135,4 +141,5 @@ export type {
   MeetingTypes,
   CountByDay,
   TaskCount,
+  SubTaskTypes,
 };
