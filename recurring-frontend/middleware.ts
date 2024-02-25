@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { API_ROUTES } from "./lib/routes";
+import { cookies } from "next/headers";
 
-export async function middleware(req: NextRequest) {
+export async function middleware() {
   try {
-    const access_token = req.cookies.get("access_token")?.value;
+    const cookieObj = cookies();
 
-    const refresh_token = req.cookies.get("refresh_token")?.value;
+    const access_token = cookieObj.get("access_token");
+
+    const refresh_token = cookieObj.get("refresh_token");
 
     const data = await fetch(`${API_ROUTES.AUTH}/api/user`, {
       method: "GET",

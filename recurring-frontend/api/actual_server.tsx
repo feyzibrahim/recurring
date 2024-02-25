@@ -19,7 +19,6 @@ export const actualServerCommonRequest = async ({
   headers,
   route,
 }: RequestProps): Promise<any> => {
-  
   const apiInstance = axios.create({
     baseURL: route,
   });
@@ -29,6 +28,7 @@ export const actualServerCommonRequest = async ({
   });
 
   const cookieData = cookies().get("access_token");
+
   let requestConfig: RequestProps = {
     method,
     url,

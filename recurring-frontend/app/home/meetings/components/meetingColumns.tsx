@@ -2,6 +2,7 @@ import { EmployeeTypes, MeetingTypes } from "@/constants/Types";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { format, isAfter, isBefore } from "date-fns";
+import StatusDiv from "@/components/common/StatusDiv";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import AvatarFallbackImage from "@/components/common/AvatarFallbackImage";
 import Link from "next/link";
@@ -164,15 +165,11 @@ export const columns: ColumnDef<MeetingTypes>[] = [
       ) ? (
         <Link href={`meetings/${row.getValue("slug")}`}>
           <Button variant="link" className="border border-primary">
-            Start
+            Join
           </Button>
         </Link>
-      ) : isExpired(row.getValue("endTime"), row.getValue("date")) ? (
-        <p className="text-xs text-foregroundAccent">Expired</p>
       ) : (
-        <Link href={`meetings/edit/${row.getValue("slug")}`}>
-          <FiEdit className="hover:text-foregroundAccent cursor-pointer" />
-        </Link>
+        <p className="text-xs text-foregroundAccent">Expired</p>
       ),
   },
 ];

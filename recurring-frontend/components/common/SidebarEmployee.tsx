@@ -7,7 +7,7 @@ import { AiOutlineDashboard } from "react-icons/ai";
 import { RiDashboardLine } from "react-icons/ri";
 import { CgTimelapse } from "react-icons/cg";
 import { FaRegAddressCard, FaTasks } from "react-icons/fa";
-import { BiChat, BiCreditCard, BiLogOut } from "react-icons/bi";
+import { BiCalendar, BiChat, BiCreditCard, BiLogOut } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -22,6 +22,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { logout } from "@/client/logout";
+import { ToolTipWrapper } from "../custom/ToolTipWrapper";
 
 const EmployeeSidebar = () => {
   const pathName = usePathname();
@@ -81,15 +82,17 @@ const EmployeeSidebar = () => {
             <FaRegAddressCard className="m-1" />
           </div>
         </Link>
-        <Link href={"/home/billing"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/home/billing" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <BiCreditCard className="m-1" />
-          </div>
-        </Link>
+        <ToolTipWrapper title="Meetings">
+          <Link href={"/home/meetings"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName.includes("/meetings") ? " bg-primary text-white" : ""
+              }`}
+            >
+              <BiCalendar className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
 
         <Link href={"/home/chat"} className="hover-text text-xl">
           <div

@@ -23,11 +23,6 @@ const MeetingList = () => {
           columns={columns}
           data={meetings}
           pageTitle="Meetings"
-          newButton={
-            <Link href="meetings/create">
-              <Button>New Meeting</Button>
-            </Link>
-          }
           searchField="title"
         />
       ) : (
