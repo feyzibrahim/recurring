@@ -70,12 +70,20 @@ interface TaskTypes {
   description: string;
   tags: [];
   subTasks: [SubTaskTypes];
+  notes: [NotesTypes];
 }
 
 interface SubTaskTypes {
   _id: string;
   title: string;
   status: "planning" | "active" | "completed" | "archive" | "backlog";
+}
+interface NotesTypes {
+  _id: string;
+  text: string;
+  user: string | EmployeeTypes;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface LeaveTypes {
@@ -142,4 +150,5 @@ export type {
   CountByDay,
   TaskCount,
   SubTaskTypes,
+  NotesTypes,
 };

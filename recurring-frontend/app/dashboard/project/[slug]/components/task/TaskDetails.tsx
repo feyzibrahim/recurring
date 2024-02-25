@@ -11,8 +11,9 @@ import { useEffect, useState } from "react";
 import { TanStackDataTable } from "@/components/custom/TanStackDataTable";
 import { columns } from "./taskColumns";
 import TaskDetailSheet from "./TaskDetailSheet";
+import { EmployeeTypes } from "@/constants/Types";
 
-const TaskDetails = ({ slug }: { slug: string }) => {
+const TaskDetails = ({ slug, user }: { slug: string; user: EmployeeTypes }) => {
   const dispatch = useAppDispatch();
   const { tasks } = useAppSelector((state) => state.task);
 
@@ -32,6 +33,7 @@ const TaskDetails = ({ slug }: { slug: string }) => {
       <TaskDetailSheet
         onOpenChange={onEditSheet}
         setOnOpenChange={setOnEditSheet}
+        user={user}
       />
       {tasks && tasks.length > 0 ? (
         <TanStackDataTable

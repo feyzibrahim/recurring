@@ -5,7 +5,7 @@ export class Task {
     public _id: string,
     public title: string,
     public slug: string,
-    public organization: string | User,
+    public organization: string,
     public project: string,
     public startDate: Date,
     public dueDate: Date,
@@ -20,6 +20,11 @@ export class Task {
         status: "planning" | "active" | "completed" | "archive" | "backlog";
       }
     ],
-    public notes?: [string]
+    public notes?: [
+      {
+        text: string;
+        user: string | User;
+      }
+    ]
   ) {}
 }

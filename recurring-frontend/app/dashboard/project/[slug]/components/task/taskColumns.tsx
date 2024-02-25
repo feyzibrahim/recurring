@@ -5,13 +5,14 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { EmployeeTypes, TaskTypes } from "@/constants/Types";
+import { EmployeeTypes, SubTaskTypes, TaskTypes } from "@/constants/Types";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { format } from "date-fns";
 import StatusDiv from "@/components/common/StatusDiv";
 import LowMediumHigh from "@/components/common/LowMediumHigh";
+import { Progress } from "@/components/ui/progress";
 
 export const columns: ColumnDef<TaskTypes>[] = [
   {
@@ -128,5 +129,31 @@ export const columns: ColumnDef<TaskTypes>[] = [
       );
     },
     cell: ({ row }) => <LowMediumHigh priority={row.getValue("priority")} />,
+  },
+  {
+    accessorKey: "subTasks",
+    header: "Completion",
+    cell: ({ row }) => {
+      const subTask: SubTaskTypes[] = row.getValue("subTasks");
+      let completed = 0;
+      subTask.map((sub) => {
+        if (sub.status === "completed") {
+          completed++;
+        }
+      });
+
+      const value = ((completed / subTask.length) * 100) >> 0;
+
+      if (subTask.length === 0) {
+        return null;
+      }
+
+      return (
+        <span className="flex items-center gap-2">
+          <Progress value={value} className="h-1" />
+          {value ?? ""}%
+        </span>
+      );
+    },
   },
 ];

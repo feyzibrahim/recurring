@@ -12,6 +12,18 @@ const SubTask: Schema = new Schema({
     enum: ["planning", "active", "completed", "archive", "backlog"],
   },
 });
+const Notes: Schema = new Schema(
+  {
+    text: {
+      type: String,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  },
+  { timestamps: true }
+);
 
 const TaskSchema: Schema = new Schema(
   {
@@ -61,7 +73,7 @@ const TaskSchema: Schema = new Schema(
       type: [SubTask],
     },
     notes: {
-      type: [String],
+      type: [Notes],
     },
   },
   { timestamps: true }

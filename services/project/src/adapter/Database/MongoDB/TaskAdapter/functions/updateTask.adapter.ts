@@ -7,7 +7,8 @@ export const updateTask = async (slug: string, task: Task) => {
     await TaskModel.findOneAndUpdate({ _id: slug }, { $set: { ...task } });
     const populatedTask = await TaskModel.findOne({ _id: slug })
       .populate("project")
-      .populate("assignee");
+      .populate("assignee")
+      .populate("notes.user");
 
     return populatedTask as Task;
   } catch (error) {
