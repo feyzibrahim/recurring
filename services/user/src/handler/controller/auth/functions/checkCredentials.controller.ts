@@ -18,7 +18,7 @@ export const checkCredentials = async (
     return res.status(200).json({
       user: exists,
       success: true,
-      message: "Check Crendentials",
+      message: "Check Credentials",
     });
   } catch (error: any) {
     res.status(400).json({ success: false, error: error.message });

@@ -35,7 +35,7 @@ const TaskDone = () => {
   }, [interval]);
 
   return (
-    <div className="w-full bg-backgroundAccent rounded-md shadow-lg p-3 mt-5">
+    <div className="w-full min-h-96 bg-backgroundAccent rounded-md shadow-lg p-3 mt-5">
       <div className="flex items-center justify-between gap-2 p-2 border-b mb-2">
         <h1 className="text-xl font-bold">Task Done</h1>
         <div className="flex gap-4">
@@ -121,7 +121,7 @@ const TaskDone = () => {
           </defs>
         </AreaChart>
       ) : (
-        <div className="flex items-center justify-center h-24">
+        <div className="flex items-center justify-center h-96">
           <p>No data to show Yet!</p>
         </div>
       )}

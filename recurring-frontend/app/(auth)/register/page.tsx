@@ -7,12 +7,9 @@ import Link from "next/link";
 import BgImage from "@/public/Register.png";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-import { checkUser } from "@/server/checkUser";
 import GoogleAuth from "@/components/common/GoogleAuth";
 
 export default async function page() {
-  await checkUser();
-
   return (
     <>
       <Navbar />

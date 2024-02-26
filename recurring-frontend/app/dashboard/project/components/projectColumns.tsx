@@ -58,18 +58,19 @@ export const columns: ColumnDef<ProjectTypes>[] = [
       let members: EmployeeTypes[] = row.getValue("members");
       return (
         <div className="flex">
-          {members.map(
-            (member, index) =>
-              typeof member !== "string" && (
-                <Avatar
-                  key={index}
-                  className={`w-7 h-7 border ${index !== 0 ? "-ml-2" : ""}`}
-                >
-                  <AvatarImage src={member.profileImageURL} />
-                  <AvatarFallbackImage />
-                </Avatar>
-              )
-          )}
+          {members &&
+            members.map(
+              (member, index) =>
+                typeof member !== "string" && (
+                  <Avatar
+                    key={index}
+                    className={`w-7 h-7 border ${index !== 0 ? "-ml-2" : ""}`}
+                  >
+                    <AvatarImage src={member.profileImageURL} />
+                    <AvatarFallbackImage />
+                  </Avatar>
+                )
+            )}
         </div>
       );
     },

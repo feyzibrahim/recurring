@@ -15,6 +15,7 @@ const ProjectTable: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { projects } = useAppSelector((state) => state.project);
+  console.log("file: ProjectTable.tsx:18 -> projects", projects);
 
   useEffect(() => {
     dispatch(getProjects());
@@ -43,7 +44,7 @@ const ProjectTable: React.FC = () => {
           <p className="mt-2">No projects where created yet!</p>
           <p className="text-sm py-2">Please Create One</p>
           <Link href="project/create">
-            <Button>Create Meeting</Button>
+            <Button>Create Projects</Button>
           </Link>
         </div>
       )}

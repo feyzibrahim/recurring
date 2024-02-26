@@ -28,8 +28,6 @@ export class SocketIOService {
     });
 
     this.io.on("connection", (socket: Socket) => {
-      this.io.emit("get-online-users", this.onlineUsersList);
-
       socket.on("online-user", (userId: string) => {
         this.onlineUsersList = this.onlineUsersList.filter(
           (user) => user.userId !== userId

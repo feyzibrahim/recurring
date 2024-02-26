@@ -5,13 +5,10 @@ import Logo from "@/public/img/logo.png";
 import Link from "next/link";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-import { checkUser } from "@/server/checkUser";
 import BgImage from "@/public/login-bg.jpg";
 import FormUsername from "./Form";
 
 export default async function page() {
-  await checkUser();
-
   return (
     <>
       <Navbar />

@@ -42,7 +42,11 @@ export class UserController {
         message: "User Data successfully Fetched initially",
       });
     } catch (error: any) {
-      res.status(400).json({ success: false, error: error.message });
+      console.log(
+        "file: UserController.ts:53 -> UserController -> getUser -> error",
+        error
+      );
+      res.status(420).json({ success: false, error: error.message });
     }
   }
 

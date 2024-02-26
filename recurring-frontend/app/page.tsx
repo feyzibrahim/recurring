@@ -18,7 +18,7 @@ import Footer from "@/components/common/Footer";
 import { checkUser } from "@/server/checkUser";
 
 export default async function Home() {
-  await checkUser();
+  // await checkUser();
 
   return (
     <>

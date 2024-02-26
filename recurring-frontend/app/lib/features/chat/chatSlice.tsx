@@ -68,6 +68,7 @@ export const chatSlice = createSlice({
           };
         });
       }
+      console.log("file: chatSlice.tsx:52 -> newChats", newChats);
 
       let newActiveChat = activeChat;
 

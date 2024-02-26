@@ -11,6 +11,10 @@ export const createProject = async (
   try {
     let body = req.body as Project;
 
+    if (!body.manager) {
+      throw Error("Please select manager or create a new manager");
+    }
+
     const { access_token } = req.cookies;
 
     const data = validateJwt(access_token);

@@ -11,10 +11,8 @@ export default async function DashboardLayout({
 
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-4 h-screen">
-      <UserContextWrapper user={user}>
-        <ChatList />
-        {children}
-      </UserContextWrapper>
+      <ChatList />
+      {children}
     </div>
   );
 }
