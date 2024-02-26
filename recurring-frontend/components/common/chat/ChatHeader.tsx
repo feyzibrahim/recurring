@@ -5,10 +5,23 @@ import { ChatTypes, EmployeeTypes } from "@/constants/Types";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserProvider/UserContextProvider";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
-import Link from "next/link";
+import { v4 as uuid } from "uuid";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
-const ChatHeader = ({ username }: { username: string }) => {
+const ChatHeader = () => {
   const { user, socket } = useContext(UserContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [callingHeader, setCallingHeader] = useState("Video Calling...");
+  const [callingDescription, setCallingDescription] = useState(
+    "Please wait while the user accepts the call"
+  );
 
   const [typing, setTyping] = useState(false);
 
@@ -21,11 +34,18 @@ const ChatHeader = ({ username }: { username: string }) => {
           setTyping(true);
         }
       });
+
     socket &&
       socket.on("typing-stopped", (data) => {
         if (data.to === user?._id) {
           setTyping(false);
         }
+      });
+
+    socket &&
+      socket.on("video-call-declined", (data) => {
+        setCallingHeader("Call Declined");
+        setCallingDescription("User declined the call please try later...");
       });
   }, [socket, user?._id]);
 
@@ -48,6 +68,34 @@ const ChatHeader = ({ username }: { username: string }) => {
     );
 
     return temp as EmployeeTypes;
+  };
+
+  const videoCallUser = () => {
+    const callId = uuid();
+    if (activeChat) {
+      let temp = activeChat.participants.find(
+        (part) => part.username !== user?.username
+      );
+
+      if (temp && user) {
+        socket &&
+          socket.emit("video-call", { to: temp._id, from: user._id, callId });
+        setIsModalOpen(true);
+      }
+    }
+  };
+  const hangUpCall = () => {
+    if (activeChat) {
+      let temp = activeChat.participants.find(
+        (part) => part.username !== user?.username
+      );
+
+      if (temp && user) {
+        socket &&
+          socket.emit("video-call-hangup", { to: temp._id, from: user._id });
+        setIsModalOpen(true);
+      }
+    }
   };
 
   return (
@@ -78,9 +126,33 @@ const ChatHeader = ({ username }: { username: string }) => {
           </div>
         )}
       </div>
-      <Link href={`${username}/video`}>
-        <AiOutlineVideoCameraAdd className="text-2xl hover:text-foregroundAccent cursor-pointer" />
-      </Link>
+      {/* <Link href={`${username}/video`} onClick={videoCallUser}> */}
+      <AiOutlineVideoCameraAdd
+        className="text-2xl hover:text-foregroundAccent cursor-pointer"
+        onClick={videoCallUser}
+      />
+      {/* </Link> */}
+
+      <Dialog
+        open={isModalOpen}
+        onOpenChange={() => {
+          setIsModalOpen(false);
+          setCallingHeader("Video Calling...");
+          setCallingDescription("Please wait while the user accepts the call");
+        }}
+      >
+        <DialogContent className="sm:max-w-[300px]">
+          <DialogHeader>
+            <DialogTitle className="animate-pulse">{callingHeader}</DialogTitle>
+            <DialogDescription>{callingDescription}</DialogDescription>
+            {callingHeader === "Video Calling..." && (
+              <Button variant="destructive" onClick={hangUpCall}>
+                Cancel Call
+              </Button>
+            )}
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

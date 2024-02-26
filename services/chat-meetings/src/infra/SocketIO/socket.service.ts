@@ -139,21 +139,50 @@ export class SocketIOService {
 
       // Video Call
 
-      socket.emit("me", socket.id);
+      socket.on("video-call", (data) => {
+        const receiver = this.onlineUsersList.find(
+          (user) => user.userId === data.to
+        );
 
-      socket.on("disconnect-video-call", () => {
-        socket.broadcast.emit("callEnded");
+        if (receiver) {
+          this.io.to(receiver.socketId).emit("video-call", data);
+        }
       });
 
-      socket.on("video-call-user", ({ userToCall, signalData, from, name }) => {
-        this.io
-          .to(userToCall)
-          .emit("video-call-user", { signal: signalData, from, name });
+      socket.on("video-call-declined", (data) => {
+        const receiver = this.onlineUsersList.find(
+          (user) => user.userId === data.to
+        );
+
+        if (receiver) {
+          this.io.to(receiver.socketId).emit("video-call-declined", data);
+        }
+      });
+      socket.on("video-call-accepted", (data) => {
+        const receiver = this.onlineUsersList.find(
+          (user) => user.userId === data.to
+        );
+
+        if (receiver) {
+          this.io.to(receiver.socketId).emit("video-call-accepted", data);
+        }
       });
 
-      socket.on("answer-call", (data: any) => {
-        this.io.to(data.to).emit("call-accepted", data.signal);
-      });
+      // socket.emit("me", socket.id);
+
+      // socket.on("disconnect-video-call", () => {
+      //   socket.broadcast.emit("callEnded");
+      // });
+
+      // socket.on("video-call-user", ({ userToCall, signalData, from, name }) => {
+      //   this.io
+      //     .to(userToCall)
+      //     .emit("video-call-user", { signal: signalData, from, name });
+      // });
+
+      // socket.on("answer-call", (data: any) => {
+      //   this.io.to(data.to).emit("call-accepted", data.signal);
+      // });
     });
   }
 }

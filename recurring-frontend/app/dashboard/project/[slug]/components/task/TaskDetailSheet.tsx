@@ -16,10 +16,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import SubTaskEditForm from "../subTask/SubTaskEditForm";
-import NewNotesButton from "../notes/NewNotesButton";
 import { EmployeeTypes } from "@/constants/Types";
-import UserAvatar from "@/components/common/UserAvatar";
-import EmptyMessage from "@/components/empty/EmptyMessage";
+
 import NotesListInSheet from "../notes/NotesListInSheet";
 
 interface PropsTypes {
