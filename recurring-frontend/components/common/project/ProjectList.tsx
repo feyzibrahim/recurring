@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProjectTiles from "./ProjectTiles";
 import ProjectTable from "./ProjectTable";
 
-const ProjectList = () => {
+const ProjectList = ({ location }: { location: string }) => {
   return (
     <Tabs defaultValue="table" className="pt-5">
       <TabsList className="mx-5 bg-backgroundAccent">
@@ -10,7 +10,7 @@ const ProjectList = () => {
         <TabsTrigger value="tiles">Tiles</TabsTrigger>
       </TabsList>
       <TabsContent value="table">
-        <ProjectTable />
+        <ProjectTable location={location} />
       </TabsContent>
       <TabsContent value="tiles">
         <ProjectTiles />

@@ -1,10 +1,11 @@
-import ProjectList from "./components/ProjectList";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import ProjectList from "@/components/common/project/ProjectList";
 
 const page = async () => {
   return (
-    <div className="w-full h-screen">
-      <ProjectList />
-    </div>
+    <ScrollArea className="w-full h-screen">
+      <ProjectList location="dashboard" />
+    </ScrollArea>
   );
 };
 

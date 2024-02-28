@@ -3,7 +3,7 @@ import CountByDay from "../../constants/types/CountByDay";
 
 export interface ProjectAdapterInterface {
   getProject(slug: string): Promise<Project | boolean>;
-  getProjects(organizationId: string): Promise<Project[] | boolean>;
+  getProjects(params: Record<string, string>): Promise<Project[] | boolean>;
   getProjectByUserId(userId: string): Promise<Project | boolean>;
   getProjectsByManagerId(managerId: string): Promise<Project[] | boolean>;
   createProject(project: Project): Promise<Project | boolean>;

@@ -1,6 +1,6 @@
+import ProjectDetails from "@/components/common/project/projectTask/project/ProjectDetails";
+import TaskDetails from "@/components/common/project/projectTask/task/TaskDetails";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
-import ProjectDetails from "./components/project/ProjectDetails";
-import TaskDetails from "./components/task/TaskDetails";
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const user = await checkUserWithoutRedirect();

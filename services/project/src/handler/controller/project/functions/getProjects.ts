@@ -11,7 +11,21 @@ export const getProjects = async (
     const { access_token } = req.cookies;
     const data = validateJwt(access_token);
 
-    let projects = await iProjectUseCase.getProjects(data.organization);
+    let params: Record<string, string> = {};
+
+    if (data.roles === "owner") {
+      params.organization = data.organization;
+    }
+
+    if (data.roles === "manager") {
+      params.manager = data.user;
+    }
+
+    if (data.roles === "employee") {
+      params.members = data.user;
+    }
+
+    let projects = await iProjectUseCase.getProjects(params);
     if (!projects) {
       throw Error("No project found");
     }

@@ -7,15 +7,14 @@ import { useEffect } from "react";
 import { getProjects } from "@/app/lib/features/project/projectActions";
 import { useRouter } from "next/navigation";
 import { TanStackDataTable } from "@/components/custom/TanStackDataTable";
-import { columns } from "./projectColumns";
+import { columns, columnsDashboard } from "./projectColumns";
 import EmptyFolder from "@/components/empty/EmptyFolder";
 
-const ProjectTable: React.FC = () => {
+const ProjectTable = ({ location }: { location: string }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const { projects } = useAppSelector((state) => state.project);
-  console.log("file: ProjectTable.tsx:18 -> projects", projects);
 
   useEffect(() => {
     dispatch(getProjects());
@@ -27,13 +26,15 @@ const ProjectTable: React.FC = () => {
     <div className="w-full text-sm pb-5">
       {projects && projects.length > 0 ? (
         <TanStackDataTable
-          columns={columns}
+          columns={location === "dashboard" ? columnsDashboard : columns}
           data={projects}
           pageTitle="Projects"
           newButton={
-            <Link href="project/create">
-              <Button>Create New Project</Button>
-            </Link>
+            location === "home" ? null : (
+              <Link href="project/create">
+                <Button>Create New Project</Button>
+              </Link>
+            )
           }
           searchField="name"
           rowOnCLick={rowOnCLick}

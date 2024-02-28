@@ -30,8 +30,8 @@ export class ProjectUseCase implements ProjectUseCaseInterface {
     return this.iProjectUseCase.updateProject(slug, project);
   }
 
-  getProjects(organizationId: string): Promise<boolean | Project[]> {
-    return this.iProjectUseCase.getProjects(organizationId);
+  getProjects(params: Record<string, string>): Promise<boolean | Project[]> {
+    return this.iProjectUseCase.getProjects(params);
   }
 
   deleteProject(id: string): Promise<boolean | Project> {

@@ -39,8 +39,8 @@ export class ProjectAdapter implements ProjectAdapterInterface {
     return updateProject(slug, project);
   }
 
-  async getProjects(organizationId: string): Promise<boolean | Project[]> {
-    return getProjects(organizationId);
+  async getProjects(params: Record<string, any>): Promise<boolean | Project[]> {
+    return getProjects(params);
   }
 
   async deleteProject(id: string): Promise<boolean | Project> {
