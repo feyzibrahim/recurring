@@ -18,11 +18,12 @@ export class TaskUseCase implements TaskUseCaseInterface {
   ): Promise<false | TaskCount[]> {
     return this.iTaskUseCase.getTaskCount(organizationId, interval);
   }
-  getNewTaskCount(organizationId: string): Promise<false | CountByDay[]> {
-    return this.iTaskUseCase.getNewTaskCount(organizationId);
-  }
-  getTaskCompletedCount(organizationId: string): Promise<false | CountByDay[]> {
-    return this.iTaskUseCase.getTaskCompletedCount(organizationId);
+
+  getTaskCountForEmployee(
+    employeeId: string,
+    interval: string
+  ): Promise<false | TaskCount[]> {
+    return this.iTaskUseCase.getTaskCountForEmployee(employeeId, interval);
   }
 
   getTaskLengthByProject(
@@ -62,6 +63,9 @@ export class TaskUseCase implements TaskUseCaseInterface {
   ): Promise<boolean | Task[]> {
     return this.iTaskUseCase.getTasksByUserId(userId, filter, skip, limit);
   }
+  getTasksForUser(userId: string): Promise<boolean | Task[]> {
+    return this.iTaskUseCase.getTasksForUser(userId);
+  }
 
   updateTask(id: string, task: Task): Promise<boolean | Task> {
     return this.iTaskUseCase.updateTask(id, task);
@@ -69,5 +73,23 @@ export class TaskUseCase implements TaskUseCaseInterface {
 
   deleteTask(id: string): Promise<boolean | Task> {
     return this.iTaskUseCase.deleteTask(id);
+  }
+
+  getNewTaskCount(organizationId: string): Promise<false | CountByDay[]> {
+    return this.iTaskUseCase.getNewTaskCount(organizationId);
+  }
+  getTaskCompletedCount(organizationId: string): Promise<false | CountByDay[]> {
+    return this.iTaskUseCase.getTaskCompletedCount(organizationId);
+  }
+
+  getNewTaskCountForEmployee(
+    employeeId: string
+  ): Promise<false | CountByDay[]> {
+    return this.iTaskUseCase.getNewTaskCountForEmployee(employeeId);
+  }
+  getTaskCompletedCountForEmployee(
+    employeeId: string
+  ): Promise<false | CountByDay[]> {
+    return this.iTaskUseCase.getTaskCompletedCountForEmployee(employeeId);
   }
 }

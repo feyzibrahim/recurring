@@ -16,4 +16,10 @@ export interface ProjectAdapterInterface {
   getProjectsCompletedCount(
     organizationId: string
   ): Promise<CountByDay[] | false>;
+  getProjectsCompletedCountForManager(
+    managerId: string
+  ): Promise<CountByDay[] | false>;
+  getProjectsCompletedCountForEmployee(
+    employeeId: string
+  ): Promise<CountByDay[] | false>;
 }

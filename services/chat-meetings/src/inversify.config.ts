@@ -24,6 +24,8 @@ import { MeetingAdapter } from "./adapter/Database/MongoDB/MeetingAdapter";
 import { MeetingUseCaseInterface } from "./interface/meeting/MeetingUseCaseInterface";
 import { MeetingUseCase } from "./useCases/MeetingUseCase";
 import { MeetingController } from "./handler/controller/meeting";
+import { UserUseCaseInterface } from "./interface/user/UserUseCaseInterface";
+import { UserUseCase } from "./useCases/UserUseCase";
 
 // Database connection
 connectToDatabase();
@@ -64,6 +66,9 @@ container.bind<MeetingUseCase>(MeetingUseCase).toSelf();
 container
   .bind<UserAdapterInterface>(TYPES.UserAdapterInterface)
   .to(UserAdapter);
+container
+  .bind<UserUseCaseInterface>(TYPES.UserUseCaseInterface)
+  .to(UserUseCase);
 
 // RabbitMQ injection
 container

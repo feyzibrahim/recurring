@@ -1,14 +1,12 @@
 "use client";
-import {
-  getAttendanceByUserId,
-  getAttendances,
-} from "@/app/lib/features/attendance/attendanceActions";
+import { getAttendances } from "@/app/lib/features/attendance/attendanceActions";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import React, { useEffect } from "react";
-import { AttendanceRow } from "./AttendanceRow";
 import EmptyProject from "@/components/empty/EmptyProjects";
 import { useSearchParams } from "next/navigation";
 import AttendanceBarChart from "./AttendanceBarChart";
+import { TanStackDataTable } from "@/components/custom/TanStackDataTable";
+import { columns } from "./attendanceColumns";
 
 const AttendanceList = () => {
   const dispatch = useAppDispatch();
@@ -34,7 +32,13 @@ const AttendanceList = () => {
       {attendances && attendances.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-4">
           <AttendanceBarChart data={attendances} />
-          <AttendanceRow attendances={attendances} />
+          <div className="col-span-3">
+            <TanStackDataTable
+              columns={columns}
+              data={attendances}
+              showColSelectButton={false}
+            />
+          </div>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center">

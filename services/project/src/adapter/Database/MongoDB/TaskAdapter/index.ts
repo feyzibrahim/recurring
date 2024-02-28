@@ -16,26 +16,13 @@ import { getTaskCompletedCount } from "./functions/getTaskCompletedCount.adapter
 import { getNewTaskCount } from "./functions/getNewTaskCount.adapter";
 import { getTaskCount } from "./functions/getTaskCount.adapter";
 import TaskCount from "../../../../constants/types/TaskCount";
+import { getTasksForUser } from "./functions/getTasksForUser.adapter";
+import { getNewTaskCountForEmployee } from "./functions/getNewTaskCountForEmployee.adapter";
+import { getTaskCompletedCountForEmployee } from "./functions/getTaskCompletedCountForEmployee.adapter";
+import { getTaskCountForEmployee } from "./functions/getTaskCountForEmployee.adapter";
 
 @injectable()
 export class TaskAdapter implements TaskAdapterInterface {
-  async getTaskCount(
-    organizationId: string,
-    interval: string
-  ): Promise<false | TaskCount[]> {
-    return getTaskCount(organizationId, interval);
-  }
-
-  async getNewTaskCount(organizationId: string): Promise<false | CountByDay[]> {
-    return getNewTaskCount(organizationId);
-  }
-
-  async getTaskCompletedCount(
-    organizationId: string
-  ): Promise<false | CountByDay[]> {
-    return getTaskCompletedCount(organizationId);
-  }
-
   async getTask(slug: string): Promise<boolean | Task> {
     return getTask(slug);
   }
@@ -60,6 +47,9 @@ export class TaskAdapter implements TaskAdapterInterface {
   ): Promise<boolean | Task[]> {
     return getTasksByUserId(userSlug, filter, skip, limit);
   }
+  async getTasksForUser(userSlug: string): Promise<boolean | Task[]> {
+    return getTasksForUser(userSlug);
+  }
   async getTaskLength(
     userSlug: string,
     filter: SimpleFilter
@@ -67,7 +57,7 @@ export class TaskAdapter implements TaskAdapterInterface {
     return getTaskLength(userSlug, filter);
   }
 
-  getTaskLengthByProject(
+  async getTaskLengthByProject(
     projectSlug: string,
     filter: SimpleFilter
   ): Promise<number | boolean> {
@@ -80,5 +70,40 @@ export class TaskAdapter implements TaskAdapterInterface {
 
   async deleteTask(id: string): Promise<boolean | Task> {
     return deleteTask(id);
+  }
+
+  async getTaskCount(
+    organizationId: string,
+    interval: string
+  ): Promise<false | TaskCount[]> {
+    return getTaskCount(organizationId, interval);
+  }
+
+  async getTaskCountForEmployee(
+    organizationId: string,
+    interval: string
+  ): Promise<false | TaskCount[]> {
+    return getTaskCountForEmployee(organizationId, interval);
+  }
+
+  async getNewTaskCount(organizationId: string): Promise<false | CountByDay[]> {
+    return getNewTaskCount(organizationId);
+  }
+
+  async getTaskCompletedCount(
+    organizationId: string
+  ): Promise<false | CountByDay[]> {
+    return getTaskCompletedCount(organizationId);
+  }
+
+  async getTaskCompletedCountForEmployee(
+    employeeId: string
+  ): Promise<false | CountByDay[]> {
+    return getTaskCompletedCountForEmployee(employeeId);
+  }
+  async getNewTaskCountForEmployee(
+    employeeId: string
+  ): Promise<false | CountByDay[]> {
+    return getNewTaskCountForEmployee(employeeId);
   }
 }

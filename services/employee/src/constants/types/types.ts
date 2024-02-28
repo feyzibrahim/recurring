@@ -15,6 +15,10 @@ export const TYPES = {
   LeaveAdapterInterface: Symbol.for("LeaveAdapterInterface"),
   LeaveUseCaseInterface: Symbol.for("LeaveUseCaseInterface"),
 
+  // LeavePolicy
+  LeavePolicyAdapterInterface: Symbol.for("LeavePolicyAdapterInterface"),
+  LeavePolicyUseCaseInterface: Symbol.for("LeavePolicyUseCaseInterface"),
+
   // RabbitMQ
   RabbitMQServiceInitializer: Symbol.for("RabbitMQServiceInitializer"),
   RabbitMQUseCaseInterface: Symbol.for("RabbitMQUseCaseInterface"),

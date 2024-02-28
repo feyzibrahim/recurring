@@ -13,6 +13,7 @@ export interface TaskUseCaseInterface {
     skip: number,
     limit: number
   ): Promise<Task[] | boolean>;
+  getTasksForUser(userId: string): Promise<Task[] | boolean>;
   getTaskLength(
     userId: string,
     filter: SimpleFilter
@@ -25,9 +26,17 @@ export interface TaskUseCaseInterface {
   updateTask(slug: string, task: Task): Promise<Task | boolean>;
   deleteTask(slug: string): Promise<Task | boolean>;
   getTaskCompletedCount(organizationId: string): Promise<CountByDay[] | false>;
+  getTaskCompletedCountForEmployee(
+    employeeId: string
+  ): Promise<CountByDay[] | false>;
   getNewTaskCount(organizationId: string): Promise<CountByDay[] | false>;
+  getNewTaskCountForEmployee(employeeId: string): Promise<CountByDay[] | false>;
   getTaskCount(
     organizationId: string,
+    interval: string
+  ): Promise<TaskCount[] | false>;
+  getTaskCountForEmployee(
+    employeeId: string,
     interval: string
   ): Promise<TaskCount[] | false>;
 }

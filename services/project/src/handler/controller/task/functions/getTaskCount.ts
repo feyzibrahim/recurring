@@ -12,10 +12,18 @@ export const getTaskCount = async (
     const data = validateJwt(access_token);
     const { interval } = req.query;
 
-    let taskDone = await iTaskUseCase.getTaskCount(
-      data.organization,
-      interval as string
-    );
+    let taskDone;
+    if (data.roles === "employee") {
+      taskDone = await iTaskUseCase.getTaskCountForEmployee(
+        data.user,
+        interval as string
+      );
+    } else {
+      taskDone = await iTaskUseCase.getTaskCount(
+        data.organization,
+        interval as string
+      );
+    }
 
     return res.status(200).json({
       taskDone: taskDone,

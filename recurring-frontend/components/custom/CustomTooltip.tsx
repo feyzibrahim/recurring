@@ -8,7 +8,11 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         {payload.map((entry: any, index: number) => (
           <p
             key={index}
-            className="capitalize"
+            className={`capitalize ${
+              entry.dataKey === "completed" && "text-[#4787FA]"
+            } ${entry.dataKey === "planning" && "text-[#1EA7FF]"} ${
+              entry.dataKey === "active" && "text-[#2eff70]"
+            } ${entry.dataKey === "backlog" && "text-[#ff5353]"}`}
           >{`${entry.dataKey}: ${entry.value}`}</p>
         ))}
       </div>

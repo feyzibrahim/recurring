@@ -9,7 +9,7 @@ const leaveSchema = new Schema(
       required: true,
     },
     startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true },
+    endDate: { type: Date },
     reason: { type: String, required: true },
     status: {
       type: String,

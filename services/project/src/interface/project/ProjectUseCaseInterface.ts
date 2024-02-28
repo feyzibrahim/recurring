@@ -1,5 +1,5 @@
 import { Project } from "../../Entities/Project";
-import ProjectCountByDay from "../../constants/types/CountByDay";
+import CountByDay from "../../constants/types/CountByDay";
 
 export interface ProjectUseCaseInterface {
   getProject(slug: string): Promise<Project | boolean>;
@@ -15,5 +15,11 @@ export interface ProjectUseCaseInterface {
   ): Promise<Project | boolean>;
   getProjectsCompletedCount(
     organizationId: string
-  ): Promise<ProjectCountByDay[] | false>;
+  ): Promise<CountByDay[] | false>;
+  getProjectsCompletedCountForManager(
+    managerId: string
+  ): Promise<CountByDay[] | false>;
+  getProjectsCompletedCountForEmployee(
+    employeeId: string
+  ): Promise<CountByDay[] | false>;
 }

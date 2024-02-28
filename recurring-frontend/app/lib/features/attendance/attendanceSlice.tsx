@@ -48,6 +48,10 @@ export const attendanceSlice = createSlice({
         state.error = payload;
       })
       .addCase(getAttendances.fulfilled, (state, { payload }) => {
+        console.log(
+          "file: attendanceSlice.tsx:51 -> .addCase -> payload",
+          payload
+        );
         state.loading = false;
         state.error = null;
         state.attendances = payload.attendances;

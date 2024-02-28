@@ -138,6 +138,15 @@ interface TaskCount {
   active: number;
 }
 
+interface MessageTypes {
+  message: string;
+  from: string;
+  to: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export type {
   InputWithIconProps,
   EmployeeTypes,
@@ -151,4 +160,5 @@ export type {
   TaskCount,
   SubTaskTypes,
   NotesTypes,
+  MessageTypes,
 };

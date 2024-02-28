@@ -1,11 +1,6 @@
 "use client";
-import { useAppSelector } from "@/app/lib/hook";
 import UserAvatar from "@/components/common/UserAvatar";
-import { ChatTypes, EmployeeTypes } from "@/constants/Types";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "./UserProvider/UserContextProvider";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
-import { v4 as uuid } from "uuid";
 import {
   Dialog,
   DialogContent,
@@ -14,89 +9,21 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useAppSelector } from "@/app/lib/hook";
+import useHeaderHook from "./hooks/useHeaderHook";
 
-const ChatHeader = () => {
-  const { user, socket } = useContext(UserContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [callingHeader, setCallingHeader] = useState("Video Calling...");
-  const [callingDescription, setCallingDescription] = useState(
-    "Please wait while the user accepts the call"
-  );
-
-  const [typing, setTyping] = useState(false);
-
+const ChatHeader = ({ username }: { username: string }) => {
   const { activeChat } = useAppSelector((state) => state.chat);
-
-  useEffect(() => {
-    socket &&
-      socket.on("typing", (data) => {
-        if (data.to === user?._id) {
-          setTyping(true);
-        }
-      });
-
-    socket &&
-      socket.on("typing-stopped", (data) => {
-        if (data.to === user?._id) {
-          setTyping(false);
-        }
-      });
-
-    socket &&
-      socket.on("video-call-declined", (data) => {
-        setCallingHeader("Call Declined");
-        setCallingDescription("User declined the call please try later...");
-      });
-  }, [socket, user?._id]);
-
-  useEffect(() => {
-    socket &&
-      socket.on("chat", (data) => {
-        setTyping(false);
-      });
-  }, [socket]);
-
-  useEffect(() => {
-    if (typing) {
-      setTimeout(() => setTyping(false), 3000);
-    }
-  }, [typing]);
-
-  const getCurrentUser = (chat: ChatTypes) => {
-    let temp = chat.participants.find(
-      (part) => part.username !== user?.username
-    );
-
-    return temp as EmployeeTypes;
-  };
-
-  const videoCallUser = () => {
-    const callId = uuid();
-    if (activeChat) {
-      let temp = activeChat.participants.find(
-        (part) => part.username !== user?.username
-      );
-
-      if (temp && user) {
-        socket &&
-          socket.emit("video-call", { to: temp._id, from: user._id, callId });
-        setIsModalOpen(true);
-      }
-    }
-  };
-  const hangUpCall = () => {
-    if (activeChat) {
-      let temp = activeChat.participants.find(
-        (part) => part.username !== user?.username
-      );
-
-      if (temp && user) {
-        socket &&
-          socket.emit("video-call-hangup", { to: temp._id, from: user._id });
-        setIsModalOpen(true);
-      }
-    }
-  };
+  const {
+    getCurrentUser,
+    typing,
+    videoCallUser,
+    isModalOpen,
+    setIsModalOpen,
+    setVideoCallActive,
+    videoCallActive,
+    hangUpCall,
+  } = useHeaderHook(username);
 
   return (
     <div className="flex gap-2 items-center shadow-md p-5 ">
@@ -126,26 +53,29 @@ const ChatHeader = () => {
           </div>
         )}
       </div>
-      {/* <Link href={`${username}/video`} onClick={videoCallUser}> */}
       <AiOutlineVideoCameraAdd
         className="text-2xl hover:text-foregroundAccent cursor-pointer"
         onClick={videoCallUser}
       />
-      {/* </Link> */}
 
       <Dialog
         open={isModalOpen}
         onOpenChange={() => {
           setIsModalOpen(false);
-          setCallingHeader("Video Calling...");
-          setCallingDescription("Please wait while the user accepts the call");
+          setVideoCallActive(false);
         }}
       >
         <DialogContent className="sm:max-w-[300px]">
           <DialogHeader>
-            <DialogTitle className="animate-pulse">{callingHeader}</DialogTitle>
-            <DialogDescription>{callingDescription}</DialogDescription>
-            {callingHeader === "Video Calling..." && (
+            <DialogTitle className="animate-pulse">
+              {videoCallActive ? "Video Calling..." : "Call Declined"}
+            </DialogTitle>
+            <DialogDescription>
+              {videoCallActive
+                ? "Please wait while the user accepts the call"
+                : "User declined the call please try later..."}
+            </DialogDescription>
+            {videoCallActive && (
               <Button variant="destructive" onClick={hangUpCall}>
                 Cancel Call
               </Button>

@@ -25,7 +25,7 @@ const Chat = ({ username }: { username: string }) => {
   return (
     <>
       {/* Chat Header */}
-      <ChatHeader />
+      <ChatHeader username={username} />
       {/* Chat Section */}
       <div className="flex flex-col justify-between h-[89vh]">
         <ChatContainer />

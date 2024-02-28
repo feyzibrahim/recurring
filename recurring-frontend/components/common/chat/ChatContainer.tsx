@@ -7,13 +7,7 @@ import { UserContext } from "./UserProvider/UserContextProvider";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
 import EmptyMessage from "@/components/empty/EmptyMessage";
-
-interface MessageTypes {
-  message: string;
-  from: string;
-  to: string;
-  content: string;
-}
+import { MessageTypes } from "@/constants/Types";
 
 const ChatContainer = () => {
   const [messages, setMessages] = useState<MessageTypes[]>([]);
@@ -68,11 +62,9 @@ const ChatContainer = () => {
       {messages && messages.length > 0 ? (
         messages.map((msg, index) => {
           if (msg.from === user?._id) {
-            return <MyChat message={msg.message || msg.content} key={index} />;
+            return <MyChat message={msg} key={index} />;
           } else {
-            return (
-              <OtherChat message={msg.message || msg.content} key={index} />
-            );
+            return <OtherChat message={msg} key={index} />;
           }
         })
       ) : (

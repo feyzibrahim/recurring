@@ -10,10 +10,24 @@ export const getProjectsCompletedCount = async (
   try {
     const { access_token } = req.cookies;
     const data = validateJwt(access_token);
+    console.log("file: getProjectsCompletedCount.ts:13 -> data", data);
 
-    let projectsCount = await iProjectUseCase.getProjectsCompletedCount(
-      data.organization
-    );
+    let projectsCount;
+    if (data.roles === "owner") {
+      projectsCount = await iProjectUseCase.getProjectsCompletedCount(
+        data.organization
+      );
+    }
+
+    if (data.roles === "manager") {
+      projectsCount = await iProjectUseCase.getProjectsCompletedCountForManager(
+        data.user
+      );
+    }
+    if (data.roles === "employee") {
+      projectsCount =
+        await iProjectUseCase.getProjectsCompletedCountForEmployee(data.user);
+    }
     if (!projectsCount) {
       throw Error("No project found");
     }

@@ -13,13 +13,11 @@ export const getAttendance = async (
 
     const data = validateJwt(access_token);
 
-    const { filter, limit, skip } = simpleQueryFilter(req);
+    const { filter } = simpleQueryFilter(req);
 
-    let attendances = await iAttendanceUseCase.getAttendanceByUserId(
+    let attendances = await iAttendanceUseCase.getAttendanceList(
       data.user,
-      filter,
-      limit,
-      skip
+      filter
     );
     if (!attendances) {
       throw Error("No attendance found");

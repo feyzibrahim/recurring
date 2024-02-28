@@ -49,4 +49,16 @@ export class ProjectUseCase implements ProjectUseCaseInterface {
   ): Promise<ProjectCountByDay[] | false> {
     return this.iProjectUseCase.getProjectsCompletedCount(organizationId);
   }
+  getProjectsCompletedCountForManager(
+    managerId: string
+  ): Promise<false | ProjectCountByDay[]> {
+    return this.iProjectUseCase.getProjectsCompletedCountForManager(managerId);
+  }
+  getProjectsCompletedCountForEmployee(
+    employeeId: string
+  ): Promise<false | ProjectCountByDay[]> {
+    return this.iProjectUseCase.getProjectsCompletedCountForEmployee(
+      employeeId
+    );
+  }
 }

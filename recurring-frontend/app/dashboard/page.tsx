@@ -1,10 +1,9 @@
-import EmptyProject from "@/components/empty/EmptyProjects";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
-import TaskCompleteChart from "./components/TaskCompleteChart";
+import TaskCompleteChart from "@/components/charts/TaskCompleteChart";
 import { Skeleton } from "@/components/ui/skeleton";
-import NewTaskChart from "./components/NewTaskChart";
-import ProjectsDone from "./components/ProjectsDone";
-import TaskDone from "./components/TaskDone";
+import NewTaskChart from "@/components/charts/NewTaskChart";
+import ProjectsDone from "@/components/charts/ProjectsDone";
+import TaskDone from "@/components/charts/TaskDone";
 import { actualServerCommonRequest } from "@/api/actual_server";
 import { API_ROUTES } from "@/lib/routes";
 const page = async () => {
@@ -41,12 +40,6 @@ const page = async () => {
         </div>
         <Skeleton className="h-[650px] w-full bg-backgroundAccent shadow-lg" />
       </div>
-      {/* <TaskCompleteChart /> */}
-      {/* <div className="flex flex-col items-center justify-center h-full">
-        <EmptyProject />
-        <p className="mt-2">Dashboard Yet To be designed</p>
-        <p className="text-sm py-2">Will be updated Later</p>
-      </div> */}
     </div>
   );
 };

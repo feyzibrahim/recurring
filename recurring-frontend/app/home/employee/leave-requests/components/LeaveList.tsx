@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { LeaveTable } from "./LeaveTable";
 import { getLeavesForUser } from "@/app/lib/features/leave/leaveActions";
 
-const LeaveList = () => {
+const LeaveList = ({ organization }: { organization: any }) => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const from = searchParams.get("from");
@@ -29,6 +29,13 @@ const LeaveList = () => {
 
   return (
     <div>
+      <div>
+        <p>Available Leaves this month: </p>{" "}
+        {leaves &&
+          organization &&
+          organization.sickLeave + organization.casualLeave - leaves.length}
+        /{organization.sickLeave + organization.casualLeave}
+      </div>
       {leaves && leaves.length > 0 ? (
         <LeaveTable leaves={leaves} />
       ) : (

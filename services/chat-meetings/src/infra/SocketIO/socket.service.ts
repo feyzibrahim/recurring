@@ -6,6 +6,7 @@ import { Chat } from "../../Entities/Chat";
 import http from "http";
 import { MessageUseCaseInterface } from "../../interface/message/MessageUseCaseInterface";
 import { Message } from "../../Entities/Message";
+import { UserUseCaseInterface } from "../../interface/user/UserUseCaseInterface";
 
 @injectable()
 export class SocketIOService {
@@ -16,7 +17,10 @@ export class SocketIOService {
     @inject(TYPES.ChatUseCaseInterface)
     private iChatUseCase: ChatUseCaseInterface,
     @inject(TYPES.MessageUseCaseInterface)
-    private iMessageUseCase: MessageUseCaseInterface
+    private iMessageUseCase: MessageUseCaseInterface,
+
+    @inject(TYPES.UserUseCaseInterface)
+    private iUserUseCase: UserUseCaseInterface
   ) {}
 
   public init(app: http.Server): void {
@@ -139,10 +143,18 @@ export class SocketIOService {
 
       // Video Call
 
-      socket.on("video-call", (data) => {
+      socket.on("video-call", async (data) => {
         const receiver = this.onlineUsersList.find(
           (user) => user.userId === data.to
         );
+        const caller = this.onlineUsersList.find(
+          (user) => user.userId !== data.to
+        );
+
+        if (caller) {
+          const user = await this.iUserUseCase.getUserById(caller.userId);
+          data.user = user;
+        }
 
         if (receiver) {
           this.io.to(receiver.socketId).emit("video-call", data);
@@ -165,6 +177,16 @@ export class SocketIOService {
 
         if (receiver) {
           this.io.to(receiver.socketId).emit("video-call-accepted", data);
+        }
+      });
+
+      socket.on("video-call-hangup", (data) => {
+        const receiver = this.onlineUsersList.find(
+          (user) => user.userId === data.to
+        );
+
+        if (receiver) {
+          this.io.to(receiver.socketId).emit("video-call-hangup", data);
         }
       });
 

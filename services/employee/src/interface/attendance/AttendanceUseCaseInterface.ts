@@ -2,7 +2,10 @@ import { Attendance } from "../../Entities/Attendance";
 import { SimpleFilter } from "../../constants/props/SimpleFilter";
 
 export interface AttendanceUseCaseInterface {
-  getAttendanceList(id: string): Promise<Attendance | boolean>;
+  getAttendanceList(
+    id: string,
+    filter: SimpleFilter
+  ): Promise<Attendance[] | boolean>;
   getAttendanceByUserId(
     userId: string,
     filter: SimpleFilter,

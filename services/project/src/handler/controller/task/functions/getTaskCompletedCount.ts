@@ -11,12 +11,25 @@ export const getTaskCompletedCount = async (
     const { access_token } = req.cookies;
     const data = validateJwt(access_token);
 
-    let tasksCount = await iTaskUseCase.getTaskCompletedCount(
-      data.organization
-    );
-    let newTaskCount = await iTaskUseCase.getNewTaskCount(data.organization);
-    if (!tasksCount) {
-      throw Error("No task found");
+    let tasksCount;
+    let newTaskCount;
+
+    if (data.roles !== "employee") {
+      tasksCount = await iTaskUseCase.getTaskCompletedCount(data.organization);
+
+      newTaskCount = await iTaskUseCase.getNewTaskCount(data.organization);
+      if (!tasksCount) {
+        throw Error("No task found");
+      }
+    } else {
+      tasksCount = await iTaskUseCase.getTaskCompletedCountForEmployee(
+        data.user
+      );
+
+      newTaskCount = await iTaskUseCase.getNewTaskCountForEmployee(data.user);
+      if (!tasksCount) {
+        throw Error("No task found");
+      }
     }
 
     return res.status(200).json({

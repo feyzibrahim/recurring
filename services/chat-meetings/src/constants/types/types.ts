@@ -11,7 +11,10 @@ export const TYPES = {
   MeetingAdapterInterface: Symbol.for("MeetingAdapterInterface"),
   MeetingUseCaseInterface: Symbol.for("MeetingUseCaseInterface"),
 
+  // User
   UserAdapterInterface: Symbol.for("UserAdapterInterface"),
+  UserUseCaseInterface: Symbol.for("UserUseCaseInterface"),
+
   RabbitMQServiceInitializer: Symbol.for("RabbitMQServiceInitializer"),
   SocketIOServiceInitializer: Symbol.for("SocketIOServiceInitializer"),
 };

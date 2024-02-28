@@ -11,10 +11,6 @@ export const getProjects = async (id: string) => {
       path: "members",
       select: "firstName lastName profileImageURL",
     });
-    console.log(
-      "file: getProjects.adapter.ts:14 -> getProjects -> projects",
-      projects
-    );
 
     return projects as Project[];
   } catch (error) {

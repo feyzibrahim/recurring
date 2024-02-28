@@ -4,9 +4,8 @@ import { EmployeeTypes } from "@/constants/Types";
 import { Socket, io } from "socket.io-client";
 import { API_ROUTES } from "@/lib/routes";
 import { useToast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { ToastAction } from "@/components/ui/toast";
+import { usePathname, useRouter } from "next/navigation";
 
 interface UserContextType {
   user: EmployeeTypes | null;
@@ -27,6 +26,10 @@ const UserContextProvider = ({
 }) => {
   let [socket, setSocket] = useState<Socket>();
   const { toast } = useToast();
+  const router = useRouter();
+  const pathName = usePathname();
+  let path = pathName.split("/");
+  let curr = path[1];
 
   useEffect(() => {
     let connect: Socket = io(API_ROUTES.CHAT);
@@ -45,43 +48,67 @@ const UserContextProvider = ({
     data.to = from;
     socket && socket.emit("video-call-declined", data);
   };
+  const acceptCall = (data: {
+    from: string;
+    to: string;
+    callId: string;
+    user: EmployeeTypes;
+  }) => {
+    let from = data.from;
+    let to = data.to;
+    data.from = to;
+    data.to = from;
+    socket && socket.emit("video-call-accepted", data);
+
+    router.replace(`/${curr}/chat/user/${data.user.username}/${data.callId}`);
+  };
+
+  const [callCancelledByCaller, setCallCancelledByCaller] = useState(false);
 
   useEffect(() => {
     socket &&
       socket.on(
         "video-call",
-        (data: { from: string; to: string; callId: string }) => {
+        (data: {
+          from: string;
+          to: string;
+          callId: string;
+          user: EmployeeTypes;
+        }) => {
           toast({
             title: "Video Call",
-            description: "Just Testing",
+            description: `${user.firstName} ${user.lastName}`,
             variant: "light",
             duration: 45000,
             action: (
-              <div className="">
+              <div className="flex gap-2">
                 <ToastAction
                   altText="Accept Call"
-                  className="border-none hover:bg-none"
+                  className="border-none hover:bg-none bg-green-700"
                 >
-                  <Link href={`/chat/${data.callId}`}>
-                    <Button>Accept</Button>
-                  </Link>
+                  <p onClick={() => acceptCall(data)}>Accept</p>
                 </ToastAction>
                 <ToastAction
                   altText="Decline Call"
-                  className="border-none hover:bg-none"
+                  className="border-none hover:bg-none bg-red-700"
                 >
-                  <Button
-                    variant="destructive"
-                    onClick={() => declineCall(data)}
-                  >
+                  <p className="" onClick={() => declineCall(data)}>
                     Decline
-                  </Button>
+                  </p>
                 </ToastAction>
               </div>
             ),
           });
         }
       );
+    socket &&
+      socket.on("video-call-hangup", (data) => {
+        console.log(
+          "file: UserContextProvider.tsx:95 -> socket.on -> data",
+          data
+        );
+        setCallCancelledByCaller(true);
+      });
   }, [socket]);
 
   return (

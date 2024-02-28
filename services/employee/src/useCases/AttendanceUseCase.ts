@@ -18,8 +18,11 @@ export class AttendanceUseCase implements AttendanceUseCaseInterface {
     return this.iAttendanceUseCase.getAttendanceLength(id, filter);
   }
 
-  getAttendanceList(id: string): Promise<boolean | Attendance> {
-    return this.iAttendanceUseCase.getAttendanceList(id);
+  getAttendanceList(
+    id: string,
+    filter: SimpleFilter
+  ): Promise<boolean | Attendance[]> {
+    return this.iAttendanceUseCase.getAttendanceList(id, filter);
   }
 
   getAttendanceByUserId(

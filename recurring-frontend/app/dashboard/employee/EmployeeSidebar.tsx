@@ -55,6 +55,17 @@ const EmployeeSidebar = () => {
             Ex-employees
           </div>
         </Link>
+        <Link href={"/dashboard/employee/leave-policy"} className="hover-text">
+          <div
+            className={`px-3 py-2 rounded ${
+              pathName === "/dashboard/employee/leave-policy"
+                ? " bg-backgroundAccent text-foregroundAccent"
+                : ""
+            }`}
+          >
+            Leave Policy
+          </div>
+        </Link>
       </div>
     </div>
   );

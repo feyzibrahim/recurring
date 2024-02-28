@@ -11,8 +11,11 @@ import { getAttendanceLength } from "./functions/getAttendanceLength";
 
 @injectable()
 export class AttendanceAdapter implements AttendanceAdapterInterface {
-  async getAttendanceList(id: string): Promise<boolean | Attendance> {
-    return getAttendanceList(id);
+  async getAttendanceList(
+    id: string,
+    filter: SimpleFilter
+  ): Promise<boolean | Attendance[]> {
+    return getAttendanceList(id, filter);
   }
 
   getAttendanceLength(

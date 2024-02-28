@@ -31,7 +31,6 @@ const ChatList = () => {
 
     socket &&
       socket.on("get-online-users", (data) => {
-        console.log("file: ChatList.tsx:34 -> socket.on -> data", data);
         dispatch(updateOnlineStatus({ onlineList: data, userId: user?._id }));
       });
   }, [socket, dispatch, user?._id]);
