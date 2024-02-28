@@ -22,9 +22,9 @@ import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { editTask } from "@/app/lib/features/task/taskActions";
 import FormInputCustom from "@/components/common/FormInputCustom";
 import { EmployeeList } from "@/components/common/task/EmployeeList";
-import DatePickerNoLimit from "@/components/custom/DatePickerNoLimit";
 import { format } from "date-fns";
 import DatePickerLimitedString from "@/components/custom/DatePickerLimitedString";
+import { usePathname } from "next/navigation";
 
 const formSchema = z.object({
   title: z
@@ -32,21 +32,24 @@ const formSchema = z.object({
     .min(2, {
       message: "Email must be at least 2 characters.",
     })
-    .max(30, { message: "Name should be Less than 30 characters" }),
-  startDate: z.string(),
-  dueDate: z.string(),
+    .max(30, { message: "Name should be Less than 30 characters" })
+    .optional(),
+  startDate: z.string().optional(),
+  dueDate: z.string().optional(),
   status: z
     .string()
     .min(2, {
       message: "Email must be at least 2 characters.",
     })
-    .max(30, { message: "Name should be Less than 30 characters" }),
+    .max(30, { message: "Name should be Less than 30 characters" })
+    .optional(),
   priority: z
     .string()
     .min(2, {
       message: "Email must be at least 2 characters.",
     })
-    .max(30, { message: "Name should be Less than 30 characters" }),
+    .max(30, { message: "Name should be Less than 30 characters" })
+    .optional(),
   assignee: z.any(),
   // description: z
   //   .string()
@@ -69,6 +72,8 @@ export default function TaskEditForm({
 }: {
   setIsModalOpen: any;
 }) {
+  const path = usePathname();
+  const curr = path.split("/")[1];
   const dispatch = useAppDispatch();
 
   const { task, loading, error } = useAppSelector((state) => state.task);
@@ -104,6 +109,7 @@ export default function TaskEditForm({
         <FormField
           control={form.control}
           name="title"
+          disabled={curr === "home"}
           render={({ field }) => (
             <FormInputCustom
               field={field}
@@ -117,6 +123,7 @@ export default function TaskEditForm({
           <FormField
             control={form.control}
             name="startDate"
+            disabled={curr === "home"}
             render={({ field }) => (
               <DatePickerLimitedString title="Starting Date" field={field} />
             )}
@@ -126,6 +133,7 @@ export default function TaskEditForm({
           <FormField
             control={form.control}
             name="dueDate"
+            disabled={curr === "home"}
             render={({ field }) => (
               <DatePickerLimitedString title="Due Date" field={field} />
             )}
@@ -165,6 +173,7 @@ export default function TaskEditForm({
             <FormField
               control={form.control}
               name="priority"
+              disabled={curr === "home"}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Priority</FormLabel>
@@ -192,6 +201,7 @@ export default function TaskEditForm({
         <FormField
           control={form.control}
           name="assignee"
+          disabled={curr === "home"}
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Choose Assignee</FormLabel>

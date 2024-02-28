@@ -9,13 +9,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import SubTaskForm from "./SubTaskForm";
+import { usePathname } from "next/navigation";
 
 const NewSubTaskButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const path = usePathname();
+  const curr = path.split("/")[1];
 
   return (
     <>
-      <Button variant="secondary" onClick={() => setIsModalOpen(true)}>
+      <Button
+        variant="secondary"
+        onClick={() => setIsModalOpen(true)}
+        disabled={curr === "home"}
+      >
         New
       </Button>
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
