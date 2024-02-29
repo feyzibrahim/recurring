@@ -20,6 +20,7 @@ const ChatList = () => {
   const { user, socket } = useContext(UserContext);
 
   const { chats } = useAppSelector((state) => state.chat);
+  console.log("file: ChatList.tsx:23 -> ChatList -> chats", chats);
 
   useEffect(() => {
     socket && socket.emit("online-user", user?._id);
@@ -30,7 +31,7 @@ const ChatList = () => {
       });
 
     socket &&
-      socket.on("get-online-users", (data) => {
+      socket.off().on("get-online-users", (data) => {
         dispatch(updateOnlineStatus({ onlineList: data, userId: user?._id }));
       });
   }, [socket, dispatch, user?._id]);

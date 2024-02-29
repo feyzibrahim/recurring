@@ -35,6 +35,9 @@ export const taskSlice = createSlice({
     removeTaskOnClose: (state) => {
       return { ...state, task: null };
     },
+    setTask: (state, { payload }) => {
+      return { ...state, task: payload.task };
+    },
   },
   extraReducers: (builder) => {
     // Get all tasks
@@ -157,6 +160,6 @@ export const taskSlice = createSlice({
   },
 });
 
-export const { removeTaskOnClose } = taskSlice.actions;
+export const { removeTaskOnClose, setTask } = taskSlice.actions;
 
 export default taskSlice.reducer;

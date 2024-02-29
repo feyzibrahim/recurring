@@ -51,6 +51,10 @@ const useTaskHook = () => {
       });
       if (res && res.tasks) {
         setTasks(res.tasks);
+        console.log(
+          "file: useTaskHook.ts:54 -> loadTasks -> res.tasks",
+          res.tasks
+        );
 
         const tasksByStatus: Record<string, TaskTypes[]> = {};
         res.tasks.forEach((task: TaskTypes) => {

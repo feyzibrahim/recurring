@@ -18,17 +18,18 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { FormControl } from "@/components/ui/form";
-import { useState } from "react";
-import { City, ICity } from "country-state-city";
+import { City } from "country-state-city";
 
 export function CityList({
   field,
   countryISO,
   stateISO,
+  value,
 }: {
   field: any;
   countryISO: any;
   stateISO: any;
+  value?: string;
 }) {
   const cities = City.getCitiesOfState(countryISO, stateISO);
 
@@ -64,7 +65,7 @@ export function CityList({
                   key={city.name}
                   value={city.name}
                   onSelect={() => {
-                    setValue("city", city.name);
+                    setValue(value ? value : "city", city.name);
                   }}
                 >
                   <Check

@@ -18,21 +18,21 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { FormControl } from "@/components/ui/form";
-import { useState } from "react";
-import { IState, State } from "country-state-city";
+import { State } from "country-state-city";
 
 export function StateList({
   field,
   countryISO,
   setStateISO,
+  value,
 }: {
   field: any;
   countryISO: any;
   setStateISO: any;
+  value?: string;
 }) {
   const states = State.getStatesOfCountry(countryISO);
 
-  console.log("file: StateList.tsx:36 -> states", states);
   const { setValue } = useFormContext();
 
   return (
@@ -65,7 +65,7 @@ export function StateList({
                   key={state.name}
                   value={state.name}
                   onSelect={() => {
-                    setValue("state", state.name);
+                    setValue(value ? value : "state", state.name);
                     setStateISO(state.isoCode);
                   }}
                 >

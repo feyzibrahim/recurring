@@ -3,6 +3,7 @@ export const API_ROUTES = {
   PROJECT: "http://localhost:4002",
   EMPLOYEE: "http://localhost:4003",
   CHAT: "http://localhost:4004",
+  CLIENT_DEALS: "http://localhost:4005",
 };
 
 // export const API_ROUTES = {

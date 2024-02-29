@@ -102,7 +102,9 @@ export class SocketIOService {
           to: data.to,
         };
 
-        await this.iMessageUseCase.createMessage(message);
+        const messageSaved = (await this.iMessageUseCase.createMessage(
+          message
+        )) as Message;
 
         // this.io.sockets.emit("chat", data);
         const receiver = this.onlineUsersList.find(
@@ -110,7 +112,7 @@ export class SocketIOService {
         );
 
         if (receiver) {
-          this.io.to(receiver.socketId).emit("message", data);
+          this.io.to(receiver.socketId).emit("message", messageSaved);
         }
 
         const sender = this.onlineUsersList.find(
@@ -118,7 +120,7 @@ export class SocketIOService {
         );
 
         if (sender) {
-          this.io.to(sender.socketId).emit("message", data);
+          this.io.to(sender.socketId).emit("message", messageSaved);
         }
       });
 

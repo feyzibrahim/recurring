@@ -4,9 +4,10 @@ import Column from "./Column";
 import { useContext, useState } from "react";
 import TaskDetailSheet from "./TaskDetailSheet";
 import { TaskContext } from "./TaskContextProvider";
+import { EmployeeTypes } from "@/constants/Types";
 // import CreateTaskButton from "./CreateTaskButton";
 
-const TaskList = () => {
+const TaskList = ({ user }: { user: EmployeeTypes }) => {
   const { columns, onDragEnd } = useContext(TaskContext);
   return (
     <div>
@@ -22,7 +23,7 @@ const TaskList = () => {
             ))}
         </div>
       </DragDropContext>
-      <TaskDetailSheet />
+      <TaskDetailSheet user={user} />
     </div>
   );
 };

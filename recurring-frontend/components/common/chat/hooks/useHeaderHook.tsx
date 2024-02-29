@@ -40,7 +40,7 @@ const useHeaderHook = (username: string) => {
         router.push(`${username}/${data.callId}`);
         // setVideoCallActive(false);
       });
-  }, [socket, user?._id]);
+  }, [socket, user?._id, router, username]);
 
   useEffect(() => {
     socket &&

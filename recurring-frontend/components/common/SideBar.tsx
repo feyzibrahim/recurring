@@ -116,7 +116,7 @@ const SideBar = () => {
           <Link href={"/dashboard/clients"} className="hover-text text-xl">
             <div
               className={`p-1 rounded-xl hover:bg-background ${
-                pathName === "/dashboard/clients"
+                pathName.includes("/dashboard/clients")
                   ? " bg-primary text-white"
                   : ""
               }`}
@@ -130,7 +130,9 @@ const SideBar = () => {
           <Link href={"/dashboard/deals"} className="hover-text text-xl">
             <div
               className={`p-1 rounded-xl hover:bg-background ${
-                pathName === "/dashboard/deals" ? " bg-primary text-white" : ""
+                pathName.includes("/dashboard/deals")
+                  ? " bg-primary text-white"
+                  : ""
               }`}
             >
               <FaMoneyCheckAlt className="m-1" />

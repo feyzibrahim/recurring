@@ -24,9 +24,11 @@ import { Country, ICountry } from "country-state-city";
 export function CountryList({
   field,
   setCountryISO,
+  value,
 }: {
   field: any;
   setCountryISO: any;
+  value?: string;
 }) {
   const countries = Country.getAllCountries();
 
@@ -63,7 +65,7 @@ export function CountryList({
                   key={country.name}
                   value={country.name}
                   onSelect={() => {
-                    setValue("country", country.name);
+                    setValue(value ? value : "country", country.name);
                     setCountryISO(country.isoCode);
                   }}
                 >

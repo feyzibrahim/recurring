@@ -147,6 +147,34 @@ interface MessageTypes {
   updatedAt: Date;
 }
 
+interface ClientTypes {
+  _id: string;
+  email: string;
+  type: "individual" | "company";
+  phone: string;
+  organization: string;
+  slug: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  };
+  industry: string;
+  createdAt: Date;
+  updatedAt: Date;
+  individualDetails?: {
+    firstName: string;
+    lastName: string;
+  };
+  companyDetails?: {
+    companyName: string;
+    contactPerson: string;
+  };
+  profileImageURL?: string;
+}
+
 export type {
   InputWithIconProps,
   EmployeeTypes,
@@ -161,4 +189,5 @@ export type {
   SubTaskTypes,
   NotesTypes,
   MessageTypes,
+  ClientTypes,
 };

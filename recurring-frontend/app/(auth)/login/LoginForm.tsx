@@ -70,6 +70,7 @@ export default function LoginForm() {
         router.replace("/man");
       }
     }
+    router.refresh();
     setLoading(false);
   }
 

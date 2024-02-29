@@ -13,5 +13,6 @@ export const logout = async (router: AppRouterInstance) => {
   });
   if (data.success) {
     router.replace("/");
+    router.refresh();
   }
 };
