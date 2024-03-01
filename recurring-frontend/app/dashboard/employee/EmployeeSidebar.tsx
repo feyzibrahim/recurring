@@ -1,6 +1,10 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { CgNotifications } from "react-icons/cg";
+import { GrList } from "react-icons/gr";
+import { RiDraftLine, RiFolderUserLine } from "react-icons/ri";
 
 const EmployeeSidebar = () => {
   const pathName = usePathname();
@@ -10,24 +14,24 @@ const EmployeeSidebar = () => {
       <div className="flex flex-col gap-2 my-5 text-sm">
         <Link href={"/dashboard/employee"} className="hover-text w-full">
           <div
-            className={`px-3 py-2 rounded ${
+            className={`px-3 py-2 rounded flex items-center gap-1 ${
               pathName === "/dashboard/employee"
                 ? " bg-backgroundAccent text-foregroundAccent"
                 : ""
             }`}
           >
-            Employee List
+            <GrList /> Employee List
           </div>
         </Link>
         <Link href={"/dashboard/employee/create"} className="hover-text">
           <div
-            className={`px-3 py-2 rounded ${
+            className={`px-3 py-2 rounded flex items-center gap-1 ${
               pathName === "/dashboard/employee/create"
                 ? " bg-backgroundAccent text-foregroundAccent"
                 : ""
             }`}
           >
-            Create Employee
+            <AiOutlineUserAdd /> Create
           </div>
         </Link>
         <Link
@@ -35,35 +39,35 @@ const EmployeeSidebar = () => {
           className="hover-text"
         >
           <div
-            className={`px-3 py-2 rounded ${
+            className={`px-3 py-2 rounded flex items-center gap-1 ${
               pathName === "/dashboard/employee/leave-requests"
                 ? " bg-backgroundAccent text-foregroundAccent"
                 : ""
             }`}
           >
-            Leave Requests
+            <CgNotifications /> Leave Requests
           </div>
         </Link>
         <Link href={"/dashboard/employee/ex"} className="hover-text">
           <div
-            className={`px-3 py-2 rounded ${
+            className={`px-3 py-2 rounded flex items-center gap-1 ${
               pathName === "/dashboard/employee/ex"
                 ? " bg-backgroundAccent text-foregroundAccent"
                 : ""
             }`}
           >
-            Ex-employees
+            <RiFolderUserLine /> Ex-employees
           </div>
         </Link>
         <Link href={"/dashboard/employee/leave-policy"} className="hover-text">
           <div
-            className={`px-3 py-2 rounded ${
+            className={`px-3 py-2 rounded flex items-center gap-1 ${
               pathName === "/dashboard/employee/leave-policy"
                 ? " bg-backgroundAccent text-foregroundAccent"
                 : ""
             }`}
           >
-            Leave Policy
+            <RiDraftLine /> Leave Policy
           </div>
         </Link>
       </div>
