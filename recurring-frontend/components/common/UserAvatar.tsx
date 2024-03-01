@@ -1,9 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { FiUser } from "react-icons/fi";
 
-const UserAvatar = ({ profileImageURL }: { profileImageURL: string }) => {
+interface PropsTypes {
+  profileImageURL: string;
+  size?: string;
+}
+
+const UserAvatar = ({ profileImageURL, size }: PropsTypes) => {
   return (
-    <Avatar>
+    <Avatar className={size ? size : ""}>
       <AvatarImage src={profileImageURL} alt="@user" />
       <AvatarFallback>
         <AvatarFallback className="bg-backgroundAccent">

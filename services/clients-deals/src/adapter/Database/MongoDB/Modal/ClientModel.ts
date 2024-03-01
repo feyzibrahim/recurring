@@ -2,29 +2,20 @@ import mongoose, { Schema } from "mongoose";
 import { Client } from "../../../../Entities/Client";
 import { v4 as uuid } from "uuid";
 
-const individualClientSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-});
-
-const companyClientSchema = new Schema({
-  companyName: {
-    type: String,
-    required: true,
-  },
-  contactPerson: {
-    type: String,
-  },
-});
-
 const clientSchema = new Schema(
   {
+    details: {
+      name: {
+        type: String,
+        required: true,
+      },
+      contactPerson: {
+        type: String,
+      },
+      profileImageURL: {
+        type: String,
+      },
+    },
     type: {
       type: String,
       enum: ["individual", "company"],
@@ -36,7 +27,7 @@ const clientSchema = new Schema(
     },
     slug: {
       type: String,
-      default: uuid(),
+      default: uuid,
     },
     phone: {
       type: String,
@@ -56,11 +47,6 @@ const clientSchema = new Schema(
       zip: { type: String },
       country: { type: String },
     },
-    profileImageURL: {
-      type: String,
-    },
-    individualDetails: individualClientSchema,
-    companyDetails: companyClientSchema,
   },
   { timestamps: true }
 );

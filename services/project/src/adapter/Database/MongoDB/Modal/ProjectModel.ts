@@ -10,7 +10,7 @@ const ProjectsSchema: Schema = new Schema(
     },
     slug: {
       type: String,
-      default: uuid(),
+      default: uuid,
     },
     startDate: {
       type: Date,

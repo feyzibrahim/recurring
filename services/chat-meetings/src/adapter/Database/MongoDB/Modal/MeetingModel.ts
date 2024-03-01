@@ -25,7 +25,7 @@ const meetingSchema: Schema = new Schema(
     },
     slug: {
       type: String,
-      default: uuid(),
+      default: uuid,
     },
     organization: {
       type: mongoose.Schema.Types.ObjectId,

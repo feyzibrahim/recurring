@@ -27,7 +27,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { FiEdit } from "react-icons/fi";
 import EditButton from "./EditButton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

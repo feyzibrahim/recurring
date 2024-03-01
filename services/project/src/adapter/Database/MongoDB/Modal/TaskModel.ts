@@ -33,7 +33,7 @@ const TaskSchema: Schema = new Schema(
     },
     slug: {
       type: String,
-      default: uuid(),
+      default: uuid,
     },
     organization: {
       type: Schema.Types.ObjectId,

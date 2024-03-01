@@ -1,6 +1,11 @@
 export class Client {
   constructor(
     public _id: string,
+    public details: {
+      name: string;
+      contactPerson?: string;
+      profileImageURL?: string;
+    },
     public email: string,
     public type: "individual" | "company",
     public phone: string,
@@ -15,15 +20,6 @@ export class Client {
     },
     public createdAt: Date,
     public updatedAt: Date,
-    public individualDetails?: {
-      firstName: string;
-      lastName: string;
-    },
-    public industry?: string,
-    public companyDetails?: {
-      companyName: string;
-      contactPerson: string;
-    },
-    public profileImageURL?: string
+    public industry?: string
   ) {}
 }

@@ -2,6 +2,7 @@ import { ClientTypes } from "@/constants/Types";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import UserAvatar from "../UserAvatar";
 
 export const columns: ColumnDef<ClientTypes>[] = [
   {
@@ -9,7 +10,7 @@ export const columns: ColumnDef<ClientTypes>[] = [
     header: "Slug",
   },
   {
-    accessorKey: "individualDetails",
+    accessorKey: "details",
     header: ({ column }) => {
       return (
         <div
@@ -22,33 +23,45 @@ export const columns: ColumnDef<ClientTypes>[] = [
       );
     },
     cell: ({ row }) => {
-      const data: { firstName: string; lastName: string } =
-        row.getValue("individualDetails");
+      const data: {
+        name: string;
+        contactPerson: string;
+        profileImageURL: string;
+      } = row.getValue("details");
+
       return (
-        <span>
-          {data && data.firstName} {data && data.lastName}
-        </span>
+        data && (
+          <div className="flex items-center gap-2">
+            {data.profileImageURL && (
+              <UserAvatar profileImageURL={data.profileImageURL} size="" />
+            )}
+            <div>
+              <p>{data.name}</p>
+              <p className="text-xs text-foregroundAccent">
+                {data.contactPerson ?? ""}
+              </p>
+            </div>
+          </div>
+        )
       );
     },
   },
   {
-    accessorKey: "companyDetails",
+    accessorKey: "type",
     header: ({ column }) => {
       return (
         <div
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="flex gap-1 items-center hover:text-foreground cursor-pointer"
         >
-          Company
+          Type
           <CaretSortIcon className="ml-2 h-4 w-4" />
         </div>
       );
     },
-    cell: ({ row }) => {
-      const data: { companyName: string; contactPerson: string } =
-        row.getValue("companyDetails");
-      return <span>{data && data.companyName}</span>;
-    },
+    cell: ({ row }) => (
+      <span className="capitalize">{row.getValue("type")}</span>
+    ),
   },
   {
     accessorKey: "phone",
@@ -77,23 +90,6 @@ export const columns: ColumnDef<ClientTypes>[] = [
         </div>
       );
     },
-  },
-  {
-    accessorKey: "type",
-    header: ({ column }) => {
-      return (
-        <div
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex gap-1 items-center hover:text-foreground cursor-pointer"
-        >
-          Type
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-    cell: ({ row }) => (
-      <span className="capitalize">{row.getValue("type")}</span>
-    ),
   },
   {
     accessorKey: "createdAt",

@@ -43,7 +43,7 @@ const ClientCreateForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 px-5 pb-5"
       >
-        <div className="md:grid grid-cols-4 gap-10">
+        <div className="md:grid grid-cols-4 gap-5">
           <div>
             <PhotoUpload
               selectedFile={selectedFile}
@@ -78,70 +78,40 @@ const ClientCreateForm = () => {
               name="industry"
               render={({ field }) => (
                 <FormInputCustom
-                  placeholder="Enter First Name"
+                  placeholder="Enter the industry of client"
                   field={field}
                   showTitle={true}
-                  title="First Name"
+                  title="Industry"
                 />
               )}
             />
           </div>
           <div className="col-span-3">
-            {form.watch("type") === "individual" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <FormField
-                  control={form.control}
-                  name="individualDetails.firstName"
-                  render={({ field }) => (
-                    <FormInputCustom
-                      placeholder="Enter First Name"
-                      field={field}
-                      showTitle={true}
-                      title="First Name"
-                    />
-                  )}
+            <FormField
+              control={form.control}
+              name="details.name"
+              render={({ field }) => (
+                <FormInputCustom
+                  placeholder="Enter client name"
+                  field={field}
+                  showTitle={true}
+                  title="Name"
                 />
-                <FormField
-                  control={form.control}
-                  name="individualDetails.lastName"
-                  render={({ field }) => (
-                    <FormInputCustom
-                      placeholder="Enter Last Name"
-                      field={field}
-                      showTitle={true}
-                      title="Last Name"
-                    />
-                  )}
-                />
-              </div>
-            )}
+              )}
+            />
             {form.watch("type") === "company" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <FormField
-                  control={form.control}
-                  name="companyDetails.companyName"
-                  render={({ field }) => (
-                    <FormInputCustom
-                      placeholder="Enter company name"
-                      field={field}
-                      showTitle={true}
-                      title="Company Name"
-                    />
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="companyDetails.contactPerson"
-                  render={({ field }) => (
-                    <FormInputCustom
-                      placeholder="Enter contact person name"
-                      field={field}
-                      showTitle={true}
-                      title="Contact Person"
-                    />
-                  )}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="details.contactPerson"
+                render={({ field }) => (
+                  <FormInputCustom
+                    placeholder="Enter company contact person name"
+                    field={field}
+                    showTitle={true}
+                    title="Contact Person Name"
+                  />
+                )}
+              />
             )}
             <FormField
               control={form.control}

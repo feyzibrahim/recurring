@@ -7,14 +7,18 @@ import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { TanStackDataTable } from "@/components/custom/TanStackDataTable";
 import { columns } from "./clientColumns";
 import { getClients } from "@/app/lib/features/client/clientActions";
+import { useRouter } from "next/navigation";
 
 const ClientTable = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const { clients } = useAppSelector((state) => state.client);
 
   useEffect(() => {
     dispatch(getClients());
   }, [dispatch]);
+
+  const rowOnCLick = (slug: string) => router.push(`clients/${slug}`);
 
   return (
     <div>
@@ -29,7 +33,7 @@ const ClientTable = () => {
             </Link>
           }
           searchField="email"
-          //   rowOnCLick={rowOnCLick}
+          rowOnCLick={rowOnCLick}
         />
       ) : (
         <div className="flex flex-col items-center justify-center h-[80vh]">

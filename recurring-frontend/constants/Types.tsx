@@ -149,6 +149,11 @@ interface MessageTypes {
 
 interface ClientTypes {
   _id: string;
+  details: {
+    name: string;
+    contactPerson?: string;
+    profileImageURL?: string;
+  };
   email: string;
   type: "individual" | "company";
   phone: string;
@@ -164,15 +169,6 @@ interface ClientTypes {
   industry: string;
   createdAt: Date;
   updatedAt: Date;
-  individualDetails?: {
-    firstName: string;
-    lastName: string;
-  };
-  companyDetails?: {
-    companyName: string;
-    contactPerson: string;
-  };
-  profileImageURL?: string;
 }
 
 export type {

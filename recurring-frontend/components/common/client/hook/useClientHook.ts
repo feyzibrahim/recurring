@@ -23,28 +23,19 @@ const useClientHook = () => {
     zipCode: z.string().optional(),
   });
 
-  const individualDetails = z.object({
-    firstName: z
+  const detailsSchema = z.object({
+    name: z
       .string()
-      .min(2, { message: "First name must be at least 2 characters." })
-      .optional(),
-    lastName: z
-      .string()
-      .min(2, { message: "Last name must be at least 2 characters." })
-      .optional(),
-  });
-  const companyDetails = z.object({
-    companyName: z
-      .string()
-      .min(2, { message: "First name must be at least 2 characters." })
-      .optional(),
+      .min(2, { message: "First name must be at least 2 characters." }),
     contactPerson: z
       .string()
       .min(2, { message: "Contact person must be at least 2 characters." })
       .optional(),
+    profileImageURL: z.string().optional(),
   });
 
   const clientSchema = z.object({
+    details: detailsSchema,
     phone: z.string().min(8, { message: "Phone be at least 10 characters." }),
     email: z
       .string()
@@ -54,10 +45,7 @@ const useClientHook = () => {
       .string()
       .min(2, { message: "Employee Type must be at least 2 characters." }),
     industry: z.string(),
-    profileImageURL: z.string().optional(),
     address: addressSchema.optional(),
-    individualDetails: individualDetails.optional(),
-    companyDetails: companyDetails.optional(),
   });
 
   const form = useForm<z.infer<typeof clientSchema>>({
@@ -78,11 +66,11 @@ const useClientHook = () => {
   });
 
   useEffect(() => {
-    if (form.watch("type") === "company") {
-      form.reset({ ...form.getValues(), individualDetails: undefined });
-    }
     if (form.watch("type") === "individual") {
-      form.reset({ ...form.getValues(), companyDetails: undefined });
+      form.reset({
+        ...form.getValues(),
+        details: { contactPerson: undefined },
+      });
     }
   }, [form, form.watch("type")]);
 
@@ -108,7 +96,7 @@ const useClientHook = () => {
   const onSubmit = async (values: z.infer<typeof clientSchema>) => {
     const profileImageURL = selectedFile && (await photoUpload());
     if (profileImageURL) {
-      values.profileImageURL = profileImageURL;
+      values.details.profileImageURL = profileImageURL;
     }
     const res = await dispatch(createClient(values));
     if (createClient.fulfilled.match(res)) {
