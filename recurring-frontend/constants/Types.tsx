@@ -171,6 +171,23 @@ interface ClientTypes {
   updatedAt: Date;
 }
 
+interface DealTypes {
+  _id: string;
+  title: string;
+  description: string;
+  organization: string;
+  amount: number;
+  expectedCloseDate: Date;
+  status: "lead" | "qualified" | "proposal" | "negotiation" | "closed" | "lost";
+  priority: "low" | "medium" | "high";
+  lastContacted: Date;
+  slug: string;
+  client: ClientTypes;
+  createdBy: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export type {
   InputWithIconProps,
   EmployeeTypes,
@@ -186,4 +203,5 @@ export type {
   NotesTypes,
   MessageTypes,
   ClientTypes,
+  DealTypes,
 };

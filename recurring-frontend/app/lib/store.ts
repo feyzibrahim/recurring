@@ -7,6 +7,7 @@ import leaveSlice from "./features/leave/leaveSlice";
 import chatSlice from "./features/chat/chatSlice";
 import meetingSlice from "./features/meeting/meetingSlice";
 import clientSlice from "./features/client/clientSlice";
+import dealSlice from "./features/deal/dealSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -19,6 +20,7 @@ export const makeStore = () => {
       chat: chatSlice,
       meeting: meetingSlice,
       client: clientSlice,
+      deal: dealSlice,
     },
   });
 };
