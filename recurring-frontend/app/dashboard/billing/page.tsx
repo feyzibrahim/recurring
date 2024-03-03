@@ -1,11 +1,16 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import EmptyBill from "@/components/empty/EmptyBill";
+import CurrentPlanBenefits from "./components/CurrentPlanBenefits";
+import CurrentSubscriptionPlan from "./components/CurrentSubscriptionPlan";
+import NextInvoice from "./components/NextInvoice";
 
 const page = () => {
   return (
-    <div className="md:px-10 md:py-5 w-full overflow-hidden">
-      <div className="flex items-center justify-between mb-5">
+    <div className="p-5 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-7 space-y-5 md:space-y-0 md:space-x-5">
+        <CurrentSubscriptionPlan />
+        <NextInvoice />
+        <CurrentPlanBenefits />
+      </div>
+      {/* <div className="flex items-center justify-between mb-5">
         <h1 className="text-2xl font-bold">Billing</h1>
         <Link href="employee/create">
           <Button>Add Billing</Button>
@@ -18,7 +23,7 @@ const page = () => {
         <Link href="employee/create">
           <Button>Create Billing</Button>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

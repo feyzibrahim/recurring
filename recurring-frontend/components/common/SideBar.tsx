@@ -98,20 +98,6 @@ const SideBar = () => {
           </Link>
         </ToolTipWrapper>
 
-        <ToolTipWrapper title="Billing">
-          <Link href={"/dashboard/billing"} className="hover-text text-xl">
-            <div
-              className={`p-1 rounded-xl hover:bg-background ${
-                pathName === "/dashboard/billing"
-                  ? " bg-primary text-white"
-                  : ""
-              }`}
-            >
-              <BiCreditCard className="m-1" />
-            </div>
-          </Link>
-        </ToolTipWrapper>
-
         <ToolTipWrapper title="Clients">
           <Link href={"/dashboard/clients"} className="hover-text text-xl">
             <div
@@ -177,6 +163,20 @@ const SideBar = () => {
               }`}
             >
               <FiSettings className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+
+        <ToolTipWrapper title="Billing">
+          <Link href={"/dashboard/billing"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName === "/dashboard/billing"
+                  ? " bg-primary text-white"
+                  : ""
+              }`}
+            >
+              <BiCreditCard className="m-1" />
             </div>
           </Link>
         </ToolTipWrapper>

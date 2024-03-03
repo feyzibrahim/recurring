@@ -1,14 +1,8 @@
 export const API_ROUTES = {
-  AUTH: "http://localhost:4001",
-  PROJECT: "http://localhost:4002",
-  EMPLOYEE: "http://localhost:4003",
-  CHAT: "http://localhost:4004",
-  CLIENT_DEALS: "http://localhost:4005",
+  AUTH: process.env.NEXT_PUBLIC_BACKEND_URL_AUTH,
+  PROJECT: process.env.NEXT_PUBLIC_BACKEND_URL_PROJECT,
+  EMPLOYEE: process.env.NEXT_PUBLIC_BACKEND_URL_EMPLOYEE,
+  CHAT: process.env.NEXT_PUBLIC_BACKEND_URL_CHAT,
+  CLIENT_DEALS: process.env.NEXT_PUBLIC_BACKEND_URL_CLIENT_AND_DEALS,
+  SUBSCRIPTION: process.env.NEXT_PUBLIC_BACKEND_URL_SUBSCRIPTION,
 };
-
-// export const API_ROUTES = {
-//   AUTH: "https://recurring-user-service.onrender.com",
-//   PROJECT: "https://recurring-project-service.onrender.com",
-//   EMPLOYEE: "https://recurring-employee-service.onrender.com",
-//   CHAT: "https://recurring-chat-meeting-service.onrender.com",
-// };
