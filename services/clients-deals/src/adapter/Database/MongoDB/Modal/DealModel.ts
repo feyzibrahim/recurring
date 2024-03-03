@@ -2,6 +2,35 @@ import mongoose, { Schema } from "mongoose";
 import { Deal } from "../../../../Entities/Deal";
 import { v4 as uuid } from "uuid";
 
+const activitySchema = new Schema(
+  {
+    title: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  },
+  { timestamps: true }
+);
+
+const noteSchema = new Schema(
+  {
+    content: {
+      type: String,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  },
+  { timestamps: true }
+);
+
 const dealModel = new Schema(
   {
     title: {
@@ -10,18 +39,15 @@ const dealModel = new Schema(
     },
     description: {
       type: String,
-      required: true,
     },
     organization: {
       type: String,
     },
     amount: {
       type: Number,
-      required: true,
     },
     expectedCloseDate: {
       type: Date,
-      required: true,
     },
     status: {
       type: String,
@@ -47,6 +73,8 @@ const dealModel = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Client",
     },
+    activity: [activitySchema],
+    note: [noteSchema],
   },
   { timestamps: true }
 );

@@ -171,6 +171,22 @@ interface ClientTypes {
   updatedAt: Date;
 }
 
+interface ActivityTypes {
+  _id: string;
+  title: string;
+  description: string;
+  user: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+interface NoteTypes {
+  _id: string;
+  content: string;
+  user: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 interface DealTypes {
   _id: string;
   title: string;
@@ -184,6 +200,8 @@ interface DealTypes {
   slug: string;
   client: ClientTypes;
   createdBy: string;
+  activity: [ActivityTypes];
+  note: [NoteTypes];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -204,4 +222,6 @@ export type {
   MessageTypes,
   ClientTypes,
   DealTypes,
+  ActivityTypes,
+  NoteTypes,
 };

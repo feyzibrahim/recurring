@@ -71,3 +71,83 @@ export const editDeal: any = createAsyncThunk(
     });
   }
 );
+
+// Deal - Activity Adding
+export const addActivityToDeal: any = createAsyncThunk(
+  "deal/addActivityToDeal",
+  async (
+    { data, slug }: { data: DealTypes; slug: string },
+    { rejectWithValue }
+  ) => {
+    return reduxCommonRequest({
+      route: API_ROUTES.CLIENT_DEALS,
+      method: "POST",
+      url: `/api/deal/activity/${slug}`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      rejectWithValue,
+    });
+  }
+);
+
+// Deal - Activity Editing
+export const editActivityToDeal: any = createAsyncThunk(
+  "deal/editActivityToDeal",
+  async (
+    { data, slug }: { data: DealTypes; slug: string },
+    { rejectWithValue }
+  ) => {
+    return reduxCommonRequest({
+      route: API_ROUTES.CLIENT_DEALS,
+      method: "PATCH",
+      url: `/api/deal/activity/${slug}`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      rejectWithValue,
+    });
+  }
+);
+
+// Deal - Note Adding
+export const addNoteToDeal: any = createAsyncThunk(
+  "deal/addNoteToDeal",
+  async (
+    { data, slug }: { data: DealTypes; slug: string },
+    { rejectWithValue }
+  ) => {
+    return reduxCommonRequest({
+      route: API_ROUTES.CLIENT_DEALS,
+      method: "POST",
+      url: `/api/deal/note/${slug}`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      rejectWithValue,
+    });
+  }
+);
+
+// Deal - Note Editing
+export const editNoteToDeal: any = createAsyncThunk(
+  "deal/editNoteToDeal",
+  async (
+    { data, slug }: { data: DealTypes; slug: string },
+    { rejectWithValue }
+  ) => {
+    return reduxCommonRequest({
+      route: API_ROUTES.CLIENT_DEALS,
+      method: "PATCH",
+      url: `/api/deal/note/${slug}`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      rejectWithValue,
+    });
+  }
+);

@@ -1,10 +1,11 @@
 import Image from "next/image";
-import deal_banner from "@/public/deal_banner.png";
+import deal_banner from "@/public/deal_banner.jpg";
 import DealDetails from "@/components/common/deals/slug/DealDetails";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const page = ({ params }: { params: { slug: string } }) => {
   return (
-    <div>
+    <ScrollArea className="h-screen w-full">
       <div className="m-5 h-60 bg-backgroundAccent rounded-b-xl">
         <Image
           src={deal_banner}
@@ -15,7 +16,7 @@ const page = ({ params }: { params: { slug: string } }) => {
         />
         <DealDetails slug={params.slug} />
       </div>
-    </div>
+    </ScrollArea>
   );
 };
 

@@ -13,6 +13,10 @@ import { getDeal } from "./functions/getDeal";
 import { updateDeal } from "./functions/updateDeal";
 import { requireAuth } from "../../middleware/AuthMiddleware";
 import { getDeals } from "./functions/getDeals";
+import { addActivity } from "./functions/addActivity";
+import { editActivity } from "./functions/editActivity";
+import { addNote } from "./functions/addNote";
+import { editNote } from "./functions/editNote";
 
 @controller("/api/deal", requireAuth)
 export class DealController {
@@ -36,8 +40,26 @@ export class DealController {
     await createDeal(req, res, this.iDealUseCase);
   }
 
-  @httpPatch("/")
+  @httpPatch("/:slug")
   async updateDeal(req: Request, res: Response) {
     await updateDeal(req, res, this.iDealUseCase);
+  }
+
+  @httpPost("/activity/:slug")
+  async addActivity(req: Request, res: Response) {
+    await addActivity(req, res, this.iDealUseCase);
+  }
+  @httpPatch("/activity/:slug")
+  async editActivity(req: Request, res: Response) {
+    await editActivity(req, res, this.iDealUseCase);
+  }
+
+  @httpPost("/note/:slug")
+  async addNote(req: Request, res: Response) {
+    await addNote(req, res, this.iDealUseCase);
+  }
+  @httpPatch("/note/:slug")
+  async editNote(req: Request, res: Response) {
+    await editNote(req, res, this.iDealUseCase);
   }
 }
