@@ -7,7 +7,7 @@ export const createSubscription = async (
   // iOrgUseCase: ProjectUseCaseInterface
 ) => {
   const apiKey = process.env.STRIPE_SECRET;
-  const { price, email } = req.body;
+  const { price, email, address, name } = req.body;
 
   try {
     const prices = await stripe.prices.list({
@@ -22,8 +22,28 @@ export const createSubscription = async (
       throw Error("Amount is found");
     }
 
-    // ToDo: add customerId to user Schema on User service
-    const customer = await stripe.customers.create({ email }, { apiKey });
+    const cus = await stripe.customers.list({ email: email }, { apiKey });
+    let customer;
+    if (cus.data.length === 0) {
+      // ToDo: add customerId to user Schema on User service
+      customer = await stripe.customers.create(
+        { email, name, address },
+        { apiKey }
+      );
+    } else {
+      customer = cus.data[0];
+    }
+
+    const existingSubscriptions = await stripe.subscriptions.list(
+      {
+        customer: customer.id,
+      },
+      { apiKey }
+    );
+
+    if (existingSubscriptions.data.length > 0) {
+      throw Error("Subscription Already Exists");
+    }
 
     const session = await stripe.checkout.sessions.create(
       {
@@ -35,8 +55,8 @@ export const createSubscription = async (
             quantity: 1,
           },
         ],
-        success_url: `${process.env.FRONTEND_URL}/dashboard/billing`,
-        cancel_url: `${process.env.FRONTEND_URL}/dashboard/billing/plans`,
+        success_url: `${process.env.FRONTEND_URL}/success`,
+        cancel_url: `${process.env.FRONTEND_URL}/failed`,
         customer: customer.id,
       },
       { apiKey }

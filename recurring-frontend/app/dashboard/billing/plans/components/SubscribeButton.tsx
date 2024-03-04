@@ -6,12 +6,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { actualCommonRequest } from "@/api/actual_client";
-import { UserContext } from "@/components/common/chat/UserProvider/UserContextProvider";
-import { Button } from "@/components/ui/button";
-import { API_ROUTES } from "@/lib/routes";
-import React, { useContext, useState } from "react";
 import DetailsForm from "./DetailsForm";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface Props {
   title: string;
@@ -20,32 +17,6 @@ interface Props {
 
 const SubscribeButton = ({ title, value }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const { user } = useContext(UserContext);
-
-  const handleSubscribe = async () => {
-    if (user) {
-      const res = await actualCommonRequest({
-        route: API_ROUTES.SUBSCRIPTION,
-        method: "POST",
-        url: "/api/subscription",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: {
-          price: value,
-          email: user?.email,
-        },
-      });
-      console.log(
-        "file: SubscribeButton.tsx:30 -> handleSubscribe -> res",
-        res
-      );
-      if (res.success) {
-        window.location.href = res.session.url;
-      }
-    }
-  };
 
   return (
     <>
@@ -61,8 +32,7 @@ const SubscribeButton = ({ title, value }: Props) => {
               please enter below details.
             </DialogDescription>
           </DialogHeader>
-          <DetailsForm setIsModalOpen={setIsModalOpen} />
-          {/* <DealEditForm setIsModalOpen={setIsModalOpen} slug={slug} /> */}
+          <DetailsForm setIsModalOpen={setIsModalOpen} value={value} />
         </DialogContent>
       </Dialog>
     </>

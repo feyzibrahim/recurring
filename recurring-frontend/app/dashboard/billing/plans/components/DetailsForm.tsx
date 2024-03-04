@@ -4,15 +4,25 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormLabel } from "@/components/ui/form";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import FormInputCustom from "@/components/common/FormInputCustom";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
 import { CountryList } from "@/components/common/CountryList";
 import { StateList } from "@/components/common/StateList";
 import { CityList } from "@/components/common/CityList";
+import { UserContext } from "@/components/common/chat/UserProvider/UserContextProvider";
+import getStripe from "@/util/getStripe";
+import { loadStripe } from "@stripe/stripe-js";
+import { storeObject } from "@/util/localStorage";
 
 const formSchema = z.object({
+  name: z
+    .string()
+    .min(2, {
+      message: "Name must be at least 2 characters.",
+    })
+    .max(30, { message: "Name should be less than 30 characters" }),
   street: z
     .string()
     .min(2, {
@@ -45,7 +55,13 @@ const formSchema = z.object({
     .max(30, { message: "zipCode should be less than 30 characters" }),
 });
 
-const DetailsForm = ({ setIsModalOpen }: { setIsModalOpen: any }) => {
+interface Props {
+  setIsModalOpen: any;
+  value: string;
+}
+
+const DetailsForm = ({ setIsModalOpen, value }: Props) => {
+  const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -56,6 +72,7 @@ const DetailsForm = ({ setIsModalOpen }: { setIsModalOpen: any }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       street: "",
       state: "",
       city: "",
@@ -65,35 +82,51 @@ const DetailsForm = ({ setIsModalOpen }: { setIsModalOpen: any }) => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const address = {
-      street: values.street,
-      city: values.city,
-      state: values.state,
-      country: values.country,
-      zipCode: values.zipCode,
-    };
+      const address = {
+        line1: values.street,
+        city: values.city,
+        state: values.state,
+        country: values.country,
+        postal_code: values.zipCode,
+      };
 
-    let res = await actualCommonRequest({
-      route: API_ROUTES.AUTH,
-      method: "PATCH",
-      url: "/api/user/organization/",
-      data: { address },
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      if (user) {
+        const res = await actualCommonRequest({
+          route: API_ROUTES.SUBSCRIPTION,
+          method: "POST",
+          url: "/api/subscription",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: { address, name: values.name, price: value, email: user.email },
+        });
 
-    if (!res.success) {
-      setError(res.error);
+        if (!res.success) {
+          setError(res.error);
+        }
+        storeObject("subscription_session", res.session);
+
+        const stripe = await loadStripe(
+          process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+        );
+
+        if (stripe) {
+          const result = await stripe.redirectToCheckout({
+            sessionId: res.session.id,
+          });
+          console.log(
+            "file: DetailsForm.tsx:114 -> onSubmit -> result",
+            result
+          );
+        }
+      }
+      setLoading(false);
+    } catch (error) {
+      console.log("file: DetailsForm.tsx:123 -> onSubmit -> error", error);
     }
-
-    if (res.success) {
-      console.log("file: OrganizationAddress.tsx:77 -> onSubmit -> res", res);
-      setIsModalOpen(false);
-    }
-    setLoading(false);
   }
 
   return (
@@ -101,11 +134,23 @@ const DetailsForm = ({ setIsModalOpen }: { setIsModalOpen: any }) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
         <FormField
           control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormInputCustom
+              field={field}
+              placeholder="Enter your name"
+              title="Name"
+              showTitle={true}
+            />
+          )}
+        />
+        <FormField
+          control={form.control}
           name="street"
           render={({ field }) => (
             <FormInputCustom
               field={field}
-              placeholder="Enter your organization street"
+              placeholder="Enter street"
               title="Street"
               showTitle={true}
             />
@@ -156,14 +201,14 @@ const DetailsForm = ({ setIsModalOpen }: { setIsModalOpen: any }) => {
           render={({ field }) => (
             <FormInputCustom
               field={field}
-              placeholder="Enter your organization zipCode"
+              placeholder="Enter your zipCode"
               title="Zip Code"
               showTitle={true}
             />
           )}
         />
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Loading..." : "Save Address"}
+          {loading ? "Loading..." : "Continue to billing"}
         </Button>
         {error && <p className="text-sm text-red-500">{error}</p>}
       </form>

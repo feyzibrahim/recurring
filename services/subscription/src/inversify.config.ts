@@ -4,12 +4,11 @@ import {
   disconnectFromDatabase,
 } from "./config/dbConnection";
 
-import { ProjectUseCase } from "./useCases/ProjectUseCase";
-import { ProjectAdapter } from "./adapter/Database/MongoDB/ProjectAdapter";
-import { ProjectAdapterInterface } from "./interface/project/ProjectAdapterInterface";
+import { SubscriptionUseCase } from "./useCases/SubscriptionUseCase";
+import { SubscriptionAdapter } from "./adapter/Database/MongoDB/SubscriptionAdapter";
+import { SubscriptionAdapterInterface } from "./interface/subscription/SubscriptionAdapterInterface";
 import { TYPES } from "./constants/types/types";
-import { ProjectUseCaseInterface } from "./interface/project/ProjectUseCaseInterface";
-import { ProjectController } from "./handler/controller/project/ProjectController";
+import { SubscriptionUseCaseInterface } from "./interface/subscription/SubscriptionUseCaseInterface";
 import { SubscriptionController } from "./handler/controller/subscription/SubscriptionController";
 
 // Database connection
@@ -17,15 +16,15 @@ connectToDatabase();
 
 const container = new Container();
 
-// Project Injection
+// Subscription Injection
 container
-  .bind<ProjectAdapterInterface>(TYPES.ProjectAdapterInterface)
-  .to(ProjectAdapter);
+  .bind<SubscriptionAdapterInterface>(TYPES.SubscriptionAdapterInterface)
+  .to(SubscriptionAdapter);
 container
-  .bind<ProjectUseCaseInterface>(TYPES.ProjectUseCaseInterface)
-  .to(ProjectUseCase);
-container.bind<ProjectController>(ProjectController).toSelf();
-container.bind<ProjectUseCase>(ProjectUseCase).toSelf();
+  .bind<SubscriptionUseCaseInterface>(TYPES.SubscriptionUseCaseInterface)
+  .to(SubscriptionUseCase);
+container.bind<SubscriptionController>(SubscriptionController).toSelf();
+container.bind<SubscriptionUseCase>(SubscriptionUseCase).toSelf();
 
 // Subscription Injection
 

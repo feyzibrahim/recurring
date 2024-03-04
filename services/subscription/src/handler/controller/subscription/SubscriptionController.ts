@@ -1,26 +1,39 @@
 import { Request, Response } from "express";
-import {
-  controller,
-  httpGet,
-  httpPatch,
-  httpPost,
-} from "inversify-express-utils";
+import { controller, httpGet, httpPost } from "inversify-express-utils";
 import { requireAuth } from "../../middleware/AuthMiddleware";
 import { getPrices } from "./functions/getPrices";
 import { createSubscription } from "./functions/createSubscription";
+import { stripeCheckoutSessionCompleted } from "./functions/stripeCheckoutSessionCompleted";
+import { SubscriptionUseCaseInterface } from "../../../interface/subscription/SubscriptionUseCaseInterface";
+import { TYPES } from "../../../constants/types/types";
+import { inject } from "inversify";
+import { getSubscriptionDetails } from "./functions/getSubscriptionDetails";
 
-@controller("/api/subscription", requireAuth)
+@controller("/api/subscription")
 export class SubscriptionController {
-  //   constructor() {} // private iOrgUseCase: ProjectUseCaseInterface // @inject(TYPES.ProjectUseCaseInterface)
+  constructor(
+    @inject(TYPES.SubscriptionUseCaseInterface)
+    private iSubscriptionUseCase: SubscriptionUseCaseInterface
+  ) {}
 
-  @httpGet("/prices")
+  @httpGet("/", requireAuth)
+  async getSubscriptionDetails(req: Request, res: Response) {
+    await getSubscriptionDetails(req, res, this.iSubscriptionUseCase);
+  }
+
+  @httpGet("/prices", requireAuth)
   async getPrices(req: Request, res: Response) {
     await getPrices(req, res);
   }
 
-  @httpPost("/")
+  @httpPost("/", requireAuth)
   async createSubscription(req: Request, res: Response) {
     await createSubscription(req, res);
+  }
+
+  @httpPost("/create")
+  async stripeCheckoutSessionCompleted(req: Request, res: Response) {
+    await stripeCheckoutSessionCompleted(req, res, this.iSubscriptionUseCase);
   }
 
   //   @httpPost("/")

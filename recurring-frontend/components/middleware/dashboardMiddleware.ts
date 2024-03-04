@@ -6,6 +6,7 @@ export async function dashboardMiddleware(req: NextRequest) {
   try {
     const access_token = req.cookies.get("access_token")?.value;
     const refresh_token = req.cookies.get("refresh_token")?.value;
+
     if (!access_token) {
       return NextResponse.redirect(new URL("/login", req.url));
     }

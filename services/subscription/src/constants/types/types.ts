@@ -1,4 +1,4 @@
 export const TYPES = {
-  ProjectAdapterInterface: Symbol.for("ProjectAdapterInterface"),
-  ProjectUseCaseInterface: Symbol.for("ProjectUseCaseInterface"),
+  SubscriptionAdapterInterface: Symbol.for("SubscriptionAdapterInterface"),
+  SubscriptionUseCaseInterface: Symbol.for("SubscriptionUseCaseInterface"),
 };
