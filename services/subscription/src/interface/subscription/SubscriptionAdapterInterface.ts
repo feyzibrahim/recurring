@@ -2,7 +2,9 @@ import { Subscription } from "../../Entities/Subscription";
 
 export interface SubscriptionAdapterInterface {
   getSubscription(id: string): Promise<Subscription | boolean>;
-  getSubscriptionByUserId(userId: string): Promise<Subscription | boolean>;
+  getSubscriptionByOrganizationId(
+    organizationId: string
+  ): Promise<Subscription | boolean>;
   createSubscription(
     subscription: Subscription
   ): Promise<Subscription | boolean>;

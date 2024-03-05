@@ -1,3 +1,4 @@
+"use client";
 export const storeObject = (key: string, object: any) => {
   const jsonString = JSON.stringify(object);
   localStorage.setItem(key, jsonString);

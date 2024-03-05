@@ -103,6 +103,7 @@ const DetailsForm = ({ setIsModalOpen, value }: Props) => {
           },
           data: { address, name: values.name, price: value, email: user.email },
         });
+        setLoading(false);
 
         if (!res.success) {
           setError(res.error);
@@ -123,7 +124,6 @@ const DetailsForm = ({ setIsModalOpen, value }: Props) => {
           );
         }
       }
-      setLoading(false);
     } catch (error) {
       console.log("file: DetailsForm.tsx:123 -> onSubmit -> error", error);
     }

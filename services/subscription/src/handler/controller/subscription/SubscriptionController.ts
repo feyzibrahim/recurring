@@ -8,12 +8,15 @@ import { SubscriptionUseCaseInterface } from "../../../interface/subscription/Su
 import { TYPES } from "../../../constants/types/types";
 import { inject } from "inversify";
 import { getSubscriptionDetails } from "./functions/getSubscriptionDetails";
+import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 
 @controller("/api/subscription")
 export class SubscriptionController {
   constructor(
     @inject(TYPES.SubscriptionUseCaseInterface)
-    private iSubscriptionUseCase: SubscriptionUseCaseInterface
+    private iSubscriptionUseCase: SubscriptionUseCaseInterface,
+    @inject(TYPES.RabbitMQUseCaseInterface)
+    private iRabbitMQUseCase: RabbitMQUseCaseInterface
   ) {}
 
   @httpGet("/", requireAuth)
@@ -33,7 +36,12 @@ export class SubscriptionController {
 
   @httpPost("/create")
   async stripeCheckoutSessionCompleted(req: Request, res: Response) {
-    await stripeCheckoutSessionCompleted(req, res, this.iSubscriptionUseCase);
+    await stripeCheckoutSessionCompleted(
+      req,
+      res,
+      this.iSubscriptionUseCase,
+      this.iRabbitMQUseCase
+    );
   }
 
   //   @httpPost("/")

@@ -3,21 +3,28 @@ import React from "react";
 import { HiCheckCircle } from "react-icons/hi";
 import SubscribeButton from "./SubscribeButton";
 
-export default function SubCards({
-  pro,
-  business,
-}: {
+interface Props {
   pro: string;
   business: string;
-}) {
+  subscription: any;
+}
+
+export default function SubCards({ pro, business, subscription }: Props) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pt-8 lg:px-16 mx-36">
       <div className="bg-backgroundAccent rounded-xl p-5">
-        <h4 className="text-xl font-bold text-white">Pro</h4>
-        <p className="text-white">
-          Experiment the power of infinite possibilities
-        </p>
-        <h1 className="text-4xl py-3 font-bold ">₹{pro}</h1>
+        <h4 className="text-xl font-bold">
+          Pro{" "}
+          {subscription && subscription.plan.amount / 100 === parseInt(pro) ? (
+            <span className="bg-background py-1 px-2 rounded-lg text-sm font-normal">
+              Active
+            </span>
+          ) : (
+            ""
+          )}
+        </h4>
+        <p className="">Experiment the power of infinite possibilities</p>
+        <h1 className="text-4xl py-3 font-bold">₹{pro}</h1>
         <div className="flex flex-col gap-3 bg-background px-5 pt-10 rounded-xl text-left">
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
@@ -38,7 +45,13 @@ export default function SubCards({
             <HiCheckCircle className="text-primary text-xl" />
             Salary Payroll
           </p>
-          <SubscribeButton title="Subscribe to Pro" value={pro} />
+          {subscription && subscription.plan.amount / 100 === parseInt(pro) ? (
+            <Button className="my-5" variant="secondary">
+              Active
+            </Button>
+          ) : (
+            <SubscribeButton title="Subscribe to Pro" value={pro} />
+          )}
         </div>
       </div>
       <div className="bg-backgroundAccent rounded-xl p-5">

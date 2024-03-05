@@ -12,7 +12,7 @@ const NextInvoice = ({ subscription }: Props) => {
     <div className="text-sm bg-backgroundAccent p-7 rounded-md col-span-2">
       <p className="uppercase">Next Invoice</p>
       <h1 className="text-4xl font-bold py-2">
-        ₹{subscription.plan.amount / 100 ?? "0.00"}
+        ₹{subscription ? subscription.plan.amount / 100 : "0.00"}
       </h1>
       <p>Next Payment:</p>
       <p className="flex items-center gap-2 py-2">

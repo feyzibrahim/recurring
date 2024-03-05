@@ -46,7 +46,13 @@ export class AuthController {
   // Google Sign Up
   @httpPost("/google")
   async googleSignup(req: Request, res: Response) {
-    await googleSignup(req, res, this.iAuthUseCase, this.iRabbitMQUseCase);
+    await googleSignup(
+      req,
+      res,
+      this.iAuthUseCase,
+      this.iRabbitMQUseCase,
+      this.iOrgUseCase
+    );
   }
   // Forget Password Link Sent
   @httpPost("/forgot-password")

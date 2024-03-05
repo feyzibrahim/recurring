@@ -33,6 +33,9 @@ server.setConfig(async (app) => {
   );
   await rabbitMQService.connect();
   await rabbitMQService.consumeMessages(QUEUES.EMPLOYEECREATION);
+  await rabbitMQService.consumeSubscriptionUpdates(
+    QUEUES.ORGANIZATION_SUBSCRIPTION_UPDATES
+  );
 });
 
 envChecker();

@@ -1,7 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SubCards from "./SubCards";
 
-export default function Plans() {
+interface Props {
+  subscription: any;
+}
+
+export default function Plans({ subscription }: Props) {
   return (
     <div className="text-center w-full">
       <h1 className="text-3xl font-bold">Choose Plan </h1>
@@ -20,10 +24,10 @@ export default function Plans() {
           <TabsTrigger value="yearly">yearly</TabsTrigger>
         </TabsList>
         <TabsContent value="monthly">
-          <SubCards pro="49" business="399" />
+          <SubCards pro="49" business="399" subscription={subscription} />
         </TabsContent>
         <TabsContent value="yearly">
-          <SubCards pro="499" business="3999" />
+          <SubCards pro="499" business="3999" subscription={subscription} />
         </TabsContent>
       </Tabs>
     </div>

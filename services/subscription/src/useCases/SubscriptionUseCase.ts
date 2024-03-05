@@ -12,8 +12,12 @@ export class SubscriptionUseCase implements SubscriptionUseCaseInterface {
   getSubscription(organizationId: string): Promise<boolean | Subscription> {
     return this.iSubscriptionUseCase.getSubscription(organizationId);
   }
-  getSubscriptionByUserId(userId: string): Promise<boolean | Subscription> {
-    return this.iSubscriptionUseCase.getSubscriptionByUserId(userId);
+  getSubscriptionByOrganizationId(
+    organizationId: string
+  ): Promise<boolean | Subscription> {
+    return this.iSubscriptionUseCase.getSubscriptionByOrganizationId(
+      organizationId
+    );
   }
   createSubscription(
     subscription: Subscription

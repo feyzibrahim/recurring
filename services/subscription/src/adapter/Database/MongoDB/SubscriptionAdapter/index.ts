@@ -3,6 +3,7 @@ import { Subscription } from "../../../../Entities/Subscription";
 import { createSubscription } from "./functions/createSubscription.adapter";
 import { getSubscription } from "./functions/getSubscription.adapter";
 import { SubscriptionAdapterInterface } from "../../../../interface/subscription/SubscriptionAdapterInterface";
+import { updateSubscription } from "./functions/updateSubscription.adapter";
 
 @injectable()
 export class SubscriptionAdapter implements SubscriptionAdapterInterface {
@@ -16,15 +17,15 @@ export class SubscriptionAdapter implements SubscriptionAdapterInterface {
     return createSubscription(Subscription);
   }
 
-  async getSubscriptionByUserId(
-    userId: string
+  async getSubscriptionByOrganizationId(
+    organizationId: string
   ): Promise<boolean | Subscription> {
-    throw new Error("Method not implemented.");
+    return getSubscription(organizationId);
   }
   async updateSubscription(
-    id: string,
-    project: Subscription
+    organizationId: string,
+    subscription: Subscription
   ): Promise<boolean | Subscription> {
-    throw new Error("Method not implemented.");
+    return updateSubscription(organizationId, subscription);
   }
 }

@@ -6,9 +6,8 @@ import { deleteObject, getObject } from "@/util/localStorage";
 import Link from "next/link";
 import { useEffect } from "react";
 const PaymentSuccess = () => {
-  const data = getObject("subscription_session");
-
   const handleSave = async () => {
+    const data = getObject("subscription_session");
     if (data) {
       const res = await actualCommonRequest({
         route: API_ROUTES.SUBSCRIPTION,

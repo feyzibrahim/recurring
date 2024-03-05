@@ -60,7 +60,7 @@ const SideBar = () => {
             </div>
           </ToolTipWrapper>
         </Link>
-        <ToolTipWrapper title="Timeline">
+        {/* <ToolTipWrapper title="Timeline">
           <Link href={"/dashboard/timeline"} className="hover-text text-xl">
             <div
               className={`p-1 rounded-xl hover:bg-background ${
@@ -72,7 +72,7 @@ const SideBar = () => {
               <CgTimelapse className="m-1" />
             </div>
           </Link>
-        </ToolTipWrapper>
+        </ToolTipWrapper> */}
 
         <ToolTipWrapper title="Task">
           <Link href={"/dashboard/task"} className="hover-text text-xl">

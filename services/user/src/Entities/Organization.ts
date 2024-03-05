@@ -16,7 +16,10 @@ export class Organization {
     },
     public industry: string,
     public projects: string[],
-    public isActive: boolean
-  ) // public subscriptionId: string
-  {}
+    public isActive: boolean,
+    public subscriptionId?: string,
+    public subscriptionType?: string,
+    public subscriptionStripeId?: string,
+    public subscriptionActive?: string
+  ) {}
 }

@@ -4,17 +4,23 @@ import { UserAdapterInterface } from "../../interface/user/UserAdapterInterface"
 import { TYPES } from "../../constants/types/types";
 import { consumeMessages } from "./functions/ConsumeMessages";
 import { SendDataToQueue } from "./functions/SendDataToQueue";
+import { OrganizationAdapterInterface } from "../../interface/organization/OrganizationAdapterInterface";
+import { consumeSubscriptionUpdates } from "./functions/consumeSubscriptionUpdates";
 
 @injectable()
 export class RabbitMQService {
   private connection!: Connection;
   private channel!: Channel;
   private userAdapter: UserAdapterInterface;
+  private organizationAdapter: OrganizationAdapterInterface;
 
   constructor(
-    @inject(TYPES.UserAdapterInterface) userAdapter: UserAdapterInterface
+    @inject(TYPES.UserAdapterInterface) userAdapter: UserAdapterInterface,
+    @inject(TYPES.OrganizationAdapterInterface)
+    organizationAdapter: OrganizationAdapterInterface
   ) {
     this.userAdapter = userAdapter;
+    this.organizationAdapter = organizationAdapter;
   }
 
   async connect() {
@@ -26,6 +32,10 @@ export class RabbitMQService {
 
   async consumeMessages(queue: string) {
     consumeMessages(this.channel, queue, this.userAdapter);
+  }
+
+  async consumeSubscriptionUpdates(queue: string) {
+    consumeSubscriptionUpdates(this.channel, queue, this.organizationAdapter);
   }
 
   async sendDataToQueue(queue: string, data: any) {

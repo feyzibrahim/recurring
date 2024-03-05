@@ -10,6 +10,9 @@ import { SubscriptionAdapterInterface } from "./interface/subscription/Subscript
 import { TYPES } from "./constants/types/types";
 import { SubscriptionUseCaseInterface } from "./interface/subscription/SubscriptionUseCaseInterface";
 import { SubscriptionController } from "./handler/controller/subscription/SubscriptionController";
+import { RabbitMQService } from "./infra/rabbitmq/rabbitmq.service";
+import { RabbitMQUseCaseInterface } from "./interface/rabbitmq/RabbitMQUseCaseInterface";
+import { RabbitMQUseCase } from "./useCases/RabbitMQUseCase";
 
 // Database connection
 connectToDatabase();
@@ -26,8 +29,16 @@ container
 container.bind<SubscriptionController>(SubscriptionController).toSelf();
 container.bind<SubscriptionUseCase>(SubscriptionUseCase).toSelf();
 
-// Subscription Injection
+// RabbitMQ
+container
+  .bind<RabbitMQService>(TYPES.RabbitMQServiceInitializer)
+  .to(RabbitMQService)
+  .inSingletonScope();
+container
+  .bind<RabbitMQUseCaseInterface>(TYPES.RabbitMQUseCaseInterface)
+  .to(RabbitMQUseCase);
 
+// Subscription Injection
 container.bind<SubscriptionController>(SubscriptionController).toSelf();
 
 // Disconnect From Database

@@ -3,11 +3,14 @@ import { SubscriptionUseCaseInterface } from "../../../../interface/subscription
 import { Subscription } from "../../../../Entities/Subscription";
 import { validateJwt } from "@recurring/shared_library";
 import { stripe } from "../../../../adapter/stripe/stripe";
+import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
+import { QUEUES } from "../../../../constants/types/queue";
 
 export const stripeCheckoutSessionCompleted = async (
   req: Request,
   res: Response,
-  iSubscriptionUseCase: SubscriptionUseCaseInterface
+  iSubscriptionUseCase: SubscriptionUseCaseInterface,
+  iRabbitMQUseCase: RabbitMQUseCaseInterface
 ) => {
   try {
     const apiKey = process.env.STRIPE_SECRET;
@@ -27,19 +30,62 @@ export const stripeCheckoutSessionCompleted = async (
       throw Error("No subscription found");
     }
 
-    const planId = "";
+    const dbSubExists =
+      await iSubscriptionUseCase.getSubscriptionByOrganizationId(
+        data.organization
+      );
 
-    const subscriptData: Subscription = {
+    let subscription: Subscription | boolean;
+    let subscriptionData: Subscription = {
       customerId: customerId,
       organization: data.organization,
       user: data.user,
-      planId: planId,
       subscriptionId: existingSubscriptions.data[0].id,
     };
 
-    let subscription = await iSubscriptionUseCase.createSubscription(
-      subscriptData
+    if (dbSubExists) {
+      subscription = await iSubscriptionUseCase.updateSubscription(
+        data.organization,
+        subscriptionData
+      );
+    } else {
+      subscription = await iSubscriptionUseCase.createSubscription(
+        subscriptionData
+      );
+    }
+
+    console.log(
+      "file: stripeCheckoutSessionCompleted.ts:51 -> subscription",
+      subscription
     );
+
+    if (typeof subscription !== "boolean") {
+      const sub = await stripe.subscriptions.retrieve(
+        subscription.subscriptionId,
+        { apiKey }
+      );
+      const product = await stripe.products.retrieve(
+        sub.items.data[0].price.product as string,
+        { apiKey }
+      );
+
+      const messageData = {
+        _id: data.organization,
+        subscriptionId: subscription._id,
+        subscriptionStripeId: subscription.subscriptionId,
+        subscriptionActive: true,
+        subscriptionType: product.name,
+      };
+      console.log(
+        "file: stripeCheckoutSessionCompleted.ts:73 -> messageData",
+        messageData
+      );
+
+      iRabbitMQUseCase.sendDataToQueue(
+        QUEUES.ORGANIZATION_SUBSCRIPTION_UPDATES,
+        messageData
+      );
+    }
 
     return res.status(200).json({
       subscription: subscription,

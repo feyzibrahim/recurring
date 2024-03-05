@@ -31,9 +31,17 @@ export const getSubscriptionDetails = async (
       { apiKey }
     );
 
+    const invoices = await stripe.invoices.list(
+      {
+        subscription: subscription.subscriptionId,
+      },
+      { apiKey }
+    );
+
     return res.status(200).json({
       subscription: sub,
       product: product,
+      invoices: invoices,
       success: true,
       message: "Subscription details successfully fetched",
     });

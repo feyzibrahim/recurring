@@ -42,7 +42,9 @@ export const createSubscription = async (
     );
 
     if (existingSubscriptions.data.length > 0) {
-      throw Error("Subscription Already Exists");
+      throw Error(
+        "Subscription Already Exists. Please cancel the old subscription and then continue"
+      );
     }
 
     const session = await stripe.checkout.sessions.create(

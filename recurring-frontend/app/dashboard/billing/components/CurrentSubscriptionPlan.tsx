@@ -13,7 +13,7 @@ const CurrentSubscriptionPlan = ({ product }: Props) => {
       <p className="uppercase">Current subscription plan</p>
       <h1 className="text-4xl font-bold py-2">
         🚀
-        {product ? product.name : "free"}
+        {product ? product.name : "Free"}
       </h1>
       <p className="text-foregroundAccent py-2">
         {product

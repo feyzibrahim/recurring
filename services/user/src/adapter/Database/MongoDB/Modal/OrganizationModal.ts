@@ -35,9 +35,21 @@ const OrganizationSchema: Schema = new Schema(
       required: true,
       default: true,
     },
-    // subscriptionId: {
-    //   type: Schema.Types.ObjectId
-    // },
+    subscriptionId: {
+      type: Schema.Types.ObjectId,
+    },
+    subscriptionType: {
+      type: String,
+      enum: ["Free", "Pro", "Business"],
+      default: "Free",
+    },
+    subscriptionStripeId: {
+      type: String,
+    },
+    subscriptionActive: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
