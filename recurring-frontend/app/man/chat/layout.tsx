@@ -1,5 +1,4 @@
 import ChatList from "@/components/common/chat/ChatList";
-import UserContextWrapper from "@/components/common/chat/UserProvider/TaskContextWrapper";
 import { checkUserWithoutRedirectInManager } from "@/server/checkUserWithoutRedirectInManager";
 
 export default async function DashboardLayout({

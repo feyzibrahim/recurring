@@ -206,6 +206,30 @@ interface DealTypes {
   updatedAt: Date;
 }
 
+interface OrganizationTypes {
+  _id: string;
+  admin: string;
+  name: string;
+  description: string;
+  members: {}[];
+  departments: string[];
+  website: string;
+  address: {
+    city: string;
+    country: string;
+    state: string;
+    street: string;
+    zipCode: string;
+  };
+  industry: string;
+  projects: string[];
+  isActive: boolean;
+  subscriptionId?: string;
+  subscriptionType?: string;
+  subscriptionStripeId?: string;
+  subscriptionActive?: string;
+}
+
 export type {
   InputWithIconProps,
   EmployeeTypes,
@@ -224,4 +248,5 @@ export type {
   DealTypes,
   ActivityTypes,
   NoteTypes,
+  OrganizationTypes,
 };

@@ -5,6 +5,7 @@ export interface SubscriptionAdapterInterface {
   getSubscriptionByOrganizationId(
     organizationId: string
   ): Promise<Subscription | boolean>;
+  deleteSubscription(organizationId: string): Promise<Subscription | boolean>;
   createSubscription(
     subscription: Subscription
   ): Promise<Subscription | boolean>;

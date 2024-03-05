@@ -1,5 +1,6 @@
 import Recurring from "@/components/common/Recurring";
 import React from "react";
+import { HiCheckCircle } from "react-icons/hi";
 
 interface Props {
   product: any;
@@ -21,14 +22,26 @@ const CurrentPlanBenefits = ({ product }: Props) => {
       <div className="grid grid-cols-2 gap-3 pt-2">
         {product ? (
           product.features.map((feat: { name: string }, index: number) => (
-            <p key={index}>✅ {feat.name}</p>
+            <p key={index} className="flex gap-1">
+              <HiCheckCircle className="text-primary text-xl" />
+              {feat.name}
+            </p>
           ))
         ) : (
           <>
-            <p>✅ 5 Employee</p>
-            <p>✅ 5 Projects</p>
-            <p>✅ In-app Chat</p>
-            <p>✅ 2 Department</p>
+            <p className="flex gap-1">
+              <HiCheckCircle className="text-primary text-xl" />5 Employee
+            </p>
+            <p className="flex gap-1">
+              <HiCheckCircle className="text-primary text-xl" />5 Projects
+            </p>
+            <p className="flex gap-1">
+              <HiCheckCircle className="text-primary text-xl" />
+              In-app Chat
+            </p>
+            <p className="flex gap-1">
+              <HiCheckCircle className="text-primary text-xl" />2 Department
+            </p>
           </>
         )}
       </div>

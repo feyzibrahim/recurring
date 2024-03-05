@@ -6,7 +6,6 @@ const userSchema = new Schema(
     username: {
       type: String,
       unique: true,
-      sparse: true,
     },
     firstName: {
       type: String,

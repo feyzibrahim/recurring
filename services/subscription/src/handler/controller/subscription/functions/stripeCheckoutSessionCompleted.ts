@@ -54,11 +54,6 @@ export const stripeCheckoutSessionCompleted = async (
       );
     }
 
-    console.log(
-      "file: stripeCheckoutSessionCompleted.ts:51 -> subscription",
-      subscription
-    );
-
     if (typeof subscription !== "boolean") {
       const sub = await stripe.subscriptions.retrieve(
         subscription.subscriptionId,
@@ -76,10 +71,6 @@ export const stripeCheckoutSessionCompleted = async (
         subscriptionActive: true,
         subscriptionType: product.name,
       };
-      console.log(
-        "file: stripeCheckoutSessionCompleted.ts:73 -> messageData",
-        messageData
-      );
 
       iRabbitMQUseCase.sendDataToQueue(
         QUEUES.ORGANIZATION_SUBSCRIPTION_UPDATES,

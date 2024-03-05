@@ -7,8 +7,14 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { TanStackDataTable } from "@/components/custom/TanStackDataTable";
 import { columns } from "./meetingColumns";
+import SubscriptionAlertButton from "@/components/common/SubscriptionAlertButton";
+import { OrganizationTypes } from "@/constants/Types";
 
-const MeetingList = () => {
+interface Props {
+  organization: OrganizationTypes;
+}
+
+const MeetingList = ({ organization }: Props) => {
   const dispatch = useAppDispatch();
   const { meetings } = useAppSelector((state) => state.meeting);
 
@@ -17,21 +23,25 @@ const MeetingList = () => {
   }, [dispatch]);
 
   return (
-    <div className="">
+    <div className="pt-5">
       {meetings && meetings.length > 0 ? (
         <TanStackDataTable
           columns={columns}
           data={meetings}
           pageTitle="Meetings"
           newButton={
-            <Link href="meetings/create">
-              <Button>New Meeting</Button>
-            </Link>
+            <SubscriptionAlertButton
+              organization={organization}
+              validationLength={meetings.length}
+              subTitle="meeting"
+              title="Meeting"
+              url="meetings/create"
+            />
           }
           searchField="title"
         />
       ) : (
-        <div className="flex flex-col items-center justify-center h-full">
+        <div className="flex flex-col items-center justify-center h-screen">
           <EmptyNotification />
           <p className="mt-2">No Meetings where created yet!</p>
           <p className="text-sm py-2">Please Create One</p>

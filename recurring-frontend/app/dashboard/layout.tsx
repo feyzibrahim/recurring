@@ -1,7 +1,7 @@
 import SideBar from "@/components/common/SideBar";
 import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
 import StoreProvider from "../lib/StoreProvider";
-import UserContextWrapper from "@/components/common/chat/UserProvider/TaskContextWrapper";
+import UserContextWrapper from "@/components/common/chat/UserProvider/UserContextWrapper";
 
 export default async function DashboardLayout({
   children,

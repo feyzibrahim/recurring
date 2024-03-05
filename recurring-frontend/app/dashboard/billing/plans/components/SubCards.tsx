@@ -35,16 +35,18 @@ export default function SubCards({ pro, business, subscription }: Props) {
             20 Employees
           </p>
           <p className="flex gap-2 items-center">
-            <HiCheckCircle className="text-primary text-xl" />5 Departments
+            <HiCheckCircle className="text-primary text-xl" />
+            20 Projects
           </p>
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
-            10 Video Meetings/Month
+            20 Video Meetings
           </p>
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
-            Salary Payroll
+            Salary Payroll (In testing)
           </p>
+
           {subscription && subscription.plan.amount / 100 === parseInt(pro) ? (
             <Button className="my-5" variant="secondary">
               Active
@@ -71,7 +73,7 @@ export default function SubCards({ pro, business, subscription }: Props) {
           </p>
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
-            Unlimited Departments
+            Unlimited Projects
           </p>
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />

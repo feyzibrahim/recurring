@@ -32,7 +32,7 @@ const UserContextProvider = ({
   let curr = path[1];
 
   useEffect(() => {
-    let connect: Socket = io(API_ROUTES.CHAT);
+    let connect: Socket = io(API_ROUTES.CHAT as string);
     connect.emit("online-user", user._id);
     setSocket(connect);
     return () => {
@@ -60,7 +60,7 @@ const UserContextProvider = ({
     data.to = from;
     socket && socket.emit("video-call-accepted", data);
 
-    router.replace(`/${curr}/chat/user/${data.user.username}/${data.callId}`);
+    router.replace(`/${curr}/video-call/${data.callId}`);
   };
 
   const [callCancelledByCaller, setCallCancelledByCaller] = useState(false);

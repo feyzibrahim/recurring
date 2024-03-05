@@ -9,8 +9,15 @@ import { useRouter } from "next/navigation";
 import { TanStackDataTable } from "@/components/custom/TanStackDataTable";
 import { columns, columnsDashboard } from "./projectColumns";
 import EmptyFolder from "@/components/empty/EmptyFolder";
+import SubscriptionAlertButton from "../SubscriptionAlertButton";
+import { OrganizationTypes } from "@/constants/Types";
 
-const ProjectTable = ({ location }: { location: string }) => {
+interface Props {
+  location: string;
+  organization: OrganizationTypes;
+}
+
+const ProjectTable = ({ location, organization }: Props) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -31,9 +38,13 @@ const ProjectTable = ({ location }: { location: string }) => {
           pageTitle="Projects"
           newButton={
             location === "home" ? null : (
-              <Link href="project/create">
-                <Button>Create New Project</Button>
-              </Link>
+              <SubscriptionAlertButton
+                organization={organization}
+                validationLength={projects.length}
+                subTitle="projects"
+                title="Project"
+                url="project/create"
+              />
             )
           }
           searchField="name"

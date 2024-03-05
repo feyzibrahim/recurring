@@ -2,6 +2,7 @@ import Recurring from "@/components/common/Recurring";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import Link from "next/link";
+import SubscriptionCancelButton from "./SubscriptionCancelButton";
 
 interface Props {
   product: any;
@@ -22,9 +23,12 @@ const CurrentSubscriptionPlan = ({ product }: Props) => {
               <Recurring />
             )} subscribe to Pro or Business to enjoy all benefits`}
       </p>
-      <Link href="billing/plans">
-        <Button>Upgrade Plan</Button>
-      </Link>
+      <div className="flex items-center gap-5">
+        <Link href="billing/plans">
+          <Button>Upgrade Plan</Button>
+        </Link>
+        <SubscriptionCancelButton />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import EmployeeSidebar from "@/components/common/SidebarEmployee";
 import { checkUserWithoutRedirectInHome } from "@/server/checkUserWithoutRedirectInHome";
 import StoreProvider from "../lib/StoreProvider";
-import UserContextWrapper from "@/components/common/chat/UserProvider/TaskContextWrapper";
+import UserContextWrapper from "@/components/common/chat/UserProvider/UserContextWrapper";
 
 export default async function HomeLayout({
   children,

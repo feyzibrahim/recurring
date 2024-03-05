@@ -5,7 +5,6 @@ import Logo from "../../public/img/logo.png";
 import Link from "next/link";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { RiDashboardLine } from "react-icons/ri";
-import { CgTimelapse } from "react-icons/cg";
 import { FaMoneyCheckAlt, FaRegAddressCard, FaTasks } from "react-icons/fa";
 import { IoIosPeople } from "react-icons/io";
 import { BiCalendar, BiChat, BiCreditCard, BiLogOut } from "react-icons/bi";

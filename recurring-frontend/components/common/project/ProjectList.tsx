@@ -1,8 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProjectTiles from "./ProjectTiles";
 import ProjectTable from "./ProjectTable";
+import { OrganizationTypes } from "@/constants/Types";
 
-const ProjectList = ({ location }: { location: string }) => {
+interface Props {
+  location: string;
+  organization: OrganizationTypes;
+}
+
+const ProjectList = ({ location, organization }: Props) => {
   return (
     <Tabs defaultValue="table" className="pt-5">
       <TabsList className="mx-5 bg-backgroundAccent">
@@ -10,7 +16,7 @@ const ProjectList = ({ location }: { location: string }) => {
         <TabsTrigger value="tiles">Tiles</TabsTrigger>
       </TabsList>
       <TabsContent value="table">
-        <ProjectTable location={location} />
+        <ProjectTable location={location} organization={organization} />
       </TabsContent>
       <TabsContent value="tiles">
         <ProjectTiles />

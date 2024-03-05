@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { controller, httpGet, httpPost } from "inversify-express-utils";
+import {
+  controller,
+  httpDelete,
+  httpGet,
+  httpPost,
+} from "inversify-express-utils";
 import { requireAuth } from "../../middleware/AuthMiddleware";
 import { getPrices } from "./functions/getPrices";
 import { createSubscription } from "./functions/createSubscription";
@@ -9,6 +14,7 @@ import { TYPES } from "../../../constants/types/types";
 import { inject } from "inversify";
 import { getSubscriptionDetails } from "./functions/getSubscriptionDetails";
 import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
+import { cancelSubscription } from "./functions/cancelSubscription";
 
 @controller("/api/subscription")
 export class SubscriptionController {
@@ -32,6 +38,15 @@ export class SubscriptionController {
   @httpPost("/", requireAuth)
   async createSubscription(req: Request, res: Response) {
     await createSubscription(req, res);
+  }
+  @httpDelete("/cancel", requireAuth)
+  async cancelSubscription(req: Request, res: Response) {
+    await cancelSubscription(
+      req,
+      res,
+      this.iSubscriptionUseCase,
+      this.iRabbitMQUseCase
+    );
   }
 
   @httpPost("/create")

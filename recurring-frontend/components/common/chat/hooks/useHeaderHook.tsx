@@ -3,12 +3,15 @@ import { ChatTypes, EmployeeTypes } from "@/constants/Types";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../UserProvider/UserContextProvider";
 import { v4 as uuid } from "uuid";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const useHeaderHook = (username: string) => {
   const { user, socket } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
+  const pathName = usePathname();
+  let path = pathName.split("/");
+  let curr = path[1];
 
   const [videoCallActive, setVideoCallActive] = useState(false);
 
@@ -37,7 +40,7 @@ const useHeaderHook = (username: string) => {
       });
     socket &&
       socket.on("video-call-accepted", (data) => {
-        router.push(`${username}/${data.callId}`);
+        router.push(`/${curr}/video-call/${data.callId}`);
         // setVideoCallActive(false);
       });
   }, [socket, user?._id, router, username]);

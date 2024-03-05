@@ -19,6 +19,9 @@ export class SubscriptionUseCase implements SubscriptionUseCaseInterface {
       organizationId
     );
   }
+  deleteSubscription(organizationId: string): Promise<boolean | Subscription> {
+    return this.iSubscriptionUseCase.deleteSubscription(organizationId);
+  }
   createSubscription(
     subscription: Subscription
   ): Promise<boolean | Subscription> {

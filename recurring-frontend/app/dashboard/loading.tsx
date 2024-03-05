@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const page = () => {
   return (
-    <div className="h-screen p-10">
+    <div className="h-screen p-5">
       <div className="flex gap-5">
         <div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">

@@ -52,7 +52,7 @@ const CreateForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
-    const res = dispatch(createProject(values));
+    const res = await dispatch(createProject(values));
     if (createProject.fulfilled.match(res)) {
       router.back();
     }

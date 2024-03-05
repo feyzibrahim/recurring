@@ -21,7 +21,10 @@ export default function SubCards({
             <HiCheckCircle className="text-primary text-xl" />5 Employee
           </p>
           <p className="flex gap-2 items-center">
-            <HiCheckCircle className="text-primary text-xl" />2 Departments
+            <HiCheckCircle className="text-primary text-xl" />5 Projects
+          </p>
+          <p className="flex gap-2 items-center">
+            <HiCheckCircle className="text-primary text-xl" />5 Meetings
           </p>
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
@@ -30,9 +33,6 @@ export default function SubCards({
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
             Chat Support{" "}
-          </p>
-          <p className="flex gap-2 items-center">
-            <HiCheckCircle className="text-primary text-xl" />5 Projects
           </p>
           <Button className="my-5">Sign Up for free</Button>
         </div>
@@ -53,11 +53,12 @@ export default function SubCards({
             20 Employees
           </p>
           <p className="flex gap-2 items-center">
-            <HiCheckCircle className="text-primary text-xl" />5 Departments
+            <HiCheckCircle className="text-primary text-xl" />
+            20 Projects
           </p>
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
-            10 Video Meetings/Month
+            20 Video Meetings
           </p>
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
@@ -83,7 +84,7 @@ export default function SubCards({
           </p>
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
-            Unlimited Departments
+            Unlimited Projects
           </p>
           <p className="flex gap-2 items-center">
             <HiCheckCircle className="text-primary text-xl" />
