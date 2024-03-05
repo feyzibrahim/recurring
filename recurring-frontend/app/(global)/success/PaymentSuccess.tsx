@@ -2,24 +2,27 @@
 import { actualCommonRequest } from "@/api/actual_client";
 import { Button } from "@/components/ui/button";
 import { API_ROUTES } from "@/lib/routes";
-import { getObject } from "@/util/localStorage";
+import { deleteObject, getObject } from "@/util/localStorage";
 import Link from "next/link";
 import { useEffect } from "react";
 const PaymentSuccess = () => {
   const data = getObject("subscription_session");
-  console.log("file: PaymentSuccess.tsx:7 -> PaymentSuccess -> data", data);
 
   const handleSave = async () => {
-    const res = await actualCommonRequest({
-      route: API_ROUTES.SUBSCRIPTION,
-      method: "POST",
-      url: "/api/subscription/create",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: { customerId: data.customer },
-    });
-    console.log("file: PaymentSuccess.tsx:25 -> handleSave -> res", res);
+    if (data) {
+      const res = await actualCommonRequest({
+        route: API_ROUTES.SUBSCRIPTION,
+        method: "POST",
+        url: "/api/subscription/create",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: { customerId: data.customer },
+      });
+      if (res.success) {
+        deleteObject("subscription_session");
+      }
+    }
   };
 
   useEffect(() => {

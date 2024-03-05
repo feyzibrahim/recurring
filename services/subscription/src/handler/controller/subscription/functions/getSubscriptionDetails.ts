@@ -26,9 +26,14 @@ export const getSubscriptionDetails = async (
       subscription.subscriptionId,
       { apiKey }
     );
+    const product = await stripe.products.retrieve(
+      sub.items.data[0].price.product as string,
+      { apiKey }
+    );
 
     return res.status(200).json({
       subscription: sub,
+      product: product,
       success: true,
       message: "Subscription details successfully fetched",
     });
