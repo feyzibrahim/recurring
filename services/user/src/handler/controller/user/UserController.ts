@@ -10,6 +10,8 @@ import { updateProfile } from "./functions/updateProfile.controller";
 import { newPassword } from "./functions/newPassword.controller";
 import { getUsersInOrgWithoutMe } from "./functions/getUsersInOrgWithoutMe.controller";
 import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
+import { getUsersForAdmin } from "./functions/getUsersForAdmin.controller";
+import { requireSuperAdminAccess } from "../../middleware/SuperAdminMiddleware";
 
 @controller("/api/user")
 export class UserController {
@@ -82,5 +84,10 @@ export class UserController {
   @httpGet("/in-org-without-me", requireAuth)
   async getUsersInOrgWithoutMe(req: Request, res: Response) {
     await getUsersInOrgWithoutMe(req, res, this.iUserUseCase);
+  }
+
+  @httpGet("/admin", requireSuperAdminAccess)
+  async getUsersForAdmin(req: Request, res: Response) {
+    await getUsersForAdmin(req, res, this.iUserUseCase);
   }
 }

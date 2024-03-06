@@ -57,10 +57,10 @@ const OrganizationAddress = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      street: "test",
-      state: "test",
-      city: "test",
-      country: "test",
+      street: "",
+      state: "",
+      city: "",
+      country: "",
       zipCode: "189484",
     },
   });

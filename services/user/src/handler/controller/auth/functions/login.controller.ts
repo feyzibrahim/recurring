@@ -30,7 +30,7 @@ export const login = async (
 
     const payload: JWTPayload = {
       user: user._id,
-      role: user.role,
+      roles: user.role,
       organization: user.organization,
     };
 

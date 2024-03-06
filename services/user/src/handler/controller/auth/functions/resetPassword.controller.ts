@@ -33,7 +33,7 @@ export const resetPassword = async (
     // Setting JWT Tokens
     const payload: JWTPayload = {
       user: tempUser._id,
-      role: tempUser.role,
+      roles: tempUser.role,
       organization: tempUser.organization,
     };
 

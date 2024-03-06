@@ -20,6 +20,7 @@ export class Organization {
     public subscriptionId?: string,
     public subscriptionType?: string,
     public subscriptionStripeId?: string,
-    public subscriptionActive?: string
+    public subscriptionActive?: string,
+    public slug?: string
   ) {}
 }

@@ -27,4 +27,8 @@ export class UserUseCase implements UserUseCaseInterface {
   ): Promise<boolean | User[]> {
     return this.iUserUseCase.getUsersInOrgWithoutMe(organizationId, userId);
   }
+
+  getUsersForAdmin(role: string): Promise<boolean | User[]> {
+    return this.iUserUseCase.getUsersForAdmin(role);
+  }
 }

@@ -34,6 +34,9 @@ export async function authExistMiddleware(req: NextRequest) {
         if (json.user.role === "owner") {
           return NextResponse.redirect(new URL("/dashboard", req.url));
         }
+        if (json.user.role === "super-admin") {
+          return NextResponse.redirect(new URL("/super-admin", req.url));
+        }
       }
     }
     return NextResponse.next();

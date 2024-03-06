@@ -10,4 +10,5 @@ export interface OrganizationAdapterInterface {
     id: string,
     organization: Organization
   ): Promise<Organization | boolean>;
+  getOrganizationForAdmin(): Promise<Organization[] | boolean>;
 }

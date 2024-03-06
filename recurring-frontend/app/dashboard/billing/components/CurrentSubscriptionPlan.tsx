@@ -27,7 +27,7 @@ const CurrentSubscriptionPlan = ({ product }: Props) => {
         <Link href="billing/plans">
           <Button>Upgrade Plan</Button>
         </Link>
-        <SubscriptionCancelButton />
+        {product && <SubscriptionCancelButton />}
       </div>
     </div>
   );

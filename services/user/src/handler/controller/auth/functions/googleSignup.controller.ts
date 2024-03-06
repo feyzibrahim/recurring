@@ -62,7 +62,7 @@ export const googleSignup = async (
 
     const payload: JWTPayload = {
       user: tempUser._id,
-      role: tempUser.role,
+      roles: tempUser.role,
       organization: tempUser.organization,
     };
 

@@ -8,6 +8,9 @@ import chatSlice from "./features/chat/chatSlice";
 import meetingSlice from "./features/meeting/meetingSlice";
 import clientSlice from "./features/client/clientSlice";
 import dealSlice from "./features/deal/dealSlice";
+import organizationSlice from "./features/organization/organizationSlice";
+import userSlice from "./features/user/userSlice";
+import subscriptionSlice from "./features/subscription/subscriptionSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -21,6 +24,9 @@ export const makeStore = () => {
       meeting: meetingSlice,
       client: clientSlice,
       deal: dealSlice,
+      organization: organizationSlice,
+      user: userSlice,
+      subscription: subscriptionSlice,
     },
   });
 };

@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { Organization } from "../../../../Entities/Organization";
+import { v4 as uuid } from "uuid";
 
 const OrganizationSchema: Schema = new Schema(
   {
@@ -7,6 +8,7 @@ const OrganizationSchema: Schema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
       unique: true,
+      ref: "User",
     },
     name: {
       type: String,
@@ -49,6 +51,10 @@ const OrganizationSchema: Schema = new Schema(
     subscriptionActive: {
       type: Boolean,
       default: false,
+    },
+    slug: {
+      type: String,
+      default: uuid,
     },
   },
   { timestamps: true }

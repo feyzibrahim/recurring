@@ -30,4 +30,8 @@ export class OrganizationUseCase implements OrganizationUseCaseInterface {
   ): Promise<boolean | Organization> {
     return this.iOrganizationUseCase.updateOrganization(id, organization);
   }
+
+  getOrganizationForAdmin(): Promise<boolean | Organization[]> {
+    return this.iOrganizationUseCase.getOrganizationForAdmin();
+  }
 }

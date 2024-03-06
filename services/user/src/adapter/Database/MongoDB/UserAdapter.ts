@@ -77,4 +77,10 @@ export class UserAdapter implements UserAdapterInterface {
       return false;
     }
   }
+
+  async getUsersForAdmin(role: string): Promise<boolean | User[]> {
+    const user = await UserModal.find({ role: role });
+
+    return user as User[];
+  }
 }

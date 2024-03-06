@@ -44,7 +44,7 @@ export const verifyEmail = async (
     // Setting JWT Tokens
     const payload: JWTPayload = {
       user: temp._id,
-      role: temp.role,
+      roles: temp.role,
       organization: temp.organization,
     };
 

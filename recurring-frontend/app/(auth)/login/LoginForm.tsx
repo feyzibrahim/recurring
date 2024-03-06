@@ -69,6 +69,9 @@ export default function LoginForm() {
       if (res.user.role === "manager") {
         router.replace("/man");
       }
+      if (res.user.role === "super-admin") {
+        router.replace("/super-admin");
+      }
     }
     router.refresh();
     setLoading(false);

@@ -4,6 +4,7 @@ import { authExistMiddleware } from "@/components/middleware/authExistMiddleware
 import { dashboardMiddleware } from "@/components/middleware/dashboardMiddleware";
 import { manMiddleware } from "./components/middleware/manMiddleware";
 import { homeMiddleware } from "./components/middleware/homeMiddleware";
+import { superAdminMiddleware } from "./components/middleware/superAdminMiddleware";
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -16,15 +17,9 @@ export async function middleware(req: NextRequest) {
     return manMiddleware(req);
   } else if (path.startsWith("/home")) {
     return homeMiddleware(req);
-  }
-  // else if (path.startsWith("/student")) {
-  //   return studentMiddleware(req);
-  // } else if (path.startsWith("/instructor")) {
-  //   return instructorMiddleware(req);
-  // } else if (path.startsWith("/admin")) {
-  //   return adminMiddleware(req);
-  // }
-  else {
+  } else if (path.startsWith("/super-admin")) {
+    return superAdminMiddleware(req);
+  } else {
     return NextResponse.next();
   }
 }
@@ -34,6 +29,7 @@ export const config = {
     "/dashboard/:path*",
     "/man/:path*",
     "/home/:path*",
+    "/super-admin/:path*",
     "/login",
     "/register",
     "/",

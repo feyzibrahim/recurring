@@ -93,9 +93,6 @@ const ClientDetails = ({ slug }: propsTypes) => {
           </Button>
         </div>
       </div>
-      <div>
-        <h1 className="py-3 text-xl font-semibold">Description</h1>
-      </div>
     </div>
   );
 };

@@ -15,6 +15,8 @@ import { inject } from "inversify";
 import { getSubscriptionDetails } from "./functions/getSubscriptionDetails";
 import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 import { cancelSubscription } from "./functions/cancelSubscription";
+import { getSubscriptionDetailsForAdmin } from "./functions/getSubscriptionDetailsForAdmin";
+import { requireSuperAdminAccess } from "../../middleware/SuperAdminMiddleware";
 
 @controller("/api/subscription")
 export class SubscriptionController {
@@ -57,6 +59,11 @@ export class SubscriptionController {
       this.iSubscriptionUseCase,
       this.iRabbitMQUseCase
     );
+  }
+
+  @httpGet("/admin", requireSuperAdminAccess)
+  async getSubscriptionDetailsForAdmin(req: Request, res: Response) {
+    await getSubscriptionDetailsForAdmin(req, res);
   }
 
   //   @httpPost("/")

@@ -8,4 +8,5 @@ export interface UserUseCaseInterface {
     organizationId: string,
     userId: string
   ): Promise<User[] | boolean>;
+  getUsersForAdmin(role: string): Promise<User[] | boolean>;
 }

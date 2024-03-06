@@ -12,6 +12,7 @@ export class User {
     public isActive: boolean,
     public profileImageURL: string,
     public isEmailVerified: boolean,
-    public organization: string
+    public organization: string,
+    public slug?: string
   ) {}
 }

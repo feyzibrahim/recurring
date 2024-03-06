@@ -5,6 +5,7 @@ import { createOrganization } from "./functions/createOrganization.adapter";
 import { getOrganization } from "./functions/getOrganization.adapter";
 import { getOrganizationByUserId } from "./functions/getOrganizationByUserId.adapter";
 import { updateOrganization } from "./functions/updateOrganization.adapter";
+import { getOrganizationForAdmin } from "./functions/getOrganizationForAdmin.adapter";
 
 @injectable()
 export class OrganizationAdapter implements OrganizationAdapterInterface {
@@ -27,5 +28,9 @@ export class OrganizationAdapter implements OrganizationAdapterInterface {
     organization: Organization
   ): Promise<boolean | Organization> {
     return updateOrganization(id, organization);
+  }
+
+  async getOrganizationForAdmin(): Promise<boolean | Organization[]> {
+    return getOrganizationForAdmin();
   }
 }

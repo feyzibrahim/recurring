@@ -62,7 +62,7 @@ export const signup = async (
     // Setting JWT Tokens
     const payload: JWTPayload = {
       user: tempUser._id,
-      role: tempUser.role,
+      roles: tempUser.role,
       organization: typeof organization !== "boolean" ? organization._id : "",
     };
 

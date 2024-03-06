@@ -208,7 +208,7 @@ interface DealTypes {
 
 interface OrganizationTypes {
   _id: string;
-  admin: string;
+  admin: EmployeeTypes;
   name: string;
   description: string;
   members: {}[];

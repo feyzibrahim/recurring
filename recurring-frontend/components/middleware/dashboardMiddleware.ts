@@ -28,6 +28,9 @@ export async function dashboardMiddleware(req: NextRequest) {
         if (json.user.role === "manager") {
           return NextResponse.redirect(new URL("/man", req.url));
         }
+        if (json.user.role === "super-admin") {
+          return NextResponse.redirect(new URL("/super-admin", req.url));
+        }
       }
     }
     return NextResponse.next();

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
-import { FiMail } from "react-icons/fi";
+import { FiMail, FiUser } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
@@ -87,7 +87,7 @@ export default function RegisterForm() {
           render={({ field }) => (
             <FormInputWithIcon
               field={field}
-              icon={<FiMail />}
+              icon={<FiUser />}
               placeholder="Your Username"
               showTitle={false}
             />
