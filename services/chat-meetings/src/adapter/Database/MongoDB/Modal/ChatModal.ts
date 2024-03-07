@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { Chat } from "../../../../Entities/Chat";
+import { v4 as uuid } from "uuid";
 
 const chatSchema: Schema = new Schema(
   {
@@ -10,9 +11,15 @@ const chatSchema: Schema = new Schema(
       default: "one_to_one",
     },
     groupName: { type: String },
+    groupDescription: { type: String },
+    groupProfile: { type: String },
     organization: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Organization",
+    },
+    slug: {
+      type: String,
+      default: uuid,
     },
   },
   { timestamps: true }

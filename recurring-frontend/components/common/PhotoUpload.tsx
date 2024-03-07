@@ -8,9 +8,11 @@ import { AiOutlineDelete } from "react-icons/ai";
 const PhotoUpload = ({
   selectedFile,
   setSelectedFile,
+  size,
 }: {
   selectedFile: any;
   setSelectedFile: any;
+  size?: string;
 }) => {
   const fileInputRef = useRef<any>();
   const [isDragging, setIsDragging] = useState(false);
@@ -66,7 +68,11 @@ const PhotoUpload = ({
         ref={fileInputRef}
       />
       {selectedFile ? (
-        <div className="w-36 h-36 rounded-full overflow-clip mx-auto">
+        <div
+          className={`w-${size ?? "36"} h-${
+            size ?? "36"
+          } rounded-full overflow-clip mx-auto`}
+        >
           <Image
             src={URL.createObjectURL(selectedFile)}
             alt={selectedFile?.name}
@@ -76,7 +82,11 @@ const PhotoUpload = ({
           />
         </div>
       ) : (
-        <div className="w-36 h-36 rounded-full overflow-clip mx-auto">
+        <div
+          className={`w-${size ?? "36"} h-${
+            size ?? "36"
+          } rounded-full overflow-clip mx-auto`}
+        >
           <Image
             src={UserAvatar}
             alt="Profile"

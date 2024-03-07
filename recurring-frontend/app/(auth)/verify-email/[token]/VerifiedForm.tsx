@@ -41,7 +41,7 @@ const VerifiedForm = (params: any) => {
       <p className="mb-6">
         Your email has been successfully verified. Welcome to Recurring App!
       </p>
-      {user?.role === "employee" ? (
+      {user?.role === "employee" || user?.role === "manager" ? (
         <Link href="/set-new-password">
           <Button className="hover:underline">
             Set password for your account

@@ -22,7 +22,7 @@ const NewNotesButton = ({ user }: { user: EmployeeTypes }) => {
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>New Note</DialogTitle>
+            <DialogTitle>New Comment</DialogTitle>
             <DialogDescription>
               Update in the below form. After your done click the add button
             </DialogDescription>

@@ -6,7 +6,13 @@ export const getTask = async (slug: string) => {
     const task = await TaskModal.findOne({
       slug: slug,
       status: { $ne: "archive" },
-    }).populate("notes.user", "firstName lastName profileImageURL username");
+    })
+      .populate("notes.user", "firstName lastName profileImageURL username")
+      .populate(
+        "notes.replay.user",
+        "firstName lastName profileImageURL username"
+      );
+
     return task as Task;
   } catch (error) {
     console.log("TaskAdapter: getTask -> error", error);

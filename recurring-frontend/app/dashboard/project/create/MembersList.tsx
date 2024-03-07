@@ -11,7 +11,7 @@ import UserAvatar from "@/public/img/user-avatar.png";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import InputWithIcon from "@/components/custom/InputWithIcon";
 import { FiSearch } from "react-icons/fi";
-import MembersListLoading from "./MembersListLoading";
+import MembersListLoading from "@/components/common/MembersListLoading";
 
 export default function MembersList({
   setIsModalOpen,

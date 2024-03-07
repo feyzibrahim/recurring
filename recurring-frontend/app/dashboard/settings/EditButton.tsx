@@ -17,7 +17,7 @@ const EditButton = ({ user }: { user: any }) => {
     <>
       <Button onClick={() => setIsModalOpen(true)}>Edit Your Details</Button>
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[800px]">
           <DialogHeader>
             <DialogTitle>Edit Your Details</DialogTitle>
             <DialogDescription>

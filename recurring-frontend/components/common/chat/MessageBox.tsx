@@ -22,6 +22,7 @@ const MessageBox = () => {
             ?._id,
           chat: activeChat?._id,
           type: "text",
+          fromName: `${user?.firstName} ${user?.lastName}`,
         });
       setMessage("");
       typingStoppedBroadcast();

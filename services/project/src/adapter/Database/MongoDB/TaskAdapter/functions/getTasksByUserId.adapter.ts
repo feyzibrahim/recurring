@@ -16,7 +16,8 @@ export const getTasksByUserId = async (
     })
       .skip(skip)
       .limit(limit)
-      .populate("assignee");
+      .populate("assignee")
+      .populate({ path: "notes.replay", populate: { path: "user" } });
 
     return tasks as Task[];
   } catch (error) {

@@ -27,6 +27,7 @@ export const updateProfile = async (
     user.username = body.username;
     user.dateOfBirth = body.dateOfBirth;
     user.phoneNumber = body.phoneNumber;
+    user.profileImageURL = body.profileImageURL;
 
     const updatedUser = await iUserUseCase.updateUser(user);
 

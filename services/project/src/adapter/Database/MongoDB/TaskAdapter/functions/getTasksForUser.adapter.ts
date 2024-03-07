@@ -6,7 +6,9 @@ export const getTasksForUser = async (userSlug: string) => {
     const tasks = await TaskModal.find({
       assignee: userSlug,
       status: { $ne: "archive" },
-    }).populate("assignee");
+    })
+      .populate("assignee")
+      .populate({ path: "notes.replay", populate: { path: "user" } });
 
     return tasks as Task[];
   } catch (error) {

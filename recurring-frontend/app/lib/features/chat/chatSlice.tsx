@@ -40,6 +40,19 @@ export const chatSlice = createSlice({
         return state;
       }
     },
+    setActiveChatWithSlug: (state, { payload }) => {
+      const { chats } = state;
+
+      if (chats) {
+        const newChat = chats.find((chat) => chat.slug === payload.slug);
+
+        if (newChat) {
+          return { ...state, activeChat: newChat };
+        }
+
+        return state;
+      }
+    },
     socketNewChatUpdate: (state, { payload }) => {
       let chats = [payload.chat, ...(state.chats || [])] as ChatTypes[];
       return { ...state, chats };
@@ -129,6 +142,7 @@ export const {
   setActiveChat,
   socketNewChatUpdate,
   setActiveChatWithUserName,
+  setActiveChatWithSlug,
   updateOnlineStatus,
 } = chatSlice.actions;
 

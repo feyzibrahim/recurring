@@ -41,6 +41,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { ReactNode, useState } from "react";
+import { ScrollArea } from "../ui/scroll-area";
 
 export function TanStackDataTable<TData, TValue>({
   columns,
@@ -144,7 +145,7 @@ export function TanStackDataTable<TData, TValue>({
 
   return (
     <div className="w-full px-5">
-      <div className="flex items-center gap-2 pb-4">
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-2 pb-4">
         {pageTitle && <h1 className="font-bold text-3xl">{pageTitle}</h1>}
         {searchField && (
           <Input
@@ -161,7 +162,7 @@ export function TanStackDataTable<TData, TValue>({
         {showColSelectButton && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
+              <Button variant="outline" className="md:ml-auto">
                 Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>

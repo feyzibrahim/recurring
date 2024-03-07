@@ -66,10 +66,10 @@ export default function NewNoteForm({
           name="text"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Notes</FormLabel>
+              <FormLabel>Comment</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Enter your note"
+                  placeholder="Enter your comment"
                   {...field}
                   className="my-2 h-52 bg-backgroundAccent"
                 />
@@ -81,7 +81,7 @@ export default function NewNoteForm({
 
         <div className="py-1"></div>
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Loading..." : "Add new note"}
+          {loading ? "Loading..." : "Add new comment"}
         </Button>
         {error && <p className="text-sm text-red-500">{error}</p>}
       </form>

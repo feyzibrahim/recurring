@@ -25,6 +25,7 @@ import { EmployeeList } from "@/components/common/task/EmployeeList";
 import { format } from "date-fns";
 import DatePickerLimitedString from "@/components/custom/DatePickerLimitedString";
 import { usePathname } from "next/navigation";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   title: z
@@ -51,20 +52,13 @@ const formSchema = z.object({
     .max(30, { message: "Name should be Less than 30 characters" })
     .optional(),
   assignee: z.any(),
-  // description: z
-  //   .string()
-  //   .min(2, {
-  //     message: "Email must be at least 2 characters.",
-  //   })
-  //   .max(70, { message: "Name should be Less than 30 characters" })
-  //   .optional(),
-  // tags: z
-  //   .string()
-  //   .min(2, {
-  //     message: "Email must be at least 2 characters.",
-  //   })
-  //   .max(70, { message: "Name should be Less than 30 characters" })
-  //   .optional(),
+  description: z
+    .string()
+    .min(2, {
+      message: "Email must be at least 2 characters.",
+    })
+    .max(300, { message: "Name should be Less than 300 characters" })
+    .optional(),
 });
 
 export default function TaskEditForm({
@@ -89,8 +83,7 @@ export default function TaskEditForm({
       status: (task && task.status) || "",
       priority: (task && task.priority) || "",
       assignee: (task && task.assignee) || "",
-      // description: "",
-      // tags: "",
+      description: (task && task.description) || "",
     },
   });
 
@@ -117,6 +110,22 @@ export default function TaskEditForm({
               title="Task Title"
               showTitle={true}
             />
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Enter Description"
+                  className="bg-backgroundAccent"
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
           )}
         />
         <div className="w-full">

@@ -14,19 +14,26 @@ import {
   updateOnlineStatus,
 } from "@/app/lib/features/chat/chatSlice";
 import EmptyEmployee from "@/components/empty/EmptyEmployee";
+import MembersListLoading from "../MembersListLoading";
+import GroupChat from "./group/GroupChat";
 
 const ChatList = () => {
   const dispatch = useAppDispatch();
   const { user, socket } = useContext(UserContext);
 
-  const { chats } = useAppSelector((state) => state.chat);
-  console.log("file: ChatList.tsx:23 -> ChatList -> chats", chats);
+  const { chats, loading } = useAppSelector((state) => state.chat);
 
   useEffect(() => {
     socket && socket.emit("online-user", user?._id);
 
     socket &&
       socket.on("new-chat", (data) => {
+        dispatch(socketNewChatUpdate({ chat: data }));
+      });
+
+    socket &&
+      socket.on("new-group-chatter", (data) => {
+        console.log("file: ChatList.tsx:35 -> socket.on -> data", data);
         dispatch(socketNewChatUpdate({ chat: data }));
       });
 
@@ -47,28 +54,33 @@ const ChatList = () => {
         <SeeAllButton />
       </div>
       <InputWithIcon placeholder="search..." icon={<FiSearch />} />
-      <ScrollArea className="h-[450px] mt-2">
+      <ScrollArea className="h-[82vh] mt-2">
+        {loading && <MembersListLoading />}
         {chats && chats.length > 0 ? (
-          chats.map((chat, index) => {
-            const participant = chat.participants.find(
-              (part) => part.username !== user?.username
-            );
-            return (
-              <SingleChat
-                user={participant as EmployeeTypes}
-                key={index}
-                online={chat.online}
-              />
-            );
+          chats.map((chat: ChatTypes, index) => {
+            if (chat.type === "one_to_one") {
+              const participant = chat.participants.find(
+                (part) => part.username !== user?.username
+              );
+              return (
+                <SingleChat
+                  user={participant as EmployeeTypes}
+                  key={index}
+                  online={chat.online}
+                />
+              );
+            } else {
+              return <GroupChat chat={chat} online={chat.online} key={index} />;
+            }
           })
-        ) : (
+        ) : !loading ? (
           <div className="flex flex-col items-center justify-center h-[450px]">
             <EmptyEmployee />
             <p>No chats were created</p>
             <p>Please create one</p>
             <SeeAllButton />
           </div>
-        )}
+        ) : null}
       </ScrollArea>
     </div>
   );

@@ -8,7 +8,9 @@ export const getTasks = async (id: string) => {
       status: { $ne: "archive" },
     })
       .populate("project")
-      .populate("assignee");
+      .populate("assignee")
+      .populate({ path: "notes.replay", populate: { path: "user" } });
+
     return task as Task[];
   } catch (error) {
     console.log("TaskAdapter: getTask -> error", error);

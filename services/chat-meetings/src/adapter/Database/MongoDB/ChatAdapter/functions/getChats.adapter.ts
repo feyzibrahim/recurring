@@ -1,6 +1,7 @@
 import ChatModal from "../../Modal/ChatModal";
 
 export const getChats = async (userId: string) => {
+  console.log("file: getChats.adapter.ts:4 -> getChats -> userId", userId);
   try {
     const chats = await ChatModal.find({ participants: userId }).populate(
       "participants",

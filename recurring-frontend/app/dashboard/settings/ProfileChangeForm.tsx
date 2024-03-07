@@ -12,6 +12,8 @@ import { useState } from "react";
 import DatePicker from "@/components/custom/DatePicker";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
+import PhotoUpload from "@/components/common/PhotoUpload";
+import { photoUpload } from "@/util/functions";
 
 const formSchema = z.object({
   firstName: z
@@ -38,13 +40,14 @@ const formSchema = z.object({
       message: "Email must be at least 2 characters.",
     })
     .max(30, { message: "Name should be Less than 30 characters" }),
-  dateOfBirth: z.date(),
+  dateOfBirth: z.string(),
   role: z
     .string()
     .min(2, {
       message: "Email must be at least 2 characters.",
     })
     .max(30, { message: "Name should be Less than 30 characters" }),
+  profileImageURL: z.string().optional(),
 });
 
 export default function ProfileChangeForm({
@@ -57,6 +60,7 @@ export default function ProfileChangeForm({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedFile, setSelectedFile] = useState<any>();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -67,11 +71,15 @@ export default function ProfileChangeForm({
       phoneNumber: user.phoneNumber || undefined,
       dateOfBirth: user.dateOfBirth || undefined,
       role: user.role || "",
+      profileImageURL: user.profileImageURL || "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
+    const profileImageURL = selectedFile && (await photoUpload(selectedFile));
+    values.profileImageURL = profileImageURL;
+
     let res = await actualCommonRequest({
       route: API_ROUTES.AUTH,
       method: "PATCH",
@@ -95,70 +103,81 @@ export default function ProfileChangeForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<FiUser />}
-              placeholder="Enter your first name"
-              title="First Name"
-              showTitle={true}
-            />
-          )}
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="grid grid-cols-1 md:grid-cols-2 space-x-5"
+      >
+        <PhotoUpload
+          selectedFile={selectedFile}
+          setSelectedFile={setSelectedFile}
+          // size="20"
         />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<FiUser />}
-              placeholder="Enter your last name"
-              title="Last Name"
-              showTitle={true}
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<RiLockPasswordLine />}
-              placeholder="Enter your username"
-              title="Username"
-              showTitle={true}
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormInputWithIcon
-              field={field}
-              icon={<RiLockPasswordLine />}
-              placeholder="Enter your phone number"
-              title="Phone Number"
-              showTitle={true}
-            />
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="dateOfBirth"
-          render={({ field }) => (
-            <DatePicker title="Date of Birth" field={field} />
-          )}
-        />
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Loading..." : "Update Details"}
-        </Button>
-        {error && <p className="text-sm text-red-500">{error}</p>}
+
+        <div className="space-y-2">
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormInputWithIcon
+                field={field}
+                icon={<FiUser />}
+                placeholder="Enter your first name"
+                title="First Name"
+                showTitle={true}
+              />
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormInputWithIcon
+                field={field}
+                icon={<FiUser />}
+                placeholder="Enter your last name"
+                title="Last Name"
+                showTitle={true}
+              />
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormInputWithIcon
+                field={field}
+                icon={<RiLockPasswordLine />}
+                placeholder="Enter your username"
+                title="Username"
+                showTitle={true}
+              />
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phoneNumber"
+            render={({ field }) => (
+              <FormInputWithIcon
+                field={field}
+                icon={<RiLockPasswordLine />}
+                placeholder="Enter your phone number"
+                title="Phone Number"
+                showTitle={true}
+              />
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="dateOfBirth"
+            render={({ field }) => (
+              <DatePicker title="Date of Birth" field={field} />
+            )}
+          />
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Loading..." : "Update Details"}
+          </Button>
+          {error && <p className="text-sm text-red-500">{error}</p>}
+        </div>
       </form>
     </Form>
   );

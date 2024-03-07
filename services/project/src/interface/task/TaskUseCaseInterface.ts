@@ -1,3 +1,4 @@
+import { Replay } from "../../Entities/Replay";
 import { Task } from "../../Entities/Task";
 import { SimpleFilter } from "../../constants/props/SimpleFilter";
 import CountByDay from "../../constants/types/CountByDay";
@@ -39,4 +40,9 @@ export interface TaskUseCaseInterface {
     employeeId: string,
     interval: string
   ): Promise<TaskCount[] | false>;
+  replayToTask(
+    slug: string,
+    noteId: string,
+    replay: Replay
+  ): Promise<Task | false>;
 }

@@ -78,12 +78,20 @@ interface SubTaskTypes {
   title: string;
   status: "planning" | "active" | "completed" | "archive" | "backlog";
 }
+
+interface ReplayTypes {
+  text: string;
+  user: string | EmployeeTypes;
+  createdAt: Date;
+}
+
 interface NotesTypes {
   _id: string;
   text: string;
   user: string | EmployeeTypes;
   createdAt: Date;
   updatedAt: Date;
+  replay: [ReplayTypes];
 }
 
 interface LeaveTypes {
@@ -103,8 +111,11 @@ interface ChatTypes {
   groupName: string;
   createdAt: Date;
   updatedAt: Date;
-  type: string;
+  type: "group" | "one_to_one";
   online: boolean;
+  slug: string;
+  groupDescription?: string;
+  groupProfile?: string;
 }
 
 interface MeetingTypes {
@@ -249,4 +260,5 @@ export type {
   ActivityTypes,
   NoteTypes,
   OrganizationTypes,
+  ReplayTypes,
 };

@@ -7,9 +7,12 @@ import {
 } from "@/components/ui/dialog";
 import AllMembers from "./AllMembers";
 import { useState } from "react";
+import GroupChatCreationList from "./GroupChatCreationList";
+import { Switch } from "@/components/ui/switch";
 
 const SeeAllButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGroup, setIsGroup] = useState(false);
 
   return (
     <>
@@ -25,7 +28,18 @@ const SeeAllButton = () => {
           <DialogHeader>
             <DialogTitle>Choose below members</DialogTitle>
           </DialogHeader>
-          <AllMembers setIsModalOpen={setIsModalOpen} />
+          <div className="flex items-center gap-2">
+            <p>Group:</p>
+            <Switch
+              checked={isGroup}
+              onCheckedChange={(value) => setIsGroup(value)}
+            />
+          </div>
+          {isGroup ? (
+            <GroupChatCreationList setIsModalOpen={setIsModalOpen} />
+          ) : (
+            <AllMembers setIsModalOpen={setIsModalOpen} />
+          )}
         </DialogContent>
       </Dialog>
     </>

@@ -20,6 +20,8 @@ import { getTasksForUser } from "./functions/getTasksForUser.adapter";
 import { getNewTaskCountForEmployee } from "./functions/getNewTaskCountForEmployee.adapter";
 import { getTaskCompletedCountForEmployee } from "./functions/getTaskCompletedCountForEmployee.adapter";
 import { getTaskCountForEmployee } from "./functions/getTaskCountForEmployee.adapter";
+import { replayToTask } from "./functions/replayToTask.adapter";
+import { Replay } from "../../../../Entities/Replay";
 
 @injectable()
 export class TaskAdapter implements TaskAdapterInterface {
@@ -105,5 +107,13 @@ export class TaskAdapter implements TaskAdapterInterface {
     employeeId: string
   ): Promise<false | CountByDay[]> {
     return getNewTaskCountForEmployee(employeeId);
+  }
+
+  async replayToTask(
+    slug: string,
+    noteId: string,
+    replay: Replay
+  ): Promise<Task | false> {
+    return replayToTask(slug, noteId, replay);
   }
 }

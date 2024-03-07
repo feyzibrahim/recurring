@@ -93,6 +93,50 @@ export class SocketIOService {
         }
       );
 
+      socket.on(
+        "new-group-chat",
+        async (data: {
+          from: string;
+          groupName: string;
+          participants: [string];
+          organization: string;
+          groupDescription?: string;
+          groupProfile?: string;
+        }) => {
+          let participants = [...data.participants, data.from];
+
+          let chatData = {
+            participants: participants,
+            organization: data.organization,
+            groupName: data.groupName,
+            groupProfile: data.groupProfile,
+            groupDescription: data.groupDescription,
+            type: "group",
+          };
+
+          let chat = (await this.iChatUseCase.createChat(
+            chatData as Chat
+          )) as Chat;
+          console.log(
+            "file: socket.service.ts:120 -> SocketIOService -> this.io.on -> chat",
+            chat
+          );
+
+          participants.map((part) => {
+            const receiver = this.onlineUsersList.find(
+              (user) => user.userId === part
+            );
+            if (receiver) {
+              console.log(
+                "file: socket.service.ts:129 -> SocketIOService -> participants.map -> receiver",
+                receiver
+              );
+              socket.to(receiver.socketId).emit("new-group-chatter", chat);
+            }
+          });
+        }
+      );
+
       socket.on("message", async (data) => {
         const message: Message = {
           content: data.message,
@@ -112,7 +156,13 @@ export class SocketIOService {
         );
 
         if (receiver) {
-          this.io.to(receiver.socketId).emit("message", messageSaved);
+          console.log(
+            "file: socket.service.ts:159 -> SocketIOService -> socket.on -> receiver",
+            receiver
+          );
+          this.io
+            .to(receiver.socketId)
+            .emit("message", { messageSaved, fromName: data.fromName });
         }
 
         const sender = this.onlineUsersList.find(
@@ -120,7 +170,13 @@ export class SocketIOService {
         );
 
         if (sender) {
-          this.io.to(sender.socketId).emit("message", messageSaved);
+          console.log(
+            "file: socket.service.ts:168 -> SocketIOService -> socket.on -> sender",
+            sender
+          );
+          this.io
+            .to(sender.socketId)
+            .emit("message", { messageSaved, fromName: data.fromName });
         }
       });
 

@@ -22,6 +22,7 @@ import { getTasksForUser } from "./functions/getTasksForUser";
 import { getTasksByManagerId } from "./functions/getTasksByManagerId";
 import { getTaskCompletedCount } from "./functions/getTaskCompletedCount";
 import { getTaskCount } from "./functions/getTaskCount";
+import { replayToTask } from "./functions/replayToTask";
 
 @controller("/api/task")
 export class TaskController {
@@ -97,5 +98,10 @@ export class TaskController {
   @httpDelete("/:slug")
   async deleteTask(req: Request, res: Response) {
     await deleteTask(req, res, this.iTaskUseCase);
+  }
+
+  @httpPost("/replay-to-comment")
+  async replayToTask(req: Request, res: Response) {
+    await replayToTask(req, res, this.iTaskUseCase);
   }
 }

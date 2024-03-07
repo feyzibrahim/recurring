@@ -9,6 +9,7 @@ import {
   deleteTask,
   getTasksByProjectId,
   getTasksByUserId,
+  replayToTaskComment,
 } from "./taskActions";
 import { TaskTypes } from "@/constants/Types";
 
@@ -137,6 +138,29 @@ export const taskSlice = createSlice({
             if (index !== -1) {
               state.tasks[index] = payload.task;
             }
+          }
+        }
+      })
+      .addCase(replayToTaskComment.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(replayToTaskComment.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.task = null;
+        state.error = payload;
+      })
+      .addCase(replayToTaskComment.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.task = payload.task;
+
+        if (state.tasks !== null) {
+          const index = state.tasks.findIndex(
+            (item) => item._id === payload.task._id
+          );
+
+          if (index !== -1) {
+            state.tasks[index] = payload.task;
           }
         }
       })

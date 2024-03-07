@@ -122,3 +122,20 @@ export const deleteTask: any = createAsyncThunk(
     });
   }
 );
+
+// Task details finding
+export const replayToTaskComment: any = createAsyncThunk(
+  "task/replayToTaskComment",
+  async (data: any, { rejectWithValue }) => {
+    return reduxCommonRequest({
+      route: API_ROUTES.PROJECT,
+      method: "POST",
+      url: "/api/task/replay-to-comment",
+      data: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      rejectWithValue,
+    });
+  }
+);

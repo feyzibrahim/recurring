@@ -68,6 +68,18 @@ const UserContextProvider = ({
   useEffect(() => {
     socket &&
       socket.on(
+        "message",
+        (data: { messageSaved: { content: string }; fromName: string }) => {
+          toast({
+            title: "New Message",
+            description: `${data.fromName}: ${data.messageSaved.content ?? ""}`,
+            variant: "light",
+          });
+        }
+      );
+
+    socket &&
+      socket.on(
         "video-call",
         (data: {
           from: string;

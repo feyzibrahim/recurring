@@ -22,6 +22,10 @@ const VideoCall = ({ user, slug }: { user: EmployeeTypes; slug: string }) => {
           user._id,
           user.username
         );
+        console.log(
+          "file: VideoCall.tsx:25 -> joinMeeting -> kitToken",
+          kitToken
+        );
 
         const zp = ZegoUIKitPrebuilt.create(kitToken);
 

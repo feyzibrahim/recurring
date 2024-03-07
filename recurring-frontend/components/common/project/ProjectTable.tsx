@@ -30,7 +30,7 @@ const ProjectTable = ({ location, organization }: Props) => {
   const rowOnCLick = (slug: string) => router.push(`project/${slug}`);
 
   return (
-    <div className="w-full text-sm pb-5">
+    <div className=" text-sm pb-5 ">
       {projects && projects.length > 0 ? (
         <TanStackDataTable
           columns={location === "dashboard" ? columnsDashboard : columns}

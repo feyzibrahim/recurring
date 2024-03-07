@@ -29,7 +29,7 @@ const page = async () => {
 
   return (
     <div className="min-h-screen w-full p-5">
-      <div className="grid grid-cols-4 gap-5">
+      <div className="">
         <div className="col-span-3">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <TaskCompleteChart data={taskStatus.tasksCount} />
@@ -38,7 +38,7 @@ const page = async () => {
           </div>
           <TaskDone />
         </div>
-        <Skeleton className="h-[650px] w-full bg-backgroundAccent shadow-lg" />
+        {/* <Skeleton className="h-[650px] w-full bg-backgroundAccent shadow-lg" /> */}
       </div>
     </div>
   );

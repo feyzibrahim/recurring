@@ -10,6 +10,7 @@ import InputWithIcon from "@/components/custom/InputWithIcon";
 import { FiSearch } from "react-icons/fi";
 import { Socket, io } from "socket.io-client";
 import { UserContext } from "../UserProvider/UserContextProvider";
+import MembersListLoading from "../../MembersListLoading";
 
 export default function MembersList({
   setIsModalOpen,
@@ -17,14 +18,7 @@ export default function MembersList({
   setIsModalOpen: any;
 }) {
   const [loading, setLoading] = useState(false);
-  const { user } = useContext(UserContext);
-
-  let [socket, setSocket] = useState<Socket>();
-
-  useEffect(() => {
-    let connect: Socket = io(API_ROUTES.CHAT);
-    setSocket(connect);
-  }, []);
+  const { user, socket } = useContext(UserContext);
 
   const [membersList, setMembersList] = useState<
     (EmployeeTypes & { selected?: boolean })[]
@@ -70,7 +64,7 @@ export default function MembersList({
       <InputWithIcon icon={<FiSearch />} placeholder="Search..." />
       <ScrollArea className="h-72 py-2">
         {loading ? (
-          <div>Loading</div>
+          <MembersListLoading />
         ) : (
           membersList.map((member, index: number) => (
             <label

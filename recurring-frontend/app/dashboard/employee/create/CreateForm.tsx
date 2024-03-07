@@ -27,7 +27,7 @@ import { createEmployee } from "@/app/lib/features/employee/employeeActions";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
 import { useState } from "react";
-import axios from "axios";
+import { photoUpload } from "@/util/functions";
 
 const checkCredentials = async ({
   key,
@@ -158,27 +158,8 @@ const CreateForm = () => {
     },
   });
 
-  const photoUpload = async () => {
-    const formData = new FormData();
-    formData.append("file", selectedFile as Blob);
-    formData.append(
-      "upload_preset",
-      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string
-    );
-
-    try {
-      const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        formData
-      );
-      return response.data.secure_url;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
-    const profileImageURL = selectedFile && (await photoUpload());
+    const profileImageURL = selectedFile && (await photoUpload(selectedFile));
     if (profileImageURL) {
       values.profileImageURL = profileImageURL;
     }

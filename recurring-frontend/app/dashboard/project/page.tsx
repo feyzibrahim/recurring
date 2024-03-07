@@ -7,9 +7,9 @@ const page = async () => {
   const organization: OrganizationTypes = await getOrganizationData();
 
   return (
-    <ScrollArea className="w-full h-screen">
+    <div className="w-full">
       <ProjectList location="dashboard" organization={organization} />
-    </ScrollArea>
+    </div>
   );
 };
 

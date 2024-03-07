@@ -20,6 +20,10 @@ export const columns: ColumnDef<TaskTypes>[] = [
     header: "Slug",
   },
   {
+    accessorKey: "description",
+    header: "Description",
+  },
+  {
     accessorKey: "title",
     header: ({ column }) => {
       return (
@@ -43,8 +47,8 @@ export const columns: ColumnDef<TaskTypes>[] = [
           <div className="space-y-1">
             <h4 className="text-sm font-semibold">{row.getValue("title")}</h4>
             <p className="text-sm">
-              {/* {row.getValue("description") || "No description were given"} */}
-              {"No description were given"}
+              {row.getValue("description") || "No description were given"}
+              {/* {"No description were given"} */}
             </p>
           </div>
         </HoverCardContent>

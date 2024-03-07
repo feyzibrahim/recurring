@@ -24,6 +24,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { createTask } from "@/app/lib/features/task/taskActions";
 import { ProjectList } from "./ProjectList";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   title: z
@@ -58,20 +59,13 @@ const formSchema = z.object({
       message: "Email must be at least 2 characters.",
     })
     .max(30, { message: "Name should be Less than 30 characters" }),
-  // description: z
-  //   .string()
-  //   .min(2, {
-  //     message: "Email must be at least 2 characters.",
-  //   })
-  //   .max(70, { message: "Name should be Less than 30 characters" })
-  //   .optional(),
-  // tags: z
-  //   .string()
-  //   .min(2, {
-  //     message: "Email must be at least 2 characters.",
-  //   })
-  //   .max(70, { message: "Name should be Less than 30 characters" })
-  //   .optional(),
+  description: z
+    .string()
+    .min(2, {
+      message: "Email must be at least 2 characters.",
+    })
+    .max(300, { message: "Name should be Less than 300 characters" })
+    .optional(),
 });
 
 export default function TaskForm({
@@ -95,7 +89,7 @@ export default function TaskForm({
       status: "",
       priority: "",
       assignee: "",
-      // description: "",
+      description: "",
       // tags: "",
     },
   });
@@ -119,6 +113,22 @@ export default function TaskForm({
               title="Task Title"
               showTitle={true}
             />
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Enter Description"
+                  className="bg-backgroundAccent"
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
           )}
         />
         <div className="flex gap-5">

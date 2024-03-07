@@ -5,6 +5,7 @@ import { Task } from "../Entities/Task";
 import { SimpleFilter } from "../constants/props/SimpleFilter";
 import CountByDay from "../constants/types/CountByDay";
 import TaskCount from "../constants/types/TaskCount";
+import { Replay } from "../Entities/Replay";
 
 @injectable()
 export class TaskUseCase implements TaskUseCaseInterface {
@@ -91,5 +92,13 @@ export class TaskUseCase implements TaskUseCaseInterface {
     employeeId: string
   ): Promise<false | CountByDay[]> {
     return this.iTaskUseCase.getTaskCompletedCountForEmployee(employeeId);
+  }
+
+  replayToTask(
+    slug: string,
+    noteId: string,
+    replay: Replay
+  ): Promise<Task | false> {
+    return this.iTaskUseCase.replayToTask(slug, noteId, replay);
   }
 }

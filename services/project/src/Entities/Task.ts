@@ -1,3 +1,4 @@
+import { Note } from "./Note";
 import { User } from "./User";
 
 export class Task {
@@ -20,11 +21,6 @@ export class Task {
         status: "planning" | "active" | "completed" | "archive" | "backlog";
       }
     ],
-    public notes?: [
-      {
-        text: string;
-        user: string | User;
-      }
-    ]
+    public notes?: [Note]
   ) {}
 }
