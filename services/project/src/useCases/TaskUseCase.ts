@@ -101,4 +101,7 @@ export class TaskUseCase implements TaskUseCaseInterface {
   ): Promise<Task | false> {
     return this.iTaskUseCase.replayToTask(slug, noteId, replay);
   }
+  getSubTaskTitle(organizationId: string): Promise<any> {
+    return this.iTaskUseCase.getSubTaskTitle(organizationId);
+  }
 }

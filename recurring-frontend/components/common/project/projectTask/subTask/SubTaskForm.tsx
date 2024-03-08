@@ -20,8 +20,12 @@ import {
 } from "@/components/ui/select";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { editTask } from "@/app/lib/features/task/taskActions";
-import FormInputCustom from "@/components/common/FormInputCustom";
 import { SubTaskTypes } from "@/constants/Types";
+import { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const formSchema = z.object({
   title: z
@@ -43,6 +47,8 @@ export default function SubTaskForm({
 }: {
   setIsModalOpen: any;
 }) {
+  const [suggestions, setSuggestions] = useState([""]);
+
   const dispatch = useAppDispatch();
 
   const { task, loading, error } = useAppSelector((state) => state.task);
@@ -54,6 +60,24 @@ export default function SubTaskForm({
       status: "",
     },
   });
+
+  const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
+
+  // Function to filter suggestions based on user input
+  // Function to filter suggestions based on user input and update input field
+  const handleInputChange = (inputValue: string) => {
+    const filtered = suggestions.filter((suggestion) =>
+      suggestion.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setFilteredSuggestions(filtered);
+    // If there's only one suggestion left and it matches the current input value, update the input field
+    if (
+      filtered.length === 1 &&
+      filtered[0].toLowerCase() === inputValue.toLowerCase()
+    ) {
+      form.setValue("title", filtered[0]);
+    }
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     let val = values as SubTaskTypes;
@@ -68,6 +92,24 @@ export default function SubTaskForm({
     }
   }
 
+  const loadData = async () => {
+    let res = await actualCommonRequest({
+      route: API_ROUTES.PROJECT,
+      method: "GET",
+      url: "/api/task/sub-task-titles",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.success) {
+      setSuggestions(res.subTasksList);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -75,14 +117,41 @@ export default function SubTaskForm({
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormInputCustom
-              field={field}
-              placeholder="Enter sub task title"
-              title="Title"
-              showTitle={true}
-            />
+            <FormItem className="mt-2">
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter sub task title"
+                  {...field}
+                  className="bg-backgroundAccent"
+                  onChange={(e) => {
+                    handleInputChange(e.target.value);
+                    field.onChange(e);
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
+        {filteredSuggestions.length > 0 && (
+          <ul className="absolute z-10 bg-backgroundAccent rounded-lg border border-border w-4/5 mt-1">
+            <ScrollArea className="h-52 w-full">
+              {filteredSuggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  className="py-2 px-3 cursor-pointer hover:bg-background"
+                  onClick={() => {
+                    form.setValue("title", suggestion);
+                    setFilteredSuggestions([]);
+                  }}
+                >
+                  {suggestion}
+                </li>
+              ))}
+            </ScrollArea>
+          </ul>
+        )}
         <div className="w-full">
           <FormField
             control={form.control}

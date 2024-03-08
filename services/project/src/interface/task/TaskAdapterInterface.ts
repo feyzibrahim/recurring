@@ -47,4 +47,5 @@ export interface TaskAdapterInterface {
     noteId: string,
     replay: Replay
   ): Promise<Task | false>;
+  getSubTaskTitle(organizationId: string): Promise<any>;
 }

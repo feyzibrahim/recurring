@@ -35,10 +35,6 @@ const DealDetails = ({ slug }: { slug: string }) => {
               <BiNote />
               Notes
             </TabsTrigger>
-            <TabsTrigger value="invoice" className="flex items-center gap-1">
-              <HiOutlineDocumentDownload />
-              Invoice
-            </TabsTrigger>
           </TabsList>
           <ScrollBar orientation="horizontal" className="invisible" />
         </ScrollArea>

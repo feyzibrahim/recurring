@@ -18,13 +18,13 @@ const ClientPage = ({ slug }: Props) => {
               <BiDetail />
               Details
             </TabsTrigger>
-            <TabsTrigger
+            {/* <TabsTrigger
               value="description"
               className="flex items-center gap-1"
             >
               <MdDescription />
               Description
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
           <ScrollBar orientation="horizontal" className="invisible" />
         </ScrollArea>

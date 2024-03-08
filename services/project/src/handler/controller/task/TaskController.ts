@@ -23,6 +23,7 @@ import { getTasksByManagerId } from "./functions/getTasksByManagerId";
 import { getTaskCompletedCount } from "./functions/getTaskCompletedCount";
 import { getTaskCount } from "./functions/getTaskCount";
 import { replayToTask } from "./functions/replayToTask";
+import { getSubTasksTitle } from "./functions/getSubTasksTitle";
 
 @controller("/api/task")
 export class TaskController {
@@ -75,6 +76,16 @@ export class TaskController {
     );
   }
 
+  @httpPost("/replay-to-comment")
+  async replayToTask(req: Request, res: Response) {
+    await replayToTask(req, res, this.iTaskUseCase);
+  }
+
+  @httpGet("/sub-task-titles")
+  async getSubTasksTitle(req: Request, res: Response) {
+    await getSubTasksTitle(req, res, this.iTaskUseCase);
+  }
+
   @httpGet("/:slug")
   async getTask(req: Request, res: Response) {
     await getTask(req, res, this.iTaskUseCase);
@@ -98,10 +109,5 @@ export class TaskController {
   @httpDelete("/:slug")
   async deleteTask(req: Request, res: Response) {
     await deleteTask(req, res, this.iTaskUseCase);
-  }
-
-  @httpPost("/replay-to-comment")
-  async replayToTask(req: Request, res: Response) {
-    await replayToTask(req, res, this.iTaskUseCase);
   }
 }

@@ -88,9 +88,9 @@ const ClientDetails = ({ slug }: propsTypes) => {
               </p>
             )}
           </div>
-          <Button className="absolute top-5 right-5">
+          {/* <Button className="absolute top-5 right-5">
             <FiEdit />
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

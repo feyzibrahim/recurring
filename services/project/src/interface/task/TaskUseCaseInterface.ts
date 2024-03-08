@@ -45,4 +45,5 @@ export interface TaskUseCaseInterface {
     noteId: string,
     replay: Replay
   ): Promise<Task | false>;
+  getSubTaskTitle(organizationId: string): Promise<any>;
 }

@@ -22,6 +22,7 @@ import { getTaskCompletedCountForEmployee } from "./functions/getTaskCompletedCo
 import { getTaskCountForEmployee } from "./functions/getTaskCountForEmployee.adapter";
 import { replayToTask } from "./functions/replayToTask.adapter";
 import { Replay } from "../../../../Entities/Replay";
+import { getSubTaskTitle } from "./functions/getSubTaskTitle.adapter";
 
 @injectable()
 export class TaskAdapter implements TaskAdapterInterface {
@@ -115,5 +116,9 @@ export class TaskAdapter implements TaskAdapterInterface {
     replay: Replay
   ): Promise<Task | false> {
     return replayToTask(slug, noteId, replay);
+  }
+
+  async getSubTaskTitle(organizationId: string): Promise<any> {
+    return getSubTaskTitle(organizationId);
   }
 }
