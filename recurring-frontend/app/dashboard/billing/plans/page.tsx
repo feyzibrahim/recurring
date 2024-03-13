@@ -5,7 +5,7 @@ import { API_ROUTES } from "@/lib/routes";
 
 const page = async () => {
   const res = await actualServerCommonRequest({
-    route: API_ROUTES.SUBSCRIPTION,
+    route: API_ROUTES.SUBSCRIPTION_SERVER,
     method: "GET",
     url: "/api/subscription",
     headers: {

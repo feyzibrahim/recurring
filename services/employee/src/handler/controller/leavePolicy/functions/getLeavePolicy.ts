@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import { LeaveUseCaseInterface } from "../../../../interface/leave/LeaveUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import { LeavePolicyUseCaseInterface } from "../../../../interface/leavePolicy/LeavePolicyUseCaseInterface";
 
-export const getLeaves = async (
+export const getLeavePolicy = async (
   req: Request,
   res: Response,
-  iLeaveUseCase: LeaveUseCaseInterface
+  iLeaveUseCase: LeavePolicyUseCaseInterface
 ) => {
   try {
     const { access_token } = req.cookies;
     const data = validateJwt(access_token);
 
-    let leaves = await iLeaveUseCase.getLeaves(data.organization);
+    let leaves = await iLeaveUseCase.getLeavePolicy(data.organization);
     if (!leaves) {
       throw Error("No leaves found");
     }

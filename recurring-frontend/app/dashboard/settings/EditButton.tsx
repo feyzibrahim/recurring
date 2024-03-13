@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import ProfileChangeForm from "./ProfileChangeForm";
 import { useState } from "react";
 
-const EditButton = ({ user }: { user: any }) => {
+const EditButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -24,7 +24,7 @@ const EditButton = ({ user }: { user: any }) => {
               Update in the below form. After your done click the save button
             </DialogDescription>
           </DialogHeader>
-          <ProfileChangeForm user={user} setIsModalOpen={setIsModalOpen} />
+          <ProfileChangeForm setIsModalOpen={setIsModalOpen} />
         </DialogContent>
       </Dialog>
     </>

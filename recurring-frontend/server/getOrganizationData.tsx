@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 export const getOrganizationData = async () => {
   const data = await actualServerCommonRequest({
-    route: API_ROUTES.AUTH,
+    route: API_ROUTES.AUTH_SERVER,
     method: "GET",
     url: "/api/user/organization",
     headers: {

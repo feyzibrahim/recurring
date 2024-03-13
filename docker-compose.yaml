@@ -1,22 +1,118 @@
 version: "3.8"
 services:
+  rabbitmq:
+    image: "rabbitmq:management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+    networks:
+      - recurring-internal-network
+  web:
+    build: ./recurring-frontend
+    container_name: recurring-web
+    image: feyzibrahim/recurring-web
+    ports:
+      - "3000:3000"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    env_file:
+      - ./recurring-frontend/.env
+    networks:
+      - recurring-internal-network
   user:
     build: ./services/user
-    ports: 
-      - 4001:4001
-  employee:
-    build: ./services/employee
-    ports: 
-      - 4002:4002
+    container_name: recurring-user
+    image: feyzibrahim/recurring-user
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "4001:4001"
+    env_file:
+      - ./services/user/.env
+    networks:
+      - recurring-internal-network
   project:
     build: ./services/project
-    ports: 
-      - 4003:4003
+    container_name: recurring-project
+    image: feyzibrahim/recurring-project
+    ports:
+      - "4002:4002"
+    env_file:
+      - ./services/project/.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - recurring-internal-network
+  employee:
+    build: ./services/employee
+    container_name: recurring-employee
+    image: feyzibrahim/recurring-employee
+    ports:
+      - "4003:4003"
+    env_file:
+      - ./services/employee/.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - recurring-internal-network
   chat:
     build: ./services/chat-meetings
-    ports: 
-      - 4004:4004
-  mongodb: 
+    container_name: recurring-chat
+    image: feyzibrahim/recurring-chat
+    ports:
+      - "4004:4004"
+    env_file:
+      - ./services/chat-meetings/.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - recurring-internal-network
+  clients-deals:
+    build: ./services/clients-deals
+    container_name: recurring-clients-deals
+    image: feyzibrahim/recurring-clients-deals
+    ports:
+      - "4005:4005"
+    env_file:
+      - ./services/clients-deals/.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - recurring-internal-network
+  subscription:
+    build: ./services/subscription
+    container_name: recurring-subscription
+    image: feyzibrahim/recurring-subscription
+    ports:
+      - "4006:4006"
+    env_file:
+      - ./services/subscription/.env
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - recurring-internal-network
+  mongodb:
     image: "mongo:4.0-xenial"
-    ports: 
-      - 27017:27017
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - recurring-internal-network
+    volumes:
+      - mongo_data:/data/db
+networks:
+  recurring-internal-network:
+volumes:
+  mongo_data:

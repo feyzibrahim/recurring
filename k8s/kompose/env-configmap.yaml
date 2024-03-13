@@ -1,0 +1,30 @@
+apiVersion: v1
+data:
+  ACCESS_SECRET: FqLYgkeMFkgrUq0oCruFjxJIwyMVPXk9
+  DATABASE_CONNECTION_URI_CHAT_MEETINGS: mongodb://mongodb:27017/recurring_chat_meeting
+  DATABASE_CONNECTION_URI_CLIENTS_DEALS: mongodb://mongodb:27017/recurring_recurring_clients_deals
+  DATABASE_CONNECTION_URI_EMPLOYEE: mongodb://mongodb:27017/recurring_employee
+  DATABASE_CONNECTION_URI_PROJECT: mongodb://mongodb:27017/recurring_project
+  DATABASE_CONNECTION_URI_SUBSCRIPTION: mongodb://mongodb:27017/recurring_subscription
+  DATABASE_CONNECTION_URI_USER: mongodb://mongodb:27017/recurring_user
+  FRONTEND_URL: http://recurring.test
+  GOOGLE_AUTH_ID: 649239403046-df8md65gntctdh0nro5elne559mgsuqo.apps.googleusercontent.com
+  MAIL_HOST: smtp.gmail.com
+  MAIL_PASS: jhpg uhri lpzr wdjt
+  MAIL_USER: faizashrafkk@gmail.com
+  PORT_USER: "4001"
+  PORT_PROJECT: "4002"
+  PORT_EMPLOYEE: "4003"
+  PORT_CHAT: "4004"
+  PORT_CLIENTS_DEALS: "4005"
+  PORT_SUBSCRIPTION: "4006"
+  RABBITMQ_URL: amqp://rabbitmq:5672
+  REFRESH_SECRET: QRAkq1xQj2eFE5c5aFfpYA9tLuSgATrr
+  VERIFICATION_SECRET: FqLYgkeMFkgrUq0oCruFjxJIwyMVPXk9
+  STRIPE_PUBLISHABLE: pk_test_51Opu4xSJPINCwuSfeYIquGBx3qkU6FKxvVSxtmf4GgBVSAs65KpETKsEJGfYriWXtUOWY8FHTtpKfF8iGp8CkEbX004JP8repK
+  STRIPE_SECRET: sk_test_51Opu4xSJPINCwuSfJ3Puwrz741VnpRBhqGUkOjD85V8PzbYW01uHMNNgBiBwyeopqt1jIPJLCZ1mF3i80Adbozeq00yhQfbilp
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: chat-env-configmap
+  name: env-configmap

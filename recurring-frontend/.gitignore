@@ -33,7 +33,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
+nextenv-configmap.d.ts
 
 # environemnt variable
 .env

@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { LeaveUseCaseInterface } from "../../../../interface/leave/LeaveUseCaseInterface";
-import { Leave } from "../../../../Entities/Leave";
+import { LeavePolicyUseCaseInterface } from "../../../../interface/leavePolicy/LeavePolicyUseCaseInterface";
+import { LeavePolicy } from "../../../../Entities/LeavePolicy";
 
-export const updateLeave = async (
+export const updateLeavePolicy = async (
   req: Request,
   res: Response,
-  iLeaveUseCase: LeaveUseCaseInterface
+  iLeaveUseCase: LeavePolicyUseCaseInterface
 ) => {
   try {
-    const leave = req.body as Leave;
+    const leave = req.body as LeavePolicy;
 
-    let updateLeave = await iLeaveUseCase.updateLeave(leave);
+    let updateLeave = await iLeaveUseCase.updateLeavePolicy(leave);
     if (!updateLeave) {
       throw Error("No leave found");
     }

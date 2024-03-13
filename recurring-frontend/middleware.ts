@@ -8,6 +8,7 @@ import { superAdminMiddleware } from "./components/middleware/superAdminMiddlewa
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
+  console.log("file: middleware.ts:11 -> middleware -> path", path);
 
   if (path === "/login" || path === "/register" || path === "/") {
     return authExistMiddleware(req);

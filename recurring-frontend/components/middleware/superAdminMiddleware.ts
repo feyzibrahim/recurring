@@ -5,20 +5,13 @@ import { API_ROUTES } from "@/lib/routes";
 export async function superAdminMiddleware(req: NextRequest) {
   try {
     const access_token = req.cookies.get("access_token")?.value;
-    console.log(
-      "file: superAdminMiddleware.ts:8 -> superAdminMiddleware -> access_token",
-      access_token
-    );
+
     const refresh_token = req.cookies.get("refresh_token")?.value;
-    console.log(
-      "file: superAdminMiddleware.ts:10 -> superAdminMiddleware -> refresh_token",
-      refresh_token
-    );
 
     if (!access_token) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
-    const data = await fetch(`${API_ROUTES.AUTH}/api/user`, {
+    const data = await fetch(`${API_ROUTES.AUTH_SERVER}/api/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

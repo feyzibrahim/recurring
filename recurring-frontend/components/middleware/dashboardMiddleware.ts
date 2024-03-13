@@ -10,7 +10,7 @@ export async function dashboardMiddleware(req: NextRequest) {
     if (!access_token) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
-    const data = await fetch(`${API_ROUTES.AUTH}/api/user`, {
+    const data = await fetch(`${API_ROUTES.AUTH_SERVER}/api/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

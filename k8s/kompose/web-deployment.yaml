@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recurring-frontend
+  labels:
+    app: recurring-frontend
+spec:
+  selector:
+    matchLabels:
+      app: recurring-frontend
+  template:
+    metadata:
+      labels:
+        app: recurring-frontend
+    spec:
+      containers:
+        - name: recurring-frontend
+          image: feyzibrahim/recurring-web
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: web-config

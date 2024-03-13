@@ -15,7 +15,9 @@ interface EmployeeTypes {
   hiringDate: Date;
   organization: string;
   isActive: boolean;
+  isEmailVerified?: boolean;
   salary?: string;
+  dateOfBirth?: Date;
   role?: string;
   profileImageURL?: string;
   employeeType?: string;

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+data:
+  NEXTAUTH_URL: http://localhost:3000
+  NEXTAUTH_SECRET: IUYDnius5i4Ea/ASFASEDWE6rANVMf/Cyj0410basdfasdfwM=
+  GOOGLE_AUTH_ID: 649239403046-df8md65gntctdh0nro5elne559mgsuqo.apps.googleusercontent.com
+  NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: "dkuts6cak"
+  NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: "ellljweo"
+  NEXT_PUBLIC_BACKEND_URL_AUTH: "http://recurring.test"
+  NEXT_PUBLIC_BACKEND_URL_PROJECT: "http://recurring.test"
+  NEXT_PUBLIC_BACKEND_URL_EMPLOYEE: "http://recurring.test"
+  NEXT_PUBLIC_BACKEND_URL_CHAT: "http://recurring.test"
+  NEXT_PUBLIC_BACKEND_URL_CLIENT_AND_DEALS: "http://recurring.test"
+  NEXT_PUBLIC_BACKEND_URL_SUBSCRIPTION: "http://recurring.test"
+  BACKEND_URL_AUTH: "http://user:4001"
+  BACKEND_URL_PROJECT: "http://project:4002"
+  BACKEND_URL_EMPLOYEE: "http://employee:4003"
+  BACKEND_URL_CHAT: "http://chat:4004"
+  BACKEND_URL_CLIENT_AND_DEALS: "http://clients-deals:4005"
+  BACKEND_URL_SUBSCRIPTION: "http://subscription:4006"
+  NEXT_PUBLIC_ZEGO_APP_ID: "1837025301"
+  NEXT_PUBLIC_ZEGO_SERVER_ID: d50e0bdc8b8b987e970196b7e1752d6b
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_51Opu4xSJPINCwuSfeYIquGBx3qkU6FKxvVSxtmf4GgBVSAs65KpETKsEJGfYriWXtUOWY8FHTtpKfF8iGp8CkEbX004JP8repK

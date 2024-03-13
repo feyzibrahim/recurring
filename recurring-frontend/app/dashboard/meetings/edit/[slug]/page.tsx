@@ -7,7 +7,7 @@ import { MeetingTypes } from "@/constants/Types";
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const res = await actualServerCommonRequest({
-    route: API_ROUTES.CHAT,
+    route: API_ROUTES.CHAT_SERVER,
     method: "GET",
     url: `/api/meeting/${params.slug}`,
     headers: {

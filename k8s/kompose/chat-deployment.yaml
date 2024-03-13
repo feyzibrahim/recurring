@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yaml
+    kompose.version: 1.32.0 (765fde254)
+  labels:
+    io.kompose.service: chat
+  name: chat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chat
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yaml
+        kompose.version: 1.32.0 (765fde254)
+      labels:
+        io.kompose.network/recurring-recurring-internal-network: "true"
+        io.kompose.service: chat
+    spec:
+      containers:
+        - env:
+            - name: ACCESS_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: ACCESS_SECRET
+                  name: env-configmap
+            - name: DATABASE_CONNECTION_URI
+              valueFrom:
+                configMapKeyRef:
+                  key: DATABASE_CONNECTION_URI_CHAT_MEETINGS
+                  name: env-configmap
+            - name: FRONTEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: FRONTEND_URL
+                  name: env-configmap
+            - name: GOOGLE_AUTH_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: GOOGLE_AUTH_ID
+                  name: env-configmap
+            - name: MAIL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_HOST
+                  name: env-configmap
+            - name: MAIL_PASS
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_PASS
+                  name: env-configmap
+            - name: MAIL_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_USER
+                  name: env-configmap
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: PORT_CHAT
+                  name: env-configmap
+            - name: RABBITMQ_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: RABBITMQ_URL
+                  name: env-configmap
+            - name: REFRESH_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: REFRESH_SECRET
+                  name: env-configmap
+            - name: VERIFICATION_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: VERIFICATION_SECRET
+                  name: env-configmap
+          image: feyzibrahim/recurring-chat
+          name: recurring-chat
+          ports:
+            - containerPort: 4004
+              # hostPort: 4004
+              protocol: TCP
+      restartPolicy: Always

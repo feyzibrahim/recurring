@@ -1,0 +1,134 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-controller
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  labels:
+    name: ingress-controller
+  # namespace: recurring
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: recurring.site
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: recurring-frontend-service
+                port:
+                  number: 3000
+          - pathType: Prefix
+            path: "/onboarding"
+            backend:
+              service:
+                name: recurring-frontend-service
+                port:
+                  number: 3000
+          - pathType: Prefix
+            path: "/api/auth"
+            backend:
+              service:
+                name: user
+                port:
+                  number: 4001
+          - pathType: Prefix
+            path: "/api/user"
+            backend:
+              service:
+                name: user
+                port:
+                  number: 4001
+          - pathType: Prefix
+            path: "/api/project"
+            backend:
+              service:
+                name: project
+                port:
+                  number: 4002
+          - pathType: Prefix
+            path: "/api/task"
+            backend:
+              service:
+                name: project
+                port:
+                  number: 4002
+          - pathType: Prefix
+            path: "/api/attendance"
+            backend:
+              service:
+                name: employee
+                port:
+                  number: 4003
+          - pathType: Prefix
+            path: "/api/leave"
+            backend:
+              service:
+                name: employee
+                port:
+                  number: 4003
+          - pathType: Prefix
+            path: "/api/leavePolicy"
+            backend:
+              service:
+                name: employee
+                port:
+                  number: 4003
+          - pathType: Prefix
+            path: "/api/employee"
+            backend:
+              service:
+                name: employee
+                port:
+                  number: 4003
+          - pathType: Prefix
+            path: "/api/salary"
+            backend:
+              service:
+                name: employee
+                port:
+                  number: 4003
+          - pathType: Prefix
+            path: "/api/chat"
+            backend:
+              service:
+                name: chat
+                port:
+                  number: 4004
+          - pathType: Prefix
+            path: "/api/meeting"
+            backend:
+              service:
+                name: chat
+                port:
+                  number: 4004
+          - pathType: Prefix
+            path: "/api/message"
+            backend:
+              service:
+                name: chat
+                port:
+                  number: 4004
+          - pathType: Prefix
+            path: "/api/client"
+            backend:
+              service:
+                name: clients-deals
+                port:
+                  number: 4005
+          - pathType: Prefix
+            path: "/api/deal"
+            backend:
+              service:
+                name: clients-deals
+                port:
+                  number: 4005
+          - pathType: Prefix
+            path: "/api/subscription"
+            backend:
+              service:
+                name: subscription
+                port:
+                  number: 4006

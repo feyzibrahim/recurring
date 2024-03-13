@@ -7,7 +7,7 @@ import { API_ROUTES } from "@/lib/routes";
 
 const page = async () => {
   const projectStatus = await actualServerCommonRequest({
-    route: API_ROUTES.PROJECT,
+    route: API_ROUTES.PROJECT_SERVER,
     method: "GET",
     url: "/api/project/completed-count",
     headers: {
@@ -16,7 +16,7 @@ const page = async () => {
   });
 
   const taskStatus = await actualServerCommonRequest({
-    route: API_ROUTES.PROJECT,
+    route: API_ROUTES.PROJECT_SERVER,
     method: "GET",
     url: "/api/task/completed-count",
     headers: {

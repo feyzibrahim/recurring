@@ -5,11 +5,19 @@ import { API_ROUTES } from "@/lib/routes";
 export async function authExistMiddleware(req: NextRequest) {
   try {
     const access_token = req.cookies.get("access_token")?.value;
+    console.log(
+      "file: authExistMiddleware.ts:8 -> authExistMiddleware -> access_token",
+      access_token
+    );
     const refresh_token = req.cookies.get("refresh_token")?.value;
+    console.log(
+      "file: authExistMiddleware.ts:10 -> authExistMiddleware -> refresh_token",
+      refresh_token
+    );
     if (!access_token) {
       return NextResponse.next();
     }
-    const data = await fetch(`${API_ROUTES.AUTH}/api/user`, {
+    const data = await fetch(`${API_ROUTES.AUTH_SERVER}/api/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

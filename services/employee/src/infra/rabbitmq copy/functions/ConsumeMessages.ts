@@ -13,6 +13,10 @@ export const consumeMessages = async (
       if (data) {
         const response = Buffer.from(data.content).toString();
         const employee = JSON.parse(response) as Employee;
+        console.log(
+          "file: ConsumeMessages.ts:16 -> channel.consume -> employee",
+          employee
+        );
 
         await userAdapter.updateEmployee(employee._id, employee);
 

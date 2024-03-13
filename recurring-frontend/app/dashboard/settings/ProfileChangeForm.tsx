@@ -8,12 +8,13 @@ import { FiUser } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DatePicker from "@/components/custom/DatePicker";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
 import PhotoUpload from "@/components/common/PhotoUpload";
 import { photoUpload } from "@/util/functions";
+import { UserContext } from "@/components/common/chat/UserProvider/UserContextProvider";
 
 const formSchema = z.object({
   firstName: z
@@ -51,10 +52,8 @@ const formSchema = z.object({
 });
 
 export default function ProfileChangeForm({
-  user,
   setIsModalOpen,
 }: {
-  user: any;
   setIsModalOpen: any;
 }) {
   const router = useRouter();
@@ -62,16 +61,18 @@ export default function ProfileChangeForm({
   const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState<any>();
 
+  const { user } = useContext(UserContext);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: user.firstName || "",
-      lastName: user.lastName || "",
-      username: user.username || "",
-      phoneNumber: user.phoneNumber || undefined,
-      dateOfBirth: user.dateOfBirth || undefined,
-      role: user.role || "",
-      profileImageURL: user.profileImageURL || "",
+      firstName: (user && user.firstName) || "",
+      lastName: (user && user.lastName) || "",
+      username: (user && user.username) || "",
+      phoneNumber: (user && user.phoneNumber) || undefined,
+      dateOfBirth: (user && user.dateOfBirth?.toString()) || undefined,
+      role: (user && user.role) || "",
+      profileImageURL: (user && user.profileImageURL) || "",
     },
   });
 
