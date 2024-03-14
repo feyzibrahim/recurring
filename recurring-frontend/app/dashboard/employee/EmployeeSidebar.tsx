@@ -1,22 +1,40 @@
 "use client";
+import { actualCommonRequest } from "@/api/actual_client";
 import { useAppSelector } from "@/app/lib/hook";
 import SubscriptionAlertButton from "@/components/common/SubscriptionAlertButton";
 import { OrganizationTypes } from "@/constants/Types";
+import { API_ROUTES } from "@/lib/routes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { CgNotifications } from "react-icons/cg";
 import { GrList } from "react-icons/gr";
 import { RiDraftLine, RiFolderUserLine } from "react-icons/ri";
 
-interface Props {
-  organization: OrganizationTypes;
-}
-
-const EmployeeSidebar = ({ organization }: Props) => {
+const EmployeeSidebar = () => {
   const { employees } = useAppSelector((state) => state.employee);
-
   const pathName = usePathname();
+
+  const [organization, setOrganization] = useState<OrganizationTypes>();
+
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await actualCommonRequest({
+        route: API_ROUTES.AUTH,
+        method: "GET",
+        url: "/api/user/organization",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (data.success) {
+        setOrganization(data.organization);
+      }
+    };
+    loadData();
+  }, []);
+
   return (
     <div className="p-5 bg-secondary pt-16">
       <h1 className="text-2xl font-bold pr-5">Employees</h1>
@@ -32,7 +50,7 @@ const EmployeeSidebar = ({ organization }: Props) => {
             <GrList /> Employee List
           </div>
         </Link>
-        {employees && (
+        {employees && organization && (
           <SubscriptionAlertButton
             organization={organization}
             validationLength={employees.length}

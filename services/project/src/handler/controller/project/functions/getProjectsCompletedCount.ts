@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ProjectUseCaseInterface } from "../../../../interface/project/ProjectUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getProjectsCompletedCount = async (
   req: Request,
@@ -8,7 +9,7 @@ export const getProjectsCompletedCount = async (
   iProjectUseCase: ProjectUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token);
     console.log("file: getProjectsCompletedCount.ts:13 -> data", data);
 

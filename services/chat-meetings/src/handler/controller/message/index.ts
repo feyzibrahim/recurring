@@ -9,8 +9,9 @@ import { inject } from "inversify";
 import { TYPES } from "../../../constants/types/types";
 import { MessageUseCaseInterface } from "../../../interface/message/MessageUseCaseInterface";
 import { getMessages } from "./functions/getMessages";
+import { requireAuth } from "../../middleware/AuthMiddleware";
 
-@controller("/api/message")
+@controller("/api/message", requireAuth)
 export class MessageController {
   constructor(
     @inject(TYPES.MessageUseCaseInterface)

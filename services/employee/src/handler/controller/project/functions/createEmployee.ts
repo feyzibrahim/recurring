@@ -4,6 +4,7 @@ import { Employee } from "../../../../Entities/Employee";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
 import { QUEUES } from "../../../../constants/types/queue";
 import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createEmployee = async (
   req: Request,
@@ -14,7 +15,7 @@ export const createEmployee = async (
   try {
     let body = req.body as Employee;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
 

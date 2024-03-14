@@ -7,15 +7,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { AiOutlineMail } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
-import InputWithIcon from "@/components/custom/InputWithIcon";
 import EmailChangeForm from "./EmailChangeForm";
-import { checkUserWithoutRedirectInManager } from "@/server/checkUserWithoutRedirectInManager";
+import EmailComponent from "@/components/common/EmailComponent";
 
-const page = async () => {
-  const user = await checkUserWithoutRedirectInManager();
-
+const page = () => {
   return (
     <div className="md:px-10 md:py-5 w-full">
       <div>
@@ -23,11 +19,7 @@ const page = async () => {
           <Label>
             <p className="pt-5 pb-2">Email</p>
           </Label>
-          <InputWithIcon
-            icon={<AiOutlineMail />}
-            placeholder="You email"
-            field={{ defaultValue: user && user.email }}
-          />
+          <EmailComponent />
         </div>
         <Dialog>
           <DialogTrigger asChild>

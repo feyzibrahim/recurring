@@ -13,8 +13,9 @@ import { createSalary } from "./functions/createSalary";
 import { updateSalary } from "./functions/updateSalary";
 import { createSalaryByAdmin } from "./functions/createSalaryByAdmin";
 import { getSalaryByUserId } from "./functions/getSalaryByUserId";
+import { requireAuth } from "../../middleware/AuthMiddleware";
 
-@controller("/api/salary")
+@controller("/api/salary", requireAuth)
 export class SalaryController {
   constructor(
     @inject(TYPES.SalaryUseCaseInterface)

@@ -61,7 +61,7 @@ export const columns: ColumnDef<DealTypes>[] = [
       return (
         <div className="flex items-center gap-2">
           <UserAvatar
-            profileImageURL={client.details.profileImageURL ?? ""}
+            profileImageURL={client.details?.profileImageURL ?? ""}
             size="w-6 h-6"
           />
           <p>{client.details.name}</p>

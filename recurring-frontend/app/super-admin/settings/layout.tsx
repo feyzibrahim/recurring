@@ -1,17 +1,14 @@
-import { checkUserWithoutRedirect } from "@/server/checkUserWithoutRedirect";
-import UserAvatar from "../../../public/img/user-avatar.png";
-import ProfileBanner from "../../../public/profile_banner.png";
+import ProfileBanner from "@/public/profile_banner.png";
 import Image from "next/image";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SettingsNavSuperAdmin from "./SettingsNavSuperAdmin";
+import SettingsProfilePic from "@/components/common/SettingsProfilePic";
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await checkUserWithoutRedirect();
-
   return (
     <ScrollArea className="h-screen overflow-clip w-full">
       <div className="h-48 overflow-clip m-5">
@@ -24,15 +21,7 @@ export default async function DashboardLayout({
 
       <div className="bg-backgroundAccent rounded-lg shadow-md md:px-10 -mt-10 mx-5">
         <div className="flex items-center mb-4">
-          <div className="w-28 h-28 rounded-full mr-4 overflow-clip bg-background border-8 border-backgroundAccent">
-            <Image
-              src={(user && user.profileImageURL) || UserAvatar}
-              alt="Profile"
-              className="w-full h-full object-cover"
-              width={100}
-              height={100}
-            />
-          </div>
+          <SettingsProfilePic />
           <div className="pt-5">
             <p className="text-3xl font-semibold ">Settings</p>
           </div>

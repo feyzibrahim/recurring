@@ -26,6 +26,9 @@ import {
 } from "@/components/ui/select";
 import { editMeeting } from "@/app/lib/features/meeting/meetingActions";
 import { EmployeeTypes, MeetingTypes } from "@/constants/Types";
+import { useEffect, useState } from "react";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const meetingSchema = z.object({
   title: z.string().min(2).max(30),
@@ -38,28 +41,46 @@ const meetingSchema = z.object({
   participants: z.array(z.string()),
 });
 
-const EditForm = ({ meeting }: { meeting: MeetingTypes }) => {
+const EditForm = ({ slug }: { slug: string }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [meeting, setMeeting] = useState<MeetingTypes>();
 
   const { loading, error } = useAppSelector((state) => state.meeting);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const res = await actualCommonRequest({
+        route: API_ROUTES.CHAT,
+        method: "GET",
+        url: `/api/meeting/${slug}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.success) {
+        setMeeting(res.meeting);
+      }
+    };
+    loadData();
+  }, []);
 
   const form = useForm<z.infer<typeof meetingSchema>>({
     resolver: zodResolver(meetingSchema),
     defaultValues: {
-      title: meeting.title || "",
-      description: meeting.description || "",
-      type: meeting.type || "offline",
-      location: meeting.location || "",
-      date: meeting.date || "",
-      startTime: meeting.startTime || "",
-      endTime: meeting.endTime || "",
-      participants: meeting.participants.map((part) => part._id) || [],
+      title: meeting ? meeting.title : "",
+      description: meeting ? meeting.description : "",
+      type: meeting ? meeting.type : "offline",
+      location: meeting ? meeting.location : "",
+      date: meeting ? meeting.date : "",
+      startTime: meeting ? meeting.startTime : "",
+      endTime: meeting ? meeting.endTime : "",
+      participants: meeting ? meeting.participants.map((part) => part._id) : [],
     },
   });
 
   const onSubmit = async (values: z.infer<typeof meetingSchema>) => {
-    dispatch(editMeeting({ data: values, slug: meeting.slug })).then(() => {
+    dispatch(editMeeting({ data: values, slug: slug })).then(() => {
       router.back();
     });
   };
@@ -102,9 +123,11 @@ const EditForm = ({ meeting }: { meeting: MeetingTypes }) => {
                 </FormItem>
               )}
             />
-            <MemberTable
-              membersFromServer={meeting.participants as EmployeeTypes[]}
-            />
+            {meeting && (
+              <MemberTable
+                membersFromServer={meeting.participants as EmployeeTypes[]}
+              />
+            )}
           </div>
           <div>
             <FormField

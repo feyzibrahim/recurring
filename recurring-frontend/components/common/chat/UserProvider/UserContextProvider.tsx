@@ -6,6 +6,8 @@ import { API_ROUTES } from "@/lib/routes";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { usePathname, useRouter } from "next/navigation";
+import { getObject } from "@/util/localStorage";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface UserContextType {
   user: EmployeeTypes | null;
@@ -19,10 +21,10 @@ const UserContext = createContext<UserContextType>({
 
 const UserContextProvider = ({
   children,
-  user,
-}: {
+}: // user,
+{
   children: ReactNode;
-  user: EmployeeTypes;
+  // user: EmployeeTypes;
 }) => {
   let [socket, setSocket] = useState<Socket>();
   const { toast } = useToast();
@@ -30,16 +32,19 @@ const UserContextProvider = ({
   const pathName = usePathname();
   let path = pathName.split("/");
   let curr = path[1];
+  const user: EmployeeTypes = getObject("user_data");
 
   useEffect(() => {
-    let connect: Socket = io(API_ROUTES.CHAT as string);
-    connect.emit("online-user", user._id);
-    setSocket(connect);
-    return () => {
-      connect.emit("offline-user", user._id);
-      connect.disconnect();
-    };
-  }, [user._id]);
+    if (user) {
+      let connect: Socket = io(API_ROUTES.CHAT as string);
+      connect.emit("online-user", user._id);
+      setSocket(connect);
+      return () => {
+        connect.emit("offline-user", user._id);
+        connect.disconnect();
+      };
+    }
+  }, []);
 
   const declineCall = (data: { from: string; to: string; callId: string }) => {
     let from = data.from;
@@ -122,6 +127,19 @@ const UserContextProvider = ({
         setCallCancelledByCaller(true);
       });
   }, [socket]);
+
+  if (!user) {
+    return (
+      <div className="h-screen p-5 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <Skeleton className="h-48 w-full bg-backgroundAccent shadow-lg" />
+          <Skeleton className="h-48 w-full bg-backgroundAccent shadow-lg" />
+          <Skeleton className="h-48 w-full bg-backgroundAccent shadow-lg" />
+        </div>
+        <Skeleton className="h-96 w-full mt-5 bg-backgroundAccent shadow-lg" />
+      </div>
+    );
+  }
 
   return (
     <UserContext.Provider

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserUseCaseInterface } from "../../../../interface/user/UserUseCaseInterface";
 import { validateJwt } from "@recurring/shared_library";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getUsersInOrgWithoutMe = async (
   req: Request,
@@ -8,7 +9,7 @@ export const getUsersInOrgWithoutMe = async (
   iUserUseCase: UserUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const { organization, user } = validateJwt(
       access_token,

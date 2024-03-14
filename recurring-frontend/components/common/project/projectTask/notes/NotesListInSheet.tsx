@@ -4,12 +4,10 @@ import NewNotesButton from "./NewNotesButton";
 import UserAvatar from "@/components/common/UserAvatar";
 import EmptyMessage from "@/components/empty/EmptyMessage";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { EmployeeTypes } from "@/constants/Types";
 import { formatDistanceToNow } from "date-fns";
-import { Button } from "@/components/ui/button";
 import ReplayButton from "./ReplayButton";
 
-const NotesListInSheet = ({ user }: { user: EmployeeTypes }) => {
+const NotesListInSheet = () => {
   const { task } = useAppSelector((state) => state.task);
 
   return (
@@ -18,7 +16,7 @@ const NotesListInSheet = ({ user }: { user: EmployeeTypes }) => {
         <div>
           <div className="flex items-center justify-between gap-2 pb-3">
             <h1 className="font-bold text-xl">Comments</h1>
-            <NewNotesButton user={user} />
+            <NewNotesButton />
           </div>
           <ScrollArea className="h-52">
             {task.notes && task.notes.length > 0 ? (

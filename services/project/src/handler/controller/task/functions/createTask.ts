@@ -4,6 +4,7 @@ import { Task } from "../../../../Entities/Task";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
 import { ProjectUseCaseInterface } from "../../../../interface/project/ProjectUseCaseInterface";
 import { Project } from "../../../../Entities/Project";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createTask = async (
   req: Request,
@@ -14,7 +15,7 @@ export const createTask = async (
   try {
     let body = req.body as Task;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
 

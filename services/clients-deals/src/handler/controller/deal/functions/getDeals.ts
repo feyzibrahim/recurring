@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { DealUseCaseInterface } from "../../../../interface/deal/DealUseCaseInterface";
 import { validateJwt } from "@recurring/shared_library";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getDeals = async (
   req: Request,
@@ -8,7 +9,7 @@ export const getDeals = async (
   iDealUseCase: DealUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token, process.env.ACCESS_SECRET ?? "");
 
     let deals = await iDealUseCase.getDeals(data.organization);

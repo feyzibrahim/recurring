@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { LeaveUseCaseInterface } from "../../../../interface/leave/LeaveUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getLeaves = async (
   req: Request,
@@ -8,7 +9,7 @@ export const getLeaves = async (
   iLeaveUseCase: LeaveUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token);
 
     let leaves = await iLeaveUseCase.getLeaves(data.organization);

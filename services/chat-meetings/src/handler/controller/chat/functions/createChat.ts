@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ChatUseCaseInterface } from "../../../../interface/chat/ChatUseCaseInterface";
 import { Chat } from "../../../../Entities/Chat";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createChat = async (
   req: Request,
@@ -11,7 +12,7 @@ export const createChat = async (
   try {
     let body = req.body as Chat;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
 

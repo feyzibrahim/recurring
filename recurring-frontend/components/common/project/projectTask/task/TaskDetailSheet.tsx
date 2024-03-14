@@ -16,21 +16,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import SubTaskEditForm from "../subTask/SubTaskEditForm";
-import { EmployeeTypes } from "@/constants/Types";
 
 import NotesListInSheet from "../notes/NotesListInSheet";
 
 interface PropsTypes {
   onOpenChange: any;
   setOnOpenChange: any;
-  user: EmployeeTypes;
 }
 
-const TaskDetailSheet = ({
-  onOpenChange,
-  setOnOpenChange,
-  user,
-}: PropsTypes) => {
+const TaskDetailSheet = ({ onOpenChange, setOnOpenChange }: PropsTypes) => {
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [subTaskSlug, setSubTaskSlug] = useState("");
@@ -63,7 +57,7 @@ const TaskDetailSheet = ({
               />
             )}
           </div>
-          <NotesListInSheet user={user} />
+          <NotesListInSheet />
         </ScrollArea>
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogContent className="sm:max-w-[500px]">

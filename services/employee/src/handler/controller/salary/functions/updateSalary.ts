@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { SalaryUseCaseInterface } from "../../../../interface/salary/SalaryUseCaseInterface";
 import { Salary } from "../../../../Entities/Salary";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const updateSalary = async (
   req: Request,
@@ -9,11 +10,10 @@ export const updateSalary = async (
   iSalaryUseCase: SalaryUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
     const salary = req.body as Salary;
-    console.log("updateSalary: salary", salary);
 
     let sal = await iSalaryUseCase.updateSalary(data.user, salary);
     if (!sal) {

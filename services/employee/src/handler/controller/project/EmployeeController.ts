@@ -19,8 +19,9 @@ import { sendEmployeeInvitation } from "./functions/sendEmployeeInvitation";
 import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 import { terminateEmployee } from "./functions/terminateEmployee";
 import { getExEmployees } from "./functions/getExEmployees";
+import { requireAuth } from "../../middleware/AuthMiddleware";
 
-@controller("/api/employee")
+@controller("/api/employee", requireAuth)
 export class EmployeeController {
   constructor(
     @inject(TYPES.EmployeeUseCaseInterface)

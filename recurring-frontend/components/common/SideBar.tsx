@@ -157,7 +157,7 @@ const SideBar = () => {
           <Link href={"/dashboard/billing"} className="hover-text text-xl">
             <div
               className={`p-1 rounded-xl hover:bg-background ${
-                pathName === "/dashboard/billing"
+                pathName.includes("/dashboard/billing")
                   ? " bg-primary text-white"
                   : ""
               }`}

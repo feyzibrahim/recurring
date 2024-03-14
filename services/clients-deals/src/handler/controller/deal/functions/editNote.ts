@@ -10,7 +10,6 @@ export const editNote = async (
   try {
     const { slug } = req.params;
     const body = req.body as Note;
-    console.log("file: editNote.ts:13 -> body", body);
 
     let deal = await iDealUseCase.editNote(slug, body);
     if (!deal) {

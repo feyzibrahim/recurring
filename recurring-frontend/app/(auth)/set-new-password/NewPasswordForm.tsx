@@ -35,8 +35,8 @@ const NewPasswordForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      password: "Faiz@1234",
-      confirmPassword: "Faiz@1234",
+      password: "",
+      confirmPassword: "",
     },
   });
 

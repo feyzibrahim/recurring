@@ -14,8 +14,9 @@ import { updateLeave } from "./functions/updateLeave";
 import { getLeavesByUserId } from "./functions/getLeavesByUserId";
 import { getLeavesForUser } from "./functions/getLeavesForUser";
 import { getLeaves } from "./functions/getLeaves";
+import { requireAuth } from "../../middleware/AuthMiddleware";
 
-@controller("/api/leave")
+@controller("/api/leave", requireAuth)
 export class LeaveController {
   constructor(
     @inject(TYPES.LeaveUseCaseInterface)

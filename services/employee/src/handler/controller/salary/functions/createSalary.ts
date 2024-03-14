@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { SalaryUseCaseInterface } from "../../../../interface/salary/SalaryUseCaseInterface";
 import { Salary } from "../../../../Entities/Salary";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createSalary = async (
   req: Request,
@@ -11,7 +12,7 @@ export const createSalary = async (
   try {
     let body = req.body as Salary;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
 

@@ -1,20 +1,21 @@
 "use client";
-
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import EmptyProject from "@/components/empty/EmptyProjects";
 import { useSearchParams } from "next/navigation";
 import { LeaveTable } from "./LeaveTable";
 import { getLeavesForUser } from "@/app/lib/features/leave/leaveActions";
+import { LeavePolicyTypes } from "@/constants/Types";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
-const LeaveList = ({ organization }: { organization: any }) => {
+const LeaveList = () => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const from = searchParams.get("from");
   const to = searchParams.get("to");
-
+  const [leavePolicy, setLeavePolicy] = useState<LeavePolicyTypes>();
   const { leaves } = useAppSelector((state) => state.leave);
-  console.log("file: LeaveList.tsx:17 -> LeaveList -> leaves", leaves);
 
   useEffect(() => {
     let filter = [];
@@ -27,14 +28,31 @@ const LeaveList = ({ organization }: { organization: any }) => {
     dispatch(getLeavesForUser({ filter: filter.join("&") }));
   }, [dispatch, from, to, searchParams]);
 
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await actualCommonRequest({
+        route: API_ROUTES.EMPLOYEE,
+        method: "GET",
+        url: "/api/leavePolicy",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setLeavePolicy(data.leavePolicy);
+    };
+
+    loadData();
+  }, []);
+
   return (
     <div>
       <div>
         <p>Available Leaves this month: </p>{" "}
         {leaves &&
-          organization &&
-          organization.sickLeave + organization.casualLeave - leaves.length}
-        /{organization.sickLeave + organization.casualLeave}
+          leavePolicy &&
+          leavePolicy.sickLeave + leavePolicy.casualLeave - leaves.length}
+        /{leavePolicy && leavePolicy.sickLeave + leavePolicy.casualLeave}
       </div>
       {leaves && leaves.length > 0 ? (
         <LeaveTable leaves={leaves} />

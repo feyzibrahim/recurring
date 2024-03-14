@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ProjectUseCaseInterface } from "../../../../interface/project/ProjectUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getProjects = async (
   req: Request,
@@ -8,7 +9,8 @@ export const getProjects = async (
   iProjectUseCase: ProjectUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
+
     const data = validateJwt(access_token);
 
     let params: Record<string, string> = {};

@@ -11,8 +11,9 @@ import { LeavePolicyUseCaseInterface } from "../../../interface/leavePolicy/Leav
 import { createLeavePolicy } from "./functions/createLeavePolicy";
 import { updateLeavePolicy } from "./functions/updateLeavePolicy";
 import { getLeavePolicy } from "./functions/getLeavePolicy";
+import { requireAuth } from "../../middleware/AuthMiddleware";
 
-@controller("/api/leavePolicy")
+@controller("/api/leavePolicy", requireAuth)
 export class LeavePolicyController {
   constructor(
     @inject(TYPES.LeavePolicyUseCaseInterface)

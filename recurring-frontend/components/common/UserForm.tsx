@@ -1,8 +1,9 @@
+"use client";
 import InputWithIcon from "@/components/custom/InputWithIcon";
 import { Label } from "@/components/ui/label";
 import { AiOutlineCheck } from "react-icons/ai";
 import { format } from "date-fns";
-import EditButton from "./EditButton";
+import EditButton from "../../app/dashboard/settings/EditButton";
 import InputBox from "@/components/common/InputBox";
 import { useContext } from "react";
 import { UserContext } from "@/components/common/chat/UserProvider/UserContextProvider";

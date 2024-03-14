@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { LeavePolicyUseCaseInterface } from "../../../../interface/leavePolicy/LeavePolicyUseCaseInterface";
 import { LeavePolicy } from "../../../../Entities/LeavePolicy";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createLeavePolicy = async (
   req: Request,
@@ -11,7 +12,7 @@ export const createLeavePolicy = async (
   try {
     const body = req.body as LeavePolicy;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token);
     body.organization = data.organization;
 

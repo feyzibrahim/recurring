@@ -1,8 +1,11 @@
 "use client";
+import { actualCommonRequest } from "@/api/actual_client";
 import CustomTooltip from "@/components/custom/CustomTooltip";
 import { CountByDay } from "@/constants/Types";
+import { API_ROUTES } from "@/lib/routes";
 import { countTotal } from "@/util/functions";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import { FiStar } from "react-icons/fi";
 import { Tooltip, Area, XAxis } from "recharts";
 
@@ -11,7 +14,26 @@ const AreaChart = dynamic(
   { ssr: false }
 );
 
-const TaskCompleteChart = ({ data }: { data: CountByDay[] }) => {
+const TaskCompleteChart = () => {
+  const [data, setData] = useState<CountByDay[]>();
+
+  useEffect(() => {
+    const loadData = async () => {
+      const taskStatus = await actualCommonRequest({
+        route: API_ROUTES.PROJECT,
+        method: "GET",
+        url: "/api/task/completed-count",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (taskStatus.success) {
+        setData(taskStatus.tasksCount);
+      }
+    };
+    loadData();
+  }, []);
+
   return (
     <div className="chart-box-parent">
       <div className="chart-box-header">

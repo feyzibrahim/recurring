@@ -4,6 +4,7 @@ import { validateJwt } from "../../../../util/JWT/validate.jwt";
 import { User } from "../../../../Entities/User";
 import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 import { QUEUES } from "../../../../constants/types/queue";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const updateProfile = async (
   req: Request,
@@ -13,7 +14,7 @@ export const updateProfile = async (
 ) => {
   const body = req.body as User;
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
     let user = (await iUserUseCase.getUser(data.user)) as User;

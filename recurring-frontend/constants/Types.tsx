@@ -243,6 +243,13 @@ interface OrganizationTypes {
   subscriptionActive?: string;
 }
 
+interface LeavePolicyTypes {
+  casualLeave: number;
+  sickLeave: number;
+  _id: string;
+  organization: string;
+}
+
 export type {
   InputWithIconProps,
   EmployeeTypes,
@@ -263,4 +270,5 @@ export type {
   NoteTypes,
   OrganizationTypes,
   ReplayTypes,
+  LeavePolicyTypes,
 };

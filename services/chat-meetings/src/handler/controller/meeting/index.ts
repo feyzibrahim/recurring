@@ -12,8 +12,9 @@ import { createMeeting } from "./functions/createMeeting";
 import { updateMeeting } from "./functions/updateMeeting";
 import { getMeetings } from "./functions/getMeetings";
 import { getMeeting } from "./functions/getMeeting";
+import { requireAuth } from "../../middleware/AuthMiddleware";
 
-@controller("/api/meeting")
+@controller("/api/meeting", requireAuth)
 export class MeetingController {
   constructor(
     @inject(TYPES.MeetingUseCaseInterface)

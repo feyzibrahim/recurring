@@ -15,11 +15,8 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { HiCheckCircle } from "react-icons/hi";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-import { checkUser } from "@/server/checkUser";
 
 export default async function Home() {
-  // await checkUser();
-
   return (
     <>
       <Navbar />

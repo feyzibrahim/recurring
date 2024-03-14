@@ -1,3 +1,4 @@
+import { getObject } from "@/util/localStorage";
 import axios from "axios";
 
 interface RequestProps {
@@ -28,6 +29,16 @@ export const actualCommonRequest = async ({
       return error.response.data;
     }
   );
+
+  const user_data: { access_token: string; refresh_token: string } =
+    getObject("user_data");
+
+  if (user_data) {
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${user_data.access_token}`,
+    };
+  }
 
   let requestConfig: RequestProps = {
     method,

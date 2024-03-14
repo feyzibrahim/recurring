@@ -27,7 +27,7 @@ export class SubscriptionController {
     private iRabbitMQUseCase: RabbitMQUseCaseInterface
   ) {}
 
-  @httpGet("/", requireAuth)
+  @httpGet("/")
   async getSubscriptionDetails(req: Request, res: Response) {
     await getSubscriptionDetails(req, res, this.iSubscriptionUseCase);
   }

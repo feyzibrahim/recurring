@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { OrganizationUseCaseInterface } from "../../../../interface/organization/OrganizationUseCaseInterface";
 import { Organization } from "../../../../Entities/Organization";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const updateOrganization = async (
   req: Request,
@@ -9,7 +10,7 @@ export const updateOrganization = async (
   iOrgUseCase: OrganizationUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
     const organization = req.body as Organization;

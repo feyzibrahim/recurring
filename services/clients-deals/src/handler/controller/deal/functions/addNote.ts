@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { DealUseCaseInterface } from "../../../../interface/deal/DealUseCaseInterface";
 import { Note } from "../../../../Entities/Note";
 import { validateJwt } from "@recurring/shared_library";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const addNote = async (
   req: Request,
@@ -10,7 +11,7 @@ export const addNote = async (
 ) => {
   try {
     const { slug } = req.params;
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token, process.env.ACCESS_SECRET ?? "");
 
     const body = req.body as Note;

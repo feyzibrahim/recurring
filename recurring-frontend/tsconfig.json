@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["nextenv-configmap.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "middleware.ts"],
+  "include": ["nextenv-configmap.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../env/middleware.ts"],
   "exclude": ["node_modules"]
 }

@@ -1,9 +1,11 @@
 "use client";
+import { actualCommonRequest } from "@/api/actual_client";
 import CustomTooltip from "@/components/custom/CustomTooltip";
 import { CountByDay } from "@/constants/Types";
+import { API_ROUTES } from "@/lib/routes";
 import { countTotal } from "@/util/functions";
 import dynamic from "next/dynamic";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RiDashboardLine } from "react-icons/ri";
 import { Tooltip, Area, XAxis } from "recharts";
 
@@ -12,9 +14,28 @@ const AreaChart = dynamic(
   { ssr: false }
 );
 
-const ProjectsDone = ({ data }: { data: CountByDay[] }) => {
+const ProjectsDone = () => {
+  const [data, setData] = useState<CountByDay[]>();
+
+  useEffect(() => {
+    const loadData = async () => {
+      const projectStatus = await actualCommonRequest({
+        route: API_ROUTES.PROJECT,
+        method: "GET",
+        url: "/api/project/completed-count",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (projectStatus.success) {
+        setData(projectStatus.projectsCount);
+      }
+    };
+    loadData();
+  }, []);
+
   return (
-    <div className="chart-box-parent">
+    <div className="chart-box-parent" suppressHydrationWarning>
       <div className="chart-box-header">
         <div className="chart-box-icon">
           <RiDashboardLine />

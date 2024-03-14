@@ -47,6 +47,10 @@ const ChatList = () => {
     dispatch(getChats({ filter: "" }));
   }, [dispatch]);
 
+  if (!chats) {
+    return <MembersListLoading />;
+  }
+
   return (
     <div className="bg-secondary p-5">
       <div className="flex items-center justify-between ">

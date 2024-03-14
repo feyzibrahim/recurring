@@ -1,8 +1,7 @@
 "use client";
 import React, { useContext, useState } from "react";
-import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { TaskContext } from "./TaskContextProvider";
-import { format } from "date-fns";
 import TaskEditForm from "@/components/common/project/projectTask/task/TaskEditForm";
 import { useAppSelector } from "@/app/lib/hook";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -18,10 +17,9 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import SubTaskEditForm from "@/components/common/project/projectTask/subTask/SubTaskEditForm";
-import { EmployeeTypes } from "@/constants/Types";
 
-const TaskDetailSheet = ({ user }: { user: EmployeeTypes }) => {
-  const { onOpenChange, setOnOpenChange, sheetData } = useContext(TaskContext);
+const TaskDetailSheet = () => {
+  const { onOpenChange, setOnOpenChange } = useContext(TaskContext);
   const { task } = useAppSelector((state) => state.task);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,7 +46,7 @@ const TaskDetailSheet = ({ user }: { user: EmployeeTypes }) => {
               />
             )}
           </div>
-          <NotesListInSheet user={user} />
+          <NotesListInSheet />
         </ScrollArea>
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogContent className="sm:max-w-[500px]">

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { LeaveUseCaseInterface } from "../../../../interface/leave/LeaveUseCaseInterface";
 import { Leave } from "../../../../Entities/Leave";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createLeave = async (
   req: Request,
@@ -11,7 +12,8 @@ export const createLeave = async (
   try {
     const body = req.body as Leave;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
+
     const data = validateJwt(access_token);
     body.organization = data.organization;
     body.employeeId = data.user;
