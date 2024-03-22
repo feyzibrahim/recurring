@@ -19,6 +19,7 @@ export class Task {
       {
         title: string;
         status: "planning" | "active" | "completed" | "archive" | "backlog";
+        duration: { length: number; durationType: "minutes" | "hours" | "day" };
       }
     ],
     public notes?: [Note]

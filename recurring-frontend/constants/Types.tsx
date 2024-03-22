@@ -73,12 +73,17 @@ interface TaskTypes {
   tags: [];
   subTasks: [SubTaskTypes];
   notes: [NotesTypes];
+  attachments: [AttachmentTypes];
 }
 
 interface SubTaskTypes {
   _id: string;
   title: string;
   status: "planning" | "active" | "completed" | "archive" | "backlog";
+  duration: {
+    length: number;
+    durationType: "minutes" | "hours" | "day";
+  };
 }
 
 interface ReplayTypes {
@@ -250,6 +255,13 @@ interface LeavePolicyTypes {
   organization: string;
 }
 
+interface AttachmentTypes {
+  title: string;
+  description: string;
+  user: string;
+  attachments?: string[];
+}
+
 export type {
   InputWithIconProps,
   EmployeeTypes,
@@ -271,4 +283,5 @@ export type {
   OrganizationTypes,
   ReplayTypes,
   LeavePolicyTypes,
+  AttachmentTypes,
 };

@@ -61,7 +61,8 @@ export const chatSlice = createSlice({
       const { chats, activeChat } = state;
       const { onlineList, userId } = payload;
 
-      let newChats = state.chats || [];
+      let newChats = chats || [];
+      console.log("file: chatSlice.tsx:65 -> newChats", newChats);
 
       if (chats) {
         newChats = chats.map((chat) => {
@@ -89,9 +90,11 @@ export const chatSlice = createSlice({
           (participant) => participant._id !== userId
         );
         const isParticipantOnline = participantsToCheck.some((participant) =>
-          onlineList.some(
-            (onlineUser: any) => onlineUser.userId === participant._id
-          )
+          onlineList.some((onlineUser: any) => {
+            if (onlineUser._id !== userId) {
+              return onlineUser.userId === participant._id;
+            }
+          })
         );
 
         newActiveChat = {

@@ -73,7 +73,7 @@ export default function RegisterForm() {
     }
 
     if (res.success) {
-      router.push("/dashboard");
+      router.push("/email-validation");
     }
     setLoading(false);
   }

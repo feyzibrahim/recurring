@@ -11,13 +11,12 @@ interface PropsTypes {
 }
 
 const SingleChat = ({ user, online }: PropsTypes) => {
-  console.log("file: SingleChat.tsx:14 -> SingleChat -> user", user);
   const pathName = usePathname();
   let path = pathName.split("/");
   let curr = path[1];
 
   if (!user) {
-    return <div>Single chat</div>;
+    return <></>;
   }
 
   return (

@@ -27,17 +27,6 @@ const EmployeeNav = ({ params }: { params: { id: string } }) => {
       >
         Tasks
       </Link>
-
-      <Link
-        href={`/home/employee/${params.id}/history`}
-        className={` ${
-          pathName === `/home/employee/${params.id}/history`
-            ? "text-foreground font-bold"
-            : ""
-        }`}
-      >
-        History
-      </Link>
     </div>
   );
 };

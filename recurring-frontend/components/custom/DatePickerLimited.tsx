@@ -51,6 +51,9 @@ const DatePickerLimited: React.FC<InputWithIconProps> = ({ field, title }) => {
             onSelect={field.onChange}
             disabled={isDateDisabled}
             initialFocus
+            captionLayout="dropdown-buttons"
+            fromYear={1960}
+            toYear={2030}
           />
         </PopoverContent>
       </Popover>

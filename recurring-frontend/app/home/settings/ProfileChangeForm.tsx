@@ -9,9 +9,10 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import FormInputWithIcon from "@/components/common/FormInputWithIcon";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import DatePicker from "@/components/custom/DatePicker";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
+import DatePickerLimitedString from "@/components/custom/DatePickerLimitedString";
+import { storeObject } from "@/util/localStorage";
 
 const formSchema = z.object({
   firstName: z
@@ -89,6 +90,7 @@ export default function ProfileChangeForm({
     if (res.success) {
       router.refresh();
       setIsModalOpen(false);
+      storeObject("user_data", res.user);
     }
     setLoading(false);
   }
@@ -152,7 +154,7 @@ export default function ProfileChangeForm({
           control={form.control}
           name="dateOfBirth"
           render={({ field }) => (
-            <DatePicker title="Date of Birth" field={field} />
+            <DatePickerLimitedString title="Date of Birth" field={field} />
           )}
         />
         <Button type="submit" className="w-full" disabled={loading}>

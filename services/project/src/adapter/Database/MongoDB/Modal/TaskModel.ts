@@ -11,6 +11,16 @@ const SubTask: Schema = new Schema({
     default: "planning",
     enum: ["planning", "active", "completed", "archive", "backlog"],
   },
+  duration: {
+    length: {
+      type: Number,
+    },
+    durationType: {
+      type: String,
+      default: "minutes",
+      enum: ["minutes", "hours", "day"],
+    },
+  },
 });
 
 const Replay: Schema = new Schema(

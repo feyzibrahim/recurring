@@ -8,10 +8,12 @@ import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import GoogleAuth from "@/components/common/GoogleAuth";
 import BgImage from "@/public/login-bg.jpg";
+import CheckUserExist from "@/components/common/CheckUserExist";
 
 export default async function page() {
   return (
     <>
+      <CheckUserExist />
       <Navbar />
       <div className="lg:h-screen grid grid-cols-1 lg:grid-cols-2 mb-5">
         <div className="px-5 pt-20 lg:p-20 flex items-center">

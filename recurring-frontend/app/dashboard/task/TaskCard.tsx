@@ -9,7 +9,6 @@ import { useAppDispatch } from "@/app/lib/hook";
 import { setTask } from "@/app/lib/features/task/taskSlice";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import AvatarFallbackImage from "@/components/common/AvatarFallbackImage";
-import { Progress } from "@/components/ui/progress";
 import { MdOutlineCheckCircleOutline } from "react-icons/md";
 
 interface ItemProps {

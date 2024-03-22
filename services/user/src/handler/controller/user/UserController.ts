@@ -12,6 +12,7 @@ import { getUsersInOrgWithoutMe } from "./functions/getUsersInOrgWithoutMe.contr
 import { RabbitMQUseCaseInterface } from "../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 import { getUsersForAdmin } from "./functions/getUsersForAdmin.controller";
 import { requireSuperAdminAccess } from "../../middleware/SuperAdminMiddleware";
+import { generateNewToken } from "./functions/generateNewToken.controller";
 
 @controller("/api/user")
 export class UserController {
@@ -89,5 +90,9 @@ export class UserController {
   @httpGet("/admin", requireSuperAdminAccess)
   async getUsersForAdmin(req: Request, res: Response) {
     await getUsersForAdmin(req, res, this.iUserUseCase);
+  }
+  @httpGet("/new-token")
+  async generateNewToken(req: Request, res: Response) {
+    await generateNewToken(req, res, this.iUserUseCase);
   }
 }

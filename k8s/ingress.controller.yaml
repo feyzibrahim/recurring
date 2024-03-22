@@ -2,26 +2,19 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-controller
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
   labels:
     name: ingress-controller
-  # namespace: recurring
+  annotations:
+    kubernetes.io/ingress.class: nginx # Use your Ingress class
+    cert-manager.io/cluster-issuer: letsencrypt-production # Replace with your ClusterIssuer
 spec:
-  ingressClassName: nginx
+  ingressClassName: webapprouting.kubernetes.azure.com
   rules:
     - host: recurring.site
       http:
         paths:
           - pathType: Prefix
             path: "/"
-            backend:
-              service:
-                name: recurring-frontend-service
-                port:
-                  number: 3000
-          - pathType: Prefix
-            path: "/onboarding"
             backend:
               service:
                 name: recurring-frontend-service
@@ -98,6 +91,13 @@ spec:
                 port:
                   number: 4004
           - pathType: Prefix
+            path: "/socket.io"
+            backend:
+              service:
+                name: chat
+                port:
+                  number: 4004
+          - pathType: Prefix
             path: "/api/meeting"
             backend:
               service:
@@ -132,3 +132,7 @@ spec:
                 name: subscription
                 port:
                   number: 4006
+  tls:
+    - hosts:
+        - recurring.site
+      secretName: tls-secret

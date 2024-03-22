@@ -24,7 +24,7 @@ const ChatList = () => {
   const { chats, loading } = useAppSelector((state) => state.chat);
 
   useEffect(() => {
-    socket && socket.emit("online-user", user?._id);
+    socket && socket.emit("test-online-user", user?._id);
 
     socket &&
       socket.on("new-chat", (data) => {
@@ -33,12 +33,11 @@ const ChatList = () => {
 
     socket &&
       socket.on("new-group-chatter", (data) => {
-        console.log("file: ChatList.tsx:35 -> socket.on -> data", data);
         dispatch(socketNewChatUpdate({ chat: data }));
       });
 
     socket &&
-      socket.off().on("get-online-users", (data) => {
+      socket.on("get-online-users", (data) => {
         dispatch(updateOnlineStatus({ onlineList: data, userId: user?._id }));
       });
   }, [socket, dispatch, user?._id]);

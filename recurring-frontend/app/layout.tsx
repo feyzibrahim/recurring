@@ -17,7 +17,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const googleClientId = process.env.GOOGLE_AUTH_ID ?? "";
+  const googleClientId =
+    process.env.NEXT_PUBLIC_GOOGLE_AUTH_ID ??
+    "649239403046-df8md65gntctdh0nro5elne559mgsuqo.apps.googleusercontent.com";
 
   return (
     <html lang="en">

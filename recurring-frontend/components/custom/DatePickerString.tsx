@@ -1,5 +1,5 @@
 import { Calendar } from "@/components/ui/calendar";
-import { addDays, format, isAfter, isBefore } from "date-fns";
+import { format } from "date-fns";
 import {
   FormControl,
   FormItem,
@@ -19,14 +19,7 @@ interface InputWithIconProps {
   title: string;
 }
 
-const DatePickerLimitedString: React.FC<InputWithIconProps> = ({
-  field,
-  title,
-}) => {
-  const isDateDisabled = (day: Date): boolean => {
-    return isBefore(day, addDays(new Date(), -1));
-  };
-
+const DatePickerString: React.FC<InputWithIconProps> = ({ field, title }) => {
   return (
     <FormItem className="flex flex-col">
       <FormLabel>{title}</FormLabel>
@@ -53,11 +46,13 @@ const DatePickerLimitedString: React.FC<InputWithIconProps> = ({
             mode="single"
             selected={field.value}
             onSelect={(da) => field.onChange(da?.toString())}
-            disabled={isDateDisabled}
+            disabled={(date) =>
+              date > new Date() || date < new Date("1900-01-01")
+            }
             initialFocus
+            captionLayout="dropdown-buttons"
             fromYear={1960}
             toYear={2030}
-            captionLayout="dropdown-buttons"
           />
         </PopoverContent>
       </Popover>
@@ -66,4 +61,4 @@ const DatePickerLimitedString: React.FC<InputWithIconProps> = ({
   );
 };
 
-export default DatePickerLimitedString;
+export default DatePickerString;

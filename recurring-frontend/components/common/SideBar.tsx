@@ -84,6 +84,33 @@ const SideBar = () => {
           </Link>
         </ToolTipWrapper>
 
+        <ToolTipWrapper title="Chat">
+          <Link href={"/dashboard/chat"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName.includes("/dashboard/chat")
+                  ? " bg-primary text-white"
+                  : ""
+              }`}
+            >
+              <BiChat className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+        <ToolTipWrapper title="Meetings">
+          <Link href={"/dashboard/meetings"} className="hover-text text-xl">
+            <div
+              className={`p-1 rounded-xl hover:bg-background ${
+                pathName.includes("/dashboard/meetings")
+                  ? " bg-primary text-white"
+                  : ""
+              }`}
+            >
+              <BiCalendar className="m-1" />
+            </div>
+          </Link>
+        </ToolTipWrapper>
+
         <ToolTipWrapper title="Clients">
           <Link href={"/dashboard/clients"} className="hover-text text-xl">
             <div
@@ -108,33 +135,6 @@ const SideBar = () => {
               }`}
             >
               <FaMoneyCheckAlt className="m-1" />
-            </div>
-          </Link>
-        </ToolTipWrapper>
-
-        <ToolTipWrapper title="Chat">
-          <Link href={"/dashboard/chat"} className="hover-text text-xl">
-            <div
-              className={`p-1 rounded-xl hover:bg-background ${
-                pathName.includes("/dashboard/chat")
-                  ? " bg-primary text-white"
-                  : ""
-              }`}
-            >
-              <BiChat className="m-1" />
-            </div>
-          </Link>
-        </ToolTipWrapper>
-        <ToolTipWrapper title="Meetings">
-          <Link href={"/dashboard/meetings"} className="hover-text text-xl">
-            <div
-              className={`p-1 rounded-xl hover:bg-background ${
-                pathName.includes("/dashboard/meetings")
-                  ? " bg-primary text-white"
-                  : ""
-              }`}
-            >
-              <BiCalendar className="m-1" />
             </div>
           </Link>
         </ToolTipWrapper>

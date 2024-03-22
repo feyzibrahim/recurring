@@ -22,6 +22,7 @@ import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { editTask } from "@/app/lib/features/task/taskActions";
 import FormInputCustom from "@/components/common/FormInputCustom";
 import { SubTaskTypes } from "@/constants/Types";
+import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
   _id: z
@@ -36,12 +37,16 @@ const formSchema = z.object({
       message: "Email must be at least 2 characters.",
     })
     .max(30, { message: "Name should be Less than 30 characters" }),
-  status: z
-    .string()
-    .min(2, {
-      message: "Email must be at least 2 characters.",
+  status: z.string(),
+  duration: z
+    .object({
+      length: z
+        .number()
+        .min(0, { message: "Duration must be a positive number." })
+        .optional(),
+      durationType: z.string().optional(),
     })
-    .max(30, { message: "Name should be Less than 30 characters" }),
+    .optional(),
 });
 
 export default function SubTaskEditForm({
@@ -62,6 +67,14 @@ export default function SubTaskEditForm({
       title: task?.subTasks.find((ele) => ele._id === subTaskSlug)?.title || "",
       status:
         task?.subTasks.find((ele) => ele._id === subTaskSlug)?.status || "",
+      duration: {
+        durationType:
+          task?.subTasks.find((ele) => ele._id === subTaskSlug)?.duration
+            .durationType || "",
+        length:
+          task?.subTasks.find((ele) => ele._id === subTaskSlug)?.duration
+            .length || undefined,
+      },
     },
   });
 
@@ -126,9 +139,53 @@ export default function SubTaskEditForm({
             )}
           />
         </div>
+        <FormLabel>Estimated Duration</FormLabel>
+        <FormField
+          control={form.control}
+          name="duration.durationType"
+          render={({ field }) => (
+            <FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger className="bg-backgroundAccent">
+                  <SelectValue
+                    className="capitalize"
+                    placeholder="Select Duration Type"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="minutes">Minutes</SelectItem>
+                  <SelectItem value="hours">Hours</SelectItem>
+                  <SelectItem value="days">Days</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormControl>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="duration.length"
+          render={({ field }) => (
+            <FormItem className="mt-2">
+              <FormControl>
+                <Input
+                  placeholder="Enter duration"
+                  type="number"
+                  min="0"
+                  {...field}
+                  className="bg-backgroundAccent"
+                  onChange={(e) => {
+                    const value = parseFloat(e.target.value);
+                    field.onChange(value);
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="py-1"></div>
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Loading..." : "Create New Task"}
+          {loading ? "Loading..." : "Update Sub Task"}
         </Button>
         {error && <p className="text-sm text-red-500">{error}</p>}
       </form>

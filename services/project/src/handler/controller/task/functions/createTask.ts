@@ -36,11 +36,13 @@ export const createTask = async (
     } else {
       const test = project.members.filter((mem: any) => {
         if (typeof task.assignee !== "string") {
-          return mem._id.toString() !== task.assignee._id.toString() && mem;
+          if (mem._id.toString() !== task.assignee._id.toString()) {
+            return mem;
+          }
         }
       });
 
-      if (test.length > 0 && typeof task.assignee !== "string") {
+      if (test.length === 0 && typeof task.assignee !== "string") {
         newProject = await iProjectUseCase.appendProjectMember(
           project._id,
           task.assignee._id

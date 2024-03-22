@@ -3,17 +3,17 @@ kind: ConfigMap
 metadata:
   name: web-config
 data:
-  NEXTAUTH_URL: http://localhost:3000
+  NEXTAUTH_URL: https://recurring.site
   NEXTAUTH_SECRET: IUYDnius5i4Ea/ASFASEDWE6rANVMf/Cyj0410basdfasdfwM=
-  GOOGLE_AUTH_ID: 649239403046-df8md65gntctdh0nro5elne559mgsuqo.apps.googleusercontent.com
+  NEXT_PUBLIC_GOOGLE_AUTH_ID: 649239403046-df8md65gntctdh0nro5elne559mgsuqo.apps.googleusercontent.com
   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: "dkuts6cak"
   NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: "ellljweo"
-  NEXT_PUBLIC_BACKEND_URL_AUTH: "http://recurring.test"
-  NEXT_PUBLIC_BACKEND_URL_PROJECT: "http://recurring.test"
-  NEXT_PUBLIC_BACKEND_URL_EMPLOYEE: "http://recurring.test"
-  NEXT_PUBLIC_BACKEND_URL_CHAT: "http://recurring.test"
-  NEXT_PUBLIC_BACKEND_URL_CLIENT_AND_DEALS: "http://recurring.test"
-  NEXT_PUBLIC_BACKEND_URL_SUBSCRIPTION: "http://recurring.test"
+  NEXT_PUBLIC_BACKEND_URL_AUTH: "https://recurring.site"
+  NEXT_PUBLIC_BACKEND_URL_PROJECT: "https://recurring.site"
+  NEXT_PUBLIC_BACKEND_URL_EMPLOYEE: "https://recurring.site"
+  NEXT_PUBLIC_BACKEND_URL_CHAT: "https://recurring.site"
+  NEXT_PUBLIC_BACKEND_URL_CLIENT_AND_DEALS: "https://recurring.site"
+  NEXT_PUBLIC_BACKEND_URL_SUBSCRIPTION: "https://recurring.site"
   BACKEND_URL_AUTH: "http://user:4001"
   BACKEND_URL_PROJECT: "http://project:4002"
   BACKEND_URL_EMPLOYEE: "http://employee:4003"

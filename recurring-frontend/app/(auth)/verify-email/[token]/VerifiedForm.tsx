@@ -6,6 +6,7 @@ import Link from "next/link";
 import { EmployeeTypes } from "@/constants/Types";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
+import { storeObject } from "@/util/localStorage";
 
 const VerifiedForm = (params: any) => {
   const [user, setUser] = useState<EmployeeTypes>();
@@ -21,8 +22,12 @@ const VerifiedForm = (params: any) => {
         },
       });
       if (res.success) {
-        console.log(res);
         setUser(res.user);
+        storeObject("user_data", {
+          ...res.user,
+          access_token: res.access_token,
+          refresh_token: res.refresh_token,
+        });
       }
     };
     verifyUser();

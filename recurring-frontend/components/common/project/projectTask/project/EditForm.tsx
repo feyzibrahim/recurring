@@ -17,6 +17,8 @@ import { ManagerList } from "./ManagerList";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { editProject } from "@/app/lib/features/project/projectActions";
 import DatePickerNoLimit from "@/components/custom/DatePickerNoLimit";
+import DatePicker from "@/components/custom/DatePicker";
+import DatePickerLimited from "@/components/custom/DatePickerLimited";
 
 const projectSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -104,14 +106,14 @@ const EditForm = ({ setIsModalOpen }: PropsTypes) => {
           control={form.control}
           name="startDate"
           render={({ field }) => (
-            <DatePickerNoLimit title="Start Date" field={field} />
+            <DatePickerLimited title="Start Date" field={field} />
           )}
         />
         <FormField
           control={form.control}
           name="endDate"
           render={({ field }) => (
-            <DatePickerNoLimit title="End Date" field={field} />
+            <DatePickerLimited title="End Date" field={field} />
           )}
         />
         <FormField

@@ -11,6 +11,9 @@ import morgan from "morgan";
 import { RabbitMQService } from "./infra/rabbitmq/rabbitmq.service";
 import { TYPES } from "./constants/types/types";
 import { QUEUES } from "./constants/types/queue";
+import cron from "node-cron";
+import sendReminder from "./util/nodemailer/sendReminder";
+import sendReminderTask from "./util/nodemailer/sendReminderTask";
 
 const server = new InversifyExpressServer(container);
 
@@ -32,6 +35,11 @@ server.setConfig(async (app) => {
   );
   await rabbitMQService.connect();
   await rabbitMQService.consumeMessages(QUEUES.PROJECT_USER_CREATION);
+
+  cron.schedule("0 0 * * *", async () => {
+    sendReminder();
+    sendReminderTask();
+  });
 });
 
 envChecker();

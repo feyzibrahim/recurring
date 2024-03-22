@@ -17,7 +17,7 @@ const UserList = ({ type, title }: Props) => {
 
   useEffect(() => {
     dispatch(getUsers({ query: type }));
-  }, [dispatch]);
+  }, [dispatch, type]);
 
   return (
     <div className="">

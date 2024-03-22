@@ -7,6 +7,7 @@ import { SubTaskTypes } from "@/constants/Types";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import StatusDiv from "@/components/common/StatusDiv";
+import { BiTimeFive } from "react-icons/bi";
 
 export const columns: ColumnDef<SubTaskTypes>[] = [
   {
@@ -52,5 +53,39 @@ export const columns: ColumnDef<SubTaskTypes>[] = [
       );
     },
     cell: ({ row }) => <StatusDiv status={row.getValue("status")} />,
+  },
+  {
+    accessorKey: "duration",
+    header: ({ column }) => {
+      return (
+        <div
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex gap-1 items-center hover:text-foreground cursor-pointer"
+        >
+          <BiTimeFive />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const duration: {
+        length: number;
+        durationType: "minutes" | "hours" | "day";
+      } = row.getValue("duration");
+
+      let type =
+        duration.durationType === "minutes"
+          ? "m"
+          : duration.durationType === "hours"
+          ? "h"
+          : "d";
+
+      return (
+        <span>
+          {duration.length}
+          {type}
+        </span>
+      );
+    },
   },
 ];

@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 
 import { Button } from "@/components/ui/button";
 import EmailChangeForm from "./EmailChangeForm";
+import EmailIInput from "./EmailIInput";
 
 const page = async () => {
   return (
@@ -19,6 +20,7 @@ const page = async () => {
           <Label>
             <p className="pt-5 pb-2">Email</p>
           </Label>
+          <EmailIInput />
         </div>
         <Dialog>
           <DialogTrigger asChild>

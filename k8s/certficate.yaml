@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: recurring-ssl-certificate
+  namespace: cert-manager
+spec:
+  secretName: recurring-ssl-certificate-tls
+  duration: 2160h
+  renewBefore: 360h
+  subject:
+    organizations:
+      - recurring
+  commonName: recurring.site
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - server auth
+    - client auth
+
+  dnsNames:
+    - recurring.site
+    - www.recurring.site
+  ipAddresses:
+    - 192.168.0.5
+  issuerRef:
+    name: letsencrypt-prod
+    kind: Issuer
+    group: cert-manager.io

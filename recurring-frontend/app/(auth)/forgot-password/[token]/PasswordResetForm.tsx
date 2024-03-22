@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
+import { storeObject } from "@/util/localStorage";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -52,13 +53,29 @@ const PasswordResetForm = ({ token }: { token: string }) => {
       },
     });
 
-    console.log("Log: onSubmit -> res", res);
     if (!res.success) {
       setError(res.error);
     }
 
     if (res.success) {
-      router.push("/dashboard");
+      storeObject("user_data", {
+        ...res.user,
+        access_token: res.access_token,
+        refresh_token: res.refresh_token,
+      });
+
+      if (res.user.role === "owner") {
+        router.replace("/dashboard");
+      }
+      if (res.user.role === "employee") {
+        router.replace("/home");
+      }
+      if (res.user.role === "manager") {
+        router.replace("/man");
+      }
+      if (res.user.role === "super-admin") {
+        router.replace("/super-admin");
+      }
     }
     setLoading(false);
   }
@@ -79,7 +96,7 @@ const PasswordResetForm = ({ token }: { token: string }) => {
       }
     };
     verifyToken();
-  }, []);
+  }, [router, token]);
 
   return (
     <Form {...form}>

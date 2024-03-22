@@ -50,6 +50,9 @@ const DatePicker: React.FC<InputWithIconProps> = ({ field, title }) => {
               date > new Date() || date < new Date("1900-01-01")
             }
             initialFocus
+            captionLayout="dropdown-buttons"
+            fromYear={1960}
+            toYear={2030}
           />
         </PopoverContent>
       </Popover>

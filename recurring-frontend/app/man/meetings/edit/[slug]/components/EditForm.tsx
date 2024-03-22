@@ -63,7 +63,7 @@ const EditForm = ({ slug }: { slug: string }) => {
       }
     };
     loadData();
-  }, []);
+  }, [slug]);
 
   const form = useForm<z.infer<typeof meetingSchema>>({
     resolver: zodResolver(meetingSchema),

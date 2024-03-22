@@ -55,15 +55,6 @@ const EmployeeSidebar = () => {
             <RiDashboardLine className="m-1" />
           </div>
         </Link>
-        <Link href={"/home/timeline"} className="hover-text text-xl">
-          <div
-            className={`p-1 rounded-xl hover:bg-background ${
-              pathName === "/home/timeline" ? " bg-primary text-white" : ""
-            }`}
-          >
-            <CgTimelapse className="m-1" />
-          </div>
-        </Link>
         <Link href={"/home/task"} className="hover-text text-xl">
           <div
             className={`p-1 rounded-xl hover:bg-background ${

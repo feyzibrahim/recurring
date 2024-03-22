@@ -1,13 +1,13 @@
 apiVersion: v1
 data:
   ACCESS_SECRET: FqLYgkeMFkgrUq0oCruFjxJIwyMVPXk9
-  DATABASE_CONNECTION_URI_CHAT_MEETINGS: mongodb://mongodb:27017/recurring_chat_meeting
-  DATABASE_CONNECTION_URI_CLIENTS_DEALS: mongodb://mongodb:27017/recurring_recurring_clients_deals
-  DATABASE_CONNECTION_URI_EMPLOYEE: mongodb://mongodb:27017/recurring_employee
-  DATABASE_CONNECTION_URI_PROJECT: mongodb://mongodb:27017/recurring_project
-  DATABASE_CONNECTION_URI_SUBSCRIPTION: mongodb://mongodb:27017/recurring_subscription
-  DATABASE_CONNECTION_URI_USER: mongodb://mongodb:27017/recurring_user
-  FRONTEND_URL: http://recurring.test
+  DATABASE_CONNECTION_URI_CHAT_MEETINGS: mongodb+srv://faizashrafkk:hZ2M6h60fA3p7zQ8@cluster0.wud7hgb.mongodb.net/chat-meetings?retryWrites=true&w=majority&appName=Cluster0
+  DATABASE_CONNECTION_URI_CLIENTS_DEALS: mongodb+srv://faizashrafkk:hZ2M6h60fA3p7zQ8@cluster0.wud7hgb.mongodb.net/clients-and-deals?retryWrites=true&w=majority&appName=Cluster0
+  DATABASE_CONNECTION_URI_EMPLOYEE: mongodb+srv://faizashrafkk:hZ2M6h60fA3p7zQ8@cluster0.wud7hgb.mongodb.net/employee?retryWrites=true&w=majority&appName=Cluster0
+  DATABASE_CONNECTION_URI_PROJECT: mongodb+srv://faizashrafkk:hZ2M6h60fA3p7zQ8@cluster0.wud7hgb.mongodb.net/project?retryWrites=true&w=majority&appName=Cluster0
+  DATABASE_CONNECTION_URI_SUBSCRIPTION: mongodb+srv://faizashrafkk:hZ2M6h60fA3p7zQ8@cluster0.wud7hgb.mongodb.net/subscription?retryWrites=true&w=majority&appName=Cluster0
+  DATABASE_CONNECTION_URI_USER: mongodb+srv://faizashrafkk:hZ2M6h60fA3p7zQ8@cluster0.wud7hgb.mongodb.net/user?retryWrites=true&w=majority&appName=Cluster0
+  FRONTEND_URL: https://recurring.site
   GOOGLE_AUTH_ID: 649239403046-df8md65gntctdh0nro5elne559mgsuqo.apps.googleusercontent.com
   MAIL_HOST: smtp.gmail.com
   MAIL_PASS: jhpg uhri lpzr wdjt

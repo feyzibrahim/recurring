@@ -18,6 +18,8 @@ import {
 import SubTaskEditForm from "../subTask/SubTaskEditForm";
 
 import NotesListInSheet from "../notes/NotesListInSheet";
+import EstimatedDuration from "./EstimatedDuration";
+import TaskAttachments from "./TaskAttachments";
 
 interface PropsTypes {
   onOpenChange: any;
@@ -47,6 +49,9 @@ const TaskDetailSheet = ({ onOpenChange, setOnOpenChange }: PropsTypes) => {
         <ScrollArea className="h-screen  p-5">
           {task && <TaskEditForm setIsModalOpen={setOnOpenChange} />}
           <div className="pt-3">
+            <TaskAttachments />
+            <div>Estimated Time</div>
+            <EstimatedDuration />
             {task && (
               <TanStackDataTableSmall
                 columns={columns}
@@ -62,7 +67,7 @@ const TaskDetailSheet = ({ onOpenChange, setOnOpenChange }: PropsTypes) => {
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>New Sub Task</DialogTitle>
+              <DialogTitle>Edit Sub Task</DialogTitle>
               <DialogDescription>
                 Update in the below form. After your done click the add button
               </DialogDescription>

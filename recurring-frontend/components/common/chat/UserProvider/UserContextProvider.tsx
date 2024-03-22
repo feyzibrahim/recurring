@@ -7,7 +7,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { usePathname, useRouter } from "next/navigation";
 import { getObject } from "@/util/localStorage";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface UserContextType {
   user: EmployeeTypes | null;
@@ -19,13 +18,7 @@ const UserContext = createContext<UserContextType>({
   socket: undefined,
 });
 
-const UserContextProvider = ({
-  children,
-}: // user,
-{
-  children: ReactNode;
-  // user: EmployeeTypes;
-}) => {
+const UserContextProvider = ({ children }: { children: ReactNode }) => {
   let [socket, setSocket] = useState<Socket>();
   const { toast } = useToast();
   const router = useRouter();
@@ -37,7 +30,7 @@ const UserContextProvider = ({
   useEffect(() => {
     if (user) {
       let connect: Socket = io(API_ROUTES.CHAT as string);
-      connect.emit("online-user", user._id);
+      connect.off().emit("online-user", user._id);
       setSocket(connect);
       return () => {
         connect.emit("offline-user", user._id);
@@ -118,6 +111,7 @@ const UserContextProvider = ({
           });
         }
       );
+
     socket &&
       socket.on("video-call-hangup", (data) => {
         console.log(
@@ -128,18 +122,9 @@ const UserContextProvider = ({
       });
   }, [socket]);
 
-  if (!user) {
-    return (
-      <div className="h-screen p-5 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <Skeleton className="h-48 w-full bg-backgroundAccent shadow-lg" />
-          <Skeleton className="h-48 w-full bg-backgroundAccent shadow-lg" />
-          <Skeleton className="h-48 w-full bg-backgroundAccent shadow-lg" />
-        </div>
-        <Skeleton className="h-96 w-full mt-5 bg-backgroundAccent shadow-lg" />
-      </div>
-    );
-  }
+  // if (!user) {
+  //   router.replace("/");
+  // }
 
   return (
     <UserContext.Provider
