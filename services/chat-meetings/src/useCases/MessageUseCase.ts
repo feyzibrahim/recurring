@@ -13,8 +13,14 @@ export class MessageUseCase implements MessageUseCaseInterface {
   getMessages(userId: string): Promise<boolean | Message[]> {
     return this.iMessageUseCase.getMessages(userId);
   }
+  getGroupMessages(userId: string): Promise<boolean | Message[]> {
+    return this.iMessageUseCase.getGroupMessages(userId);
+  }
   createMessage(chat: Message): Promise<boolean | Message> {
     return this.iMessageUseCase.createMessage(chat);
+  }
+  createGroupMessage(chat: Message): Promise<boolean | Message> {
+    return this.iMessageUseCase.createGroupMessage(chat);
   }
   updateMessage(id: string, chat: Message): Promise<boolean | Message> {
     return this.iMessageUseCase.updateMessage(id, chat);

@@ -1,5 +1,4 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import UserAvatar from "@/public/img/user-avatar.png";
 import ProfileBanner from "@/public/profile_banner.png";
 import Image from "next/image";
 

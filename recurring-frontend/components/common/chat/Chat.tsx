@@ -11,7 +11,7 @@ import { getChats } from "@/app/lib/features/chat/chatActions";
 const Chat = ({ username }: { username: string }) => {
   const dispatch = useAppDispatch();
 
-  const { chats } = useAppSelector((state) => state.chat);
+  const { chats, activeChat } = useAppSelector((state) => state.chat);
 
   useEffect(() => {
     if (!chats || chats.length === 0) {
@@ -21,6 +21,12 @@ const Chat = ({ username }: { username: string }) => {
       dispatch(setActiveChatWithUserName({ username }));
     }
   }, [username, chats, dispatch]);
+
+  useEffect(() => {
+    if (!activeChat) {
+      dispatch(setActiveChatWithUserName({ username }));
+    }
+  }, [username, activeChat, dispatch]);
 
   return (
     <>

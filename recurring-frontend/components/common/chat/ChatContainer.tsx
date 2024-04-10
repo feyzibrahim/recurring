@@ -42,18 +42,19 @@ const ChatContainer = () => {
 
   useEffect(() => {
     socket &&
-      socket
-        .off("message")
-        .on("message", (data: { messageSaved: MessageTypes }) => {
-          if (
-            activeChat?.participants.find((part) => part._id !== user?._id)
-              ?._id === data.messageSaved.from ||
-            activeChat?.participants.find((part) => part._id === user?._id)
-              ?._id === data.messageSaved.from
-          ) {
-            setMessages((prevMessages) => [...prevMessages, data.messageSaved]);
-          }
-        });
+      socket.on("message", (data: { messageSaved: MessageTypes }) => {
+        if (
+          activeChat?.participants.find((part) => part._id !== user?._id)
+            ?._id === data.messageSaved.from ||
+          activeChat?.participants.find((part) => part._id === user?._id)
+            ?._id === data.messageSaved.from
+        ) {
+          setMessages((prevMessages) => [...prevMessages, data.messageSaved]);
+        }
+      });
+    return () => {
+      socket && socket.off("message");
+    };
   }, [socket, activeChat, user]);
 
   return (

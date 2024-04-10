@@ -117,10 +117,6 @@ export default function NewAttachmentForm({
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/auto/upload`,
         formData
       );
-      console.log(
-        "file: NewAttachmentForm.tsx:133 -> fileUpload -> response",
-        response
-      );
       return response.data.secure_url;
     } catch (error) {
       console.error(error);
@@ -141,7 +137,8 @@ export default function NewAttachmentForm({
     let val: AttachmentTypes = values;
     await formSubmit(val);
     if (task) {
-      let attachments = [...task.attachments, val];
+      const existingAttachments = task.attachments || [];
+      let attachments = [...existingAttachments, val];
       const data = await dispatch(
         editTask({ data: { attachments: attachments }, slug: task._id })
       );
@@ -169,7 +166,6 @@ export default function NewAttachmentForm({
                       title="Title"
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -192,7 +188,7 @@ export default function NewAttachmentForm({
             />
           </div>
           <div className="text-xs">
-            <p className="text-sm pb-2">File</p>
+            <p className="text-sm py-2">File</p>
             <div className="flex flex-col">
               <input
                 type="file"
@@ -224,7 +220,7 @@ export default function NewAttachmentForm({
             {uploadedFiles && uploadedFiles.length > 0 && (
               <p className="text-sm  mt-1">Uploaded Files</p>
             )}
-            <ScrollArea className="h-32 mt-1">
+            <ScrollArea className="h-24 mt-1">
               {uploadedFiles.map((file: File, index) => (
                 <div
                   key={index}

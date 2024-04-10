@@ -88,14 +88,14 @@
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
 .scrollbar-hide::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.5); 
   border-radius: 10px;
 }
 .scrollbar-hide::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.8); 
+  background: rgba(55, 55, 55, 0.8); 
   border-radius: 10px;
 }
 
@@ -140,4 +140,8 @@
   gap: 6px;
   outline: none;
   font-size: 5px;
+}
+
+.no-outline-bgAccent {
+  @apply focus-visible:bg-backgroundAccent focus-visible:ring-transparent;
 }

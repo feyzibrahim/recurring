@@ -3,7 +3,7 @@ package-lock.json
 Dockerfile
 Dockerfile.dev
 .next
-# In production add env file also
-.env 
+# In production uncomment env file
+# .env 
 .git
 .gitignore

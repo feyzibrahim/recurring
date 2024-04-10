@@ -50,6 +50,23 @@ const Notes: Schema = new Schema(
   { timestamps: true }
 );
 
+const Attachment: Schema = new Schema(
+  {
+    title: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    attachments: [String],
+  },
+  { timestamps: true }
+);
+
 const TaskSchema: Schema = new Schema(
   {
     title: {
@@ -99,6 +116,9 @@ const TaskSchema: Schema = new Schema(
     },
     notes: {
       type: [Notes],
+    },
+    attachments: {
+      type: [Attachment],
     },
   },
   { timestamps: true }

@@ -7,6 +7,7 @@ import http from "http";
 import { MessageUseCaseInterface } from "../../interface/message/MessageUseCaseInterface";
 import { Message } from "../../Entities/Message";
 import { UserUseCaseInterface } from "../../interface/user/UserUseCaseInterface";
+import message from "./functions/message";
 
 @injectable()
 export class SocketIOService {
@@ -120,20 +121,12 @@ export class SocketIOService {
           let chat = (await this.iChatUseCase.createChat(
             chatData as Chat
           )) as Chat;
-          console.log(
-            "file: socket.service.ts:120 -> SocketIOService -> this.io.on -> chat",
-            chat
-          );
 
           participants.map((part) => {
             const receiver = this.onlineUsersList.find(
               (user) => user.userId === part
             );
             if (receiver) {
-              console.log(
-                "file: socket.service.ts:129 -> SocketIOService -> participants.map -> receiver",
-                receiver
-              );
               socket.to(receiver.socketId).emit("new-group-chatter", chat);
             }
           });
@@ -142,7 +135,7 @@ export class SocketIOService {
 
       socket.on("message", async (data) => {
         const message: Message = {
-          content: data.message,
+          content: data.content,
           type: data.type,
           chat: data.chat,
           from: data.from,
@@ -159,10 +152,6 @@ export class SocketIOService {
         );
 
         if (receiver) {
-          console.log(
-            "file: socket.service.ts:159 -> SocketIOService -> socket.on -> receiver",
-            receiver
-          );
           this.io
             .to(receiver.socketId)
             .emit("message", { messageSaved, fromName: data.fromName });
@@ -173,10 +162,6 @@ export class SocketIOService {
         );
 
         if (sender) {
-          console.log(
-            "file: socket.service.ts:168 -> SocketIOService -> socket.on -> sender",
-            sender
-          );
           this.io
             .to(sender.socketId)
             .emit("message", { messageSaved, fromName: data.fromName });
@@ -201,6 +186,51 @@ export class SocketIOService {
           this.io.to(receiver.socketId).emit("typing-stopped", data);
         }
       });
+
+      // Group Chat
+
+      socket.on("join-group-chat-room", async (data: { slug: string }) => {
+        socket.join(data.slug);
+      });
+
+      socket.on("group-message", async (roomId: string, data) => {
+        const message: Message = {
+          content: data.content,
+          type: data.type,
+          chat: data.chat,
+          from: data.from,
+        };
+        const messageSaved = (await this.iMessageUseCase.createGroupMessage(
+          message
+        )) as Message;
+
+        socket.to(roomId).emit("group-message", messageSaved);
+      });
+
+      socket.on(
+        "typing-group",
+        (
+          roomId,
+          data: {
+            activeChat: string;
+            from: { firstName: string; lastName: string };
+          }
+        ) => {
+          socket.to(roomId).emit("typing-group", data);
+        }
+      );
+      socket.on(
+        "typing-stopped-group",
+        (
+          roomId,
+          data: {
+            activeChat: string;
+            from: { firstName: string; lastName: string };
+          }
+        ) => {
+          socket.to(roomId).emit("typing-stopped-group", data);
+        }
+      );
 
       // Video Call
 

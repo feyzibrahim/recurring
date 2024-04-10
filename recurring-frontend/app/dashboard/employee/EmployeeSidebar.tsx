@@ -109,7 +109,7 @@ const EmployeeSidebar = () => {
             <RiFolderUserLine /> Ex-employees
           </div>
         </Link>
-        <Link href={"/dashboard/employee/leave-policy"} className="hover-text">
+        {/* <Link href={"/dashboard/employee/leave-policy"} className="hover-text">
           <div
             className={`px-3 py-2 rounded flex items-center gap-1 ${
               pathName === "/dashboard/employee/leave-policy"
@@ -119,7 +119,7 @@ const EmployeeSidebar = () => {
           >
             <RiDraftLine /> Leave Policy
           </div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

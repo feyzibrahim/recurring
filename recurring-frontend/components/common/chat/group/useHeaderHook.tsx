@@ -5,7 +5,7 @@ import { UserContext } from "../UserProvider/UserContextProvider";
 import { v4 as uuid } from "uuid";
 import { usePathname, useRouter } from "next/navigation";
 
-const useHeaderHook = (username: string) => {
+const useHeaderHook = (slug: string) => {
   const { user, socket } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
@@ -16,34 +16,39 @@ const useHeaderHook = (username: string) => {
   const [videoCallActive, setVideoCallActive] = useState(false);
 
   const [typing, setTyping] = useState(false);
+  const [typingUser, setTypingUser] = useState("");
 
   const { activeChat } = useAppSelector((state) => state.chat);
 
   useEffect(() => {
     socket &&
-      socket.on("typing", (data) => {
-        if (data.to === user?._id) {
-          setTyping(true);
+      socket.on(
+        "typing-group",
+        (data: {
+          activeChat: string;
+          from: { firstName: string; lastName: string };
+        }) => {
+          if (`${activeChat?._id}` === data.activeChat) {
+            setTyping(true);
+            setTypingUser(`${data.from.firstName} ${data.from.lastName}`);
+          }
         }
-      });
+      );
 
     socket &&
-      socket.on("typing-stopped", (data) => {
-        if (data.to === user?._id) {
-          setTyping(false);
+      socket.on(
+        "typing-stopped-group",
+        (data: {
+          activeChat: string;
+          from: { firstName: string; lastName: string };
+        }) => {
+          if (`${activeChat?._id}` === data.activeChat) {
+            setTyping(false);
+            setTypingUser(``);
+          }
         }
-      });
-
-    socket &&
-      socket.on("video-call-declined", (data) => {
-        setVideoCallActive(false);
-      });
-    socket &&
-      socket.on("video-call-accepted", (data) => {
-        router.push(`/${curr}/video-call/${data.callId}`);
-        // setVideoCallActive(false);
-      });
-  }, [socket, user?._id, router, username, curr]);
+      );
+  }, [socket, user?._id, router, slug, curr]);
 
   useEffect(() => {
     socket &&
@@ -104,6 +109,7 @@ const useHeaderHook = (username: string) => {
     setVideoCallActive,
     videoCallActive,
     hangUpCall,
+    typingUser,
   };
 };
 

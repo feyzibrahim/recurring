@@ -10,6 +10,7 @@ import { TYPES } from "../../../constants/types/types";
 import { MessageUseCaseInterface } from "../../../interface/message/MessageUseCaseInterface";
 import { getMessages } from "./functions/getMessages";
 import { requireAuth } from "../../middleware/AuthMiddleware";
+import { getGroupMessages } from "./functions/getGroupMessages";
 
 @controller("/api/message", requireAuth)
 export class MessageController {
@@ -17,6 +18,11 @@ export class MessageController {
     @inject(TYPES.MessageUseCaseInterface)
     private iMessageUseCase: MessageUseCaseInterface
   ) {}
+
+  @httpGet("/group/:chatId")
+  async getGroupMessages(req: Request, res: Response) {
+    await getGroupMessages(req, res, this.iMessageUseCase);
+  }
 
   @httpGet("/:chatId")
   async getMessages(req: Request, res: Response) {

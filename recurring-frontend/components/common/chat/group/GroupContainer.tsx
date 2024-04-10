@@ -1,16 +1,20 @@
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
 import MyChat from "../MyChat";
-import OtherChat from "../OtherChat";
 import { useAppSelector } from "@/app/lib/hook";
 import { UserContext } from "../UserProvider/UserContextProvider";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
 import EmptyMessage from "@/components/empty/EmptyMessage";
 import { MessageTypes } from "@/constants/Types";
+import GroupOtherChat from "./GroupOtherChat";
 
-const GroupContainer = () => {
-  const [messages, setMessages] = useState<MessageTypes[]>([]);
+interface Props {
+  messages: MessageTypes[];
+  setMessages: any;
+}
+
+const GroupContainer = ({ messages, setMessages }: Props) => {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { activeChat } = useAppSelector((state) => state.chat);
   const { user, socket } = useContext(UserContext);
@@ -26,13 +30,14 @@ const GroupContainer = () => {
       if (activeChat) {
         const res = await actualCommonRequest({
           route: API_ROUTES.CHAT,
-          url: `/api/message/${activeChat?._id}`,
+          url: `/api/message/group/${activeChat?._id}`,
           headers: {
             "Content-Type": "application/json",
           },
           method: "GET",
         });
         if (res.messages) {
+          console.log("file: GroupContainer.tsx:44 -> loadData -> res", res);
           setMessages(res.messages);
         }
       }
@@ -42,16 +47,12 @@ const GroupContainer = () => {
 
   useEffect(() => {
     socket &&
-      socket.off("message").on("message", (data) => {
-        if (
-          activeChat?.participants.find((part) => part._id !== user?._id)
-            ?._id === data.from ||
-          activeChat?.participants.find((part) => part._id === user?._id)
-            ?._id === data.from
-        ) {
-          setMessages((prevMessages) => [...prevMessages, data]);
-        }
+      socket.on("group-message", (data) => {
+        setMessages((prevMessages: MessageTypes[]) => [...prevMessages, data]);
       });
+    return () => {
+      socket && socket.off("group-message");
+    };
   }, [socket, activeChat, user]);
 
   return (
@@ -61,10 +62,16 @@ const GroupContainer = () => {
     >
       {messages && messages.length > 0 ? (
         messages.map((msg, index) => {
-          if (msg.from === user?._id) {
+          if (typeof msg.from !== "string" && msg.from._id === user?._id) {
             return <MyChat message={msg} key={index} />;
           } else {
-            return <OtherChat message={msg} key={index} />;
+            return (
+              <GroupOtherChat
+                message={msg}
+                key={index}
+                prevMessage={messages[index - 1]}
+              />
+            );
           }
         })
       ) : (

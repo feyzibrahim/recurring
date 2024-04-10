@@ -157,10 +157,11 @@ interface TaskCount {
 }
 
 interface MessageTypes {
-  message: string;
-  from: string;
+  // message: string;
+  from: string | EmployeeTypes;
   to: string;
-  content: string;
+  type: string;
+  content: string | string[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -260,6 +261,8 @@ interface AttachmentTypes {
   description: string;
   user: string;
   attachments?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export type {
