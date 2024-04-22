@@ -25,9 +25,11 @@ export class SocketIOService {
   ) {}
 
   public init(app: http.Server): void {
+    const url = process.env.FRONTEND_URL ?? "";
+
     this.io = new Server(app, {
       cors: {
-        origin: process.env.FRONTEND_URL,
+        origin: url.split(","),
         credentials: true,
       },
     });

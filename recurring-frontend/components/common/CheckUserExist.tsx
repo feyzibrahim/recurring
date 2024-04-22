@@ -87,7 +87,7 @@ const CheckUserExist = () => {
 
   useEffect(() => {
     loadUser();
-  }, []);
+  }, [loadUser]);
 
   if (user) {
     if (user.role === "owner") {

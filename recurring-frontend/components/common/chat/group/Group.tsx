@@ -19,7 +19,7 @@ const Group = ({ slug }: { slug: string }) => {
 
   useEffect(() => {
     socket && socket.emit("join-group-chat-room", { slug });
-  }, [socket]);
+  }, [socket, slug]);
 
   useEffect(() => {
     if (chats) {

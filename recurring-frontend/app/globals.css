@@ -78,6 +78,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -90,12 +91,14 @@
 .scrollbar-hide::-webkit-scrollbar {
   width: 7px;
 }
+
 .scrollbar-hide::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.5); 
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
+
 .scrollbar-hide::-webkit-scrollbar-thumb {
-  background: rgba(55, 55, 55, 0.8); 
+  background: rgba(55, 55, 55, 0.8);
   border-radius: 10px;
 }
 
@@ -135,7 +138,7 @@
   @apply hidden;
 }
 
-.rdp-caption_dropdowns{
+.rdp-caption_dropdowns {
   display: flex;
   gap: 6px;
   outline: none;
@@ -144,4 +147,16 @@
 
 .no-outline-bgAccent {
   @apply focus-visible:bg-backgroundAccent focus-visible:ring-transparent;
+}
+
+.blog-tag {
+  @apply bg-backgroundAccent w-fit text-xs rounded-full px-3 py-1;
+}
+
+.blog-h1 {
+  @apply text-2xl py-2 font-bold;
+}
+
+.blog-p {
+  @apply text-xs;
 }
