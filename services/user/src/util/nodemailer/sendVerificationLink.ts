@@ -4,7 +4,7 @@ import { sendVerificationMail } from "./mailFunction";
 
 export const sendVerificationLink = async (user: User) => {
   const token = createVerificationLink(user);
-  const url = process.env.FRONTEND_URL || "";
+  const url = "https://recurring.site";
   const link = `${url}/verify-email/${token}`;
 
   await sendVerificationMail(user.email, link);
