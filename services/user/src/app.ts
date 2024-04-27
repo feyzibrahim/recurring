@@ -22,7 +22,7 @@ server.setConfig(async (app) => {
   app.use(express.json());
   app.use(
     cors({
-      origin: [url],
+      origin: url.split(","),
       methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
       credentials: true,
     })

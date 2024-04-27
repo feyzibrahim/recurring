@@ -48,16 +48,6 @@ const SettingsNav = () => {
         Theme
       </Link>
       <Link
-        href={`/${curr}/settings/plan`}
-        className={` ${
-          pathName === `/${curr}/settings/plan`
-            ? "text-foreground font-bold"
-            : ""
-        }`}
-      >
-        Plan
-      </Link>
-      <Link
         href={`/${curr}/settings/email`}
         className={` ${
           pathName === `/${curr}/settings/email`

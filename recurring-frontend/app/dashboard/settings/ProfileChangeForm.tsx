@@ -15,6 +15,7 @@ import { API_ROUTES } from "@/lib/routes";
 import PhotoUpload from "@/components/common/PhotoUpload";
 import { photoUpload } from "@/util/functions";
 import { UserContext } from "@/components/common/chat/UserProvider/UserContextProvider";
+import DatePickerString from "@/components/custom/DatePickerString";
 
 const formSchema = z.object({
   firstName: z
@@ -69,7 +70,7 @@ export default function ProfileChangeForm({
       firstName: (user && user.firstName) || "",
       lastName: (user && user.lastName) || "",
       username: (user && user.username) || "",
-      phoneNumber: (user && user.phoneNumber) || undefined,
+      phoneNumber: user ? user.phoneNumber.toString() : "",
       dateOfBirth: (user && user.dateOfBirth?.toString()) || undefined,
       role: (user && user.role) || "",
       profileImageURL: (user && user.profileImageURL) || "",
@@ -171,7 +172,7 @@ export default function ProfileChangeForm({
             control={form.control}
             name="dateOfBirth"
             render={({ field }) => (
-              <DatePicker title="Date of Birth" field={field} />
+              <DatePickerString title="Date of Birth" field={field} />
             )}
           />
           <Button type="submit" className="w-full" disabled={loading}>

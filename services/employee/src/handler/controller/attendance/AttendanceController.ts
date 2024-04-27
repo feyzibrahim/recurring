@@ -13,8 +13,9 @@ import { getAttendance } from "./functions/getAttendanceList";
 import { updateAttendance } from "./functions/updateAttendance";
 import { createAttendanceByAdmin } from "./functions/createAttendanceByAdmin";
 import { getAttendanceByUserId } from "./functions/getAttendanceByUserId";
+import { requireAuth } from "../../middleware/AuthMiddleware";
 
-@controller("/api/attendance")
+@controller("/api/attendance", requireAuth)
 export class AttendanceController {
   constructor(
     @inject(TYPES.AttendanceUseCaseInterface)

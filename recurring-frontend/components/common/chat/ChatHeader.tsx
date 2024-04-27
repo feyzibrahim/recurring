@@ -13,7 +13,7 @@ import { useAppSelector } from "@/app/lib/hook";
 import useHeaderHook from "./hooks/useHeaderHook";
 
 const ChatHeader = ({ username }: { username: string }) => {
-  const { activeChat } = useAppSelector((state) => state.chat);
+  const { activeChat, onlineList } = useAppSelector((state) => state.chat);
   const {
     getCurrentUser,
     typing,
@@ -37,7 +37,11 @@ const ChatHeader = ({ username }: { username: string }) => {
           `${getCurrentUser(activeChat).firstName} ${
             getCurrentUser(activeChat).lastName
           }`}
-        {activeChat && activeChat.online ? (
+        {activeChat &&
+        onlineList &&
+        onlineList.some(
+          (val: any) => val.userId === getCurrentUser(activeChat)._id
+        ) ? (
           <div className="flex items-center gap-1 text-xs">
             <div className="w-2 h-2 rounded-full bg-green-600"></div>
             {typing ? (

@@ -5,6 +5,7 @@ import { validateJwt } from "@recurring/shared_library";
 import { stripe } from "../../../../adapter/stripe/stripe";
 import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 import { QUEUES } from "../../../../constants/types/queue";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const stripeCheckoutSessionCompleted = async (
   req: Request,
@@ -16,7 +17,7 @@ export const stripeCheckoutSessionCompleted = async (
     const apiKey = process.env.STRIPE_SECRET;
 
     const { customerId } = req.body;
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token, process.env.ACCESS_SECRET ?? "");
 
     const existingSubscriptions = await stripe.subscriptions.list(

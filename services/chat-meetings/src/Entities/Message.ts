@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export class Message {
   constructor(
     public content:
@@ -8,8 +10,8 @@ export class Message {
       | VideoContent,
     public type: MessageType,
     public chat: string,
-    public from: string,
-    public to: string,
+    public from: string | User,
+    public to?: string,
     public _id?: string,
     public createdAt?: Date,
     public updatedAt?: Date

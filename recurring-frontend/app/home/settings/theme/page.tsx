@@ -1,10 +1,7 @@
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Label } from "@/components/ui/label";
-import { checkUserWithoutRedirectInHome } from "@/server/checkUserWithoutRedirectInHome";
 
 const page = async () => {
-  await checkUserWithoutRedirectInHome();
-
   return (
     <div className="md:px-10 md:py-5 w-full">
       <div>

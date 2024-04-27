@@ -18,7 +18,8 @@ import DatePickerLimited from "@/components/custom/DatePickerLimited";
 import { MemberTable } from "./MemberTable";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { createProject } from "@/app/lib/features/project/projectActions";
-import { EmployeeTypes } from "@/constants/Types";
+import { useContext } from "react";
+import { UserContext } from "@/components/common/chat/UserProvider/UserContextProvider";
 
 const projectSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -31,9 +32,10 @@ const projectSchema = z.object({
   // deal: z.string().optional(),
 });
 
-const CreateForm = ({ user }: { user: EmployeeTypes }) => {
+const CreateForm = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { user } = useContext(UserContext);
 
   const { loading, error } = useAppSelector((state) => state.project);
 
@@ -45,7 +47,7 @@ const CreateForm = ({ user }: { user: EmployeeTypes }) => {
       endDate: undefined,
       members: [],
       description: "",
-      manager: user._id || "",
+      manager: user ? user._id : "",
       // client: "",
       // deal: "",
     },

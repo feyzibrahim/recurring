@@ -12,8 +12,9 @@ import { createChat } from "./functions/createChat";
 import { updateChat } from "./functions/updateChat";
 import { getChat } from "./functions/getChat";
 import { getChats } from "./functions/getChats";
+import { requireAuth } from "../../middleware/AuthMiddleware";
 
-@controller("/api/chat")
+@controller("/api/chat", requireAuth)
 export class ChatController {
   constructor(
     @inject(TYPES.ChatUseCaseInterface)

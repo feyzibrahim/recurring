@@ -12,7 +12,7 @@ export class Project {
     public members: string[] | User[],
     public status: "planning" | "active" | "completed" | "archive" | "backlog",
     public description?: string,
-    public manager?: string,
+    public manager?: string | User,
     public client?: string,
     public deal?: string
   ) {}

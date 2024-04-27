@@ -57,11 +57,11 @@ export const verifyEmail = async (
       payload,
       process.env.REFRESH_SECRET as string
     );
-    res.cookie("access_token", access_token, cookieConfig);
-    res.cookie("refresh_token", refresh_token, cookieConfig);
 
     return res.status(200).json({
       user: user,
+      access_token,
+      refresh_token,
       success: true,
       message: "Users successfully Logged In",
     });

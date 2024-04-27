@@ -22,7 +22,7 @@ const mailSender = async (
 
     // Send emails to users
     let info = await transporter.sendMail({
-      from: "Recurring - Email Verification",
+      from: "Recurring - Email Notification",
       to: email,
       subject: title,
       html: body,

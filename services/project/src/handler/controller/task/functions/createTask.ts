@@ -4,6 +4,7 @@ import { Task } from "../../../../Entities/Task";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
 import { ProjectUseCaseInterface } from "../../../../interface/project/ProjectUseCaseInterface";
 import { Project } from "../../../../Entities/Project";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createTask = async (
   req: Request,
@@ -14,7 +15,7 @@ export const createTask = async (
   try {
     let body = req.body as Task;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
 
@@ -35,11 +36,13 @@ export const createTask = async (
     } else {
       const test = project.members.filter((mem: any) => {
         if (typeof task.assignee !== "string") {
-          return mem._id.toString() !== task.assignee._id.toString() && mem;
+          if (mem._id.toString() !== task.assignee._id.toString()) {
+            return mem;
+          }
         }
       });
 
-      if (test.length > 0 && typeof task.assignee !== "string") {
+      if (test.length === 0 && typeof task.assignee !== "string") {
         newProject = await iProjectUseCase.appendProjectMember(
           project._id,
           task.assignee._id

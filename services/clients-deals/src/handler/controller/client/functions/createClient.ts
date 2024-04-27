@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ClientUseCaseInterface } from "../../../../interface/client/ClientUseCaseInterface";
 import { Client } from "../../../../Entities/Client";
 import { validateJwt } from "@recurring/shared_library";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createClient = async (
   req: Request,
@@ -11,7 +12,7 @@ export const createClient = async (
   try {
     let body = req.body as Client;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token, process.env.ACCESS_SECRET ?? "");
     body.organization = data.organization;

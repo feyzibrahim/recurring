@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UserUseCaseInterface } from "../../../../interface/user/UserUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
 import passwordValidate from "../../../../util/validation/password.validate";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const newPassword = async (
   req: Request,
@@ -11,7 +12,7 @@ export const newPassword = async (
   const { password, confirmPassword } = req.body;
 
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
 

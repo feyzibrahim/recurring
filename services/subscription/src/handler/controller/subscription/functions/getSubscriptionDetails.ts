@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { SubscriptionUseCaseInterface } from "../../../../interface/subscription/SubscriptionUseCaseInterface";
 import { validateJwt } from "@recurring/shared_library";
 import { stripe } from "../../../../adapter/stripe/stripe";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getSubscriptionDetails = async (
   req: Request,
@@ -11,14 +12,14 @@ export const getSubscriptionDetails = async (
   const apiKey = process.env.STRIPE_SECRET;
 
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token, process.env.ACCESS_SECRET ?? "");
 
     const subscription = await iSubscriptionUseCase.getSubscription(
       data.organization
     );
 
-    if (typeof subscription === "boolean") {
+    if (!subscription || typeof subscription === "boolean") {
       throw Error("Cannot find subscription");
     }
 

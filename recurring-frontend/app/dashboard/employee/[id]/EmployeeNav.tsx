@@ -37,26 +37,7 @@ const EmployeeNav = ({ params }: { params: { id: string } }) => {
       >
         Attendance
       </Link>
-      <Link
-        href={`/dashboard/employee/${params.id}/salary`}
-        className={` ${
-          pathName === `/dashboard/employee/${params.id}/salary`
-            ? "text-foreground font-bold"
-            : ""
-        }`}
-      >
-        Salary
-      </Link>
-      <Link
-        href={`/dashboard/employee/${params.id}/history`}
-        className={` ${
-          pathName === `/dashboard/employee/${params.id}/history`
-            ? "text-foreground font-bold"
-            : ""
-        }`}
-      >
-        History
-      </Link>
+
       <Link
         href={`/dashboard/employee/${params.id}/settings`}
         className={` ${

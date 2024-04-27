@@ -1,4 +1,5 @@
 import { handleError } from "@/util/functions";
+import { getObject } from "@/util/localStorage";
 import axios from "axios";
 
 interface RequestProps {
@@ -26,6 +27,16 @@ export const reduxCommonRequest = async ({
   apiInstance.interceptors.response.use((response) => {
     return response.data;
   });
+
+  const user_data: { access_token: string; refresh_token: string } =
+    getObject("user_data");
+
+  if (user_data) {
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${user_data.access_token}`,
+    };
+  }
 
   let requestConfig: RequestProps = {
     method,

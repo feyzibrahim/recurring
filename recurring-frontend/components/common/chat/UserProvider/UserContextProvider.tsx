@@ -6,6 +6,7 @@ import { API_ROUTES } from "@/lib/routes";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { usePathname, useRouter } from "next/navigation";
+import { getObject } from "@/util/localStorage";
 
 interface UserContextType {
   user: EmployeeTypes | null;
@@ -17,29 +18,26 @@ const UserContext = createContext<UserContextType>({
   socket: undefined,
 });
 
-const UserContextProvider = ({
-  children,
-  user,
-}: {
-  children: ReactNode;
-  user: EmployeeTypes;
-}) => {
+const UserContextProvider = ({ children }: { children: ReactNode }) => {
   let [socket, setSocket] = useState<Socket>();
   const { toast } = useToast();
   const router = useRouter();
   const pathName = usePathname();
   let path = pathName.split("/");
   let curr = path[1];
+  const user: EmployeeTypes = getObject("user_data");
 
   useEffect(() => {
-    let connect: Socket = io(API_ROUTES.CHAT as string);
-    connect.emit("online-user", user._id);
-    setSocket(connect);
-    return () => {
-      connect.emit("offline-user", user._id);
-      connect.disconnect();
-    };
-  }, [user._id]);
+    if (user) {
+      let connect: Socket = io(API_ROUTES.CHAT as string);
+      connect.off().emit("online-user", user._id);
+      setSocket(connect);
+      return () => {
+        connect.emit("offline-user", user._id);
+        connect.disconnect();
+      };
+    }
+  }, []);
 
   const declineCall = (data: { from: string; to: string; callId: string }) => {
     let from = data.from;
@@ -113,6 +111,7 @@ const UserContextProvider = ({
           });
         }
       );
+
     socket &&
       socket.on("video-call-hangup", (data) => {
         console.log(
@@ -122,6 +121,10 @@ const UserContextProvider = ({
         setCallCancelledByCaller(true);
       });
   }, [socket]);
+
+  // if (!user) {
+  //   router.replace("/");
+  // }
 
   return (
     <UserContext.Provider

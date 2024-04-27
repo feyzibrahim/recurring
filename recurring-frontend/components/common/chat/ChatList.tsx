@@ -4,14 +4,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { FiSearch } from "react-icons/fi";
 import SeeAllButton from "./members/SeeAllButton";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getChats } from "@/app/lib/features/chat/chatActions";
 import SingleChat from "./SingleChat";
 import { ChatTypes, EmployeeTypes } from "@/constants/Types";
 import { UserContext } from "./UserProvider/UserContextProvider";
 import {
   socketNewChatUpdate,
-  updateOnlineStatus,
+  updateOnlineList,
 } from "@/app/lib/features/chat/chatSlice";
 import EmptyEmployee from "@/components/empty/EmptyEmployee";
 import MembersListLoading from "../MembersListLoading";
@@ -22,9 +22,11 @@ const ChatList = () => {
   const { user, socket } = useContext(UserContext);
 
   const { chats, loading } = useAppSelector((state) => state.chat);
+  const [onlineUserList, setOnlineUserList] =
+    useState<{ userId: string; socketId: string }[]>();
 
   useEffect(() => {
-    socket && socket.emit("online-user", user?._id);
+    socket && socket.emit("test-online-user", user?._id);
 
     socket &&
       socket.on("new-chat", (data) => {
@@ -33,19 +35,25 @@ const ChatList = () => {
 
     socket &&
       socket.on("new-group-chatter", (data) => {
-        console.log("file: ChatList.tsx:35 -> socket.on -> data", data);
-        dispatch(socketNewChatUpdate({ chat: data }));
+        if (chats) {
+          dispatch(socketNewChatUpdate({ chat: data }));
+        }
       });
 
     socket &&
-      socket.off().on("get-online-users", (data) => {
-        dispatch(updateOnlineStatus({ onlineList: data, userId: user?._id }));
+      socket.on("get-online-users", (data: any) => {
+        setOnlineUserList(data);
+        dispatch(updateOnlineList({ onlineList: data }));
       });
   }, [socket, dispatch, user?._id]);
 
   useEffect(() => {
     dispatch(getChats({ filter: "" }));
   }, [dispatch]);
+
+  if (!chats) {
+    return <MembersListLoading />;
+  }
 
   return (
     <div className="bg-secondary p-5">
@@ -62,15 +70,30 @@ const ChatList = () => {
               const participant = chat.participants.find(
                 (part) => part.username !== user?.username
               );
+              let online = onlineUserList?.some(
+                (val) => val.userId === participant?._id
+              );
               return (
                 <SingleChat
                   user={participant as EmployeeTypes}
                   key={index}
-                  online={chat.online}
+                  online={online as boolean}
                 />
               );
             } else {
-              return <GroupChat chat={chat} online={chat.online} key={index} />;
+              const participant = chat.participants.filter(
+                (part) => part.username !== user?.username
+              );
+              let online = false;
+              onlineUserList?.map((val) => {
+                participant.map((part) => {
+                  if (part._id === val.userId) {
+                    online = true;
+                  }
+                });
+              });
+
+              return <GroupChat chat={chat} online={online} key={index} />;
             }
           })
         ) : !loading ? (

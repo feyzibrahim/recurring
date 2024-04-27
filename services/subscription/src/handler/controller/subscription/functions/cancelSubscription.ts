@@ -4,6 +4,7 @@ import { validateJwt } from "@recurring/shared_library";
 import { stripe } from "../../../../adapter/stripe/stripe";
 import { QUEUES } from "../../../../constants/types/queue";
 import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const cancelSubscription = async (
   req: Request,
@@ -14,7 +15,7 @@ export const cancelSubscription = async (
   const apiKey = process.env.STRIPE_SECRET;
 
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token, process.env.ACCESS_SECRET ?? "");
 
     const subscription = await iSubscriptionUseCase.getSubscription(

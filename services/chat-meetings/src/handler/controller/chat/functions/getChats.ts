@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ChatUseCaseInterface } from "../../../../interface/chat/ChatUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getChats = async (
   req: Request,
@@ -8,7 +9,7 @@ export const getChats = async (
   iChatUseCAse: ChatUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
 

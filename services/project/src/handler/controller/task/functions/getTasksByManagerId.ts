@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { TaskUseCaseInterface } from "../../../../interface/task/TaskUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
 import { ProjectUseCaseInterface } from "../../../../interface/project/ProjectUseCaseInterface";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getTasksByManagerId = async (
   req: Request,
@@ -10,7 +11,7 @@ export const getTasksByManagerId = async (
   iProjectUseCase: ProjectUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token);
 
     const projects = await iProjectUseCase.getProjectsByManagerId(data.user);

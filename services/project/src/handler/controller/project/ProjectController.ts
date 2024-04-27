@@ -15,8 +15,9 @@ import { updateProject } from "./functions/updateProject";
 import { getProjects } from "./functions/getProjects";
 import { deleteProject } from "./functions/deleteProject";
 import { getProjectsCompletedCount } from "./functions/getProjectsCompletedCount";
+import { requireAuth } from "../../middleware/AuthMiddleware";
 
-@controller("/api/project")
+@controller("/api/project", requireAuth)
 export class ProjectController {
   constructor(
     @inject(TYPES.ProjectUseCaseInterface)

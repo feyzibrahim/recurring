@@ -9,9 +9,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import NewNoteForm from "./NewNoteForm";
-import { EmployeeTypes } from "@/constants/Types";
 
-const NewNotesButton = ({ user }: { user: EmployeeTypes }) => {
+const NewNotesButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -27,7 +26,7 @@ const NewNotesButton = ({ user }: { user: EmployeeTypes }) => {
               Update in the below form. After your done click the add button
             </DialogDescription>
           </DialogHeader>
-          <NewNoteForm setIsModalOpen={setIsModalOpen} user={user} />
+          <NewNoteForm setIsModalOpen={setIsModalOpen} />
         </DialogContent>
       </Dialog>
     </>

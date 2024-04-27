@@ -7,6 +7,7 @@ interface ChatSliceType {
   loading: boolean;
   error: any;
   activeChat: ChatTypes | null;
+  onlineList: { userId: string; socketId: string }[] | null;
 }
 
 const initialState: ChatSliceType = {
@@ -14,6 +15,7 @@ const initialState: ChatSliceType = {
   loading: false,
   error: null,
   activeChat: null,
+  onlineList: null,
 };
 
 export const chatSlice = createSlice({
@@ -41,6 +43,7 @@ export const chatSlice = createSlice({
       }
     },
     setActiveChatWithSlug: (state, { payload }) => {
+      console.log("file: chatSlice.tsx:46 -> payload", payload);
       const { chats } = state;
 
       if (chats) {
@@ -57,53 +60,12 @@ export const chatSlice = createSlice({
       let chats = [payload.chat, ...(state.chats || [])] as ChatTypes[];
       return { ...state, chats };
     },
-    updateOnlineStatus: (state, { payload }) => {
-      const { chats, activeChat } = state;
-      const { onlineList, userId } = payload;
-
-      let newChats = state.chats || [];
-
-      if (chats) {
-        newChats = chats.map((chat) => {
-          const participantsToCheck = chat.participants.filter(
-            (participant) => participant._id !== userId
-          );
-
-          const isParticipantOnline = participantsToCheck.some((participant) =>
-            onlineList.some(
-              (onlineUser: any) => onlineUser.userId === participant._id
-            )
-          );
-
-          return {
-            ...chat,
-            online: isParticipantOnline,
-          };
-        });
-      }
-
-      let newActiveChat = activeChat;
-
-      if (activeChat) {
-        const participantsToCheck = activeChat.participants.filter(
-          (participant) => participant._id !== userId
-        );
-        const isParticipantOnline = participantsToCheck.some((participant) =>
-          onlineList.some(
-            (onlineUser: any) => onlineUser.userId === participant._id
-          )
-        );
-
-        newActiveChat = {
-          ...activeChat,
-          online: isParticipantOnline,
-        };
-      }
+    updateOnlineList: (state, { payload }) => {
+      const { onlineList } = payload;
 
       return {
         ...state,
-        chats: newChats,
-        activeChat: newActiveChat,
+        onlineList: onlineList,
       };
     },
   },
@@ -143,7 +105,7 @@ export const {
   socketNewChatUpdate,
   setActiveChatWithUserName,
   setActiveChatWithSlug,
-  updateOnlineStatus,
+  updateOnlineList,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

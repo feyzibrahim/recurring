@@ -9,7 +9,6 @@ import {
 import { Button } from "@/components/ui/button";
 import LeavePolicyEditForm from "./LeavePolicyEditForm";
 import { useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const EditButton = ({ organization }: { organization: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

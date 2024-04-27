@@ -15,13 +15,12 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { HiCheckCircle } from "react-icons/hi";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-import { checkUser } from "@/server/checkUser";
+import CheckUserExist from "@/components/common/CheckUserExist";
 
 export default async function Home() {
-  // await checkUser();
-
   return (
     <>
+      <CheckUserExist />
       <Navbar />
       <main className="flex min-h-screen flex-col items-center pt-20 md:pt-32 px-5 lg:px-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:mb-10">

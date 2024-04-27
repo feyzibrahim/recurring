@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { EmployeeUseCaseInterface } from "../../../../interface/employee/EmployeeUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getExEmployees = async (
   req: Request,
@@ -8,7 +9,7 @@ export const getExEmployees = async (
   iEmployeeUseCAse: EmployeeUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
 

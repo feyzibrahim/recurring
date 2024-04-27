@@ -19,8 +19,19 @@ export class Task {
       {
         title: string;
         status: "planning" | "active" | "completed" | "archive" | "backlog";
+        duration: { length: number; durationType: "minutes" | "hours" | "day" };
       }
     ],
-    public notes?: [Note]
+    public notes?: [Note],
+    public attachments?: [
+      {
+        title: string;
+        description: string;
+        user: string;
+        attachments?: string[];
+        createdAt?: Date;
+        updatedAt?: Date;
+      }
+    ]
   ) {}
 }

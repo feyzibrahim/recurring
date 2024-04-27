@@ -1,19 +1,16 @@
 "use client";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Column from "./Column";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import TaskDetailSheet from "./TaskDetailSheet";
 import { TaskContext } from "./TaskContextProvider";
-import { EmployeeTypes } from "@/constants/Types";
-// import CreateTaskButton from "./CreateTaskButton";
 
-const TaskList = ({ user }: { user: EmployeeTypes }) => {
+const TaskList = () => {
   const { columns, onDragEnd } = useContext(TaskContext);
   return (
     <div>
       <div className="flex items-center justify-between p-5">
         <h1 className="text-2xl font-bold">Task</h1>
-        {/* <CreateTaskButton /> */}
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 text-sm">
@@ -23,7 +20,7 @@ const TaskList = ({ user }: { user: EmployeeTypes }) => {
             ))}
         </div>
       </DragDropContext>
-      <TaskDetailSheet user={user} />
+      <TaskDetailSheet />
     </div>
   );
 };

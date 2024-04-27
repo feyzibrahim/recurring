@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { LeaveUseCaseInterface } from "../../../../interface/leave/LeaveUseCaseInterface";
 import simpleQueryFilter from "../../../../util/filters/simpleQueryFilter";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getLeavesForUser = async (
   req: Request,
@@ -9,7 +10,7 @@ export const getLeavesForUser = async (
   iLeaveUseCase: LeaveUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token);
 
     const { filter } = simpleQueryFilter(req);

@@ -78,6 +78,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -88,14 +89,16 @@
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
+
 .scrollbar-hide::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.5); 
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
+
 .scrollbar-hide::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.8); 
+  background: rgba(55, 55, 55, 0.8);
   border-radius: 10px;
 }
 
@@ -113,4 +116,47 @@
 
 .chart-box-content {
   @apply flex gap-2 items-center pt-2;
+}
+
+.chart-box-parent {
+  @apply w-full h-full bg-backgroundAccent rounded-md shadow-lg p-3;
+}
+
+.chart-box-header {
+  @apply flex items-center gap-2 pb-3 p-2 border-b mb-2;
+}
+
+.chart-box-icon {
+  @apply bg-secondary p-2 rounded-full;
+}
+
+.chart-box-content {
+  @apply flex gap-2 items-center pt-2;
+}
+
+.rdp-vhidden {
+  @apply hidden;
+}
+
+.rdp-caption_dropdowns {
+  display: flex;
+  gap: 6px;
+  outline: none;
+  font-size: 5px;
+}
+
+.no-outline-bgAccent {
+  @apply focus-visible:bg-backgroundAccent focus-visible:ring-transparent;
+}
+
+.blog-tag {
+  @apply bg-backgroundAccent w-fit text-xs rounded-full px-3 py-1;
+}
+
+.blog-h1 {
+  @apply text-2xl py-2 font-bold;
+}
+
+.blog-p {
+  @apply text-xs;
 }

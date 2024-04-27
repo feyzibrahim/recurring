@@ -5,6 +5,7 @@ import { validateJwt } from "../../../../util/JWT/validate.jwt";
 import cookieConfig from "../../../../constants/cookieConfig";
 import { createJwtAccessToken } from "../../../../util/JWT/create.jwt";
 import { User } from "../../../../Entities/User";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createOrganization = async (
   req: Request,
@@ -14,7 +15,7 @@ export const createOrganization = async (
   try {
     let body = req.body as Organization;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
 

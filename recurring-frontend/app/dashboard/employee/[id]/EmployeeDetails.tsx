@@ -13,17 +13,6 @@ import {
 } from "@/app/lib/features/employee/employeeActions";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
 
 const EmployeeDetails = ({ id }: { id: string }) => {
@@ -175,32 +164,6 @@ const EmployeeDetails = ({ id }: { id: string }) => {
             <Link href="edit">
               <Button>Edit Employee Details</Button>
             </Link>
-
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  variant="destructive"
-                  className="ml-5"
-                  disabled={loading}
-                >
-                  {loading ? "Loading..." : "Delete Employee"}
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Confirm Delete Employee?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action can&apos;t be undone...
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>No</AlertDialogCancel>
-                  <AlertDialogAction onClick={() => deleteHandler()}>
-                    Yes!
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
           </div>
         </div>
       </div>

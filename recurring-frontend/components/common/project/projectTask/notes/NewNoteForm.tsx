@@ -13,8 +13,10 @@ import {
 } from "@/components/ui/form";
 import { useAppDispatch, useAppSelector } from "@/app/lib/hook";
 import { editTask } from "@/app/lib/features/task/taskActions";
-import { EmployeeTypes, NotesTypes } from "@/constants/Types";
+import { NotesTypes } from "@/constants/Types";
 import { Textarea } from "@/components/ui/textarea";
+import { useContext } from "react";
+import { UserContext } from "@/components/common/chat/UserProvider/UserContextProvider";
 
 const formSchema = z.object({
   text: z
@@ -28,12 +30,11 @@ const formSchema = z.object({
 
 export default function NewNoteForm({
   setIsModalOpen,
-  user,
 }: {
   setIsModalOpen: any;
-  user: EmployeeTypes;
 }) {
   const dispatch = useAppDispatch();
+  const { user } = useContext(UserContext);
 
   const { task, loading, error } = useAppSelector((state) => state.task);
 
@@ -41,7 +42,7 @@ export default function NewNoteForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       text: "",
-      user: user._id || "",
+      user: user ? user._id : "",
     },
   });
 

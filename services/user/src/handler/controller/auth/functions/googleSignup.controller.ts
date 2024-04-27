@@ -7,7 +7,6 @@ import {
   createJwtAccessToken,
   createJwtRefreshToken,
 } from "@recurring/shared_library";
-import cookieConfig from "../../../../constants/cookieConfig";
 import { QUEUES } from "../../../../constants/types/queue";
 import { RabbitMQUseCaseInterface } from "../../../../interface/rabbitmq/RabbitMQUseCaseInterface";
 import { OrganizationUseCaseInterface } from "../../../../interface/organization/OrganizationUseCaseInterface";
@@ -54,7 +53,6 @@ export const googleSignup = async (
         }
       }
     }
-    console.log("file: googleSignup.controller.ts:42 -> tempUser", tempUser);
 
     iRabbitMQUseCase.sendDataToQueue(QUEUES.EMPLOYEECREATION, user);
     iRabbitMQUseCase.sendDataToQueue(QUEUES.PROJECT_USER_CREATION, user);
@@ -75,11 +73,11 @@ export const googleSignup = async (
       payload,
       process.env.REFRESH_SECRET as string
     );
-    res.cookie("access_token", access_token, cookieConfig);
-    res.cookie("refresh_token", refresh_token, cookieConfig);
 
     return res.status(200).json({
       user: user,
+      access_token,
+      refresh_token,
       success: true,
       message: "Users successfully Registered",
     });

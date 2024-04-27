@@ -1,18 +1,39 @@
 "use client";
 import dynamic from "next/dynamic";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiTask } from "react-icons/bi";
 import { Tooltip, Area, XAxis } from "recharts";
 import CustomTooltip from "@/components/custom/CustomTooltip";
 import { CountByDay } from "@/constants/Types";
 import { countTotal } from "@/util/functions";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
 const AreaChart = dynamic(
   () => import("recharts").then((recharts) => recharts.AreaChart),
   { ssr: false }
 );
 
-const NewTaskChart = ({ data }: { data: CountByDay[] }) => {
+const NewTaskChart = () => {
+  const [data, setData] = useState<CountByDay[]>();
+
+  useEffect(() => {
+    const loadData = async () => {
+      const taskStatus = await actualCommonRequest({
+        route: API_ROUTES.PROJECT,
+        method: "GET",
+        url: "/api/task/completed-count",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (taskStatus.success) {
+        setData(taskStatus.newTaskCount);
+      }
+    };
+    loadData();
+  }, []);
+
   return (
     <div className="chart-box-parent">
       <div className="chart-box-header">

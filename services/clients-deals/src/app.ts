@@ -21,7 +21,7 @@ server.setConfig((app) => {
 
   app.use(
     cors({
-      origin: [url],
+      origin: url.split(","),
       methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
       credentials: true,
     })

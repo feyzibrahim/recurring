@@ -31,15 +31,19 @@ const formSchema = z.object({
   title: z
     .string()
     .min(2, {
-      message: "Email must be at least 2 characters.",
+      message: "Title must be at least 2 characters.",
     })
-    .max(30, { message: "Name should be Less than 30 characters" }),
-  status: z
-    .string()
-    .min(2, {
-      message: "Email must be at least 2 characters.",
+    .max(30, { message: "Title should be Less than 30 characters" }),
+  status: z.string(),
+  duration: z
+    .object({
+      length: z
+        .number()
+        .min(0, { message: "Duration must be a positive number." })
+        .optional(),
+      durationType: z.string().optional(),
     })
-    .max(30, { message: "Name should be Less than 30 characters" }),
+    .optional(),
 });
 
 export default function SubTaskForm({
@@ -63,14 +67,11 @@ export default function SubTaskForm({
 
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
 
-  // Function to filter suggestions based on user input
-  // Function to filter suggestions based on user input and update input field
   const handleInputChange = (inputValue: string) => {
     const filtered = suggestions.filter((suggestion) =>
       suggestion.toLowerCase().includes(inputValue.toLowerCase())
     );
     setFilteredSuggestions(filtered);
-    // If there's only one suggestion left and it matches the current input value, update the input field
     if (
       filtered.length === 1 &&
       filtered[0].toLowerCase() === inputValue.toLowerCase()
@@ -140,7 +141,7 @@ export default function SubTaskForm({
               {filteredSuggestions.map((suggestion, index) => (
                 <li
                   key={index}
-                  className="py-2 px-3 cursor-pointer hover:bg-background"
+                  className="py-2 px-3 cursor-pointer hover:bg-background border-b"
                   onClick={() => {
                     form.setValue("title", suggestion);
                     setFilteredSuggestions([]);
@@ -181,6 +182,52 @@ export default function SubTaskForm({
             )}
           />
         </div>
+        <div className="py-1"></div>
+
+        <FormLabel>Estimated Duration</FormLabel>
+        <FormField
+          control={form.control}
+          name="duration.durationType"
+          render={({ field }) => (
+            <FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <SelectTrigger className="bg-backgroundAccent">
+                  <SelectValue
+                    className="capitalize"
+                    placeholder="Select Duration Type"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="minutes">Minutes</SelectItem>
+                  <SelectItem value="hours">Hours</SelectItem>
+                  <SelectItem value="days">Days</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormControl>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="duration.length"
+          render={({ field }) => (
+            <FormItem className="mt-2">
+              <FormControl>
+                <Input
+                  placeholder="Enter duration"
+                  type="number"
+                  min="0"
+                  {...field}
+                  className="bg-backgroundAccent"
+                  onChange={(e) => {
+                    const value = parseFloat(e.target.value);
+                    field.onChange(value);
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="py-1"></div>
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Loading..." : "Create New Task"}

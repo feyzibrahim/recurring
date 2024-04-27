@@ -15,6 +15,10 @@ const SingleChat = ({ user, online }: PropsTypes) => {
   let path = pathName.split("/");
   let curr = path[1];
 
+  if (!user) {
+    return <></>;
+  }
+
   return (
     <Link href={`/${curr}/chat/user/${user.username}`}>
       <div className="hover:bg-backgroundAccent flex gap-2 items-center text-sm rounded-sm p-1 cursor-pointer relative">

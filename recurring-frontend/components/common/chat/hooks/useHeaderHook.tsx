@@ -21,13 +21,15 @@ const useHeaderHook = (username: string) => {
 
   useEffect(() => {
     socket &&
-      socket.on("typing", (data) => {
+      activeChat &&
+      socket.on("typing", (data: { to: string; activeChat: string }) => {
         if (data.to === user?._id) {
           setTyping(true);
         }
       });
 
     socket &&
+      activeChat &&
       socket.on("typing-stopped", (data) => {
         if (data.to === user?._id) {
           setTyping(false);

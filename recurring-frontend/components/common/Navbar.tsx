@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Logo from "../../public/img/logo.png";
 import Link from "next/link";
@@ -5,8 +6,11 @@ import { ThemeToggle } from "../theme/ThemeToggle";
 import { Button } from "../ui/button";
 import Recurring from "./Recurring";
 import Hamburger from "./Hamburger";
+import { usePathname } from "next/navigation";
 
 function Navbar() {
+  const pathName = usePathname();
+
   return (
     <nav className="flex justify-between px-5 lg:px-40 py-3 bg-backgroundAccent shadow-md fixed w-full z-50">
       <div className="flex items-center gap-4">
@@ -17,22 +21,37 @@ function Navbar() {
       </div>
       <div className="gap-5 items-center flex">
         <div className="hidden lg:flex items-center gap-5">
-          <Link href={"/"} className="hover-text">
+          <Link
+            href={"/"}
+            className={`hover-text ${pathName === "/" && "font-bold"}`}
+          >
             Home
           </Link>
-          <Link href={"/contact"} className="hover-text">
+          <Link
+            href={"/contact"}
+            className={`hover-text ${pathName === "/contact" && "font-bold"}`}
+          >
             Contact Us
           </Link>
-          <Link href={"/blog"} className="hover-text">
+          <Link
+            href={"/blog"}
+            className={`hover-text ${pathName === "/blog" && "font-bold"}`}
+          >
             Blog
           </Link>
-          <Link href={"/about"} className="hover-text">
+          <Link
+            href={"/about"}
+            className={`hover-text ${pathName === "/about" && "font-bold"}`}
+          >
             About Us
           </Link>
-          <Link href={"/testimonials"} className="mr-10 hover-text">
+          <Link href={"/testimonials"} className=" hover-text">
             Testimonials
           </Link>
-          <Link href={"/login"} className="hover-text">
+          <Link
+            href={"/login"}
+            className={`hover-text ${pathName === "" && "font-bold"}`}
+          >
             Login
           </Link>
           <Button asChild>

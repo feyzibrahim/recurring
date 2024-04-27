@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { TaskUseCaseInterface } from "../../../../interface/task/TaskUseCaseInterface";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getTasks = async (
   req: Request,
@@ -8,7 +9,7 @@ export const getTasks = async (
   iTaskUseCase: TaskUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token);
 
     let tasks = await iTaskUseCase.getTasks(data.organization);

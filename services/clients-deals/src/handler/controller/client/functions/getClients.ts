@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ClientUseCaseInterface } from "../../../../interface/client/ClientUseCaseInterface";
 import { validateJwt } from "@recurring/shared_library";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getClients = async (
   req: Request,
@@ -8,7 +9,7 @@ export const getClients = async (
   iClientUseCase: ClientUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token, process.env.ACCESS_SECRET ?? "");
 
     let clients = await iClientUseCase.getClients(data.organization);

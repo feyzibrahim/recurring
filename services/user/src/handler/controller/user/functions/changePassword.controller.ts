@@ -4,6 +4,7 @@ import { validateJwt } from "../../../../util/JWT/validate.jwt";
 import passwordValidate from "../../../../util/validation/password.validate";
 import { User } from "../../../../Entities/User";
 import bcrypt from "bcrypt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const changePassword = async (
   req: Request,
@@ -16,7 +17,7 @@ export const changePassword = async (
       throw Error("Use different password");
     }
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
 
     const data = validateJwt(access_token);
     const user = await iUserUseCase.getUser(data.user);

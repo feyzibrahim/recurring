@@ -1,11 +1,30 @@
+"use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SubCards from "./SubCards";
+import { useEffect, useState } from "react";
+import { actualCommonRequest } from "@/api/actual_client";
+import { API_ROUTES } from "@/lib/routes";
 
-interface Props {
-  subscription: any;
-}
+export default function Plans() {
+  const [subscription, setSubscription] = useState<any>();
 
-export default function Plans({ subscription }: Props) {
+  useEffect(() => {
+    const loadData = async () => {
+      const res = await actualCommonRequest({
+        route: API_ROUTES.SUBSCRIPTION,
+        method: "GET",
+        url: "/api/subscription",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.success) {
+        setSubscription(res.subscription);
+      }
+    };
+    loadData();
+  }, []);
+
   return (
     <div className="text-center w-full">
       <h1 className="text-3xl font-bold">Choose Plan </h1>

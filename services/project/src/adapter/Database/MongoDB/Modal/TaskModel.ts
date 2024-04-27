@@ -11,6 +11,16 @@ const SubTask: Schema = new Schema({
     default: "planning",
     enum: ["planning", "active", "completed", "archive", "backlog"],
   },
+  duration: {
+    length: {
+      type: Number,
+    },
+    durationType: {
+      type: String,
+      default: "minutes",
+      enum: ["minutes", "hours", "day"],
+    },
+  },
 });
 
 const Replay: Schema = new Schema(
@@ -36,6 +46,23 @@ const Notes: Schema = new Schema(
       ref: "User",
     },
     replay: [Replay],
+  },
+  { timestamps: true }
+);
+
+const Attachment: Schema = new Schema(
+  {
+    title: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    attachments: [String],
   },
   { timestamps: true }
 );
@@ -89,6 +116,9 @@ const TaskSchema: Schema = new Schema(
     },
     notes: {
       type: [Notes],
+    },
+    attachments: {
+      type: [Attachment],
     },
   },
   { timestamps: true }

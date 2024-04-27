@@ -1,12 +1,12 @@
 import mailSender from "./mailSender";
 
-const sendVerificationMail = async (
+const sendProjectReminderEmail = async (
   email: string,
-  link: string
+  projectName: string
 ): Promise<void> => {
   const mailResponse = await mailSender(
     email,
-    "Email Verification",
+    "Project Reminder",
     `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -58,7 +58,7 @@ const sendVerificationMail = async (
           text-decoration: underline;
         }
     
-        .verify-link {
+        .project-link {
           display: block;
           text-align: center;
           margin-top: 20px;
@@ -73,15 +73,13 @@ const sendVerificationMail = async (
     <body>
       <div class="container">
         <div class="header">
-          <h1>Email Confirmation</h1>
+          <h1>Project Reminder</h1>
         </div>
         <div class="content">
-          <p>Hello User,</p>
-          <p>We hope this email finds you well. Your account with Recurring App is almost ready!</p>
-          <p>In the email we just sent to you, you'll find a link to complete the account setup.</p>
-          <a href="${link}" class="verify-link" target="_blank">Verify Your Email</a>
-          <p>If you don't see the email in your inbox, please check your spam folder. Sometimes, emails end up there by mistake.</p>
-          <p>Thank you for choosing Recurring App. We look forward to serving you and making your experience with us exceptional.</p>
+          <p>Hello,</p>
+          <p>This is a friendly reminder that your project <strong>${projectName}</strong> is ending tomorrow. Please make sure all tasks are completed and any necessary actions are taken.</p>
+          <p>Thank you for your attention to this matter.</p>
+          <a href="#" class="project-link" target="_blank">View Project</a>
         </div>
         <div class="footer">
           <p>Thank you for using our service.</p>
@@ -95,19 +93,19 @@ const sendVerificationMail = async (
   );
 
   if (mailResponse) {
-    console.log("Email sent successfully: ");
+    console.log("Project reminder email sent successfully: ");
   } else {
-    console.error("Failed to send email.");
+    console.error("Failed to send project reminder email.");
   }
 };
 
-const forgotPasswordResetLink = async (
+const sendTaskReminderEmail = async (
   email: string,
-  resetLink: string
+  taskTitle: string
 ): Promise<void> => {
   const mailResponse = await mailSender(
     email,
-    "Email Verification | Forgot Password",
+    "Task Reminder",
     `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -159,7 +157,7 @@ const forgotPasswordResetLink = async (
           text-decoration: underline;
         }
     
-        .reset-link {
+        .task-link {
           display: block;
           text-align: center;
           margin-top: 20px;
@@ -174,15 +172,13 @@ const forgotPasswordResetLink = async (
     <body>
       <div class="container">
         <div class="header">
-          <h1>Forgot Password</h1>
+          <h1>Task Reminder</h1>
         </div>
         <div class="content">
-          <p>Hello User,</p>
-          <p>We received a request to reset the password for your account with Recurring App.</p>
-          <p>Click on the link below to reset your password. If you didn't request this, you can ignore this email.</p>
-          <a href="${resetLink}" class="reset-link" target="_blank">Reset Password</a>
-          <p>If you don't see the email in your inbox, please check your spam folder. Sometimes, emails end up there by mistake.</p>
-          <p>Thank you for choosing Recurring App. We look forward to continuing to serve you.</p>
+          <p>Hello,</p>
+          <p>This is a friendly reminder that your task <strong>${taskTitle}</strong> is due tomorrow. Please make sure it is completed on time.</p>
+          <p>Thank you for your attention to this matter.</p>
+          <a href="#" class="task-link" target="_blank">View Task</a>
         </div>
         <div class="footer">
           <p>Thank you for using our service.</p>
@@ -196,10 +192,10 @@ const forgotPasswordResetLink = async (
   );
 
   if (mailResponse) {
-    console.log("Email sent successfully: ");
+    console.log("Project reminder email sent successfully: ");
   } else {
-    console.error("Failed to send email.");
+    console.error("Failed to send project reminder email.");
   }
 };
 
-export { sendVerificationMail, forgotPasswordResetLink };
+export { sendProjectReminderEmail, sendTaskReminderEmail };

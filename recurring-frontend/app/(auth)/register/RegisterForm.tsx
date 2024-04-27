@@ -49,10 +49,10 @@ export default function RegisterForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "test",
-      email: "test@gmail.com",
-      password: "Faiz@1234",
-      confirmPassword: "Faiz@1234",
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
@@ -73,7 +73,7 @@ export default function RegisterForm() {
     }
 
     if (res.success) {
-      router.push("/dashboard");
+      router.push("/email-validation");
     }
     setLoading(false);
   }

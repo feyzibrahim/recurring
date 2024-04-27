@@ -1,6 +1,7 @@
 "use client";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
+import { storeObject } from "@/util/localStorage";
 import { GoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
 
@@ -19,7 +20,24 @@ const GoogleAuth = () => {
     });
 
     if (res.success) {
-      router.push("/dashboard");
+      storeObject("user_data", {
+        ...res.user,
+        access_token: res.access_token,
+        refresh_token: res.refresh_token,
+      });
+
+      if (res.user.role === "owner") {
+        router.replace("/dashboard");
+      }
+      if (res.user.role === "employee") {
+        router.replace("/home");
+      }
+      if (res.user.role === "manager") {
+        router.replace("/man");
+      }
+      if (res.user.role === "super-admin") {
+        router.replace("/super-admin");
+      }
     }
   };
 

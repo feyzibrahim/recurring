@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { AttendanceUseCaseInterface } from "../../../../interface/attendance/AttendanceUseCaseInterface";
 import { Attendance } from "../../../../Entities/Attendance";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const createAttendance = async (
   req: Request,
@@ -11,7 +12,7 @@ export const createAttendance = async (
   try {
     const { type, remarks } = req.body;
 
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token);
 
     let body: any = {};

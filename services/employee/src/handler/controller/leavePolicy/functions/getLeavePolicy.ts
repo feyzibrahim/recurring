@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { validateJwt } from "../../../../util/JWT/validate.jwt";
 import { LeavePolicyUseCaseInterface } from "../../../../interface/leavePolicy/LeavePolicyUseCaseInterface";
+import getAccessToken from "../../../../util/validation/getAccessToken";
 
 export const getLeavePolicy = async (
   req: Request,
@@ -8,16 +9,16 @@ export const getLeavePolicy = async (
   iLeaveUseCase: LeavePolicyUseCaseInterface
 ) => {
   try {
-    const { access_token } = req.cookies;
+    const access_token = getAccessToken(req);
     const data = validateJwt(access_token);
 
-    let leaves = await iLeaveUseCase.getLeavePolicy(data.organization);
-    if (!leaves) {
-      throw Error("No leaves found");
+    let leavePolicy = await iLeaveUseCase.getLeavePolicy(data.organization);
+    if (!leavePolicy) {
+      throw Error("No leavePolicy found");
     }
 
     return res.status(200).json({
-      leaves: leaves,
+      leavePolicy: leavePolicy,
       success: true,
       message: "Leave successfully Fetched",
     });

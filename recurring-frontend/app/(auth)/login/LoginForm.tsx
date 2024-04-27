@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { actualCommonRequest } from "@/api/actual_client";
 import { API_ROUTES } from "@/lib/routes";
+import { storeObject } from "@/util/localStorage";
 
 const strongPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -37,8 +38,8 @@ export default function LoginForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "yomila6844@gosarlar.com",
-      password: "Faiz@1234",
+      username: "",
+      password: "",
     },
   });
 
@@ -53,13 +54,18 @@ export default function LoginForm() {
         "Content-Type": "application/json",
       },
     });
-    console.log("file: LoginForm.tsx:76 -> onSubmit -> res", res);
 
     if (!res.success) {
       setError(res.error);
     }
 
     if (res.success) {
+      storeObject("user_data", {
+        ...res.user,
+        access_token: res.access_token,
+        refresh_token: res.refresh_token,
+      });
+
       if (res.user.role === "owner") {
         router.replace("/dashboard");
       }
