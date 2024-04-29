@@ -45,7 +45,12 @@ function Navbar() {
           >
             About Us
           </Link>
-          <Link href={"/testimonials"} className=" hover-text">
+          <Link
+            href={"/testimonials"}
+            className={`hover-text ${
+              pathName === "/testimonials" && "font-bold"
+            }`}
+          >
             Testimonials
           </Link>
           <Link

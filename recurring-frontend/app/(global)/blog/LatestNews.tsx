@@ -43,8 +43,17 @@ const LatestNews = () => {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {data.map((item, index) => (
-          <div key={index}>
+          <div key={index} className="text-center">
             <Image alt="images" src={item.img} />
+            <p className="text-xs bg-secondary w-fit mt-3 px-3 py-1 rounded-full mx-auto">
+              {item.tag}
+            </p>
+            <h2 className="font-bold py-3 md:text-xl">{item.title}</h2>
+            <div className="flex gap-2 text-xs justify-center">
+              <p>{item.date}</p>
+              <p>·</p>
+              <p>{item.author}</p>
+            </div>
           </div>
         ))}
       </div>

@@ -47,8 +47,8 @@ const page = () => {
         <Team />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="p-5 md:p-20 space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 px-5 md:px-20">
+        <div className="pb-5 md:px-20 space-y-5">
           <h1 className="font-bold text-5xl">
             Join a global team of change-makers.
           </h1>

@@ -16,7 +16,7 @@ const Team = () => {
   ];
 
   return (
-    <div className="grid grid-cols-3">
+    <div className="grid grid-cols-2 gap-5 md:grid-cols-3">
       {data.map((team, index) => (
         <div key={index}>
           <Image alt={team.name} src={team.img} className="mx-auto py-5" />
